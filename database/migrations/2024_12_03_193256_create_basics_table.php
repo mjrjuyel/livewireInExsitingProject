@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('creator')->nullable();
             $table->timestamps();
         });
+// Comment
+        
     }
 
     /**
