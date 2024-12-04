@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\AdminController; // Default Admin Model Work With
 
 // Super Admin Dashboard
 use App\Http\Controllers\Admin\SuperAdminController; 
-use App\Http\Controllers\SuperAdmin\BasicController; 
+use App\Http\Controllers\SuperAdmin\BasicController;
+use App\Http\Controllers\SuperAdmin\DesgnationController;
 
 
 Route::get('/', function () {
@@ -28,6 +29,8 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard/admin',[AdminController::class,'index'])->name('dashboard.admin');
     Route::get('/dashboard/admin/view/{slug}',[AdminController::class,'view'])->name('dashboard.admin.view');
     Route::post('/dashboard/admin/update',[AdminController::class,'update'])->name('dashboard.admin.update');
+    Route::get('/dashboard/admin/passwordChange/{slug}',[AdminController::class,'passwordChange'])->name('dashboard.admin.passwordChange');
+    Route::post('/dashboard/admin/passwordChangeSubmit',[AdminController::class,'SubmitNewPass'])->name('dashboard.admin.passwordChangeSubmit');
     
 // Role ManageMent
     Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
@@ -43,11 +46,15 @@ Route::middleware(['auth','verified'])->group(function(){
         // Admin Edit Access 
         Route::get('/dashboard/admin/edit/{slug}',[AdminController::class,'edit'])->name('dashboard.admin.edit');
         Route::delete('/dashboard/admin/delete/{slug}',[AdminController::class,'delete'])->name('dashboard.admin.view');
-        // Super Admin Dashbaord
-
         //SuperAdmin Basic Controller
         Route::get('/dashboard/superAdmin/basic',[BasicController::class,'index'])->name('dashboard.superAdmin.basic');
-        
+
+        // Designation Controller
+        Route::get('/dashboard/superadmin/designation',[DesgnationController::class,'index'])->name('dashboard.superadmin.designation');
+        Route::get('/dashboard/superadmin/designation/add',[DesgnationController::class,'add'])->name('dashboard.superadmin.designation.add');
+        Route::post('/dashboard/superadmin/designation/insert',[DesgnationController::class,'insert'])->name('dashboard.superadmin.designation.insert');
+        Route::get('/dashboard/superadmin/designation/view/{id}',[DesgnationController::class,'view'])->name('dashboard.superadmin.designation.view');
+        Route::delete('/dashboard/superadmin/designation/delete/{id}',[DesgnationController::class,'delete'])->name('dashboard.superadmin.designation.view');
     });
 
     // Not As A Super Admin

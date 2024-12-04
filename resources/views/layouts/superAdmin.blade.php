@@ -76,7 +76,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
                             aria-controls="sidebarAdmin" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                            <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
                             <span class="menu-text"> Admin</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -95,7 +95,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false"
                             aria-controls="sidebarRole" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                            <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
                             <span class="menu-text">Role</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -113,6 +113,36 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarDesignation" aria-expanded="false"
+                            aria-controls="sidebarDesignation" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-material-design"></i></span>
+                            <span class="menu-text">Designation</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarDesignation">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('dashboard.superadmin.designation')}}" class="side-nav-link">
+                                        <span class="menu-text">All Desigantion</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('dashboard.superadmin.designation.add')}}" class="side-nav-link">
+                                        <span class="menu-text">Add Desigantion</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a href="{{route('dashboard')}}" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                            <span class="menu-text"> Leave Application </span>
+                        </a>
                     </li>
 
                     <li class="side-nav-item">
@@ -426,63 +456,8 @@
                             </div>
                         </div>
                     </div>
-
-
                     <!-- User Dropdown -->
-                    <div class="topbar-item nav-user">
-                        <div class="dropdown">
-                            <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown"
-                                data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{asset('contents/admin')}}/assets/images/users/avatar-1.jpg" width="32"
-                                    class="rounded-circle me-lg-2 d-flex" alt="user-image">
-                                <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h6 class="my-0">{{Auth::user()->name}}</h6>
-                                </span>
-                                <i class="mdi mdi-chevron-down d-none d-lg-block align-middle ms-2"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <!-- item-->
-                                <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
-                                    <h6 class="text-overflow text-white m-0">Welcome !</h6>
-                                </div>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-account-outline"></i>
-                                    <span>Profile</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-cog"></i>
-                                    <span>Settings</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-lock-outline"></i>
-                                    <span>Lock Screen</span>
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <!-- item-->
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="dropdown-item notify-item">
-                                    <i class="mdi mdi-logout-variant"></i>
-                                    <span>Logout</span>
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-
+                   @include('layouts.partials.dashboard.userdropdown')
                     <!-- Button Trigger Customizer Offcanvas -->
                     <div class="topbar-item d-none d-sm-flex">
                         <button class="topbar-link" data-bs-toggle="offcanvas"

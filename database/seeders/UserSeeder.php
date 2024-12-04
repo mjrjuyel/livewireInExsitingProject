@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name'=>'Admin',
+            'name'=>'SupreoX',
             'email'=>'admin@gmail.com',
             'slug'=>'user-'.uniqId(),
             'role_id'=>1,

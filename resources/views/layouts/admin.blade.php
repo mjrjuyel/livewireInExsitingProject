@@ -9,16 +9,17 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('contents/admin')}}/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('contents/admin') }}/assets/images/favicon.ico">
     <!-- Vendor css -->
-    <link href="{{asset('contents/admin')}}/assets/css/vendor.min.css" rel="stylesheet" />
+    <link href="{{ asset('contents/admin') }}/assets/css/vendor.min.css" rel="stylesheet" />
     <!-- App css -->
-    <link href="{{asset('contents/admin')}}/assets/css/app.min.css" rel="stylesheet" id="app-style" />
+    <link href="{{ asset('contents/admin') }}/assets/css/app.min.css" rel="stylesheet"
+        id="app-style" />
     <!-- Icons css -->
-    <link href="{{asset('contents/admin')}}/assets/css/icons.min.css" rel="stylesheet" />
-    <link href="{{asset('contents/admin')}}/assets/css/style.css" rel="stylesheet">
+    <link href="{{ asset('contents/admin') }}/assets/css/icons.min.css" rel="stylesheet" />
+    <link href="{{ asset('contents/admin') }}/assets/css/style.css" rel="stylesheet">
     <!-- Theme Config Js -->
-    <script src="{{asset('contents/admin')}}/assets/js/config.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/js/config.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/sweetalert.min.js"></script>
@@ -33,18 +34,22 @@
         <div class="sidenav-menu">
 
             <!-- Brand Logo -->
-            <a href="{{route('dashboard')}}" class="logo">
+            <a href="{{ route('dashboard') }}" class="logo">
                 <span class="logo-light">
-                    <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-light.png"
+                    <span class="logo-lg"><img
+                            src="{{ asset('contents/admin') }}/assets/images/logo-light.png"
                             alt="logo"></span>
-                    <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm-light.png"
+                    <span class="logo-sm"><img
+                            src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png"
                             alt="small logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png"
+                    <span class="logo-lg"><img
+                            src="{{ asset('contents/admin') }}/assets/images/logo-dark.png"
                             alt="dark logo"></span>
-                    <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm.png"
+                    <span class="logo-sm"><img
+                            src="{{ asset('contents/admin') }}/assets/images/logo-sm.png"
                             alt="small logo"></span>
                 </span>
             </a>
@@ -66,25 +71,14 @@
                     <li class="side-nav-title">General Navigation Bar</li>
 
                     <li class="side-nav-item">
-                        <a href="{{route('dashboard')}}" class="side-nav-link">
+                        <a href="{{ route('dashboard') }}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Dashboard </span>
                             <span class="badge bg-success rounded-pill">5</span>
                         </a>
                     </li>
 
-                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                    <li class="side-nav-item">
-                        <a href="{{route('dashboard.superAdmin')}}" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-key"></i></span>
-                            <span class="menu-text"> SuperAdmin </span>
-                        </a>
-                    </li>
-                    @endif
-
                     <li class="side-nav-title">Extra Pages</li>
-
-
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
@@ -96,7 +90,7 @@
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('dashboard.admin')}}" class="side-nav-link">
+                                    <a href="{{ route('dashboard.admin') }}" class="side-nav-link">
                                         <span class="menu-text">All Admin</span>
                                     </a>
                                 </li>
@@ -110,28 +104,29 @@
                     </li>
 
                     @if(Auth::user()->role_id == 1)
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false"
-                            aria-controls="sidebarRole" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
-                            <span class="menu-text"> Admin Role</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarRole">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a href="{{route('dashboard.role')}}" class="side-nav-link">
-                                        <span class="menu-text">All Role</span>
-                                    </a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="{{route('dashboard.role.add')}}" class="side-nav-link">
-                                        <span class="menu-text">Add Role</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false"
+                                aria-controls="sidebarRole" class="side-nav-link">
+                                <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                                <span class="menu-text"> Admin Role</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarRole">
+                                <ul class="sub-menu">
+                                    <li class="side-nav-item">
+                                        <a href="{{ route('dashboard.role') }}" class="side-nav-link">
+                                            <span class="menu-text">All Role</span>
+                                        </a>
+                                    </li>
+                                    <li class="side-nav-item">
+                                        <a href="{{ route('dashboard.role.add') }}"
+                                            class="side-nav-link">
+                                            <span class="menu-text">Add Role</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     @endif
 
                     <li class="side-nav-item">
@@ -163,13 +158,15 @@
                                         View</a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="layouts-hover.html" target="_blank" class="side-nav-link">Hover Menu</a>
+                                    <a href="layouts-hover.html" target="_blank" class="side-nav-link">Hover
+                                        Menu</a>
                                 </li>
                                 <li class="side-nav-item">
                                     <a href="layouts-compact.html" target="_blank" class="side-nav-link">Compact</a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="layouts-icon-view.html" target="_blank" class="side-nav-link">Icon View</a>
+                                    <a href="layouts-icon-view.html" target="_blank" class="side-nav-link">Icon
+                                        View</a>
                                 </li>
 
                             </ul>
@@ -268,18 +265,22 @@
                 <div class="d-flex align-items-center gap-2">
 
                     <!-- Brand Logo -->
-                    <a href="{{route('dashboard')}}" class="logo">
+                    <a href="{{ route('dashboard') }}" class="logo">
                         <span class="logo-light">
-                            <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-light.png"
+                            <span class="logo-lg"><img
+                                    src="{{ asset('contents/admin') }}/assets/images/logo-light.png"
                                     alt="logo"></span>
-                            <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm-light.png"
+                            <span class="logo-sm"><img
+                                    src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png"
                                     alt="small logo"></span>
                         </span>
 
                         <span class="logo-dark">
-                            <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png"
+                            <span class="logo-lg"><img
+                                    src="{{ asset('contents/admin') }}/assets/images/logo-dark.png"
                                     alt="dark logo"></span>
-                            <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm.png"
+                            <span class="logo-sm"><img
+                                    src="{{ asset('contents/admin') }}/assets/images/logo-sm.png"
                                     alt="small logo"></span>
                         </span>
                     </a>
@@ -344,7 +345,7 @@
                                         id="notification-1">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{asset('contents/admin')}}/assets/images/users/avatar-2.jpg"
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-2.jpg"
                                                     class="avatar-md rounded-circle" alt="" />
                                                 <span
                                                     class="position-absolute rounded-pill bg-danger notification-badge">
@@ -372,7 +373,7 @@
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-2">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{asset('contents/admin')}}/assets/images/users/avatar-4.jpg"
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-4.jpg"
                                                     class="avatar-md rounded-circle" alt="" />
                                                 <span class="position-absolute rounded-pill bg-info notification-badge">
                                                     <i class="mdi mdi-currency-usd"></i>
@@ -425,7 +426,7 @@
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-4">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{asset('contents/admin')}}/assets/images/users/avatar-7.jpg"
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-7.jpg"
                                                     class="avatar-md rounded-circle" alt="" />
                                                 <span
                                                     class="position-absolute rounded-pill bg-secondary notification-badge">
@@ -454,7 +455,7 @@
                                         id="notification-5">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{asset('contents/admin')}}/assets/images/users/avatar-10.jpg"
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-10.jpg"
                                                     class="avatar-md rounded-circle" alt="" />
                                                 <span
                                                     class="position-absolute rounded-pill bg-danger notification-badge">
@@ -490,59 +491,8 @@
 
 
                     <!-- User Dropdown -->
-                    <div class="topbar-item nav-user">
-                        <div class="dropdown">
-                            <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown"
-                                data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{asset('contents/admin')}}/assets/images/users/avatar-1.jpg" width="32"
-                                    class="rounded-circle me-lg-2 d-flex" alt="user-image">
-                                <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h6 class="my-0">{{Auth::user()->name}}</h6>
-                                </span>
-                                <i class="mdi mdi-chevron-down d-none d-lg-block align-middle ms-2"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <!-- item-->
-                                <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
-                                    <h6 class="text-overflow text-white m-0">Welcome !</h6>
-                                </div>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-account-outline"></i>
-                                    <span>Profile</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-cog"></i>
-                                    <span>Settings</span>
-                                </a>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-lock-outline"></i>
-                                    <span>Lock Screen</span>
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <!-- item-->
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="dropdown-item notify-item">
-                                    <i class="mdi mdi-logout-variant"></i>
-                                    <span>Logout</span>
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
+                    @include('layouts.partials.dashboard.userdropdown')
+                    
 
                     <!-- Button Trigger Customizer Offcanvas -->
                     <div class="topbar-item d-none d-sm-flex">
@@ -570,7 +520,8 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <script>
-                            document.write(new Date().getFullYear())
+                                document.write(new Date().getFullYear())
+
                             </script> © Uplon - By <span
                                 class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
                         </div>
@@ -586,19 +537,19 @@
     </div>
     <!-- Vendor js -->
 
-    <script src="{{asset('contents/admin')}}/assets/js/vendor.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/js/vendor.min.js"></script>
     <!-- App js -->
     @yield('js')
-    <script src="{{asset('contents/admin')}}/assets/js/app.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/js/app.js"></script>
     <!--Morris Chart-->
-    <script src="{{asset('contents/admin')}}/assets/libs/morris.js/morris.min.js"></script>
-    <script src="{{asset('contents/admin')}}/assets/libs/raphael/raphael.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/morris.js/morris.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/raphael/raphael.min.js"></script>
     <!-- Projects Analytics Dashboard App js -->
-    <script src="{{asset('contents/admin')}}/assets/js/pages/dashboard-sales.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/js/pages/dashboard-sales.js"></script>
 
 </body>
 
 
-<!-- Mirrored from coderthemes.com/uplon/layouts/{{route('dashboard')}} by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 02 Dec 2024 09:35:15 GMT -->
+<!-- Mirrored from coderthemes.com/uplon/layouts/{{ route('dashboard') }} by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 02 Dec 2024 09:35:15 GMT -->
 
 </html>

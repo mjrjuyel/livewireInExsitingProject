@@ -2,24 +2,26 @@
 @section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
-swal({
-    title: "Success!",
-    text: "{{ Session::get('success') }}",
-    icon: "success",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Success!"
+        , text: "{{ Session::get('success') }}"
+        , icon: "success"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 @if(Session::has('error'))
 <script type="text/javascript">
-swal({
-    title: "Opps!",
-    text: "{{ Session::get('error') }}",
-    icon: "error",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Opps!"
+        , text: "{{ Session::get('error') }}"
+        , icon: "error"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 
@@ -47,13 +49,6 @@ swal({
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col-sm-5">
-                            <a href="#" class="btn btn-primary mb-2" admin-bs-toggle="modal"
-                                admin-bs-target="#staticStoreModal"><i class="mdi mdi-plus-circle me-2"></i> Add
-                                Category</a>
-                        </div>
-                    </div>
 
                     <div class="">
                         <table class="table table-centered text-center" id="">
@@ -67,8 +62,13 @@ swal({
                                     </th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Admin Pic</th>
+                                    <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Role</th>
+                                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                    <th class="text-center">Dashboard login</th>
+                                    @endif
+
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -87,40 +87,59 @@ swal({
 
                                     <td>
                                         @if($admin->image != '')
-                                        <img src="{{ asset('uploads/admin/profile/'.$admin->image) }}" class="img-fluid"
-                                            alt="" style="width:200px; object-fit:cover;">
+                                        <img src="{{ asset('uploads/admin/profile/'.$admin->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
                                         @endif
                                     </td>
-
+                                    <td>{{optional($admin->designation)->title}}</td>
                                     <td>
                                         {{$admin->email}}
                                     </td>
 
                                     <td>
-                                        {{optional($admin->role)->role_name}}
+                                        @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                        <a href="{{route('dashboard.superAdmin')}}" class="btn btn-primary">
+                                            {{optional($admin->role)->role_name}}
+                                        </a>
+                                        @else
+                                        <button class="btn btn-primary disable">
+                                            {{optional($admin->role)->role_name}}
+                                        </button>
+                                        @endif
                                     </td>
+
+                                    @if(Auth::user()->role_id == 1|| Auth::user()->role_id == 2)
+                                    <td>
+                                        @if($admin->role_id == 1 || $admin->role_id == 2)
+                                            @if(Auth::user()->role_id == $admin->role_id)
+                                            <a href="{{route('dashboard.superAdmin')}}" class="btn btn-primary">
+                                                Log In
+                                            </a>
+                                            @else
+                                            <button class="btn btn-warning disabled">
+                                                Sorry!
+                                            </button>
+                                            @endif
+                                        @else
+                                        <button class="btn btn-warning disable">
+                                            Sorry! He HasNo Access!
+                                        </button>
+                                        @endif
+                                    </td>
+                                    @endif
 
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button"
-                                                class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item"
-                                                        href="{{ url('/dashboard/admin/view/'.$admin->slug) }}"><i
-                                                            class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ url('dashboard/admin/edit/'.$admin->slug) }}"><i
-                                                            class="uil-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('/dashboard/admin/view/'.$admin->slug) }}"><i class="uil-table"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('dashboard/admin/edit/'.$admin->slug) }}"><i class="uil-edit"></i>Edit</a></li>
                                                 <li>
-                                                    <form action="{{ url('/dashboard/admin/delete/'.$admin->slug) }}"
-                                                        method="post">
+                                                    <form action="{{ url('/dashboard/admin/delete/'.$admin->slug) }}" method="post">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i
-                                                                class="uil-trash-alt"></i>Delete</button>
+                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -150,9 +169,9 @@ swal({
         <div class="row">
             <div class="col-md-12 text-center">
                 <script>
-                document.write(new Date().getFullYear())
-                </script> © Uplon - By <span
-                    class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
+                    document.write(new Date().getFullYear())
+
+                </script> © Uplon - By <span class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
             </div>
         </div>
     </div>

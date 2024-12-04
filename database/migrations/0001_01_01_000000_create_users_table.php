@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
             $table->integer('role_id')->nullable();
+            $table->integer('designation_id')->nullable();
             $table->integer('status')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
