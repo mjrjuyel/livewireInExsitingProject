@@ -17,10 +17,19 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public $timetamps = false;
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role_id',
+        'status',
+        'slug',
     ];
 
     /**
@@ -44,5 +53,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function role(){
+        return $this->belongsTo(UserRole::class);
+    }
+    public function designation(){
+        return $this->belongsTo(Designation::class);
     }
 }
