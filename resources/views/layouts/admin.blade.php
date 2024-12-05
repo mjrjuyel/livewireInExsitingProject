@@ -13,15 +13,13 @@
     <!-- Vendor css -->
     <link href="{{ asset('contents/admin') }}/assets/css/vendor.min.css" rel="stylesheet" />
     <!-- App css -->
-    <link href="{{ asset('contents/admin') }}/assets/css/app.min.css" rel="stylesheet"
-        id="app-style" />
+    <link href="{{ asset('contents/admin') }}/assets/css/app.min.css" rel="stylesheet" id="app-style" />
     <!-- Icons css -->
     <link href="{{ asset('contents/admin') }}/assets/css/icons.min.css" rel="stylesheet" />
     <link href="{{ asset('contents/admin') }}/assets/css/style.css" rel="stylesheet">
     <!-- Theme Config Js -->
     <script src="{{ asset('contents/admin') }}/assets/js/config.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/sweetalert.min.js"></script>
 </head>
 
@@ -36,21 +34,13 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="logo">
                 <span class="logo-light">
-                    <span class="logo-lg"><img
-                            src="{{ asset('contents/admin') }}/assets/images/logo-light.png"
-                            alt="logo"></span>
-                    <span class="logo-sm"><img
-                            src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png"
-                            alt="small logo"></span>
+                    <span class="logo-lg"><img src="{{ asset('contents/admin') }}/assets/images/logo-light.png" alt="logo"></span>
+                    <span class="logo-sm"><img src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png" alt="small logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"><img
-                            src="{{ asset('contents/admin') }}/assets/images/logo-dark.png"
-                            alt="dark logo"></span>
-                    <span class="logo-sm"><img
-                            src="{{ asset('contents/admin') }}/assets/images/logo-sm.png"
-                            alt="small logo"></span>
+                    <span class="logo-lg"><img src="{{ asset('contents/admin') }}/assets/images/logo-dark.png" alt="dark logo"></span>
+                    <span class="logo-sm"><img src="{{ asset('contents/admin') }}/assets/images/logo-sm.png" alt="small logo"></span>
                 </span>
             </a>
 
@@ -81,8 +71,7 @@
                     <li class="side-nav-title">Extra Pages</li>
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
-                            aria-controls="sidebarAdmin" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
                             <span class="menu-text"> Admin</span>
                             <span class="menu-arrow"></span>
@@ -91,7 +80,7 @@
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.admin') }}" class="side-nav-link">
-                                        <span class="menu-text">All Admin</span>
+                                        <span class="menu-text">All Employe</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
@@ -104,34 +93,58 @@
                     </li>
 
                     @if(Auth::user()->role_id == 1)
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false"
-                                aria-controls="sidebarRole" class="side-nav-link">
-                                <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
-                                <span class="menu-text"> Admin Role</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarRole">
-                                <ul class="sub-menu">
-                                    <li class="side-nav-item">
-                                        <a href="{{ route('dashboard.role') }}" class="side-nav-link">
-                                            <span class="menu-text">All Role</span>
-                                        </a>
-                                    </li>
-                                    <li class="side-nav-item">
-                                        <a href="{{ route('dashboard.role.add') }}"
-                                            class="side-nav-link">
-                                            <span class="menu-text">Add Role</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false" aria-controls="sidebarRole" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                            <span class="menu-text"> Admin Role</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarRole">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard.role') }}" class="side-nav-link">
+                                        <span class="menu-text">All Role</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard.role.add') }}" class="side-nav-link">
+                                        <span class="menu-text">Add Role</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     @endif
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false"
-                            aria-controls="sidebarLayouts" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarLeave" aria-expanded="false" aria-controls="sidebarLeave" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                            <span class="menu-text"> Leave Application</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarLeave">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{ url('/dashboard/leave/view/'.Auth::user()->slug) }}" class="side-nav-link">
+                                        <span class="menu-text">View</span>
+                                    </a>
+                                </li>
+                                @php
+                                $check = App\Models\Leave::where('user_id',Auth::user()->id)->count();
+                                @endphp
+
+                                @if($check < 1)
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
+                                        <span class="menu-text">Add</span>
+                                    </a>
+                                </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false" aria-controls="sidebarLayouts" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-star-box-multiple-outline"></i></span>
                             <span class="menu-text"> Layouts </span>
                             <span class="menu-arrow"></span>
@@ -143,12 +156,10 @@
                                         Boxed</a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="layouts-horizontal.html" target="_blank"
-                                        class="side-nav-link">Horizontal</a>
+                                    <a href="layouts-horizontal.html" target="_blank" class="side-nav-link">Horizontal</a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="layouts-horizontal-boxed.html" target="_blank"
-                                        class="side-nav-link">Horizontal Boxed</a>
+                                    <a href="layouts-horizontal-boxed.html" target="_blank" class="side-nav-link">Horizontal Boxed</a>
                                 </li>
                                 <li class="side-nav-item">
                                     <a href="layouts-full.html" target="_blank" class="side-nav-link">Full View</a>
@@ -174,8 +185,7 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false"
-                            aria-controls="sidebarMultiLevel" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-card-multiple-outline"></i></span>
                             <span class="menu-text"> Multi Level </span>
                             <span class="menu-arrow"></span>
@@ -183,8 +193,7 @@
                         <div class="collapse" id="sidebarMultiLevel">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
-                                        aria-controls="sidebarSecondLevel" class="side-nav-link">
+                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel" class="side-nav-link">
                                         <span class="menu-text"> Second Level </span>
                                         <span class="menu-arrow"></span>
                                     </a>
@@ -204,8 +213,7 @@
                                     </div>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false"
-                                        aria-controls="sidebarThirdLevel" class="side-nav-link">
+                                    <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel" class="side-nav-link">
                                         <span class="menu-text"> Third Level </span>
                                         <span class="menu-arrow"></span>
                                     </a>
@@ -215,9 +223,7 @@
                                                 <a href="javascript: void(0);" class="side-nav-link">Item 1</a>
                                             </li>
                                             <li class="side-nav-item">
-                                                <a data-bs-toggle="collapse" href="#sidebarFourthLevel"
-                                                    aria-expanded="false" aria-controls="sidebarFourthLevel"
-                                                    class="side-nav-link">
+                                                <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false" aria-controls="sidebarFourthLevel" class="side-nav-link">
                                                     <span class="menu-text"> Item 2 </span>
                                                     <span class="menu-arrow"></span>
                                                 </a>
@@ -245,8 +251,7 @@
                     <li class="side-nav-title">Logout</li>
 
                     <li class="side-nav-item">
-                        <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="
                             side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-logout-variant"></i></span>
                             <span class="menu-text"> Logout </span>
@@ -267,21 +272,13 @@
                     <!-- Brand Logo -->
                     <a href="{{ route('dashboard') }}" class="logo">
                         <span class="logo-light">
-                            <span class="logo-lg"><img
-                                    src="{{ asset('contents/admin') }}/assets/images/logo-light.png"
-                                    alt="logo"></span>
-                            <span class="logo-sm"><img
-                                    src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png"
-                                    alt="small logo"></span>
+                            <span class="logo-lg"><img src="{{ asset('contents/admin') }}/assets/images/logo-light.png" alt="logo"></span>
+                            <span class="logo-sm"><img src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png" alt="small logo"></span>
                         </span>
 
                         <span class="logo-dark">
-                            <span class="logo-lg"><img
-                                    src="{{ asset('contents/admin') }}/assets/images/logo-dark.png"
-                                    alt="dark logo"></span>
-                            <span class="logo-sm"><img
-                                    src="{{ asset('contents/admin') }}/assets/images/logo-sm.png"
-                                    alt="small logo"></span>
+                            <span class="logo-lg"><img src="{{ asset('contents/admin') }}/assets/images/logo-dark.png" alt="dark logo"></span>
+                            <span class="logo-sm"><img src="{{ asset('contents/admin') }}/assets/images/logo-sm.png" alt="small logo"></span>
                         </span>
                     </a>
 
@@ -291,8 +288,7 @@
                     </button>
 
                     <!-- Horizontal Menu Toggle Button -->
-                    <button class="topnav-toggle-button px-2" data-bs-toggle="collapse"
-                        data-bs-target="#topnav-menu-content">
+                    <button class="topnav-toggle-button px-2" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
                         <i class="mdi mdi-menu font-22"></i>
                     </button>
 
@@ -322,15 +318,12 @@
                     <!-- Email Dropdown -->
                     <div class="topbar-item">
                         <div class="dropdown position-relative">
-                            <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown"
-                                data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false"
-                                aria-expanded="false">
+                            <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
                                 <i class="mdi mdi-email-outline font-22"></i>
                                 <span class="noti-icon-badge"></span>
                             </button>
 
-                            <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg"
-                                style="min-height: 300px;">
+                            <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg" style="min-height: 300px;">
                                 <div class="p-3 border-bottom bg-primary rounded-top-2">
                                     <div class="row align-items-center">
                                         <div class="col">
@@ -341,28 +334,22 @@
 
                                 <div class="position-relative z-2" style="max-height: 300px;" data-simplebar>
                                     <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap active"
-                                        id="notification-1">
+                                    <div class="dropdown-item notification-item py-2 text-wrap active" id="notification-1">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-2.jpg"
-                                                    class="avatar-md rounded-circle" alt="" />
-                                                <span
-                                                    class="position-absolute rounded-pill bg-danger notification-badge">
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-2.jpg" class="avatar-md rounded-circle" alt="" />
+                                                <span class="position-absolute rounded-pill bg-danger notification-badge">
                                                     <i class="mdi mdi-message-check-outline"></i>
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
                                             </span>
                                             <span class="flex-grow-1 text-muted">
-                                                <span class="fw-medium text-body">Glady Haid</span> commented on <span
-                                                    class="fw-medium text-body">Uplon admin status</span>
+                                                <span class="fw-medium text-body">Glady Haid</span> commented on <span class="fw-medium text-body">Uplon admin status</span>
                                                 <br />
                                                 <span class="font-12">25m ago</span>
                                             </span>
                                             <span class="notification-item-close">
-                                                <button type="button"
-                                                    class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                                    data-dismissible="#notification-1">
+                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-1">
                                                     <i class="mdi mdi-close font-16"></i>
                                                 </button>
                                             </span>
@@ -373,24 +360,19 @@
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-2">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-4.jpg"
-                                                    class="avatar-md rounded-circle" alt="" />
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-4.jpg" class="avatar-md rounded-circle" alt="" />
                                                 <span class="position-absolute rounded-pill bg-info notification-badge">
                                                     <i class="mdi mdi-currency-usd"></i>
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
                                             </span>
                                             <span class="flex-grow-1 text-muted">
-                                                <span class="fw-medium text-body">Tommy Berry</span> donated <span
-                                                    class="text-success">$100.00</span> for <span
-                                                    class="fw-medium text-body">Carbon removal program</span>
+                                                <span class="fw-medium text-body">Tommy Berry</span> donated <span class="text-success">$100.00</span> for <span class="fw-medium text-body">Carbon removal program</span>
                                                 <br />
                                                 <span class="font-12">58m ago</span>
                                             </span>
                                             <span class="notification-item-close">
-                                                <button type="button"
-                                                    class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                                    data-dismissible="#notification-2">
+                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-2">
                                                     <i class="mdi mdi-close font-16"></i>
                                                 </button>
                                             </span>
@@ -401,21 +383,17 @@
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
                                             <div class="avatar-md flex-shrink-0 me-3">
-                                                <span
-                                                    class="avatar-title bg-success-subtle text-success rounded-circle font-22">
+                                                <span class="avatar-title bg-success-subtle text-success rounded-circle font-22">
                                                     <iconify-icon icon="solar:wallet-money-bold-duotone"></iconify-icon>
                                                 </span>
                                             </div>
                                             <span class="flex-grow-1 text-muted">
-                                                You withdraw a <span class="fw-medium text-body">$500</span> by <span
-                                                    class="fw-medium text-body">New York ATM</span>
+                                                You withdraw a <span class="fw-medium text-body">$500</span> by <span class="fw-medium text-body">New York ATM</span>
                                                 <br />
                                                 <span class="font-12">2h ago</span>
                                             </span>
                                             <span class="notification-item-close">
-                                                <button type="button"
-                                                    class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                                    data-dismissible="#notification-3">
+                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-3">
                                                     <i class="mdi mdi-close font-16"></i>
                                                 </button>
                                             </span>
@@ -426,10 +404,8 @@
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-4">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-7.jpg"
-                                                    class="avatar-md rounded-circle" alt="" />
-                                                <span
-                                                    class="position-absolute rounded-pill bg-secondary notification-badge">
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-7.jpg" class="avatar-md rounded-circle" alt="" />
+                                                <span class="position-absolute rounded-pill bg-secondary notification-badge">
                                                     <i class="mdi mdi-plus"></i>
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
@@ -441,9 +417,7 @@
                                                 <span class="font-12">3h ago</span>
                                             </span>
                                             <span class="notification-item-close">
-                                                <button type="button"
-                                                    class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                                    data-dismissible="#notification-4">
+                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-4">
                                                     <i class="mdi mdi-close font-16"></i>
                                                 </button>
                                             </span>
@@ -451,14 +425,11 @@
                                     </div>
 
                                     <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap mb-5"
-                                        id="notification-5">
+                                    <div class="dropdown-item notification-item py-2 text-wrap mb-5" id="notification-5">
                                         <span class="d-flex align-items-center">
                                             <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-10.jpg"
-                                                    class="avatar-md rounded-circle" alt="" />
-                                                <span
-                                                    class="position-absolute rounded-pill bg-danger notification-badge">
+                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-10.jpg" class="avatar-md rounded-circle" alt="" />
+                                                <span class="position-absolute rounded-pill bg-danger notification-badge">
                                                     <i class="mdi mdi-heart"></i>
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
@@ -470,9 +441,7 @@
                                                 <span class="font-12">10h ago</span>
                                             </span>
                                             <span class="notification-item-close">
-                                                <button type="button"
-                                                    class="btn btn-ghost-danger rounded-circle btn-sm btn-icon"
-                                                    data-dismissible="#notification-5">
+                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-5">
                                                     <i class="mdi mdi-close font-16"></i>
                                                 </button>
                                             </span>
@@ -481,8 +450,7 @@
                                 </div>
 
                                 <!-- All-->
-                                <a href="javascript:void(0);"
-                                    class="dropdown-item notification-item position-fixed z-2 bottom-0 text-center text-reset text-decoration-underline link-offset-2 fw-bold notify-item border-top border-light py-2">
+                                <a href="javascript:void(0);" class="dropdown-item notification-item position-fixed z-2 bottom-0 text-center text-reset text-decoration-underline link-offset-2 fw-bold notify-item border-top border-light py-2">
                                     View All
                                 </a>
                             </div>
@@ -492,12 +460,11 @@
 
                     <!-- User Dropdown -->
                     @include('layouts.partials.dashboard.userdropdown')
-                    
+
 
                     <!-- Button Trigger Customizer Offcanvas -->
                     <div class="topbar-item d-none d-sm-flex">
-                        <button class="topbar-link" data-bs-toggle="offcanvas"
-                            data-bs-target="#theme-settings-offcanvas" type="button">
+                        <button class="topbar-link" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" type="button">
                             <i class="mdi mdi-cog-outline font-22"></i>
                         </button>
                     </div>
@@ -522,8 +489,7 @@
                             <script>
                                 document.write(new Date().getFullYear())
 
-                            </script> © Uplon - By <span
-                                class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
+                            </script> © Uplon - By <span class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
                         </div>
                     </div>
                 </div>

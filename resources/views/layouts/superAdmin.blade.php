@@ -77,14 +77,14 @@
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false"
                             aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
-                            <span class="menu-text"> Admin</span>
+                            <span class="menu-text"> Employe</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{route('dashboard.admin')}}" class="side-nav-link">
-                                        <span class="menu-text">All Admin</span>
+                                        <span class="menu-text">All Employe</span>
                                     </a>
                                 </li>
                             </ul>
@@ -139,7 +139,7 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="{{route('dashboard')}}" class="side-nav-link">
+                        <a href="{{route('dashboard.superAdmin.leave')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Leave Application </span>
                         </a>

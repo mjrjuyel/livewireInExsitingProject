@@ -54,7 +54,7 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('dashboard.role')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('dashboard.superadmin.designation')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
                             </div>

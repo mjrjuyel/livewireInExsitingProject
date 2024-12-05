@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +13,7 @@ use App\Models\Designation;
 use Carbon\Carbon;
 use Session;
 
-class AdminController extends Controller
+class EmployeController extends Controller
 {
     public function index(){
         $admin = User::with('role')->latest('id')->get();
