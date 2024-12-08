@@ -16,6 +16,10 @@ class Leave extends Model
     ];
 
     public function admin(){
-        return $this->hasMany(User::class,'designation_id');
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function employe(){
+        return $this->belongsTo(Employee::class,'emp_id','id');
     }
 }

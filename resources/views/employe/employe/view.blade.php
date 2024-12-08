@@ -1,6 +1,5 @@
-@extends('layouts.superAdmin')
-@section('superAdminContent')
-
+@extends('layouts.employe')
+@section('content')
 <div class="page-container">
     <div class="page-title-box">
 
@@ -15,7 +14,7 @@
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
-                    <li class="breadcrumb-item active">Designation</li>
+                    <li class="breadcrumb-item active">Admin</li>
                 </ol>
             </div>
         </div>
@@ -30,43 +29,58 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>{{$view->title}}
+                                        <h3 class="card_header"><i
+                                                class="fa-solid fa-user header_icon"></i>{{$view->name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.designation')}}" class="btn btn-bg btn-primary btn_header ">
-                                            <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
+                                    <div class="col-md-3 text-end"><a href="{{route('dashboard.admin')}}"
+                                            class="btn btn-bg btn-primary btn_header ">
+                                            <i class="fa-brands fa-servicestack btn_icon"></i>All User</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{url('superadmin/designation/edit/'.$view->id)}}" class="btn btn-bg btn-primary btn_header"><i class="uil-edit btn_icon"></i>Edit</a>
+                                    <div class="col-md-2"><a href="{{url('dashboard/admin/edit/'.$view->slug)}}"
+                                            class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                            btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>
 
                             <table class="table border view_table">
                                 <tr>
-                                    <td>Designation Name</td>
+                                    <td>Admin Name</td>
                                     <td>:</td>
-                                    <td>{{ $view->title }}</td>
+                                    <td>{{ $view->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Designation Belongs To</td>
+                                    <td>Role</td>
                                     <td>:</td>
                                     <td>
-                                         @foreach($view->admin as $admin)
-                                        <button type="button" class="btn btn-warning " style="cursor:none;">
-                                            {{optional($admin)->name}},
-                                        </button>
-                                        @endforeach
+                                        <button class="btn bg-primary">{{optional($view->role)->role_name}}</button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Designation Created At</td>
+                                    <td>Admin Email</td>
+                                    <td>:</td>
+                                    <td>{{$view->email}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Profile Picture</td>
+                                    <td>:</td>
+                                    <td>@if($view->image != '')
+                                        <img src="{{ asset('uploads/admin/profile/'.$view->image) }}" class="img-fluid"
+                                            alt="" style="width:200px; object-fit:cover;">
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Created At</td>
                                     <td>:</td>
                                     <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Designation Edited At</td>
+                                    <td>Edited At</td>
                                     <td>:</td>
-                                    <td>{{optional($view->updated_at)->format('d-M-Y | h:i:s A')}}</td>
+                                    <td>{{optional($view->updated_at)->format('d-m-Y | h:i:s A')}}</td>
                                 </tr>
                             </table>
 

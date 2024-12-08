@@ -19,8 +19,10 @@ return new class extends Migration
             $table->text('reason')->nullable();
             $table->integer('status')->default('1');
             $table->string('slug')->nullable();
+            $table->integer('total_day')->nullable();
+            $table->integer('paid_remaining')->default(14);
             // Foreign key constraint
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('emp_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();
         });
     }

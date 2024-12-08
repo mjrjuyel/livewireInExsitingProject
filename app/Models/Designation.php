@@ -18,4 +18,8 @@ class Designation extends Model
     public function admin(){
         return $this->hasMany(User::class,'designation_id');
     }
+
+    public function employe(){
+        return $this->hasMany(Employee::class,'emp_desig_id');
+    }
 }

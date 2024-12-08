@@ -19,4 +19,8 @@ class UserRole extends Model
     public function admin(){
         return $this->hasMany(User::class,'role_id');
     }
+
+    public function employe(){
+        return $this->hasMany(User::class,'role_id');
+    }
 }
