@@ -17,6 +17,10 @@ class UserRoleSeeder extends Seeder
         UserRole::create([
             'role_name'=>'SuperAdmin',
             'created_at'=>Carbon::now(),
+        ],
+        [
+            'role_name'=>'HRM',
+            'created_at'=>Carbon::now(),
         ]);
     }
 }
