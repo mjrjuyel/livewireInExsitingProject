@@ -36,6 +36,7 @@ swal({
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
                     <li class="breadcrumb-item active">Leave</li>
                 </ol>
@@ -55,7 +56,7 @@ swal({
                                     <th class="text-center">Leave Type</th>
                                     <th class="text-center">Leave Reason</th>
                                     <th class="text-center">Leave Start date</th>
-                                    <th class="text-center">Leave End date</th>
+                                    <th class="text-center">Request For</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -65,7 +66,7 @@ swal({
                                 <tr>
 
                                    <td>
-                                        {{ $data->admin->name }}
+                                        {{ $data->employe->emp_name }}
                                     </td>
 
                                     <td>
@@ -75,10 +76,10 @@ swal({
                                         {{ $data->reason }}
                                     </td>
                                     <td>
-                                        {{ $data->start_date }}
+                                        {{ $data->start_date->format('d-M-Y') }}
                                     </td>
-                                     <td>
-                                        {{ $data->end_date }}
+                                    <td>
+                                        {{ $data->total_day }} Days
                                     </td>
 
                                      
@@ -107,9 +108,9 @@ swal({
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ url('/dashboard/superAdmin/leave/view/'.$data->slug) }}"><i
-                                                            class="uil-table"></i>Edit</a></li>
-                                                    <form action="{{ url('/dashboard/superAdmin/leave/delete/'.$data->slug) }}"
+                                                        href="{{ url('superadmin/leave/view/'.$data->slug) }}"><i
+                                                            class="uil-table"></i>View</a></li>
+                                                    <form action="{{ url('superadmin/leave/delete/'.$data->slug) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')

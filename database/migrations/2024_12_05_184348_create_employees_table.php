@@ -23,7 +23,6 @@ return new class extends Migration
             $table->integer('emp_desig_id')->nullable();
             $table->integer('emp_role_id')->nullable();
             $table->date('emp_join',100)->nullable();
-            $table->integer('emp_can_leave')->default(20);
             $table->integer('emp_creator');
             $table->string('password');
             $table->timestamps();

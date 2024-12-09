@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 // For Employe Controller 
 use App\Http\Controllers\Employe\DashboardController;
 use App\Http\Controllers\Employe\RoleController;
@@ -56,6 +58,11 @@ Route::middleware('isEmploye')->group(function(){
 });
 
 
+Route::get('login', [AuthenticatedSessionController::class, 'create'])
+        ->name('login');
+
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
 Route::middleware(['auth','verified'])->group(function(){
     // Super Admin Dashbaord
     Route::middleware('is_superadmin')->group(function(){
@@ -87,10 +94,8 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::delete('/superadmin/designation/delete/{id}',[DesgnationController::class,'delete'])->name('superadmin.designation.view');
         // Leave Application status
         Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
-        // Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
-        Route::post('/superadmin/leave/insert',[SuperAdminLeaveController::class,'insert'])->name('superadmin.leave.insert');
         Route::get('/superadmin/leave/view/{slug}',[SuperAdminLeaveController::class,'view'])->name('superadmin.leave.view');
-        Route::post('/superadmin/leave/upadte',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.upadte');
+        Route::post('/superadmin/leave/update',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.update');
         Route::delete('/superadmin/leave/delete/{slug}',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.view');
     });
 

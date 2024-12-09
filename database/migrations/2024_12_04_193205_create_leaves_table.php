@@ -20,7 +20,8 @@ return new class extends Migration
             $table->integer('status')->default('1');
             $table->string('slug')->nullable();
             $table->integer('total_day')->nullable();
-            $table->integer('paid_remaining')->default(14);
+            $table->integer('paid_remainig_month')->nullable();
+            $table->integer('paid_remaining_year')->nullable();
             // Foreign key constraint
             $table->integer('emp_id')->references('id')->on('employees')->onDelete('cascade');
             $table->timestamps();

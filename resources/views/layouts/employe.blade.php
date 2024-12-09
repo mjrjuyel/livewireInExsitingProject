@@ -244,7 +244,7 @@
             <li class="side-nav-title">Logout</li>
 
             <li class="side-nav-item">
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="
+                <a href="{{ route('employe.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="
                             side-nav-link">
                     <span class="menu-icon"><i class="mdi mdi-logout-variant"></i></span>
                     <span class="menu-text"> Logout </span>
@@ -450,7 +450,6 @@
                     </div>
                 </div>
 
-
                 <!-- User Dropdown -->
                 <div class="topbar-item nav-user">
                     <div class="dropdown">
@@ -482,7 +481,7 @@
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item notify-item">
+                            <a href="{{ route('employe.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item notify-item">
                                 <i class="mdi mdi-logout-variant"></i>
                                 <span>Logout</span>
                             </a>
