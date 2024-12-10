@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\LeaveMailToAdmin;
 use Illuminate\Http\Request;
 use App\Models\Leave;
+use App\Models\LeaveType;
 use App\Models\Employee;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,7 +19,8 @@ use Auth;
 class LeaveFormController extends Controller
 {
     public function add(){
-        return view('employe.leave.add');
+        $leaveType = LeaveType::all();
+        return view('employe.leave.add',compact('leaveType'));
     }
 
     public function insert(Request $request){
@@ -32,16 +34,16 @@ class LeaveFormController extends Controller
             $end = strtotime($request['end']);
 
             // calculate days From Given date
-            $differInSecond = $end - $start;
-            $days = $differInSecond/86400;
+            $differInSecond = abs($end - $start);
+            $days = $differInSecond/86400 + 1;
 
-            // return $checkYear;
+            // return $days;
 
                 // 2 dates are valid or not!
-                if($start < $end){
+                if($start <= $end){
 
                     // request leave days are more than 3 or not!
-                    if($days <= 3){
+                    if($days <= 4){
 
                         $start_date = Carbon::parse($request->start); // Parsing day in Month, year;
 
@@ -49,7 +51,7 @@ class LeaveFormController extends Controller
                         $checkMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('paid_remainig_month');
 
                         // check total paid off in an annual year
-                        $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('paid_remaining_year');
+                        $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('paid_remainig_year');
 
                     
                         if($checkYear + $days < 14){
@@ -59,11 +61,12 @@ class LeaveFormController extends Controller
                                 // total day is less than request
                                 $request->validate([
                                     'start'=>'required',
-                                    'end'=>'required',
+                                    'reason'=>'required',
+                                    // 'end'=>'required',
                                 ]);
         
                                 $insert = Leave::create([
-                                    'leave_type'=>$request['leave_type'],
+                                    'leave_type_id'=>$request['leave_type'],
                                     'start_date'=>Carbon::parse($request->start),
                                     'end_date'=>$request['end'],
                                     'reason'=>$request['reason'],
@@ -100,8 +103,15 @@ class LeaveFormController extends Controller
 
     public function view($slug){
         $emp = Employee::where('emp_slug',Auth::guard('employee')->user()->emp_slug)->first();
-        $view = Leave::with('employe')->where('emp_id',$emp->id)->latest('id')->first();
-        // return $view;
+        // dd($emp);
+        $view = Leave::with(['employe','leavetype'])->where('emp_id',$emp->id)->where('slug',$slug)->first();
         return view('employe.leave.view',compact('view'));
     } 
+
+    public function history($slug){
+        $employe = Employee::where('emp_slug',$slug)->first();
+        $leavehistory = Leave::where('emp_id',$employe->id)->latest('id')->get();
+        // return $leavehistory;
+        return view('employe.leave.history',compact('leavehistory'));
+    }
 }

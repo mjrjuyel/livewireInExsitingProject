@@ -79,6 +79,19 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                @if($view->comments != '')
+                                <tr>
+                                    <td>Reply From Admin</td>
+                                    <td>:</td>
+                                    <td>
+                                        <span class=" btn-warning ">
+                                            {{$view->comments}}
+                                        </span>
+                                     
+                                    </td>
+                                </tr>
+                                @endif
                                 
                                 <tr>
                                     <td>Submit By</td>
@@ -91,8 +104,8 @@
                                 <tr>
                                     <td>Type</td>
                                     <td>:</td>
-                                    <td>
-                                        {{$view->leave_type}}
+                                    <td class="text-danger">
+                                        {{$view->leavetype->type_title}}
                                     </td>
                                 </tr>
 
@@ -109,6 +122,7 @@
 
                                     <td>{{$view->start_date->format('d-M-Y')}}</td>
                                 </tr>
+
                                  <tr>
                                     <td>End Leave</td>
                                     <td>:</td>

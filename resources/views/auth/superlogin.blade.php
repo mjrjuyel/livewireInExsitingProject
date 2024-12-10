@@ -33,28 +33,31 @@
                                 <div class="text-center">
                                     <div class="my-3">
                                         <a href="index.html">
-                                            <span><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png"
-                                                    alt="" height="28"></span>
+                                            <span><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png" alt="" height="28"></span>
                                         </a>
                                     </div>
-                                    <h5 class="text-muted text-uppercase py-3 font-16">Sign In</h5>
+                                    <h5 class="text-muted text-uppercase py-3 font-16">Sign In </h5>
+                                     <h5 class="text-muted text-uppercase py-3 font-16">Super Admin </h5>
                                 </div>
 
                                 <form action="{{ route('login') }}" method="POST" class=" mt-2">
                                     @csrf
                                     <div class="form-group mb-3">
-                                        <input class="form-control" type="email" name="email" value="{{old('email')}}"
-                                            required placeholder="Enter your Email">
+                                        <input class="form-control" type="email" name="email" value="{{old('email')}}" required placeholder="Enter your Email">
+                                        @error('email')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <input class="form-control" type="password" name="password" required=""
-                                            id="password" placeholder="Enter your password">
+                                        <input class="form-control" type="password" name="password" required="" id="password" placeholder="Enter your password">
+                                        @error('password')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group text-center mb-3">
-                                        <button class="btn btn-success btn-block waves-effect waves-light w-100"
-                                            type="submit"> Log In </button>
+                                        <button class="btn btn-success btn-block waves-effect waves-light w-100" type="submit"> Log In </button>
                                     </div>
 
                                     <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock me-1"></i>
@@ -67,18 +70,15 @@
 
                                     <div class="row">
                                         <div class="col-12">
-                                            <button type="button"
-                                                class="btn btn-facebook waves-effect font-14 waves-light mt-3">
+                                            <button type="button" class="btn btn-facebook waves-effect font-14 waves-light mt-3">
                                                 <i class="fab fa-facebook-f me-1"></i> Facebook
                                             </button>
 
-                                            <button type="button"
-                                                class="btn btn-twitter waves-effect font-14 waves-light mt-3">
+                                            <button type="button" class="btn btn-twitter waves-effect font-14 waves-light mt-3">
                                                 <i class="fab fa-twitter me-1"></i> Twitter
                                             </button>
 
-                                            <button type="button"
-                                                class="btn btn-googleplus waves-effect font-14 waves-light mt-3">
+                                            <button type="button" class="btn btn-googleplus waves-effect font-14 waves-light mt-3">
                                                 <i class="fab fa-google-plus-g me-1"></i> Google+
                                             </button>
                                         </div>
@@ -92,8 +92,7 @@
 
                     <div class="row mt-3">
                         <div class="col-12 text-center">
-                            <p class="text-white-50">Don't have an account? <a href="auth-register.html"
-                                    class="text-white ms-1"><b>Sign Up</b></a></p>
+                            <p class="text-white-50">Don't have an account? <a href="auth-register.html" class="text-white ms-1"><b>Sign Up</b></a></p>
                         </div> <!-- end col -->
                     </div>
                     <!-- end row -->

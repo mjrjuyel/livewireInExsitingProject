@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
@@ -76,60 +77,78 @@ class EmployeController extends Controller
         }
     }
 
-    public function passwordChange($slug){
+    public function profileSettings($slug){
         // return $slug;
-        $pass = Employee::where('emp_slug',$slug)->first();
+        $edit = Employee::where('emp_slug',$slug)->first();
         $role= UserRole::all();
+        $designation= Designation::all();
         // return $data;
-        return view('employe.employe.updateProfile',compact(['pass','role']));
+        return view('employe.employe.updateProfile',compact(['edit','role','designation']));
     }
 
-    public function SubmitNewPass(Request $request)
-    {
+    public function profileSettingUpdate(Request $request){
+
         $id = $request['id'];
         $slug = $request['slug'];
         // return $request->all();
+           // return $request->all();
         $request->validate([
             'name'=>'required',
             'email'=>'required | email:rfc,dns',
         ]);
 
-        if($request->hasFile('image')){
-            $imageTake = $request->file('image');
-            $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+        if($request->pass != ''){
+             $request->validate([
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(4)->letters()],
+                'repass' => 'required | same:pass',
+             ]);
+
+            Employee::where('id',$id)->update([
+                'pass'=>$request['pass'],
+            ]);
+        }
+
+        $date = strtotime($request['join']);
+
+        $old= Employee::find($id);
+        $path = public_path('uploads/employe/profile/');
+
+        if($request->hasFile('pic')){
+
+            if($old->emp_image !='' && $old->emp_image != null){
+                $old_pic = $path.$old->emp_image;
+                unlink($old_pic);
+            }
+
+            $imageTake = $request->file('pic');
+            $image_name = 'emp-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
             $manager = new ImageManager(new Driver());
             $image = $manager->read($imageTake);
             // $image->scale(width: 300);
-            $image->save('uploads/admin/profile/'.$image_name);
-            
+            $image->save('uploads/employe/profile/'.$image_name);
+
             Employee::where('id',$id)->update([
-                'image'=>$image_name,
+                'emp_image'=>$image_name,
             ]);
         }
         
-        $update = Employee::where('id',$id)->update([
-            'name'=>$request['name'],
+        $insert = Employee::where('id',$id)->update([
+            'emp_name'=>$request['name'],
             'email'=>$request['email'],
-            'slug'=>$slug,
+            'emp_phone'=>$request['phone'],
+            'emp_address'=>$request['add'],
+            'emp_slug'=>$slug,
+            'emp_desig_id'=>$request['desig'],
+            'emp_role_id'=>$request['role'],
+            'emp_join'=>$request['join'],
+            'emp_status'=>$request['status'],
             'updated_at'=>Carbon::now(),
         ]);
-        
-        // If Password Is changed
-        if($request->oldpass){
-            $request->validate([
-                'oldpass' => 'required',
-                'newpass' => 'required|min:8',]);
-    
-            if (!Hash::check($request->oldpass,auth()->user()->password)) {
-                return back()->withErrors(['oldpass' => 'Incorrect current password.']);
-            }
-            auth()->user()->update([
-                'password' => Hash::make($request->newpass),
-            ]);
+
+        if($insert){
+            Session::flash('success','Update Profile SuccessFully ');
+            return redirect()->route('dashboard.employe.profileSettings',$slug);
         }
-        
-        Session::flash('success','Profile Update Successfully');
-        return redirect()->back();
     }
 
 }

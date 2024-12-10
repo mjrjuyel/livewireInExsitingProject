@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\LeaveResponseByAdmin;
 use Illuminate\Http\Request;
 use App\Models\Leave;
+use App\Models\LeaveType;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -15,7 +16,7 @@ class SuperAdminLeaveController extends Controller
 {
     //  All Role 
     public function index(){
-        $alldata = Leave::with('admin')->where('status','!=',0)->latest('id')->get();
+        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.index',compact('alldata'));
     }
@@ -23,18 +24,21 @@ class SuperAdminLeaveController extends Controller
     // view per role
     public function view($slug){
         $view = Leave::with('employe')->where('slug',$slug)->first();
+        $leave_type = LeaveType::all();
         // return $view;
-        return view('superadmin.leave.view',compact('view'));
+        return view('superadmin.leave.view',compact(['view','leave_type']));
     }
 
     public function update(Request $request){
+
         $id = $request['id'];
         $slug = $request['slug'];
 
-        $leave = Leave::with('employe')->where('slug',$slug)->first();
+        $leave = Leave::with('employe')->where('slug',$slug)->latest('id')->first();
         
         $update = Leave::where('id',$id)->update([
             'status'=>$request['status'],
+            'comments'=>$request['comment'],
             'updated_at'=>Carbon::now(),
         ]);
 
@@ -43,37 +47,42 @@ class SuperAdminLeaveController extends Controller
         // }
         
         // If Date is Modified
-        if($request->end){
-            $start =strtotime($leave->start_date);
-            $end_date = strtotime($request->end);
+        // if($request->end){                                 
+        //     $start =strtotime($leave->start_date);
+        //     $end_date = strtotime($request->end);
 
-            $dayInsec = $end_date - $start;
-            $total_days = $dayInsec / 86400;
+        //     $dayInsec = $end_date - $start;
+        //     $total_days = $dayInsec / 86400 +1;
 
-            // return $total_days;
-            
-            Leave::where('id',$id)->where('status',2)->update([
-                'end_date'=>$end_date,
-                'total_day'=>$total_days,
-                'paid_remainig_month'=>$leave->paid_remainig_month + $total_days,
-                'paid_remainig_year'=>$leave->paid_remainig_year + $total_days,
-            ]);
+        //     // return carbon::parse($request->end);
+        //     Leave::where('id',$id)->where('status',2)->update([
+        //         'end_date'=>Carbon::parse($request->end),
+        //         'total_day'=>$total_days,
+        //         'paid_remainig_month'=>$leave->paid_remainig_month + $total_days,
+        //         'paid_remaining_year'=>$leave->paid_remainig_year + $total_days,
+        //     ]);
+
+        //     return Leave::all();
         
-        }else{
+        // }
+        if($request->status == 2){
             // update remainig leave
-                if($request->status == 2){
-                     Leave::where('id',$leave->id)->update([
-                        'paid_remainig_month'=>$leave->paid_remainig_month + $leave->total_day,
-                        'paid_remaining_year'=>$leave->paid_remaining_year + $leave->total_day,
-                    ]);
-                }
+            // return $leave;
+                Leave::where('id',$id)->update([
+                'paid_remainig_month'=>$leave->paid_remainig_month + $leave->total_day,
+                'paid_remainig_year'=>$leave->paid_remainig_year + $leave->total_day,
+                ]);
+
+                // return Leave::all();
             }
+        // if($update){
+        //     $email = Leave::where('slug',$slug)->first();
+        //     Mail::to($email->employe->email)->send(new LeaveResponseByAdmin($email));
+        // }
         if($update){
-            $email = Leave::where('slug',$slug)->first();
-            Mail::to($email->employe->email)->send(new LeaveResponseByAdmin($email));
+          Session::flash('success','Update Leave Form!');
+          return redirect()->back();
         }
-        Session::flash('success','Update Leave Form!');
-        return redirect()->back();
     }
 
     public function delete($slug){

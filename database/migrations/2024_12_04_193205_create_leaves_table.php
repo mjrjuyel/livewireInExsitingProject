@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('leave_type')->nullable;
+            $table->integer('leave_type_id')->nullable;
             $table->text('reason')->nullable();
             $table->integer('status')->default('1');
             $table->string('slug')->nullable();
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->integer('paid_remainig_month')->nullable();
             $table->integer('paid_remaining_year')->nullable();
             // Foreign key constraint
-            $table->integer('emp_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->integer('emp_id')->nullable();
+            $table->string('comments')->nullable();
             $table->timestamps();
         });
     }

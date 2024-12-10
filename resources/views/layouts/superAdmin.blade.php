@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard | SuperAdmin</title>
+    <title>{{ config('app.name', 'Laravel') }} | Dashboard | SuperAdmin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -56,7 +56,6 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
-                            <span class="menu-text"> Employe</span>
                             <span class="menu-text"> Employe</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -405,7 +404,11 @@
                     <div class="topbar-item nav-user">
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
+                                @if(Auth::guard('employee')->user()->emp_image != '')
+                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_img) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                @else
                                 <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-1.jpg" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::user()->name }}</h6>
                                 </span>
@@ -437,7 +440,7 @@
                                     <span>Logout</span>
                                 </a>
 
-                                <form id="logout-form" action="{{ url('/employe/logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
 

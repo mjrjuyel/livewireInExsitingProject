@@ -9,7 +9,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Employe\DashboardController;
 use App\Http\Controllers\Employe\RoleController;
 use App\Http\Controllers\Employe\LeaveFormController;
+use App\Http\Controllers\Employe\DailyReportController;
 use App\Http\Controllers\Employe\EmployeController; // Default Admin Model Work With User Model , Here we can fetch Data from User Model.
+
 use App\Http\Controllers\Employe\EmployeLoginController;
 
 // Super Admin Dashboard
@@ -23,12 +25,12 @@ use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('.');
 
 
 // Employe Login ======
-Route::get('/employe/login',[EmployeLoginController::class,'login'])->name('employe.login');
-Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit']);
+Route::get('/employe/login',[EmployeLoginController::class,'loginEmploye'])->name('employe.login');
+Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit'])->name('employe.loginsubmit');
 
 // ========= Employe Dashboard
 Route::middleware('isEmploye')->group(function(){
@@ -38,11 +40,11 @@ Route::middleware('isEmploye')->group(function(){
         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
         // Admin Controller 
         Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
-        Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
-        Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
-        Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
-        Route::get('/dashboard/employe/passwordChange/{slug}',[EmployeController::class,'passwordChange'])->name('dashboard.employe.passwordChange');
-        Route::post('/dashboard/employe/passwordChangeSubmit',[EmployeController::class,'SubmitNewPass'])->name('dashboard.employe.passwordChangeSubmit');
+        // Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
+        // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
+        // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
+        Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
+        Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
         Route::post('/dashboard/employe/delete',[EmployeController::class,'delete'])->name('dashboard.employe.delete');
     // Role ManageMent
         Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
@@ -55,13 +57,15 @@ Route::middleware('isEmploye')->group(function(){
         Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
         Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
+        Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
+
+        // Employe Daily Reports Submit
+        Route::get('/dashboard/dailyreport',[DailyReportController::class,'add'])->name('dashboard.dailyreport');
+        Route::get('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
 });
 
 
-Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
-
-Route::post('login', [AuthenticatedSessionController::class, 'store']);
+// Super Admin Dashboard
 
 Route::middleware(['auth','verified'])->group(function(){
     // Super Admin Dashbaord

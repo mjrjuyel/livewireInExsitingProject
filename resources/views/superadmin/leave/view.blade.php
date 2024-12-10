@@ -78,7 +78,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                                 </label>
-                                                <input type="text" class="form-control" name="name" value="{{ $view->leave_type }}" disabled>
+                                                <input type="text" class="form-control" name="name" value="{{ $view->leavetype->type_title }}" disabled>
                                                 @error('name')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
@@ -86,7 +86,7 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">leave Start Date<span class="text-danger">*</span> :</label>
-                                                <input type="text" class="form-control" name="start" value="{{ $view->start_date }}" placeholder="{{ $view->start_date->format('d-M-Y') }}" disabled>
+                                                <input type="text" class="form-control" name="start" value="{{ $view->start_date->format('d-M-Y') }}" placeholder="{{ $view->start_date->format('d-M-Y') }}" disabled>
                                                 @error('email')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
@@ -104,7 +104,7 @@
                                                 <label class="form-label">Reason</label>
                                                 <input class="form-control" type="text" value="{{ $view->reason }}" disabled>
                                             </div>
-
+                                            <hr>
                                             <div class="mb-3">
                                                 <label class="form-label">Status</label>
                                                 <select class="form-control" type="text" name="status">
@@ -132,27 +132,27 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Remain Paid leave In Month<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remainig_month < 3)
-                                                    @if($view->paid_remainig_month != 0)
-                                                         <input type="text" class="form-control"  value="{{ $view->paid_remaining_month }}Days"  disabled>
-                                                    @else 
-                                                         <input type="text" class="form-control"  value="Not Yet"  disabled>
+                                                @if($view->paid_remainig_month < 3) 
+                                                   @if($view->paid_remainig_month != 0)
+                                                    <input type="text" class="form-control" value="{{ $view->paid_remainig_month }}Days" disabled>
+                                                    @else
+                                                    <input type="text" class="form-control" value="Not Yet" disabled>
                                                     @endif
-                                                 @else 
-                                                <input type="text" class="form-control"  value="Limit Reached"  disabled>
-                                                 @endif
+                                                @else
+                                                    <input type="text" class="form-control text-warning" value="Limit Reached" disabled>
+                                                @endif
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Remain Paid Leave In an Annual Year {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remainig_year < 14)
-                                                    @if($view->paid_remainig_year != 0)
-                                                         <input type="text" class="form-control"  value="{{ $view->paid_remaining_year }}Days"  disabled>
-                                                    @else 
-                                                         <input type="text" class="form-control"  value="Not Yet"  disabled>
+                                                @if($view->paid_remainig_year < 14) 
+                                                    @if($view->paid_remainig_year > 0)
+                                                    <input type="text" class="form-control" value="{{ $view->paid_remainig_year }}Days" disabled>
+                                                    @else
+                                                    <input type="text" class="form-control" value="Not Yet" disabled>
                                                     @endif
-                                                 @else 
-                                                <input type="text" class="form-control"  value="Limit Reached"  disabled>
+                                                 @else
+                                                    <input type="text" class="form-control" value="Limit Reached" disabled>
                                                 @endif
                                             </div>
 
@@ -165,10 +165,23 @@
                                                 @enderror
                                             </div>
 
+                                            <div class="mb-3">
+                                                <label class="form-label">Feedback</label>
+                                                @if($view->comments != '')
+                                                <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment">{{ $view->comments }}</textarea>
+                                                @else
+                                                <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment" placeholder="Some Feedback"></textarea>
+                                                @endif
+                                            </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-4 offset-4">
+                                                @if($view->status == 2)
+                                                  <a href="{{route('superadmin.leave')}}" class="btn btn-primary">Back To Index</a>
+                                                @elseif($view->status != 2)
                                                 <button type="submit" class="btn btn-primary">Submit</button>
+                                                 @endif
                                             </div>
                                         </div>
                                     </div>

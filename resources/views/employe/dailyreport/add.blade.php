@@ -46,7 +46,7 @@
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
-                    <li class="breadcrumb-item active">Leave</li>
+                    <li class="breadcrumb-item active">Daily Report</li>
                 </ol>
             </div>
         </div>
@@ -59,54 +59,42 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Leave Application Form
+                                <h3 class="card_header"><i class="fa-solid fa-book header_icon"></i>Daily Report Submit Form
                                 </h3>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('dashboard.leave.insert')}}" method="post">
+                    <form action="{{route('dashboard.dailyreport.submit')}}" method="post">
                         @csrf
                         <div class="row mt-3">
-                            <div class="col-6 offset-2">
+                            <div class="col-5 offset-2">
 
                                 <div class="mb-3">
-                                    <label class="form-label">Leave Type<span class="text-danger">* </span>:
+                                    <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
-                                    <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">
-                                    <option value="">Select A Type</option>
-                                    @foreach($leaveType as $type)
-                                    <option value="{{$type->id}}">{{$type->type_title}}</option> 
-                                    @endforeach
-                                    </select>
-                                    @error('leave_type')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Start From<span class="text-danger">* </span>:
-                                    </label>
-                                    <input type="text" id="humanfd-datepicker" name="start" class="form-control" placeholder="">
-                                    @error('start')
+                                    <input type="text" class="form-control" name="name" value="{{Auth::guard('employee')->user()->emp_name}}" placeholder="Enter Daily Report">
+                                    @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">To End<span class="text-danger">* </span>:
+                                    <label class="form-label">Present Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="inline-datepicker" name="end" class="form-control" placeholder="">
-                                    @error('end')
+                                    <input type="text" id="datepicker" name="Submit_date" class="form-control" value="{{ date('D-m-Y') }}" placeholder="">
+
+                                    @error('Submit_date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Short Reason<span class="text-danger">* </span>:
+                                    <label class="form-label">Details About Your Today's Activity<span class="text-danger">* </span>:
                                     </label>
 
-                                    <textarea type="text" style="resize:none;" rows="4" name="reason" class="form-control" placeholder="Write Some Reason"></textarea>
+                                    <textarea type="text" style="resize:none;" rows="4" name="detail" class="form-control" placeholder="What You Have Done Today?"></textarea>
 
-                                    @error('reason')
+                                    @error('detail')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>

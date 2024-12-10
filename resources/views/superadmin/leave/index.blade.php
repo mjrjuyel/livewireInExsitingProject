@@ -70,7 +70,7 @@ swal({
                                     </td>
 
                                     <td>
-                                        {{ $data->leave_type }}
+                                        {{ $data->leavetype->type_title }}
                                     </td>
                                     <td>
                                         {{ $data->reason }}
