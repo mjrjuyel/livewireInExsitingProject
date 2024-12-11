@@ -6,6 +6,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
+
 @section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
@@ -72,18 +73,24 @@
                                 <div class="mb-3">
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="name" value="{{Auth::guard('employee')->user()->emp_name}}" placeholder="Enter Daily Report">
+                                    <select type="text" class="form-control" name="name" placeholder="Enter Daily Report">
+                                      <option value="">Select Name</option>
+                                       @foreach($employe as $employe)
+                                         <option value="{{$employe->id}}" @if($employe->id == Auth::guard('employee')->user()->id) Selected @endif>{{$employe->emp_name}}
+                                         </option>
+                                       @endforeach
+                                    </select>
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Present Date<span class="text-danger">* </span>:
+                                    <label class="form-label">Date of Work<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="datepicker" name="Submit_date" class="form-control" value="{{ date('D-m-Y') }}" placeholder="">
+                                    <input type="text" id="inline-datepicker" name="submit_date" class="form-control" value="" placeholder="">
 
-                                    @error('Submit_date')
+                                    @error('submit_date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>

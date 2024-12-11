@@ -8,6 +8,7 @@ use App\Mail\LeaveMailToAdmin;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\LeaveType;
+use App\Models\EmployeLeaveSetting;
 use App\Models\Employee;
 use App\Models\User;
 use Carbon\Carbon;
@@ -25,7 +26,7 @@ class LeaveFormController extends Controller
 
     public function insert(Request $request){
         
-        // return $request->all();
+           $definedLeave = EmployeLeaveSetting::where('id',1)->first();
         // $alldata = Leave::where('emp_id',Auth::guard('employee')->user()->id)->latest('id')->first();
         // if($alldata->status != 1 || $alldata->status = null){
 
@@ -42,27 +43,26 @@ class LeaveFormController extends Controller
                 // 2 dates are valid or not!
                 if($start <= $end){
 
-                    // request leave days are more than 3 or not!
-                    if($days <= 4){
+                    // Request leave days are more than 3 or not!
+                    if($days <= $definedLeave->month_limit){
 
                         $start_date = Carbon::parse($request->start); // Parsing day in Month, year;
 
                         // check total Paid of in a month
-                        $checkMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('paid_remainig_month');
+                        $checkMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('paid_remaining_month');
 
                         // check total paid off in an annual year
-                        $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('paid_remainig_year');
-
+                        $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('paid_remaining_year');
                     
-                        if($checkYear + $days < 14){
+                        if($checkYear + $days <= $definedLeave->year_limit){
                             // if total day is valid
 
-                            if($checkMonth + $days < 3){
+                            if($checkMonth + $days <= 3){
                                 // total day is less than request
                                 $request->validate([
                                     'start'=>'required',
                                     'reason'=>'required',
-                                    // 'end'=>'required',
+                                    'end'=>'required',
                                 ]);
         
                                 $insert = Leave::create([

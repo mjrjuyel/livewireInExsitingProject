@@ -68,7 +68,6 @@
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
-
                                 <div class="mb-3">
                                     <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                     </label>
@@ -94,7 +93,8 @@
                                 <div class="mb-3">
                                     <label class="form-label">To End<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="inline-datepicker" name="end" class="form-control" placeholder="">
+                                    {{-- data-provide="datepicker" --}}
+                                    <input type="text" id="inline-datepicker"  name="end" class="form-control" placeholder="">
                                     @error('end')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror

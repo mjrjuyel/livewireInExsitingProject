@@ -15,12 +15,13 @@ use App\Http\Controllers\Employe\EmployeController; // Default Admin Model Work 
 use App\Http\Controllers\Employe\EmployeLoginController;
 
 // Super Admin Dashboard
-use App\Http\Controllers\SuperAdmin\AdminProfileController; 
-use App\Http\Controllers\Employe\SuperAdminController; 
-use App\Http\Controllers\SuperAdmin\AdminEmployeController; // Employe Management as a SuperAdmin
+use App\Http\Controllers\SuperAdmin\AdminProfileController; //Admin Profile Controller 
+use App\Http\Controllers\Employe\SuperAdminController; // super Admin can Add Edit And Delete Employe.
+use App\Http\Controllers\SuperAdmin\AdminEmployeController; // Employe Management as a SuperAdmin // super Admin can Add Edit And Delete Employe.
 use App\Http\Controllers\SuperAdmin\BasicController;
-use App\Http\Controllers\SuperAdmin\DesgnationController;
-use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController;
+use App\Http\Controllers\SuperAdmin\DesgnationController; // super Admin can add more designation.
+use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; // Super Admin Manage Employee Leave request.
+use App\Http\Controllers\SuperAdmin\AdminDailyReportController; /// Super admin can view detail who send dailyreport.
 
 
 Route::get('/', function () {
@@ -61,7 +62,7 @@ Route::middleware('isEmploye')->group(function(){
 
         // Employe Daily Reports Submit
         Route::get('/dashboard/dailyreport',[DailyReportController::class,'add'])->name('dashboard.dailyreport');
-        Route::get('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
+        Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
 });
 
 
@@ -79,7 +80,6 @@ Route::middleware(['auth','verified'])->group(function(){
         // Route::get('/dashboard/admin/edit/{slug}',[AdminController::class,'edit'])->name('dashboard.admin.edit');
         // Route::delete('/dashboard/admin/delete/{slug}',[AdminController::class,'delete'])->name('dashboard.admin.view');
         //SuperAdmin Basic Controller
-
         Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
         // Add Employer Controller
         Route::get('/superadmin/employe',[AdminEmployeController::class,'index'])->name('superadmin.employe');
@@ -101,6 +101,13 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/leave/view/{slug}',[SuperAdminLeaveController::class,'view'])->name('superadmin.leave.view');
         Route::post('/superadmin/leave/update',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.update');
         Route::delete('/superadmin/leave/delete/{slug}',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.view');
+
+        // 
+        // Leave Application status
+        Route::get('/superadmin/dailyreport',[AdminDailyReportController::class,'index'])->name('superadmin.dailyreport');
+        Route::get('/superadmin/dailyreport/view/{slug}',[AdminDailyReportController::class,'view'])->name('superadmin.dailyreport.view');
+        Route::post('/superadmin/dailyreport/update',[AdminDailyReportController::class,'update'])->name('superadmin.dailyreport.update');
+        Route::post('/superadmin/dailyreport/softdelete',[AdminDailyReportController::class,'softDelete'])->name('superadmin.dailyreport.softdelete');
     });
 
     // Not As A Super Admin

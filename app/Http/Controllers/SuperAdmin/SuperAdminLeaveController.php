@@ -8,6 +8,7 @@ use App\Mail\LeaveResponseByAdmin;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\LeaveType;
+use App\Models\EmployeLeaveSetting;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -34,8 +35,9 @@ class SuperAdminLeaveController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
 
-        $leave = Leave::with('employe')->where('slug',$slug)->latest('id')->first();
-        
+        $leave = Leave::with('employe')->where('status',2)->latest('id')->first();
+
+        $definedLeave = EmployeLeaveSetting::where('id',1)->first();
         $update = Leave::where('id',$id)->update([
             'status'=>$request['status'],
             'comments'=>$request['comment'],
@@ -58,23 +60,40 @@ class SuperAdminLeaveController extends Controller
         //     Leave::where('id',$id)->where('status',2)->update([
         //         'end_date'=>Carbon::parse($request->end),
         //         'total_day'=>$total_days,
-        //         'paid_remainig_month'=>$leave->paid_remainig_month + $total_days,
-        //         'paid_remaining_year'=>$leave->paid_remainig_year + $total_days,
+        //         'paid_remaining_month'=>$leave->paid_remaining_month - $total_days,
+        //         'paid_remaining_year'=>$leave->paid_remaining_year - $total_days,
         //     ]);
 
         //     return Leave::all();
         
         // }
-        if($request->status == 2){
-            // update remainig leave
-            // return $leave;
-                Leave::where('id',$id)->update([
-                'paid_remainig_month'=>$leave->paid_remainig_month + $leave->total_day,
-                'paid_remainig_year'=>$leave->paid_remainig_year + $leave->total_day,
-                ]);
 
-                // return Leave::all();
-            }
+        if($leave != ''){
+            if($request->status == 2){
+                // update remainig leave
+                return $leave;
+                   
+                    Leave::where('id',$id)->update([
+                    'paid_remaining_month'=>$leave->paid_remaining_month - $leave->total_day,
+                    'paid_remaining_year'=>$leave->paid_remaining_year - $leave->total_day,
+                    ]);
+    
+                    return Leave::where('id',$id)->first();
+                }
+        }else{
+            if($request->status == 2){
+                // update remainig leave
+                // return $definedLeave;
+                    $total_days = Leave::where('id',$id)->first();
+
+                    Leave::where('id',$id)->update([
+                    'paid_remaining_month'=>$definedLeave->year_limit - $total_days->total_day,
+                    'paid_remaining_year'=>$definedLeave->month_limit - $total_days->total_day,
+                    ]);
+    
+                    // return Leave::where('id',$id)->first();
+                }
+        }
         // if($update){
         //     $email = Leave::where('slug',$slug)->first();
         //     Mail::to($email->employe->email)->send(new LeaveResponseByAdmin($email));

@@ -58,7 +58,7 @@
                                 <tr>
                                     <th class="text-center">Leave For</th>
                                     <th class="text-center">Total Day</th>
-                                    <th class="text-center">Month</th>
+                                    <th class="text-center">Start Date</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -69,29 +69,37 @@
                                         {{ $leavehistory->leavetype->type_title }}
                                     </td>
 
-                                    <td>{{ $leavehistory->total_day }}Days</td>
+                                    @if($leavehistory->total_day <= 1) 
                                     <td>
-                                        {{ $leavehistory->start_date->format('d-M-Y') }}
+                                        {{ $leavehistory->total_day }}Day
                                     </td>
+                                    @else 
+                                    <td>
+                                        {{ $leavehistory->total_day }}Days
+                                    </td>
+                                    @endif
+                                        <td>
+                                            {{ $leavehistory->start_date->format('d-M-Y') }}
+                                        </td>
 
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('/dashboard/leave/view/'.$leavehistory->slug) }}"><i class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="uil-edit"></i>Edit</a></li>
-                                                <li>
-                                                    <form action="" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <li><a class="dropdown-item" href="{{ url('/dashboard/leave/view/'.$leavehistory->slug) }}"><i class="uil-table"></i>View</a></li>
+                                                    <li><a class="dropdown-item" href="#"><i class="uil-edit"></i>Edit</a></li>
+                                                    <li>
+                                                        <form action="" method="post">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
 
                                 </tr>
                                 @endforeach

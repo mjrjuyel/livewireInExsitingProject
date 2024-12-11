@@ -128,6 +128,13 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
+                            <span class="menu-text"> Daily Report </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-card-multiple-outline"></i></span>
                             <span class="menu-text"> Multi Level </span>
@@ -404,10 +411,10 @@
                     <div class="topbar-item nav-user">
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                                @if(Auth::guard('employee')->user()->emp_image != '')
-                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_img) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                @if(Auth::user()->image != '')
+                                <img src="{{ asset('uploads/adminprofile/'.Auth::user('')->img) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                                 @else
-                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-1.jpg" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::user()->name }}</h6>

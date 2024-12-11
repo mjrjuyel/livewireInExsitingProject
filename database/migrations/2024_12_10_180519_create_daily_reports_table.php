@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('submit_by')->references('id')->on('employees')->onDelete('cascade');
             $table->date('submit_date')->nullable();
             $table->text('detail')->nullable();
+            $table->string('slug',25)->nullable();
             $table->integer('status')->default(1);
+            $table->integer('editor')->nullable();
             $table->timestamps();
         });
     }

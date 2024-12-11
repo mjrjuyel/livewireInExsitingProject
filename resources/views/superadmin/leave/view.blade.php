@@ -120,6 +120,7 @@
                                         <div class="col-5">
                                             <input type="hidden" value="{{ $view->id }}" name="id">
                                             <input type="hidden" value="{{ $view->slug }}" name="slug">
+                                            <input type="hidden" value="{{ $view->emp_id }}" name="slug">
 
                                             <div class="mb-3">
                                                 <label class="form-label">Request Leave For<span class="text-danger">* </span>:
@@ -132,9 +133,9 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Remain Paid leave In Month<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remainig_month < 3) 
-                                                   @if($view->paid_remainig_month != 0)
-                                                    <input type="text" class="form-control" value="{{ $view->paid_remainig_month }}Days" disabled>
+                                                @if($view->paid_remaining_month < 3) 
+                                                   @if($view->paid_remaining_month != 0)
+                                                    <input type="text" class="form-control" value="{{ $view->paid_remaining_month }}Days" disabled>
                                                     @else
                                                     <input type="text" class="form-control" value="Not Yet" disabled>
                                                     @endif
@@ -145,14 +146,14 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Remain Paid Leave In an Annual Year {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remainig_year < 14) 
-                                                    @if($view->paid_remainig_year > 0)
-                                                    <input type="text" class="form-control" value="{{ $view->paid_remainig_year }}Days" disabled>
-                                                    @else
-                                                    <input type="text" class="form-control" value="Not Yet" disabled>
+                                                @if($view->paid_remaining_year > 1) 
+                                                    @if($view->paid_remaining_year <= 1)
+                                                        <input type="text" class="form-control" value="{{$view->paid_remaining_year}} Day" disabled>
+                                                    @elseif($view->paid_remaining_year <= 14)
+                                                        <input type="text" class="form-control" value="{{ $view->paid_remaining_year }}Days" disabled>
                                                     @endif
                                                  @else
-                                                    <input type="text" class="form-control" value="Limit Reached" disabled>
+                                                    <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached " disabled>
                                                 @endif
                                             </div>
 

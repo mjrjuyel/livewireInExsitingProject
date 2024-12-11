@@ -17,7 +17,7 @@ class DailyReport extends Model
     ];
 
     public function employe(){
-        return $this->hasMany(Employee::class,'submit_by');
+        return $this->belongsTo(Employee::class,'submit_by','id');
     }
 
 }
