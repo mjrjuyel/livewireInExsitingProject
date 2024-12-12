@@ -72,10 +72,10 @@
                                     <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                     </label>
                                     <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">
-                                    <option value="">Select A Type</option>
-                                    @foreach($leaveType as $type)
-                                    <option value="{{$type->id}}">{{$type->type_title}}</option> 
-                                    @endforeach
+                                        <option value="">Select A Type</option>
+                                        @foreach($leaveType as $type)
+                                        <option value="{{$type->id}}">{{$type->type_title}}</option>
+                                        @endforeach
                                     </select>
                                     @error('leave_type')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -94,7 +94,7 @@
                                     <label class="form-label">To End<span class="text-danger">* </span>:
                                     </label>
                                     {{-- data-provide="datepicker" --}}
-                                    <input type="text" id="inline-datepicker"  name="end" class="form-control" placeholder="">
+                                    <input type="text" id="inline-datepicker" name="end" class="form-control" placeholder="">
                                     @error('end')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror

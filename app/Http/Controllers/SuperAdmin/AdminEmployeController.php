@@ -225,4 +225,11 @@ class AdminEmployeController extends Controller
         return redirect()->back();
         }
     }
+
+    public function login($id)
+    {
+        $employe = Employee::findOrFail(($id));
+        auth('employee')->login($employe, true);
+        return redirect()->route('dashboard');
+    }
 }

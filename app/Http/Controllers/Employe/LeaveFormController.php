@@ -14,6 +14,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use Session;
 use Auth;
+use DateTime;
+use DateInterval;
+use DatePeriod;
 
 
 
@@ -31,17 +34,46 @@ class LeaveFormController extends Controller
         // if($alldata->status != 1 || $alldata->status = null){
 
             // Convert English date into Unix time stamp 
-            $start = strtotime($request['start']);
-            $end = strtotime($request['end']);
-
-            // calculate days From Given date
-            $differInSecond = abs($end - $start);
-            $days = $differInSecond/86400 + 1;
-
-            // return $days;
-
+            $start_time = strtotime($request['start']);
+            $end_time = strtotime($request['end']);
+            
+            
                 // 2 dates are valid or not!
-                if($start <= $end){
+                if($start_time <= $end_time){
+                  
+                    // Check Date And Count Total Day between 2 dates
+
+                    function WithoutFriday($startDate, $endDate) {
+                        // Create DateTime objects for the start and end dates
+                        $start = new DateTime($startDate);
+                        $end = new DateTime($endDate);
+                    
+                        // Include the end date in the calculation
+                        $end->modify('+1 day');
+                    
+                        // Create a DatePeriod with a 1-day interval
+                        $interval = new DateInterval('P1D');
+                        $period = new DatePeriod($start, $interval, $end);
+                    
+                        $totalDays = 0;
+                    
+                        // Iterate over each day in the period
+                        foreach ($period as $date) {
+                            // Check if the day is not Friday
+                            if ($date->format('N') != 5) { // 'N' gives day of the week (1 = Monday, ..., 7 = Sunday)
+                                $totalDays++;
+                            }
+                        }
+                    
+                        return $totalDays;
+                    }
+
+                    // Data Pass With The Count FUnction
+                    $startDate = $request->start;
+                    $endDate = $request->end;
+                    $days = WithoutFriday($startDate,$endDate);
+
+                
 
                     // Request leave days are more than 3 or not!
                     if($days <= $definedLeave->month_limit){

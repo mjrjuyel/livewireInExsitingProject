@@ -37,4 +37,8 @@ class Employee extends Authenticatable
         return $this->belongsTo(User::class,'emp_creator','id');
     }
 
+    public function dailyreport(){
+        return $this->hasMany(DailyReport::class);
+    }
+
 }

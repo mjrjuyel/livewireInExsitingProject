@@ -36,9 +36,10 @@ swal({
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
+
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Designation</li>
+                    <li class="breadcrumb-item active">Role</li>
                 </ol>
             </div>
         </div>
@@ -51,27 +52,27 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i> Insert New Designation 
+                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Role
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('superadmin.designation')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('dashboard.role')}}"
                                     class="btn btn-bg btn-primary btn_header ">
-                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
+                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Role</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.designation.insert')}}" method="post">
+                    <form action="{{route('dashboard.role.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
 
                                 <div class="mb-3">
-                                    <label class="form-label">Designation Name<span class="text-danger">* </span>:
+                                    <label class="form-label">Role Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="title" value="{{old('title')}}"
-                                        placeholder="Enter Designation">
-                                    @error('title')
+                                    <input type="text" class="form-control" name="name" value="{{old('name')}}"
+                                        placeholder="Enter Role">
+                                    @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>

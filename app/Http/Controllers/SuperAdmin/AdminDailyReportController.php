@@ -16,26 +16,37 @@ class AdminDailyReportController extends Controller
 {
     public function index(){
         $alldata = DailyReport::with('employe')->where('status',1)->latest('id')->get();
-        // return $alldata;
-        return view('superadmin.dailyreport.index',compact('alldata'));
+        $name = DailyReport::with('employe')->distinct()->get('submit_by');
+        // return $name;
+        return view('superadmin.dailyreport.index',compact(['alldata','name']));
     }
 
     public function view($slug){
-        $view = DailyReport::with('employe')->where('slug',$slug)->latest('id')->first();
-
+        $view = DailyReport::with(['employe','report_editor'])->where('slug',$slug)->latest('id')->first();
+        // return $view;
         return view('superadmin.dailyreport.view',compact('view'));
+    }
+
+    //Search By Name
+    
+    public function searchName(Request $request){
+        $id = $request->id;
+        $recentName = Employee::where('id',$id)->first();
+        $alldata = DailyReport::where('submit_by',$id)->where('status',1)->get();
+
+        $name = DailyReport::with('employe')->distinct()->get('submit_by');
+        // return $recentName;
+        return view('superadmin.dailyreport.searchname',compact(['alldata','name','recentName']));
     }
 
     // soft Delete
     public function softDelete(Request $request){
         $slug = $request['slug'];
-
         $softdelete = DailyReport::where('status',1)->where('slug',$slug)->update([
             'status'=>0,
             'editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now(),
         ]);
-
         if($softdelete){
             Session::flash('error','Moved Into Trash !');
             return redirect()->back();

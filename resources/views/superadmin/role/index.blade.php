@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -38,6 +38,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
                     <li class="breadcrumb-item active">Role</li>
                 </ol>
@@ -51,7 +52,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="{{route('dashboard.role.add')}}"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('superadmin.role.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Role</a>
                         </div>
                     </div>
@@ -60,15 +61,9 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="all">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck1">
-                                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                        </div>
-                                    </th>
                                     <th class="text-center">Role Type</th>
-                                    <th class="text-center">role Pic</th>
-                                    <th class="text-center">Belong To</th>
+                                    <th class="text-center text-danger">Role As A SuperAdmin Dashboard</th>
+                                    <th class="text-center">Role As A Staff Dasboard</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -76,22 +71,18 @@
                                 @foreach($role as $role)
                                 <tr>
                                     <td>
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="customCheck2">
-                                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                        </div>
-                                    </td>
-                                    <td>
                                         {{ $role->role_name }}
                                     </td>
 
-                                    <td>
-
-                                        <img src="{{ asset('uploads/role/category/'.$role->cat_pic) }}" class="img-fluid" alt="" style="width:200px; object-fit:cover;">
+                                    <td class="text-danger">
+                                        @foreach($role->admin as $admin)
+                                        {{optional($admin)->name}},
+                                        @endforeach
                                     </td>
 
-                                    <td>@foreach($role->admin as $admin)
-                                        {{optional($admin)->name}},
+                                     <td class="text-primary">
+                                        @foreach($role->employe as $admin)
+                                        {{optional($admin)->emp_name}},
                                         @endforeach
                                     </td>
 
@@ -101,10 +92,10 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('/dashboard/role/view/'.$role->id) }}"><i class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ url('dashboard/role/edit/'.$role->id) }}"><i class="uil-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.view',$role->id) }}"><i class="uil-table"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',$role->id) }}"><i class="uil-edit"></i>Edit</a></li>
                                                 <li>
-                                                    <form action="{{ url('/dashboard/role/delete/'.$role->id) }}" method="post">
+                                                    <form action="{{ route('superadmin.role.delete',$role->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>

@@ -10,9 +10,15 @@ use App\Models\Employee;
 use App\Models\DailyReport;
 use Carbon\Carbon;
 use Session;
+use Auth;
 
 class DailyReportController extends Controller
 {
+    public function index(){
+        $alldata = DailyReport::with('employe')->where('submit_by',Auth::guard('employee')->user()->id)->where('status',1)->get();
+        return view('employe.dailyreport.index',compact('alldata'));
+    }
+
     public function add(){
         $employe = Employee::where('emp_status',1)->latest('id')->get();
         return view('employe.dailyreport.add',compact('employe'));
@@ -73,5 +79,12 @@ class DailyReportController extends Controller
             return redirect()->back();
         }
         
+    }
+
+    public function view($slug){
+        // fetch data from designation table
+        $view = DailyReport::with('employe.emp_desig')->where('slug',$slug)->first();
+        // return $view;
+        return view('employe.dailyreport.view',compact('view'));
     }
 }

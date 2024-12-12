@@ -1,10 +1,5 @@
-@extends('layouts.superAdmin')
-@section('superAdminContent')
-
-@section('css')
-
-@endsection
-
+@extends('layouts.employe')
+@section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -43,7 +38,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Employee</a></li>
 
                     <li class="breadcrumb-item active">Daily Report</li>
                 </ol>
@@ -55,22 +50,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('superadmin.dailyreport.searchname')}}" method="">
-                       @csrf
-                        <div class="row">
-                            <div class="col-4 offset-2">
-                                <label class="form-label">Search by Name: </label>
-                                <select class="form-control" data-toggle="select2" name="id"  data-placeholder="Choose ...">
-                                    @foreach($name as $name)
-                                    <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
-                                    @endforeach
-                                </select> 
-                            </div>
-                            <div class="col-4" style="margin-top: 20px;"> 
-                                <button class="btn btn-danger" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
-                            </div>
-                        </div>
-                     </form>
                     <div class="">
                         <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
@@ -105,11 +84,8 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('dashboard/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
-                                                </li>
-                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
-                                                        </i>Delete</a></li>
                                                 </li>
                                             </ul>
                                         </div>
@@ -158,27 +134,23 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net/js/dataTables.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js">
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net/js/dataTables.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive/js/dataTables.responsive.min.js">
 </script>
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
 </script>
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
 </script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-keytable/js/dataTables.keyTable.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-select/js/dataTables.select.min.js"></script>
 
 <!-- Datatables init -->
-<script src="{{ asset('contents/admin') }}/assets/js/pages/table-datatable.js"></script>
-
-<script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-
-    <script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//js/pages/table-datatable.js"></script>
 @endsection

@@ -45,7 +45,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Daily Report</li>
+                    <li class="breadcrumb-item active">Daily Report of {{$recentName->emp_name}}</li>
                 </ol>
             </div>
         </div>
@@ -58,21 +58,24 @@
                     <form action="{{route('superadmin.dailyreport.searchname')}}" method="">
                        @csrf
                         <div class="row">
-                            <div class="col-4 offset-2">
+                            <div class="col-2">
                                 <label class="form-label">Search by Name: </label>
                                 <select class="form-control" data-toggle="select2" name="id"  data-placeholder="Choose ...">
                                     @foreach($name as $name)
-                                    <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
+                                       <option value="{{$name->submit_by}}" @if($name->submit_by == $recentName->id) Selected @endif>{{$name->employe->emp_name}}</option>
                                     @endforeach
                                 </select> 
                             </div>
-                            <div class="col-4" style="margin-top: 20px;"> 
-                                <button class="btn btn-danger" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
+                            <div class="col-4" style="margin-top: 24px;"> 
+                                <button class="btn btn-danger" style="padding:2px 8px;" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
+                            </div>
+                            <div class="col-5 text-end " style="margin-top: 24px;">
+                               <a href="{{route('superadmin.dailyreport')}}" class="btn btn-primary">All Report</a>
                             </div>
                         </div>
                      </form>
-                    <div class="">
-                        <table class="table table-centered text-center" id="datatable">
+                    <div class="mt-5">
+                        <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Submit By</th>

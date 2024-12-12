@@ -10,6 +10,15 @@ use Session;
 
 class DesgnationController extends Controller
 {
+
+    //  All Role 
+    public function index(){
+        $desig = Designation::with('employe')->get();
+        // return $desig;
+        return view('superadmin.designation.index',compact('desig'));
+    }
+
+    // Add 
     public function add(){
         return view('superadmin.designation.add');
     }
@@ -29,15 +38,35 @@ class DesgnationController extends Controller
             return redirect()->back();
         }
     }
-    //  All Role 
-    public function index(){
-        $desig = Designation::with('admin')->get();
-        // return $desig;
-        return view('superadmin.designation.index',compact('desig'));
+
+    //  Edit Designation 
+    public function edit($id){
+        $edit = Designation::where('id',$id)->first();
+        return view('superadmin.designation.edit',compact('edit'));
     }
 
+    public function update(Request $request){
+
+        $id = $request['id'];
+        $request->validate([
+            'title'=>'required | unique:designations,title,'.$id,
+        ]);
+        
+        $update = Designation::where('id',$id)->update([
+            'title'=>$request['title'],
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        if($update){
+            Session::flash('success','Designation Update SuccessFully !');
+            return redirect()->back();
+        }
+    }
+
+    
+
     public function view($id){
-        $view = Designation::where('id',$id)->first();
+        $view = Designation::with('employe')->where('id',$id)->first();
         return view('superadmin.designation.view',compact('view'));
     }
 

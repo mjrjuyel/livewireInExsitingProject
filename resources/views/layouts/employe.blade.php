@@ -64,7 +64,7 @@
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                            <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
                             <span class="menu-text"> Employe</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -102,15 +102,30 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="{{route('dashboard.dailyreport')}}" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarDailyReport" aria-expanded="false" aria-controls="sidebarDailyReport" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-chart-arc"></i></span>
-                            <span class="menu-text"> Daily Report </span>
+                            <span class="menu-text">Daily Report</span>
+                            <span class="menu-arrow"></span>
                         </a>
+                        <div class="collapse" id="sidebarDailyReport">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard.dailyreport') }}" class="side-nav-link">
+                                        <span class="menu-text">All Role</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard.dailyreport.add') }}" class="side-nav-link">
+                                        <span class="menu-text">Add Role</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarLeave" aria-expanded="false" aria-controls="sidebarLeave" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
+                            <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Leave Application</span>
                             <span class="menu-arrow"></span>
                         </a>

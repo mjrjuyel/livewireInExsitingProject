@@ -85,12 +85,12 @@
                         <div class="collapse" id="sidebarRole">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('dashboard.role')}}" class="side-nav-link">
+                                    <a href="{{route('superadmin.role')}}" class="side-nav-link">
                                         <span class="menu-text">All Role</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="{{route('dashboard.role.add')}}" class="side-nav-link">
+                                    <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Role</span>
                                     </a>
                                 </li>

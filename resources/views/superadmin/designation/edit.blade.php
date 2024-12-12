@@ -51,7 +51,7 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i> Insert New Designation 
+                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i>Designation Update
                                 </h3>
                             </div>
 
@@ -61,15 +61,15 @@ swal({
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.designation.insert')}}" method="post">
+                    <form action="{{route('superadmin.designation.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
-
+                            <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
                                     <label class="form-label">Designation Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="title" value="{{old('title')}}"
+                                    <input type="text" class="form-control" name="title" value="{{$edit->title}}"
                                         placeholder="Enter Designation">
                                     @error('title')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

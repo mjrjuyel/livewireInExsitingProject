@@ -35,9 +35,14 @@ class SuperAdminLeaveController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
 
-        $leave = Leave::with('employe')->where('status',2)->latest('id')->first();
+        // dynamic 
+        $default = EmployeLeaveSetting::where('id',1)->first();
+        $previousLeave = Leave::with('employe')->where('status',2)->latest('id')->first();
 
-        $definedLeave = EmployeLeaveSetting::where('id',1)->first();
+        $currentRequest = Leave::where('slug',$slug)->first();
+        return $currentRequest;
+
+        
         $update = Leave::where('id',$id)->update([
             'status'=>$request['status'],
             'comments'=>$request['comment'],
@@ -87,8 +92,8 @@ class SuperAdminLeaveController extends Controller
                     $total_days = Leave::where('id',$id)->first();
 
                     Leave::where('id',$id)->update([
-                    'paid_remaining_month'=>$definedLeave->year_limit - $total_days->total_day,
-                    'paid_remaining_year'=>$definedLeave->month_limit - $total_days->total_day,
+                    'paid_remaining_month'=>$definedLeave->month_limit - $total_days->total_day,
+                    'paid_remaining_year'=>$definedLeave->year_limit - $total_days->total_day,
                     ]);
     
                     // return Leave::where('id',$id)->first();

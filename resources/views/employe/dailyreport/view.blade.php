@@ -1,4 +1,4 @@
-@extends('layouts.superAdmin')
+@extends('layouts.employe')
 
 @section('css')
 <link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
@@ -8,7 +8,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
 
-@section('superAdminContent')
+@section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -46,8 +46,8 @@
                 <ol class="breadcrumb m-0 py-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
-                    <li class="breadcrumb-item">Super Admin</li>
-                    <li class="breadcrumb-item active">Update</li>
+                    <li class="breadcrumb-item">Employe</li>
+                    <li class="breadcrumb-item active">Daily Report</li>
                 </ol>
             </div>
         </div>
@@ -119,7 +119,7 @@
                                 <tr>
                                     <td>Data Editor</td>
                                     <td>:</td>
-                                    <td class="text-danger">{{optional($view->report_editor)->name}}</td>
+                                    <td class="text-danger">{{optional($view)->editor}}</td>
                                 </tr>
 
                                 <tr>

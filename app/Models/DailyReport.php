@@ -20,4 +20,8 @@ class DailyReport extends Model
         return $this->belongsTo(Employee::class,'submit_by','id');
     }
 
+    public function report_editor(){
+        return $this->belongsTo(User::class,'editor','id');
+    }
+
 }
