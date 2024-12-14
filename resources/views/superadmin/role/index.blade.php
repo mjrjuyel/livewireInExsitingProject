@@ -92,13 +92,13 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.view',$role->id) }}"><i class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',$role->id) }}"><i class="uil-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 <li>
                                                     <form action="{{ route('superadmin.role.delete',$role->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
+                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
                                                     </form>
                                                 </li>
                                             </ul>

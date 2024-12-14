@@ -10,6 +10,15 @@ use Session;
 
 class AdminRoleController extends Controller
 {
+
+    
+    //  All Role 
+    public function index(){
+        $role = UserRole::with(['admin','employe'])->get();
+        // return $role;
+        return view('superadmin.role.index',compact('role'));
+    }
+    // role Add
     public function add(){
         return view('superadmin.role.add');
     }
@@ -29,15 +38,34 @@ class AdminRoleController extends Controller
             return redirect()->back();
         }
     }
-    //  All Role 
-    public function index(){
-        $role = UserRole::with('admin')->get();
-        // return $role;
-        return view('superadmin.role.index',compact('role'));
+
+    // Role  Update
+    public function edit($id){
+        $edit = UserRole::where('id',$id)->first();
+        return view('superadmin.role.edit',compact('edit'));
+    }
+
+    public function update(Request $request){
+
+        $id = $request['id'];
+
+        $request->validate([
+            'name'=>'required | unique:user_roles,role_name,'.$id,
+        ]);
+
+        $update = UserRole::where('id',$id)->update([
+            'role_name'=>$request['name'],
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        if($update){
+            Session::flash('success','Role Name Updated!');
+            return redirect()->back();
+        }
     }
 
     public function view($id){
-        $view = UserRole::where('id',$id)->first();
+        $view = UserRole::with(['employe','admin'])->where('id',$id)->first();
         return view('superadmin.role.view',compact('view'));
     }
 

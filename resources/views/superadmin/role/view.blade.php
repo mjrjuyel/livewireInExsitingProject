@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 <div class="page-container">
     <div class="page-title-box">
 
@@ -13,6 +13,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
                     <li class="breadcrumb-item active">Role</li>
                 </ol>
@@ -33,13 +34,13 @@
                                                 class="fa-solid fa-shirt header_icon"></i>{{$view->role_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('dashboard.role')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.role')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Role</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{url('dashboard/role/edit/'.$view->id)}}"
+                                    <div class="col-md-2"><a href="{{route('superadmin.role.edit',$view->id)}}"
                                             class="btn btn-bg btn-primary btn_header"><i
-                                                class="uil-edit btn_icon"></i>Edit</a>
+                                                class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -51,19 +52,21 @@
                                     <td>{{ $view->role_name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        <button class="btn bg-primary">{{optional($view->role)->role_name}}</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Role Email</td>
+                                    <td>Role BelongsTo SuperAdmin Dashboard</td>
                                     <td>:</td>
                                     <td>
                                         @foreach($view->admin as $admin)
+                                            <button class="btn bg-primary">{{optional($admin)->name}}</button>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Role Belong To Staff Dashboard</td>
+                                    <td>:</td>
+                                    <td>
+                                        @foreach($view->employe as $employe)
                                         <button class="btn btn-primary">
-                                            {{optional($admin)->name}},
+                                            {{optional($employe)->emp_name}},
                                         </button>
                                         @endforeach
                                     </td>

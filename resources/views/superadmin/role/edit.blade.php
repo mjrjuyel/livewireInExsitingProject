@@ -36,7 +36,6 @@ swal({
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
-
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
                     <li class="breadcrumb-item active">Role</li>
@@ -52,25 +51,25 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Role
+                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i>Role Update
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.role')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.role')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Role</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.role.insert')}}" method="post">
+                    <form action="{{route('superadmin.role.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
-
+                            <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
                                     <label class="form-label">Role Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="name" value="{{old('name')}}"
+                                    <input type="text" class="form-control" name="name" value="{{$edit->role_name}}"
                                         placeholder="Enter Role">
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

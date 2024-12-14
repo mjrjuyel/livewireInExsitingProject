@@ -135,6 +135,28 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarBasicSetting" aria-expanded="false" aria-controls="sidebarBasicSetting" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
+                            <span class="menu-text">Basic Setting</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarBasicSetting">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.role')}}" class="side-nav-link">
+                                        <span class="menu-text">Website Setting</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.leavesetting')}}" class="side-nav-link">
+                                        <span class="menu-text">Leave Setting</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-card-multiple-outline"></i></span>
                             <span class="menu-text"> Multi Level </span>

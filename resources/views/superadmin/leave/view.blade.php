@@ -70,6 +70,7 @@
                             <div class="card-body">
                                 <form action="{{ route('superadmin.leave.update') }}" method="post">
                                     @csrf
+
                                     <div class="row mt-3">
                                         <div class="col-5 offset-1">
                                             <input type="hidden" value="{{ $view->id }}" name="id">
@@ -119,40 +120,72 @@
 
                                         <div class="col-5">
 
+                                            @if($view->unpaid_request != 1)
                                             <div class="mb-3">
                                                 <label class="form-label">Request Leave For<span class="text-danger">* </span>:
                                                 </label>
                                                 <input type="text" class="form-control" value="{{ $view->total_day }} days" disabled>
-                                                @error('name')
-                                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                @enderror
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Remain Paid Leave In an Annual Year {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remaining_month > 1) 
-                                                    @if($view->paid_remaining_month <= 1)
-                                                        <input type="text" class="form-control" value="{{$view->paid_remaining_month}} Day" disabled>
-                                                    @elseif($view->paid_remaining_month <= 3)
-                                                        <input type="text" class="form-control" value="{{ $view->paid_remaining_month }}Days" disabled>
+                                               @if($view->paid_remaining_month != null)
+                                                    @if($view->paid_remaining_month >= 1) 
+                                                        @if($view->paid_remaining_month == 1)
+                                                            <input type="text" class="form-control" value="{{$view->paid_remaining_month}} Day" disabled>
+                                                        @elseif($view->paid_remaining_month <= 3)
+                                                            <input type="text" class="form-control" value="{{ $view->paid_remaining_month }}Days" disabled>
+                                                        @endif
+                                                    @else
+                                                        <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached " disabled>
                                                     @endif
-                                                 @else
-                                                    <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached " disabled>
-                                                @endif
+                                               @else
+                                               <input type="text" class="form-control text-primary" value="{{$defaultValue->month_limit}}" disabled>
+                                               @endif
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Remain Paid Leave In an Annual Year {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remaining_year > 1) 
-                                                    @if($view->paid_remaining_year <= 1)
-                                                        <input type="text" class="form-control" value="{{$view->paid_remaining_year}} Day" disabled>
-                                                    @elseif($view->paid_remaining_year <= 14)
-                                                        <input type="text" class="form-control" value="{{ $view->paid_remaining_year }}Days" disabled>
+                                                @if($view->paid_remaining_year != null) 
+                                                    @if($view->paid_remaining_year >= 1) 
+                                                            @if($view->paid_remaining_year == 1)
+                                                                <input type="text" class="form-control" value="{{$view->paid_remaining_year}} Day" disabled>
+                                                            @elseif($view->paid_remaining_year <= 14)
+                                                                <input type="text" class="form-control" value="{{ $view->paid_remaining_year }}Days" disabled>
+                                                            @endif
+                                                    @else
+                                                        <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached" disabled>
                                                     @endif
-                                                 @else
-                                                    <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached " disabled>
+                                                @else
+                                                    <input type="text" class="form-control text-primary" value="{{$defaultValue->year_limit}}" disabled>
                                                 @endif
                                             </div>
+
+                                            @else
+                                            <div class="mb-3">
+                                                <label class="form-label">Request Unpaid Leave<span class="text-danger">* </span>:
+                                                </label>
+                                                <input type="text" class="form-control text-danger" value="{{ $view->total_day }} days" disabled>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Total Non Paid leave in {{ date('Y')}}<span class="text-danger">*</span> :</label>
+                                               @if($view->total_unpaid != null)
+                                                    @if($view->total_unpaid >= 1) 
+                                                        @if($view->total_unpaid == 1)
+                                                            <input type="text" class="form-control" value="{{$view->total_unpaid}} Day" disabled>
+                                                        @else
+                                                            <input type="text" class="form-control" value="{{ $view->total_unpaid }}Days" disabled>
+                                                        @endif
+                                                    @endif
+                                               @else
+                                               <input type="text" class="form-control text-primary" value="Not yet" disabled>
+                                               @endif
+                                            </div>
+
+                                            @endif
+
+                                            
 
                                             <div class="mb-3">
                                                 <label class="form-label">Modified date<span class="text-danger">* </span>:

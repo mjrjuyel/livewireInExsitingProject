@@ -22,9 +22,13 @@ return new class extends Migration
             $table->integer('total_day')->nullable();
             $table->integer('paid_remaining_month')->nullable();
             $table->integer('paid_remaining_year')->nullable();
+            // unpaid
+            $table->integer('unpaid_requesr')->nullable();
+            $table->integer('total_unpaid')->nullable();
             // Foreign key constraint
             $table->integer('emp_id')->nullable();
             $table->string('comments')->nullable();
+            $table->integer('editor')->nullable();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ use App\Http\Controllers\SuperAdmin\DesgnationController; // super Admin can add
 use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; // Super Admin Manage Employee Leave request.
 use App\Http\Controllers\SuperAdmin\AdminDailyReportController; /// Super admin can view detail who send dailyreport.
 use App\Http\Controllers\SuperAdmin\AdminRoleController; /// Role Create,View,edit,delete.
+use App\Http\Controllers\SuperAdmin\LeaveSettingController; // Leave Settings .
 
 
 Route::get('/', function () {
@@ -111,9 +112,10 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
         Route::get('/superadmin/role/add',[AdminRoleController::class,'add'])->name('superadmin.role.add');
         Route::post('/superadmin/role/insert',[AdminRoleController::class,'insert'])->name('superadmin.role.insert');
-        Route::post('/superadmin/role/insert',[AdminRoleController::class,'insert'])->name('superadmin.role.insert');
+        Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
+        Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
         Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
-        Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.view');
+        Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
         
         // Leave Application status
         Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
@@ -127,7 +129,10 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/dailyreport/update',[AdminDailyReportController::class,'update'])->name('superadmin.dailyreport.update');
         Route::post('/superadmin/dailyreport/softdelete',[AdminDailyReportController::class,'softDelete'])->name('superadmin.dailyreport.softdelete');
         Route::get('/superadmin/dailyreport/searchname',[AdminDailyReportController::class,'searchName'])->name('superadmin.dailyreport.searchname');
-
+        
+        // Leave Setting status
+        Route::get('/superadmin/leavesetting',[LeaveSettingController::class,'index'])->name('superadmin.leavesetting');
+        Route::post('/superadmin/leavesetting/update',[LeaveSettingController::class,'update'])->name('superadmin.leavesetting.update');
         // 404 for not authrized
     });
 

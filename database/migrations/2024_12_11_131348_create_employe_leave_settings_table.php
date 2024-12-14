@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->integer('year_limit')->nullable();
             $table->integer('month_limit')->nullable();
+            $table->integer('weekoffday')->nullable();
+            $table->text('specialoffday')->nullable();
+            $table->integer('editor')->nullable();
             $table->timestamps();
         });
     }
