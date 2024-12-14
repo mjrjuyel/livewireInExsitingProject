@@ -29,7 +29,9 @@ class AdminEmployeController extends Controller
             'name'=>'required',
             'email'=>'required | email:rfc,dns | unique:employees,email',
             'phone'=>'required',
-            // 'pass'=>'required | min:4 | confirmed',
+            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(4)],
+            'repass' => 'required | same:pass',
+            
         ]);
 
         $date = strtotime($request['join']);
@@ -63,6 +65,7 @@ class AdminEmployeController extends Controller
             return redirect()->route('superadmin.employe.add');
         }
     }
+    
     // Fethch All Employer Data
     public function index(){
         $employe = Employee::with(['emp_role','emp_desig'])->latest('id')->get();
@@ -89,7 +92,7 @@ class AdminEmployeController extends Controller
 
         $id = $request['id'];
         $slug = $request['slug'];
-        // return $request->all();
+        return $request->all();
            // return $request->all();
         $request->validate([
             'name'=>'required',
@@ -98,16 +101,10 @@ class AdminEmployeController extends Controller
         ]);
 
         if($request->pass != ''){
-            $validatedData = $request->validate([
-                
-            ]);
-
-            $validatedData = $request->validate([
-                'pass' => 'required|min:8|confirmed',
-                'repass' => 'required'
-            ], [
-                'pass.confirmed' => 'The password confirmation does not match.'
-            ]);
+            $request->validate([
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(4)->letters()],
+                'repass' => 'required | same:pass',
+             ]);
 
             Employee::where('id',$id)->update([
                 'pass'=>$request['pass'],
@@ -227,5 +224,12 @@ class AdminEmployeController extends Controller
         Session::flash('success',' One Admin Delete!');
         return redirect()->back();
         }
+    }
+
+    public function login($id)
+    {
+        $employe = Employee::findOrFail(($id));
+        auth('employee')->login($employe, true);
+        return redirect()->route('dashboard');
     }
 }

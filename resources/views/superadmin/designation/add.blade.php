@@ -51,11 +51,11 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Designation
+                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i> Insert New Designation 
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.designation')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.designation')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
                             </div>

@@ -74,9 +74,9 @@
                                     </td>
 
                                     <td>
-                                        @foreach($desig->admin as $admin)
-                                        <button type="button" class="btn btn-warning " style="cursor:none;">
-                                            {{optional($admin)->name}},
+                                        @foreach($desig->employe as $admin)
+                                        <button type="button" class="btn btn-warning">
+                                            {{optional($admin)->emp_name}},
                                         </button>
                                         @endforeach
                                     </td>
@@ -87,13 +87,13 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('/dashboard/superadmin/designation/view/'.$desig->id) }}"><i class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ url('dashboard/role/edit/'.$desig->id) }}"><i class="uil-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$desig->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.designation.edit',$desig->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 <li>
-                                                    <form action="{{ url('/dashboard/superadmin/designation/delete/'.$desig->id) }}" method="post">
+                                                    <form action="{{ route('superadmin.designation.delete',$desig->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
+                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
                                                     </form>
                                                 </li>
                                             </ul>

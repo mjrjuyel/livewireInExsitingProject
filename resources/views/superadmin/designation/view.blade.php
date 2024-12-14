@@ -30,13 +30,13 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>{{$view->title}}
+                                        <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i>{{$view->title}}
                                         </h3>
                                     </div>
                                     <div class="col-md-3 text-end"><a href="{{route('superadmin.designation')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{url('superadmin/designation/edit/'.$view->id)}}" class="btn btn-bg btn-primary btn_header"><i class="uil-edit btn_icon"></i>Edit</a>
+                                    <div class="col-md-2"><a href="{{route('superadmin.designation.edit',$view->id)}}" class="btn btn-bg btn-primary btn_header"><i class="uil-edit btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -51,9 +51,9 @@
                                     <td>Designation Belongs To</td>
                                     <td>:</td>
                                     <td>
-                                         @foreach($view->admin as $admin)
+                                        @foreach($view->employe as $employe)
                                         <button type="button" class="btn btn-warning " style="cursor:none;">
-                                            {{optional($admin)->name}},
+                                            {{optional($employe)->emp_name}},
                                         </button>
                                         @endforeach
                                     </td>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Employe Dashboard</title>
+    <title>{{ config('app.name', 'Laravel') }} | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -40,11 +40,12 @@
                                     <h5 class="text-muted text-uppercase py-3 font-16">Employe Login</h5>
                                 </div>
 
-                                <form action="{{ url('/employe/loginsubmit') }}" method="POST" class=" mt-2">
+                                <form action="{{ route('employe.loginsubmit') }}" method="POST" class=" mt-2">
                                     @csrf
                                     <div class="form-group mb-3">
-                                        <input class="form-control" type="email" name="email" value="{{old('emp_email')}}"
-                                            required placeholder="Enter your Email">
+                                        <input class="form-control" type="email" name="email" value="{{old('email')}}"
+                                             placeholder="Enter your Email">
+                                             
                                             @error('email')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -53,6 +54,7 @@
                                     <div class="form-group mb-3">
                                         <input class="form-control" type="password" name="password"
                                             id="password" placeholder="Enter your password">
+
                                             @error('password')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror

@@ -36,6 +36,7 @@ swal({
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
                     <li class="breadcrumb-item active">Leave</li>
                 </ol>
@@ -48,14 +49,13 @@ swal({
             <div class="card">
                 <div class="card-body">
                     <div class="">
-                        <table class="table table-centered text-center" id="">
+                        <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Submit By</th>
                                     <th class="text-center">Leave Type</th>
                                     <th class="text-center">Leave Reason</th>
                                     <th class="text-center">Leave Start date</th>
-                                    <th class="text-center">Leave End date</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -65,21 +65,39 @@ swal({
                                 <tr>
 
                                    <td>
-                                        {{ $data->admin->name }}
+                                        {{ $data->employe->emp_name }}
                                     </td>
 
                                     <td>
-                                        {{ $data->leave_type }}
+                                        {{ $data->leavetype->type_title }}
                                     </td>
                                     <td>
                                         {{ $data->reason }}
                                     </td>
                                     <td>
-                                        {{ $data->start_date }}
+                                        {{ $data->start_date->format('d-M-Y') }}
                                     </td>
-                                     <td>
-                                        {{ $data->end_date }}
-                                    </td>
+                                    @if($data->unpaid_request != 1)
+                                        @if($data->total_day > 1)
+                                            <td>
+                                            {{ $data->total_day }} Days
+                                        </td>
+                                        @else
+                                        <td>
+                                            {{ $data->total_day }} Day
+                                        </td>
+                                        @endif
+                                    @else
+                                       @if($data->total_day > 1)
+                                            <td class="text-danger">
+                                            {{ $data->total_day }} Days Unpaid
+                                        </td>
+                                        @else
+                                        <td class="text-danger">
+                                            {{ $data->total_day }} Day Unpaid
+                                        </td>
+                                        @endif
+                                    @endif
 
                                      
                                     <td>
@@ -107,14 +125,14 @@ swal({
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ url('/dashboard/superAdmin/leave/view/'.$data->slug) }}"><i
-                                                            class="uil-table"></i>Edit</a></li>
-                                                    <form action="{{ url('/dashboard/superAdmin/leave/delete/'.$data->slug) }}"
+                                                        href="{{ url('superadmin/leave/view/'.$data->slug) }}"><i
+                                                            class="mdi mdi-view-agenda"></i>View</a></li>
+                                                    <form action="{{ url('superadmin/leave/delete/'.$data->slug) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="dropdown-item  text-danger" type="sumbit"><i
-                                                                class="uil-trash-alt"></i>Delete</button>
+                                                                class="mdi mdi-receipt-text-edit"></i>Delete</button>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -138,4 +156,29 @@ swal({
 
 </div> <!-- container -->
 
+@endsection
+@section('js')
+<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net/js/dataTables.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
+</script>
+
+<!-- Datatables init -->
+<script src="{{ asset('contents/admin') }}/assets/js/pages/table-datatable.js"></script>
+
+<script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+    <script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
 @endsection

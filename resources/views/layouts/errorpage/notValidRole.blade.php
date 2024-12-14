@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 <div class="page-container">
 
     <div class="page-title-box">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard | SuperAdmin</title>
+    <title>{{ config('app.name', 'Laravel') }} | Dashboard | SuperAdmin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -57,7 +57,6 @@
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
                             <span class="menu-text"> Employe</span>
-                            <span class="menu-text"> Employe</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
@@ -86,12 +85,12 @@
                         <div class="collapse" id="sidebarRole">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('dashboard.role')}}" class="side-nav-link">
+                                    <a href="{{route('superadmin.role')}}" class="side-nav-link">
                                         <span class="menu-text">All Role</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="{{route('dashboard.role.add')}}" class="side-nav-link">
+                                    <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Role</span>
                                     </a>
                                 </li>
@@ -126,6 +125,35 @@
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Leave Application </span>
                         </a>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
+                            <span class="menu-text"> Daily Report </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarBasicSetting" aria-expanded="false" aria-controls="sidebarBasicSetting" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
+                            <span class="menu-text">Basic Setting</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarBasicSetting">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.role')}}" class="side-nav-link">
+                                        <span class="menu-text">Website Setting</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.leavesetting')}}" class="side-nav-link">
+                                        <span class="menu-text">Leave Setting</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
                     <li class="side-nav-item">
@@ -405,7 +433,11 @@
                     <div class="topbar-item nav-user">
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-1.jpg" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                @if(Auth::user()->image != '')
+                                <img src="{{ asset('uploads/adminprofile/'.Auth::user('')->img) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                @else
+                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::user()->name }}</h6>
                                 </span>
@@ -437,7 +469,7 @@
                                     <span>Logout</span>
                                 </a>
 
-                                <form id="logout-form" action="{{ url('/employe/logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
 

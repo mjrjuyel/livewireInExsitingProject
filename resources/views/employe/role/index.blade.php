@@ -2,24 +2,26 @@
 @section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
-swal({
-    title: "Success!",
-    text: "{{ Session::get('success') }}",
-    icon: "success",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Success!"
+        , text: "{{ Session::get('success') }}"
+        , icon: "success"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 @if(Session::has('error'))
 <script type="text/javascript">
-swal({
-    title: "Opps!",
-    text: "{{ Session::get('error') }}",
-    icon: "error",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Opps!"
+        , text: "{{ Session::get('error') }}"
+        , icon: "error"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 
@@ -85,8 +87,7 @@ swal({
 
                                     <td>
 
-                                        <img src="{{ asset('uploads/role/category/'.$role->cat_pic) }}"
-                                            class="img-fluid" alt="" style="width:200px; object-fit:cover;">
+                                        <img src="{{ asset('uploads/role/category/'.$role->cat_pic) }}" class="img-fluid" alt="" style="width:200px; object-fit:cover;">
                                     </td>
 
                                     <td>@foreach($role->admin as $admin)
@@ -96,25 +97,17 @@ swal({
 
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button"
-                                                class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item"
-                                                        href="{{ url('/dashboard/role/view/'.$role->id) }}"><i
-                                                            class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item"
-                                                        href="{{ url('dashboard/role/edit/'.$role->id) }}"><i
-                                                            class="uil-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('/dashboard/role/view/'.$role->id) }}"><i class="uil-table"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('dashboard/role/edit/'.$role->id) }}"><i class="uil-edit"></i>Edit</a></li>
                                                 <li>
-                                                    <form action="{{ url('/dashboard/role/delete/'.$role->id) }}"
-                                                        method="post">
+                                                    <form action="{{ url('/dashboard/role/delete/'.$role->id) }}" method="post">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i
-                                                                class="uil-trash-alt"></i>Delete</button>
+                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
                                                     </form>
                                                 </li>
                                             </ul>

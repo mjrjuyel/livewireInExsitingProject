@@ -21,6 +21,6 @@ class UserRole extends Model
     }
 
     public function employe(){
-        return $this->hasMany(User::class,'role_id');
+        return $this->hasMany(Employee::class,'emp_role_id');
     }
 }

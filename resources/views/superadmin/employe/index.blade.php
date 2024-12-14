@@ -63,9 +63,9 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Admin Pic</th>
                                     <th class="text-center">Designation</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Email</th>
                                     <th class="text-center">Role</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Staus</th>
                                     @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                     <th class="text-center">Dashboard login</th>
                                     @endif
@@ -117,25 +117,15 @@
                                         @endif
                                     </td>
 
-                                    @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+
                                     <td>
-                                        @if ($employe->role_id == 1 || $employe->role_id == 2)
-                                        @if (Auth::user()->role_id == $employe->role_id)
-                                        <a href="{{ route('superadmin') }}" class="btn btn-primary">
-                                            Log In
-                                        </a>
-                                        @else
-                                        <button class="btn btn-warning disabled">
-                                            Sorry!
-                                        </button>
-                                        @endif
-                                        @else
-                                        <button class="btn btn-warning disable">
-                                            Sorry! He HasNo Access!
-                                        </button>
-                                        @endif
+                                        <form action="{{ url('/superadmin/employe/login/'.$employe->id) }}" method="post">
+                                            @csrf
+                                            @method('post')
+                                            <button class="btn btn-primary " type="sumbit"><i class="uil-trash-alt"></i>Login</button>
+                                        </form>
                                     </td>
-                                    @endif
+
 
                                     <td>
                                         <div class="btn-group" role="group">

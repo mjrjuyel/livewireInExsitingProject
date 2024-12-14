@@ -79,6 +79,19 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                @if($view->comments != '')
+                                <tr>
+                                    <td>Reply From Admin</td>
+                                    <td>:</td>
+                                    <td>
+                                        <span class=" btn-warning ">
+                                            {{$view->comments}}
+                                        </span>
+                                     
+                                    </td>
+                                </tr>
+                                @endif
                                 
                                 <tr>
                                     <td>Submit By</td>
@@ -91,8 +104,8 @@
                                 <tr>
                                     <td>Type</td>
                                     <td>:</td>
-                                    <td>
-                                        {{$view->leave_type}}
+                                    <td class="text-danger">
+                                        {{$view->leavetype->type_title}}
                                     </td>
                                 </tr>
 
@@ -107,18 +120,25 @@
                                     <td>Start Leave</td>
                                     <td>:</td>
 
-                                    <td>{{$view->start_date}}</td>
+                                    <td>{{$view->start_date->format('d-M-Y')}}</td>
                                 </tr>
+
                                  <tr>
                                     <td>End Leave</td>
                                     <td>:</td>
-                                    <td>{{$view->end_date}}</td>
+                                    <td>{{$view->end_date->format('d-M-Y')}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>leave Request For</td>
+                                    <td>:</td>
+                                    <td class="text-danger">{{$view->total_day}} Days</td>
                                 </tr>
 
                                 <tr>
                                     <td>Created At</td>
                                     <td>:</td>
-                                    <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
+                                    <td>{{$view->created_at->format('d/M/y')}}</td>
                                 </tr>
                                 <tr>
                                     <td>Edited At</td>

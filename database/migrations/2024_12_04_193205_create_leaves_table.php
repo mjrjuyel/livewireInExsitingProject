@@ -15,14 +15,20 @@ return new class extends Migration
             $table->id();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('leave_type')->nullable;
+            $table->integer('leave_type_id')->nullable;
             $table->text('reason')->nullable();
             $table->integer('status')->default('1');
             $table->string('slug')->nullable();
             $table->integer('total_day')->nullable();
-            $table->integer('paid_remaining')->default(14);
+            $table->integer('paid_remaining_month')->nullable();
+            $table->integer('paid_remaining_year')->nullable();
+            // unpaid
+            $table->integer('unpaid_requesr')->nullable();
+            $table->integer('total_unpaid')->nullable();
             // Foreign key constraint
-            $table->integer('emp_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->integer('emp_id')->nullable();
+            $table->string('comments')->nullable();
+            $table->integer('editor')->nullable();
             $table->timestamps();
         });
     }
