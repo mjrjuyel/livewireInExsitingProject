@@ -131,7 +131,7 @@
                                             <label class="form-label">Special Off Day and Govt Holiday <span class="text-danger">*
                                                 </span>:
                                             </label>
-                                            <input type="text" id="multiple-datepicker" class="form-control" name="specialoff" value="{{$setting->speacialoffday}}">
+                                            <input type="text" id="multiple-datepicker" class="form-control" name="specialoff" value="{{$setting->specialoffday}}">
                                             @error('specialOff')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
