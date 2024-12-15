@@ -19,11 +19,10 @@ return new class extends Migration
             $table->text('reason')->nullable();
             $table->integer('status')->default('1');
             $table->string('slug')->nullable();
-            $table->integer('total_day')->nullable();
-            $table->integer('paid_remaining_month')->nullable();
-            $table->integer('paid_remaining_year')->nullable();
+            $table->integer('total_paid')->nullable();
+            $table->integer('total_leave_this_month')->nullable();
             // unpaid
-            $table->integer('unpaid_requesr')->nullable();
+            $table->integer('unpaid_request')->nullable();
             $table->integer('total_unpaid')->nullable();
             // Foreign key constraint
             $table->integer('emp_id')->nullable();

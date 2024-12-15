@@ -58,7 +58,6 @@
 
 <div class="page-container">
     <div class="page-title-box">
-
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
                 <h4 class="font-18 mb-0">Dashboard</h4>
@@ -129,7 +128,9 @@
                         $currentDate = $start;
 
                         // Loop through each month in the range
-                        while ($currentDate <= $end) { $currentMonth=$currentDate->format('Y-m');
+                        while ($currentDate <= $end) {
+                            
+                            $currentMonth=$currentDate->format('Y-m');
                             $monthStart = new DateTime($currentDate->format('Y-m-01'));
                             $monthEnd = new DateTime($currentDate->format('Y-m-t'));
 
@@ -215,7 +216,6 @@
                                         <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                         @enderror
                                     </div>
-
                                     <div class="mb-3">
                                         <label class="form-label">To End<span class="text-danger">* </span>:
                                         </label>

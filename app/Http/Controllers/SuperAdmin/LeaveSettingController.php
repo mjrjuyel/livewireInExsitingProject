@@ -13,6 +13,7 @@ class LeaveSettingController extends Controller
 {
     public function index(){
         $setting = EmployeLeaveSetting::where('id',1)->first();
+        // return $setting;
         return view('superadmin.basic.leaveSetting.index',compact('setting'));
     }
 
