@@ -3,6 +3,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+img{
+    width: 100%;
+    height: auto;
+}
+a{
+    text-decoration: none;
+}
 .form_label {
     color: #494f9d;
     font-size: 1.15rem;

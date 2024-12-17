@@ -19,7 +19,7 @@ class EmployeController extends Controller
     public function index(){
         $employe = Employee::with(['emp_role','emp_desig'])->latest('id')->get();
         $desig = Designation::with('employe')->get();
-        // return $desig;
+        return $employe;
         return view('employe.employe.all',compact('employe'));
     }
 
@@ -29,53 +29,53 @@ class EmployeController extends Controller
     }
 
     // Edit Admin
-    public function edit($slug){
-        $edit= Employee::where('emp_slug',$slug)->where('status',1)->first();
-        $role= UserRole::all();
-        $designation= Designation::all();
-        // return $role;
-        return view('employe.employe.edit',compact(['edit','role','designation']));
-    }
+    // public function edit($slug){
+    //     $edit= Employee::where('emp_slug',$slug)->where('status',1)->first();
+    //     $role= UserRole::all();
+    //     $designation= Designation::all();
+    //     // return $role;
+    //     return view('employe.employe.edit',compact(['edit','role','designation']));
+    // }
 
-    public function update(Request $request){
-        $id = $request['id'];
-        $slug = $request['slug'];
-        // return $request->all();
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required | email:rfc,dns',
-        ]);
+    // public function update(Request $request){
+    //     $id = $request['id'];
+    //     $slug = $request['slug'];
+    //     // return $request->all();
+    //     $request->validate([
+    //         'name'=>'required',
+    //         'email'=>'required | email:rfc,dns',
+    //     ]);
 
-        if($request->hasFile('image')){
-            $imageTake = $request->file('image');
-            $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($imageTake);
-            // $image->scale(width: 300);
-            $image->save('uploads/employe/profile/'.$image_name);
+    //     if($request->hasFile('image')){
+    //         $imageTake = $request->file('image');
+    //         $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+    //         $manager = new ImageManager(new Driver());
+    //         $image = $manager->read($imageTake);
+    //         // $image->scale(width: 300);
+    //         $image->save('uploads/employe/profile/'.$image_name);
             
-            Employee::where('id',$id)->update([
-                'image'=>$image_name,
-            ]);
+    //         Employee::where('id',$id)->update([
+    //             'image'=>$image_name,
+    //         ]);
 
-            Session::flash('success','Profile Update Successfully');
-            return redirect()->route('dashboard.admin');
-        }
+    //         Session::flash('success','Profile Update Successfully');
+    //         return redirect()->route('dashboard.admin');
+    //     }
         
-        $update = Employee::where('id',$id)->update([
-            'name'=>$request['name'],
-            'email'=>$request['email'],
-            'role_id'=>$request['role'],
-            'designation_id'=>$request['designation'],
-            'slug'=>$slug,
-            'updated_at'=>Carbon::now(),
-        ]);
+    //     $update = Employee::where('id',$id)->update([
+    //         'name'=>$request['name'],
+    //         'email'=>$request['email'],
+    //         'role_id'=>$request['role'],
+    //         'designation_id'=>$request['designation'],
+    //         'slug'=>$slug,
+    //         'updated_at'=>Carbon::now(),
+    //     ]);
 
-        if($update){
-            Session::flash('success','Profile Update Successfully');
-            return redirect()->route('dashboard.admin');
-        }
-    }
+    //     if($update){
+    //         Session::flash('success','Profile Update Successfully');
+    //         return redirect()->route('dashboard.admin');
+    //     }
+    // }
 
     public function profileSettings($slug){
         // return $slug;
