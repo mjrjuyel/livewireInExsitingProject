@@ -24,7 +24,9 @@ class SuperAdminLeaveController extends Controller
 
     // view per role
     public function view($slug){
-        $view = Leave::with('employe')->where('slug',$slug)->first();
+        $view = Leave::with(['employe'=>function($query){
+            $query->select('id','emp_name');
+        }])->where('slug',$slug)->first();
         $leave_type = LeaveType::all();
         $defaultValue = EmployeLeaveSetting::where('id',1)->first();
         // return $view;
@@ -36,122 +38,53 @@ class SuperAdminLeaveController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
 
-        // dynamic 
         $default = EmployeLeaveSetting::where('id',1)->first();
 
-        // check year whole year
-        $startDate = Carbon::parse($request->start);
-        // check month
-        $checkPreviousMonth = Leave::with('employe')->where('status',2)->where('unpaid_request',0)->whereMonth('start_date',$startDate->month)->whereYear('start_date',$startDate->year)->latest('id')->first();
-        $checkPreviousYear = Leave::with('employe')->where('status',2)->where('unpaid_request',0)->whereYear('start_date',$startDate->year)->latest('id')->first();
-        // 
-        $previousUnpaidYear = Leave::with('employe')->where('status',2)->where('unpaid_request',1)->whereYear('start_date',$startDate->year)->latest('id')->first();
+        $email = Leave::find($id);
+        // dynamic 
+        $employe = Employee::where('id',$email->emp_id)->first();
 
-        $currentRequest = Leave::where('slug',$slug)->first();
+            $update= Leave::where('slug',$slug)->update([
+                'status'=>$request['status'],
+                'comments'=>$request['comment'],
+                'editor'=>Auth::user()->id,
+                'updated_at'=>Carbon::now(),
+            ]);
 
-        // $reduce = $default->month_limit - $currentRequest->total_day;
+            if($request->status == 2){
+                $update = Leave::where('slug',$slug)->update([
+                    'status'=>$request['status'],
+                    'comments'=>$request['comment'],
+                    'editor'=>Auth::user()->id,
+                    'updated_at'=>Carbon::now(),
+                ]);
 
-        return $checkPreviousMonth;
-
-        if($request->status == 2){
-            // request Approved then chcek all the logic
-
-            // If the leave request is not unpaid
-            if($currentRequest->unpaid_request != 1 ){
-
-                // if has taken  previous leave 
-                if($checkPreviousMonth != null && $checkPreviousMonth != ''){
-                // if previous month have taken leave and still have remain some day to take leave
-
-                    // return $request->all();
-                    $update = Leave::where('slug',$slug)->update([
-                        'status'=>$request['status'],
-                        'total_day'=>$currentRequest->total_day,
-                        'paid_remaining_month'=>$checkPreviousMonth->paid_remaining_month - $currentRequest->total_day,
-                        'paid_remaining_year'=>$checkPreviousYear->paid_remaining_year - $currentRequest->total_day,
-                        'comments'=>$request['comment'],
-                        'editor'=>Auth::user()->id,
-                        'updated_at'=>Carbon::now(),
-                    ]);
-
-                }else{
-                    // if the year doesn't take  zero leave
-                    if($checkPreviousYear != null && $checkPreviousYear != ''){
-
-                        // return "remain year leave"; 
-                        $update = Leave::where('slug',$slug)->update([
-                            'status'=>$request['status'],
-                            'total_day'=>$currentRequest->total_day,
-                            'paid_remaining_month'=>$default->month_limit - $currentRequest->total_day,
-                            'paid_remaining_year'=>$checkPreviousYear->paid_remaining_year - $currentRequest->total_day,
-                            'comments'=>$request['comment'],
-                            'editor'=>Auth::user()->id,
-                            'updated_at'=>Carbon::now(),
-                        ]);
-
-                        if($update){
-                            Session::flash('success','Request Approved');
-                            return redirect()->route('superadmin.leave.view',$slug);
-                        }
-                    }
-                    else{
-                        // return "both hav default value"; 
-                        $update = Leave::where('slug',$slug)->update([
-                            'status'=>$request['status'],
-                            'total_day'=>$currentRequest->total_day,
-                            'paid_remaining_month'=>$default->month_limit - $currentRequest->total_day,
-                            'paid_remaining_year'=>$default->year_limit - $currentRequest->total_day,
-                            'comments'=>$request['comment'],
-                            'editor'=>Auth::user()->id,
-                            'updated_at'=>Carbon::now(),
-                        ]);
-
-                        if($update){
-                            Session::flash('success','Request Approved');
-                            return redirect()->route('superadmin.leave.view',$slug);
-                        }
-                    }
-
+                if($update){
+                    Session::flash('success','Request Leave Approved');
                 }
-            }
-            else{
-                // unpaid rerquest update.
-                if($previousUnpaidYear != null && $previousUnpaidYear != ''){
-                    $update = Leave::where('slug',$slug)->update([
-                        'status'=>$request['status'],
-                        'total_day'=>$currentRequest->total_day,
-                        'total_unpaid'=>$previousUnpaidYear->total_unpaid + $currentRequest->total_day,
-                        'comments'=>$request['comment'],
-                        'editor'=>Auth::user()->id,
-                        'updated_at'=>Carbon::now(),
-                    ]);
-    
-                    if($update){
-                        Session::flash('success','Non Paid Leave Request Approved');
-                        return redirect()->back();
-                    }
-                }
-                else{
-                    $update = Leave::where('slug',$slug)->update([
-                        'status'=>$request['status'],
-                        'total_day'=>$currentRequest->total_day,
-                        'total_unpaid'=> 0 + $currentRequest->total_day,
-                        'comments'=>$request['comment'],
-                        'editor'=>Auth::user()->id,
-                        'updated_at'=>Carbon::now(),
-                    ]);
-    
-                    if($update){
-                        Session::flash('success','Non Paid Leave Request Approved');
-                        return redirect()->back();
-                    }
-                }
+
             }
 
+            if($request->status == 3){
+                $update = Leave::where('slug',$slug)->update([
+                    'status'=>$request['status'],
+                    'comments'=>$request['comment'],
+                    'editor'=>Auth::user()->id,
+                    'updated_at'=>Carbon::now(),
+                ]);
+               
 
-        }
+                if($update){
+                    Session::flash('success','Request Leave Cancle!');
+                }
+            }
+            $alldata = Leave::where('id',$id)->first();
+            // LeaveResponseByAdmin
+            Mail::to($employe->email)->send(new LeaveResponseByAdmin($alldata));
 
-
+            Session::flash('success','Updated Successfully');
+            return redirect()->back();
+        
     }
 
     public function delete($slug){

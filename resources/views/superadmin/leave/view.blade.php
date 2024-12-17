@@ -94,7 +94,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">leave Start Date<span class="text-danger">*</span> :</label>
+                                                <label class="form-label">leave End Date<span class="text-danger">*</span> :</label>
                                                 <input type="text" class="form-control" value="{{ $view->end_date->format('d-M-Y') }}" disabled>
                                                 @error('email')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -119,82 +119,56 @@
                                         </div>
 
                                         <div class="col-5">
-
-                                            @if($view->unpaid_request != 1)
                                             <div class="mb-3">
                                                 <label class="form-label">Request Leave For<span class="text-danger">* </span>:
                                                 </label>
-                                                <input type="text" class="form-control" value="{{ $view->total_day }} days" disabled>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Remain Paid Leave In an Annual Year {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                               @if($view->paid_remaining_month != null)
-                                                    @if($view->paid_remaining_month >= 1) 
-                                                        @if($view->paid_remaining_month == 1)
-                                                            <input type="text" class="form-control" value="{{$view->paid_remaining_month}} Day" disabled>
-                                                        @elseif($view->paid_remaining_month <= 3)
-                                                            <input type="text" class="form-control" value="{{ $view->paid_remaining_month }}Days" disabled>
-                                                        @endif
+                                                @if($view->total_unpaid + $view->total_paid <= 1) 
+                                                    <span class="text-danger">
+                                                    {{ $view->total_unpaid + $view->total_paid }}Day
+                                                    </span>
                                                     @else
-                                                        <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached " disabled>
-                                                    @endif
-                                               @else
-                                               <input type="text" class="form-control text-primary" value="{{$defaultValue->month_limit}}" disabled>
-                                               @endif
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Remain Paid Leave In an Annual Year {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                                @if($view->paid_remaining_year != null) 
-                                                    @if($view->paid_remaining_year >= 1) 
-                                                            @if($view->paid_remaining_year == 1)
-                                                                <input type="text" class="form-control" value="{{$view->paid_remaining_year}} Day" disabled>
-                                                            @elseif($view->paid_remaining_year <= 14)
-                                                                <input type="text" class="form-control" value="{{ $view->paid_remaining_year }}Days" disabled>
-                                                            @endif
-                                                    @else
-                                                        <input type="text" class="form-control text-danger" value="Yearly Leave Limit Reached" disabled>
-                                                    @endif
-                                                @else
-                                                    <input type="text" class="form-control text-primary" value="{{$defaultValue->year_limit}}" disabled>
+                                                    <span class="text-danger">
+                                                        {{ $view->total_unpaid + $view->total_paid }}Days
+                                                    </span>
                                                 @endif
                                             </div>
 
-                                            @else
                                             <div class="mb-3">
-                                                <label class="form-label">Request Unpaid Leave<span class="text-danger">* </span>:
+                                                <label class="form-label">Request Paid Leave<span class="text-danger">* </span>:
                                                 </label>
-                                                <input type="text" class="form-control text-danger" value="{{ $view->total_day }} days" disabled>
+                                                 @if($view->total_paid <= 1) 
+                                                    <span class="text-danger">
+                                                    {{ $view->total_paid }}Day
+                                                    </span>
+                                                    @else
+                                                    <span class="text-danger">
+                                                        {{ $view->total_paid }}Days
+                                                    </span>
+                                                @endif
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Total Non Paid leave in {{ date('Y')}}<span class="text-danger">*</span> :</label>
-                                               @if($view->total_unpaid != null)
-                                                    @if($view->total_unpaid >= 1) 
-                                                        @if($view->total_unpaid == 1)
-                                                            <input type="text" class="form-control" value="{{$view->total_unpaid}} Day" disabled>
-                                                        @else
-                                                            <input type="text" class="form-control" value="{{ $view->total_unpaid }}Days" disabled>
-                                                        @endif
-                                                    @endif
-                                               @else
-                                               <input type="text" class="form-control text-primary" value="Not yet" disabled>
-                                               @endif
+                                                <label class="form-label">Request UnPaid Leave<span class="text-danger">* </span>:
+                                                </label>
+                                                 @if($view->total_unpaid <= 1) 
+                                                    <span class="text-danger">
+                                                    {{ $view->total_unpaid  }}Day
+                                                    </span>
+                                                    @else
+                                                    <span class="text-danger">
+                                                        {{ $view->total_unpaid }}Days
+                                                    </span>
+                                                @endif
                                             </div>
 
-                                            @endif
-
-                                            
-
-                                            <div class="mb-3">
+                                            {{-- <div class="mb-3">
                                                 <label class="form-label">Modified date<span class="text-danger">* </span>:
                                                 </label>
                                                 <input type="text" id="humanfd-datepicker" name="end" class="form-control" value="" placeholder="If Reduce Date" placeholder="">
                                                 @error('end')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
 
                                             <div class="mb-3">
                                                 <label class="form-label">Feedback</label>
@@ -209,10 +183,10 @@
                                         <div class="row">
                                             <div class="col-4 offset-4">
                                                 @if($view->status == 2)
-                                                  <a href="{{route('superadmin.leave')}}" class="btn btn-primary">Back To Index</a>
+                                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary">Back To Leave</a>
                                                 @elseif($view->status != 2)
                                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                                 @endif
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

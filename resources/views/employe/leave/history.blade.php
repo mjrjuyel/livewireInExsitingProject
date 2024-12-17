@@ -57,8 +57,12 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Leave For</th>
-                                    <th class="text-center">Total Day</th>
-                                    <th class="text-center">Start Date</th>
+                                    <th class="text-center">Total Leave Request</th>
+                                    <th class="text-center">Total Paid</th>
+                                    
+                                    <th class="text-center">Total UnPaid</th>
+                                    <th class="text-center">Leave Status</th>
+                                    <th class="text-center">Start to End Date</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -69,36 +73,78 @@
                                         {{ $leavehistory->leavetype->type_title }}
                                     </td>
 
-                                    @if($leavehistory->total_day <= 1) 
-                                    <td>
-                                        {{ $leavehistory->total_day }}Day
+                                    @if($leavehistory->total_unpaid + $leavehistory->total_paid <= 1) 
+                                    <td class="text-danger">
+                                        {{ $leavehistory->total_unpaid + $leavehistory->total_paid }}Day
                                     </td>
                                     @else 
-                                    <td>
-                                        {{ $leavehistory->total_day }}Days
+                                    <td class="text-danger">
+                                        {{ $leavehistory->total_unpaid + $leavehistory->total_paid }}Days
                                     </td>
                                     @endif
+
+                                        @if($leavehistory->total_paid <= 1) 
                                         <td>
-                                            {{ $leavehistory->start_date->format('d-M-Y') }}
+                                            @if($leavehistory->total_paid !== null)
+                                            {{ $leavehistory->total_paid}}Day
+                                            @else
+                                            0 Day
+                                            @endif
+                                        </td>
+                                        @else 
+                                        <td>
+                                            {{ $leavehistory->total_paid }}Days
+                                        </td>
+                                        @endif
+                                    
+                                    @if($leavehistory->total_unpaid <= 1) 
+                                    <td class="text-danger">
+                                       @if($leavehistory->total_unpaid !== null)
+                                        {{ $leavehistory->total_unpaid}}Day
+                                        @else
+                                        0 Day
+                                        @endif
+                                    </td>
+                                    @else 
+                                    <td class="text-danger">
+                                        {{ $leavehistory->total_unpaid }}Days
+                                    </td>
+                                    @endif
+
+                                     <td>
+                                        @if($leavehistory->status == 1)
+                                        <button type="button" class="btn btn-warning ">
+                                            Pending
+                                        </button>
+                                        @elseif($leavehistory->status == 2)
+                                        <button type="button" class="btn btn-primary " >
+                                            Approved
+                                        </button>
+                                        @else
+                                        <button type="button" class="btn btn-warning">
+                                            Cancle
+                                        </button>
+                                        @endif
+                                    </td>
+
+                                        <td>
+                                            {{ $leavehistory->start_date->format('d-M-Y') }} To {{ $leavehistory->end_date->format('d-M-Y') }}
                                         </td>
 
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Action
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <li><a class="dropdown-item" href="{{ url('/dashboard/leave/view/'.$leavehistory->slug) }}"><i class="uil-table"></i>View</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="uil-edit"></i>Edit</a></li>
-                                                    <li>
-                                                        <form action="" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <button id="btnGroupDrop1" type="button"
+                                                class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <li><a class="dropdown-item"
+                                                        href="{{ url('dashboard/leave/view/'.Auth::guard('employee')->user()->emp_slug) }}"><i
+                                                            class="mdi mdi-view-agenda"></i>View</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                         </td>
 
                                 </tr>
@@ -117,24 +163,6 @@
 </div>
 
 </div> <!-- container -->
-
-<!-- Footer Start -->
-<footer class="footer">
-    <div class="page-container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <script>
-                    document.write(new Date().getFullYear())
-
-                </script> © Uplon - By <span class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- end Footer -->
-
-</div>
-<!-- end Footer -->
 @endsection
 
 @section('js')

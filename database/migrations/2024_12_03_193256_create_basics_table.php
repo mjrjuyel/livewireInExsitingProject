@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('Mlogo',100)->nullable();
             $table->string('Flogo',100)->nullable();
             $table->string('favlogo',100)->nullable();
+            $table->string('copyright',200)->nullable();
             $table->integer('creator')->nullable();
             $table->timestamps();
         });

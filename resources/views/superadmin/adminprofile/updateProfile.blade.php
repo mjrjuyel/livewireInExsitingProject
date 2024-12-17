@@ -92,8 +92,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
-                                                    @if($pass->emp_image != '')
-                                                    <img src="{{ asset('uploads/admin/profile/'.$pass->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
+                                                    @if($pass->image != '')
+                                                    <img src="{{ asset('uploads/adminprofile/'.$pass->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
                                                     @endif
                                                 </div>
                                             </div>
@@ -139,6 +139,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>

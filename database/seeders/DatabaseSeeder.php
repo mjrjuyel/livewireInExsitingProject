@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             LeaveTypeSeeder::class,  
             EmployeLeaveSettingSeeder::class,
+            BasicSeeder::class,
         ]);
 
             // User::factory(10)->create();

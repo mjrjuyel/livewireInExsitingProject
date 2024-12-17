@@ -25,7 +25,7 @@ class EmployeeSeeder extends Seeder
             'emp_role_id'=>1,
             'emp_creator'=>1,
             'emp_join'=>Carbon::now(),
-            'password'=>Hash::make('111111'),
+            'password'=>Hash::make('employe%%@'),
             'created_at'=>Carbon::now(),
         ]);
     }
