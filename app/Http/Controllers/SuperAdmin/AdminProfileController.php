@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class AdminProfileController extends Controller
         // return $slug;
         $pass = User::where('slug',$slug)->first();
         $role= UserRole::all();
-        // return $data;
+        // return $pass;
         return view('superadmin.adminprofile.updateProfile',compact(['pass','role']));
     }
 
@@ -31,19 +32,27 @@ class AdminProfileController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
         // return $request->all();
-        // $request->validate([
-        //     // 'name'=>'required',
-        //     // 'email'=>'required | email:rfc,dns',
-        // ]);
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required | email:rfc,dns | unique:users,name,'.$id,
+        ]);
 
+        $old= User::find($id);
+        $path = public_path('uploads/adminprofile/');
 
         if($request->hasFile('image')){
+        // remove old Image
+            if($old->image != '' && $old->image != null){
+                $old_pic = $path.$old->image;
+                unlink($old_pic);
+            }
+
             $imageTake = $request->file('image');
             $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
             $manager = new ImageManager(new Driver());
             $image = $manager->read($imageTake);
             // $image->scale(width: 300);
-            $image->save('uploads/admin/profile/'.$image_name);
+            $image->save('uploads/adminprofile/'.$image_name);
             
             User::where('id',$id)->update([
                 'image'=>$image_name,
@@ -61,7 +70,8 @@ class AdminProfileController extends Controller
         if($request->oldpass){
             $request->validate([
                 'oldpass' => 'required',
-                'newpass' => 'required|min:8',]);
+                'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters(1)->numbers(1)->symbols()],
+            ]);
     
             if (!Hash::check($request->oldpass,auth()->user()->password)) {
                 return back()->withErrors(['oldpass' => 'Incorrect current password.']);

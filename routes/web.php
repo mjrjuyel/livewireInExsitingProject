@@ -43,7 +43,7 @@ Route::middleware('isEmploye')->group(function(){
         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
         // Admin Controller 
         Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
-        // Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
+        Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
         // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
         // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
         Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
@@ -85,8 +85,7 @@ Route::middleware(['auth','verified'])->group(function(){
         // Admin Edit Access 
         // Route::get('/dashboard/admin/edit/{slug}',[AdminController::class,'edit'])->name('dashboard.admin.edit');
         // Route::delete('/dashboard/admin/delete/{slug}',[AdminController::class,'delete'])->name('dashboard.admin.view');
-        //SuperAdmin Basic Controller
-        Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
+        
         // Add Employer Controller
         Route::get('/superadmin/employe',[AdminEmployeController::class,'index'])->name('superadmin.employe');
         Route::get('/superadmin/employe/add',[AdminEmployeController::class,'add'])->name('superadmin.employe.add');
@@ -133,6 +132,10 @@ Route::middleware(['auth','verified'])->group(function(){
         // Leave Setting status
         Route::get('/superadmin/leavesetting',[LeaveSettingController::class,'index'])->name('superadmin.leavesetting');
         Route::post('/superadmin/leavesetting/update',[LeaveSettingController::class,'update'])->name('superadmin.leavesetting.update');
+
+        //SuperAdmin Basic Controller
+        Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
+        Route::post('/superadmin/basic/update',[BasicController::class,'update'])->name('superadmin.basic.update');
         // 404 for not authrized
     });
 

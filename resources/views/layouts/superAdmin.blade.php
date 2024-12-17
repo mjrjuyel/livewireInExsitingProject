@@ -6,10 +6,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} | Dashboard | SuperAdmin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="" name="description" />
+    <meta content="SupreoX" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('contents/admin')}}/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{asset('uploads/basic/'.$basic->favlogo)}}">
     <!-- Vendor css -->
     @include('layouts.partials.css.dashboardcss')
 </head>
@@ -22,13 +22,14 @@
             <!-- Brand Logo -->
             <a href="{{route('superadmin')}}" class="logo">
                 <span class="logo-light">
-                    <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-light.png" alt="logo"></span>
-                    <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm-light.png" alt="small logo"></span>
+                    <span class="logo-lg">
+                    <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png" alt="dark logo"></span>
-                    <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm.png" alt="small logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
                 </span>
             </a>
 
@@ -143,7 +144,7 @@
                         <div class="collapse" id="sidebarBasicSetting">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.role')}}" class="side-nav-link">
+                                    <a href="{{route('superadmin.basic')}}" class="side-nav-link">
                                         <span class="menu-text">Website Setting</span>
                                     </a>
                                 </li>
@@ -434,7 +435,7 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::user()->image != '')
-                                <img src="{{ asset('uploads/adminprofile/'.Auth::user('')->img) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                                 @else
                                 <img src="{{ asset('uploads/adminprofile/img.jpg')}}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                                 @endif
@@ -476,13 +477,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Button Trigger Customizer Offcanvas -->
-                    <div class="topbar-item d-none d-sm-flex">
-                        <button class="topbar-link" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" type="button">
-                            <i class="mdi mdi-cog-outline font-22"></i>
-                        </button>
-                    </div>
                 </div>
             </div>
         </header>
@@ -500,7 +494,7 @@
                             <script>
                                 document.write(new Date().getFullYear())
 
-                            </script> © Uplon - By <span class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
+                            </script> {{strip_tags($basic->copyright)}}</span>
                         </div>
                     </div>
                 </div>

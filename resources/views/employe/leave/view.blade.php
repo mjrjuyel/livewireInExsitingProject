@@ -117,23 +117,71 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Start Leave</td>
+                                    <td> Leave Start to End</td>
                                     <td>:</td>
 
-                                    <td>{{$view->start_date->format('d-M-Y')}}</td>
+                                    <td>{{$view->start_date->format('d-M-Y')}} To {{$view->end_date->format('d-M-Y')}}</td>
                                 </tr>
-
-                                 <tr>
-                                    <td>End Leave</td>
-                                    <td>:</td>
-                                    <td>{{$view->end_date->format('d-M-Y')}}</td>
-                                </tr>
-
                                 <tr>
-                                    <td>leave Request For</td>
+                                    <td>Total leave</td>
                                     <td>:</td>
-                                    <td class="text-danger">{{$view->total_day}} Days</td>
+
+                                    @php
+                                        $total_leave = $view->total_paid + $view->total_unpaid;
+                                    @endphp
+
+                                     @if($total_leave <= 1) 
+                                    <td class="text-danger">
+                                        {{ $total_leave }}Day
+                                    </td>
+                                    @else 
+                                    <td class="text-danger">
+                                        {{ $total_leave }}Days
+                                    </td>
+                                    @endif
                                 </tr>
+
+                                  
+
+                                 @if($view->total_paid != '')
+                                 <tr>
+                                    <td>Total Paid</td>
+                                    <td>:</td>
+                                    @if($view->total_paid <= 1) 
+                                    <td class="">
+                                        @if($view->total_paid !== null)
+                                        {{ $view->total_paid}}Day
+                                        @else
+                                        0 Day
+                                        @endif
+                                    </td>
+                                    @else 
+                                    <td class="">
+                                        {{ $view->total_paid }}Days
+                                    </td>
+                                    @endif
+                                 </tr>
+                                 @endif
+
+                                 @if($view->total_unpaid != '')
+                                 <tr>
+                                    <td>Total Unpaid</td>
+                                    <td>:</td>
+                                    @if($view->total_unpaid <= 1) 
+                                    <td class="text-danger">
+                                        @if($view->total_unpaid !== null)
+                                        {{ $view->total_unpaid}}Day
+                                        @else
+                                        0 Day
+                                        @endif
+                                    </td>
+                                    @else 
+                                    <td class="text-danger">
+                                        {{ $view->total_unpaid }}Days
+                                    </td>
+                                    @endif
+                                 </tr>
+                                 @endif
 
                                 <tr>
                                     <td>Created At</td>

@@ -6,10 +6,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }} | Dashboard | Employe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="" name="description" />
+    <meta content="SupreoX" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('contents/admin') }}/assets/images/favicon.ico">
+   <link rel="shortcut icon" href="{{asset('uploads/basic/'.$basic->favlogo)}}">
 
     {{-- partial Css --}}
     @include('layouts.partials.css.dashboardcss')
@@ -25,14 +25,14 @@
 
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="logo">
-                <span class="logo-light">
-                    <span class="logo-lg"><img src="{{ asset('contents/admin') }}/assets/images/logo-light.png" alt="logo"></span>
-                    <span class="logo-sm"><img src="{{ asset('contents/admin') }}/assets/images/logo-sm-light.png" alt="small logo"></span>
+               <span class="logo-light">
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"><img src="{{ asset('contents/admin') }}/assets/images/logo-dark.png" alt="dark logo"></span>
-                    <span class="logo-sm"><img src="{{ asset('contents/admin') }}/assets/images/logo-sm.png" alt="small logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
                 </span>
             </a>
 
@@ -79,7 +79,7 @@
                         </div>
                     </li>
 
-                    <li class="side-nav-item">
+                    {{-- <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false" aria-controls="sidebarRole" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-puzzle-outline"></i></span>
                             <span class="menu-text"> Admin Role</span>
@@ -88,18 +88,18 @@
                         <div class="collapse" id="sidebarRole">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{ route('dashboard.role') }}" class="side-nav-link">
+                                    <a href="#" class="side-nav-link">
                                         <span class="menu-text">All Role</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="{{ route('dashboard.role.add') }}" class="side-nav-link">
+                                    <a href="#" class="side-nav-link">
                                         <span class="menu-text">Add Role</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarDailyReport" aria-expanded="false" aria-controls="sidebarDailyReport" class="side-nav-link">
@@ -146,47 +146,6 @@
                                         <span class="menu-text">My History</span>
                                     </a>
                                 </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false" aria-controls="sidebarLayouts" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-star-box-multiple-outline"></i></span>
-                            <span class="menu-text"> Layouts </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarLayouts">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a href="layouts-boxed.html" target="_blank" class="side-nav-link">Vertical
-                                        Boxed</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-horizontal.html" target="_blank" class="side-nav-link">Horizontal</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-horizontal-boxed.html" target="_blank" class="side-nav-link">Horizontal Boxed</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-full.html" target="_blank" class="side-nav-link">Full View</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-fullscreen.html" target="_blank" class="side-nav-link">Fullscreen
-                                        View</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-hover.html" target="_blank" class="side-nav-link">Hover
-                                        Menu</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-compact.html" target="_blank" class="side-nav-link">Compact</a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="layouts-icon-view.html" target="_blank" class="side-nav-link">Icon
-                                        View</a>
-                                </li>
-
                             </ul>
                         </div>
                     </li>
@@ -384,75 +343,6 @@
                                             </span>
                                         </span>
                                     </div>
-
-                                    <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
-                                        <span class="d-flex align-items-center">
-                                            <div class="avatar-md flex-shrink-0 me-3">
-                                                <span class="avatar-title bg-success-subtle text-success rounded-circle font-22">
-                                                    <iconify-icon icon="solar:wallet-money-bold-duotone"></iconify-icon>
-                                                </span>
-                                            </div>
-                                            <span class="flex-grow-1 text-muted">
-                                                You withdraw a <span class="fw-medium text-body">$500</span> by <span class="fw-medium text-body">New York ATM</span>
-                                                <br />
-                                                <span class="font-12">2h ago</span>
-                                            </span>
-                                            <span class="notification-item-close">
-                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-3">
-                                                    <i class="mdi mdi-close font-16"></i>
-                                                </button>
-                                            </span>
-                                        </span>
-                                    </div>
-
-                                    <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap" id="notification-4">
-                                        <span class="d-flex align-items-center">
-                                            <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-7.jpg" class="avatar-md rounded-circle" alt="" />
-                                                <span class="position-absolute rounded-pill bg-secondary notification-badge">
-                                                    <i class="mdi mdi-plus"></i>
-                                                    <span class="visually-hidden">unread messages</span>
-                                                </span>
-                                            </span>
-                                            <span class="flex-grow-1 text-muted">
-                                                <span class="fw-medium text-body">Richard Allen</span> followed you in
-                                                <span class="fw-medium text-body">Facebook</span>
-                                                <br />
-                                                <span class="font-12">3h ago</span>
-                                            </span>
-                                            <span class="notification-item-close">
-                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-4">
-                                                    <i class="mdi mdi-close font-16"></i>
-                                                </button>
-                                            </span>
-                                        </span>
-                                    </div>
-
-                                    <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap mb-5" id="notification-5">
-                                        <span class="d-flex align-items-center">
-                                            <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-10.jpg" class="avatar-md rounded-circle" alt="" />
-                                                <span class="position-absolute rounded-pill bg-danger notification-badge">
-                                                    <i class="mdi mdi-heart"></i>
-                                                    <span class="visually-hidden">unread messages</span>
-                                                </span>
-                                            </span>
-                                            <span class="flex-grow-1 text-muted">
-                                                <span class="fw-medium text-body">Victor Collier</span> liked you recent
-                                                photo in <span class="fw-medium text-body">Instagram</span>
-                                                <br />
-                                                <span class="font-12">10h ago</span>
-                                            </span>
-                                            <span class="notification-item-close">
-                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-5">
-                                                    <i class="mdi mdi-close font-16"></i>
-                                                </button>
-                                            </span>
-                                        </span>
-                                    </div>
                                 </div>
 
                                 <!-- All-->
@@ -484,12 +374,6 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-account-outline"></i>
-                                    <span>Profile</span>
-                                </a>
-
-                                <!-- item-->
                                 <a href="{{ route('dashboard.employe.profileSettings',Auth::guard('employee')->user()->emp_slug ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Setting Profile</span>
@@ -511,13 +395,6 @@
                         </div>
                     </div>
 
-
-                    <!-- Button Trigger Customizer Offcanvas -->
-                    <div class="topbar-item d-none d-sm-flex">
-                        <button class="topbar-link" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" type="button">
-                            <i class="mdi mdi-cog-outline font-22"></i>
-                        </button>
-                    </div>
                 </div>
             </div>
         </header>
@@ -539,7 +416,7 @@
                             <script>
                                 document.write(new Date().getFullYear())
 
-                            </script> © Uplon - By <span class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
+                            </script>{{$basic->copyright}}</span>
                         </div>
                     </div>
                 </div>

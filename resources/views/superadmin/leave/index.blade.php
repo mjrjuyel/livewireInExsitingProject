@@ -55,7 +55,10 @@ swal({
                                     <th class="text-center">Submit By</th>
                                     <th class="text-center">Leave Type</th>
                                     <th class="text-center">Leave Reason</th>
-                                    <th class="text-center">Leave Start date</th>
+                                    <th class="text-center">Total Leave Request</th>
+                                    <th class="text-center">Total Paid</th>
+                                    <th class="text-center">Total UnPaid</th>
+                                    <th class="text-center">Start To End</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -71,35 +74,45 @@ swal({
                                     <td>
                                         {{ $data->leavetype->type_title }}
                                     </td>
+
                                     <td>
                                         {{ $data->reason }}
                                     </td>
-                                    <td>
-                                        {{ $data->start_date->format('d-M-Y') }}
+
+                                    @if($data->total_unpaid + $data->total_paid <= 1) 
+                                    <td class="text-danger">
+                                        {{ $data->total_unpaid + $data->total_paid }}Day
                                     </td>
-                                    @if($data->unpaid_request != 1)
-                                        @if($data->total_day > 1)
-                                            <td>
-                                            {{ $data->total_day }} Days
-                                        </td>
-                                        @else
-                                        <td>
-                                            {{ $data->total_day }} Day
-                                        </td>
-                                        @endif
-                                    @else
-                                       @if($data->total_day > 1)
-                                            <td class="text-danger">
-                                            {{ $data->total_day }} Days Unpaid
-                                        </td>
-                                        @else
-                                        <td class="text-danger">
-                                            {{ $data->total_day }} Day Unpaid
-                                        </td>
-                                        @endif
+                                    @else 
+                                    <td class="text-danger">
+                                        {{ $data->total_unpaid + $data->total_paid }}Days
+                                    </td>
                                     @endif
 
-                                     
+                                   @if($data->total_paid <= 1) 
+                                    <td>
+                                        {{ $data->total_paid }}Day
+                                    </td>
+                                    @else 
+                                    <td>
+                                        {{ $data->total_paid }}Days
+                                    </td>
+                                    @endif
+
+                                    @if($data->total_unpaid <= 1) 
+                                    <td class="text-danger">
+                                        {{ $data->total_unpaid }}Day
+                                    </td>
+                                    @else 
+                                    <td class="text-danger">
+                                        {{ $data->total_unpaid }}Days
+                                    </td>
+                                    @endif
+
+                                        <td>
+                                            {{ $data->start_date->format('d-M-Y') }} To {{ $data->end_date->format('d-M-Y') }}
+                                        </td>
+                                    
                                     <td>
                                         @if($data->status == 1)
                                         <button type="button" class="btn btn-warning ">

@@ -29,7 +29,9 @@ class AdminEmployeController extends Controller
             'name'=>'required',
             'email'=>'required | email:rfc,dns | unique:employees,email',
             'phone'=>'required',
-            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(4)],
+            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+            ->numbers()
+            ->symbols()],
             'repass' => 'required | same:pass',
             
         ]);
@@ -197,7 +199,10 @@ class AdminEmployeController extends Controller
         if($request->oldpass){
             $request->validate([
                 'oldpass' => 'required',
-                'newpass' => 'required|min:8',]);
+                'newpass' => ['required ',\Illuminate\Validation\Rules\Password::min(5)->letters()
+                ->numbers()
+                ->symbols()],
+            ]);
     
             if (!Hash::check($request->oldpass,auth()->user()->password)) {
                 return back()->withErrors(['oldpass' => 'Incorrect current password.']);
