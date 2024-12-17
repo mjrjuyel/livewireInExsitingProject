@@ -55,7 +55,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Admin Pic</th>
+                                    <th class="text-center">Employee Pic</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Role</th>
@@ -94,14 +94,7 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item" href="{{ route('dashboard.employe.view',$employe->emp_slug) }}"><i class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('dashboard.employe.edit',$employe->emp_slug) }}"><i class="uil-edit"></i>Edit</a></li>
-                                                <li>
-                                                    <form action="{{ route('dashboard.employe.delete') }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="uil-trash-alt"></i>Delete</button>
-                                                    </form>
-                                                </li>
+                                                
                                             </ul>
                                         </div>
                                     </td>

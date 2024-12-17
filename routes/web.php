@@ -48,7 +48,7 @@ Route::middleware('isEmploye')->group(function(){
         // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
         Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
         Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-        Route::post('/dashboard/employe/delete',[EmployeController::class,'delete'])->name('dashboard.employe.delete');
+        // Route::post('/dashboard/employe/delete',[EmployeController::class,'delete'])->name('dashboard.employe.delete');
     // Role ManageMent
         Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
         Route::get('/dashboard/role/add',[RoleController::class,'add'])->name('dashboard.role.add');

@@ -245,12 +245,12 @@
                     <!-- Brand Logo -->
                     <a href="{{route('dashboard')}}" class="logo">
                         <span class="logo-light">
-                            <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-light.png" alt="logo"></span>
-                            <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm-light.png" alt="small logo"></span>
+                            <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-light.png" class="img-fluid" alt="" style=" object-fit:cover;" alt="logo"></span>
+                            <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm-light.png" class="img-fluid" alt="" style="object-fit:cover;" alt="small logo"></span>
                         </span>
 
                         <span class="logo-dark">
-                            <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png" alt="dark logo"></span>
+                            <span class="logo-lg"><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png" class="img-fluid" alt="" style="object-fit:cover;" alt="dark logo"></span>
                             <span class="logo-sm"><img src="{{asset('contents/admin')}}/assets/images/logo-sm.png" alt="small logo"></span>
                         </span>
                     </a>
@@ -435,9 +435,9 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::user()->image != '')
-                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover;"  alt="user-image">
                                 @else
-                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover;" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::user()->name }}</h6>
@@ -449,12 +449,6 @@
                                 <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
                                     <h6 class="text-overflow text-white m-0">Welcome !</h6>
                                 </div>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-account-outline"></i>
-                                    <span>Profile</span>
-                                </a>
 
                                 <!-- item-->
                                 <a href="{{ route('superadmin.profile',Auth::user()->slug ) }}" class="dropdown-item notify-item">

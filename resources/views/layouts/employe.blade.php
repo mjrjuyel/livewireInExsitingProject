@@ -26,7 +26,7 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="logo">
                <span class="logo-light">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"  alt="logo"></span>
                     <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
                 </span>
 
@@ -358,9 +358,9 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::guard('employee')->user()->emp_image != '')
-                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_image) }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_image) }}"width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover; alt="user-image">
                                 @else
-                                <img src="{{ asset('uploads/employe/profile/img.jpg') }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                                <img src="{{ asset('uploads/employe/profile/img.jpg') }}" width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover; alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::guard('employee')->user()->emp_name }}</h6>
