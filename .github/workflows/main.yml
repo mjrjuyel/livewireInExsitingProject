@@ -19,7 +19,7 @@ jobs:
       with:
         server: 106.0.62.88
         username: team@team.supreox.com
-        password: abcwpplu_team
+        password: ${{ secrets.ftp_password }}
         
 
         
