@@ -11,7 +11,7 @@
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
@@ -25,11 +25,11 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <i class="icon-layers float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Orders</h6>
-                    <h3 class="my-3" data-plugin="counterup">1,587</h3>
-                    <span class="badge bg-success me-1"> +11% </span> <span class="text-muted">From previous
-                        period</span>
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Total Active Employe</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$activeEmploye}}</h3>
+                    </a>
                 </div>
             </div>
         </div>
@@ -37,11 +37,38 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <i class="icon-paypal float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Revenue</h6>
-                    <h3 class="my-3">$<span data-plugin="counterup">46,782</span></h3>
-                    <span class="badge bg-danger me-1"> -29% </span> <span class="text-muted">From previous
-                        period</span>
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Total Role</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$role}}</h3>
+                    
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
+                    
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
+                    
+                    </a>
                 </div>
             </div>
         </div>
@@ -73,21 +100,5 @@
 
 </div> <!-- container -->
 
-<!-- Footer Start -->
-<footer class="footer">
-    <div class="page-container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <script>
-                document.write(new Date().getFullYear())
-                </script> © Uplon - By <span
-                    class="fw-semibold text-decoration-underline text-primary">Coderthemes</span>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- end Footer -->
-
-</div>
 <!-- end Footer -->
 @endsection

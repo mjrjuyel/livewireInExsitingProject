@@ -5,7 +5,6 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
 
 @section('superAdminContent')
@@ -45,7 +44,7 @@
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">SuperAdmin</a></li>
@@ -61,22 +60,22 @@
             <div class="card">
 
                 <div class="card-body">
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 mb-2">
                         <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                             Designation</a>
                     </div>
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Employe Profile
+                                <h3 class="card_header"><i class="mdi mdi-account-edit-outline header_icon"></i>Employe Profile
                                     Update
                                 </h3>
                             </div>
 
                             <div class="col-md-2 text-end"><a href="{{ route('superadmin.employe') }}" class="btn btn-bg btn-primary btn_header ">
-                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Employe</a>
+                                    <i class="mdi mdi-account-group btn_icon"></i>All Employe</a>
                             </div>
-                            <div class="col-md-2"><a href="{{ url('superadmin/employe/view/'.$edit->emp_slug) }}" class="btn btn-bg btn-primary btn_header"><i class="uil-edit btn_icon"></i>View</a>
+                            <div class="col-md-2"><a href="{{ url('superadmin/employe/view/'.$edit->emp_slug) }}" class="btn btn-bg btn-primary btn_header"><i class="mdi mdi-view-array btn_icon"></i>View</a>
                             </div>
                         </div>
                     </div>
@@ -184,6 +183,14 @@
                                     @enderror
                                 </div>
 
+                                <div class="mb-3">
+                                    <label class="form-label">Resign Date<span class="text-danger">*</span> :</label>
+                                    <input type="text" class="form-control" id="humanfd-datepicke" name="resign" value="{{ $edit->resign_date }}" placeholder="Resign Date">
+                                    @error('resign')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <div class="mb-3">
@@ -238,7 +245,6 @@
 <script src="{{asset('contents/admin')}}/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
 <script src="{{asset('contents/admin')}}/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
 <script src="{{asset('contents/admin')}}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-
 <!-- Init js-->
 <script src="{{asset('contents/admin')}}/assets/js/pages/form-pickers.js"></script>
 @endsection

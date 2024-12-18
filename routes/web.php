@@ -16,7 +16,7 @@ use App\Http\Controllers\Employe\EmployeLoginController;
 
 // Super Admin Dashboard
 use App\Http\Controllers\SuperAdmin\AdminProfileController; //Admin Profile Controller 
-use App\Http\Controllers\Employe\SuperAdminController; // super Admin can Add Edit And Delete Employe.
+use App\Http\Controllers\SuperAdmin\SuperAdminController; // Dashboard
 use App\Http\Controllers\SuperAdmin\AdminEmployeController; // Employe Management as a SuperAdmin // super Admin can Add Edit And Delete Employe.
 use App\Http\Controllers\SuperAdmin\BasicController;
 use App\Http\Controllers\SuperAdmin\DesgnationController; // super Admin can add more designation.
@@ -92,7 +92,7 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/employe/insert',[AdminEmployeController::class,'insert'])->name('superadmin.employe.insert');
         Route::get('/superadmin/employe/edit/{slug}',[AdminEmployeController::class,'edit'])->name('superadmin.employe.edit');
         Route::post('/superadmin/employe/update',[AdminEmployeController::class,'update'])->name('superadmin.employe.update');
-        Route::post('/superadmin/employe/softdelete',[AdminEmployeController::class,'softdel'])->name('superadmin.employe.softdelete');
+        Route::post('/superadmin/employe/softdelete',[AdminEmployeController::class,'softdele'])->name('superadmin.employe.softdelete');
         Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
         Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
         // log in as a employee

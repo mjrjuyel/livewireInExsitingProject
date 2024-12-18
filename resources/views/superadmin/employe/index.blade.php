@@ -35,7 +35,7 @@
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
@@ -44,6 +44,8 @@
             </div>
         </div>
     </div>
+
+    
 
     <div class="row">
         <div class="col-12">
@@ -63,8 +65,9 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Admin Pic</th>
                                     <th class="text-center">Designation</th>
-                                    <th class="text-center">Role</th>
                                     <th class="text-center">Email</th>
+                                    <th class="text-center">Role</th>
+                                    
                                     <th class="text-center">Staus</th>
                                     @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                     <th class="text-center">Dashboard login</th>
@@ -161,7 +164,7 @@
                                                 @csrf
                                                 <div class="modal-body">
                                                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                                                    <input type="hidden" name="slug" value="{{$employe->slug}}">
+                                                    <input type="hidden" name="id" value="{{$employe->id}}">
                                                 </div>
                                                 
                                                 <div class="modal-footer">

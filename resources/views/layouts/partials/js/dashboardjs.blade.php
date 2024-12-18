@@ -7,4 +7,5 @@
     <script src="{{asset('contents/admin')}}/assets/libs/raphael/raphael.min.js"></script>
     <!-- Projects Analytics Dashboard App js -->
     <script src="{{asset('contents/admin')}}/assets/js/pages/dashboard-sales.js"></script>
+    <script src="{{asset('contents/admin')}}/assets/js/custom.js"></script>
    

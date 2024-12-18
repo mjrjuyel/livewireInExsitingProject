@@ -26,12 +26,12 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="logo">
                <span class="logo-light">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"  class=" img-fluid" style="width:80px; object-fit:cover;"  alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"  class=" img-fluid" style="width:100px; object-fit:cover;"  alt="logo"></span>
                     <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:40px; object-fit:cover;"  alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:80px; object-fit:cover;"   alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:100px; object-fit:cover;"   alt="logo"></span>
                     <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:40px; object-fit:cover;"   alt="logo"></span>
                 </span>
             </a>
@@ -331,6 +331,7 @@
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
                                             </span>
+
                                             <span class="flex-grow-1 text-muted">
                                                 <span class="fw-medium text-body">Tommy Berry</span> donated <span class="text-success">$100.00</span> for <span class="fw-medium text-body">Carbon removal program</span>
                                                 <br />
@@ -358,9 +359,9 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::guard('employee')->user()->emp_image != '')
-                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_image) }}"width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover; alt="user-image">
+                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @else
-                                <img src="{{ asset('uploads/employe/profile/img.jpg') }}" width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover; alt="user-image">
+                                <img src="{{ asset('uploads/employe/profile/img.jpg') }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::guard('employee')->user()->emp_name }}</h6>
@@ -370,13 +371,13 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
-                                    <h6 class="text-overflow text-white m-0">Welcome !</h6>
+                                    <h6 class="text-overflow text-white m-0">Welcome ! {{Auth::guard('employee')->user()->emp_name}}</h6>
                                 </div>
 
                                 <!-- item-->
                                 <a href="{{ route('dashboard.employe.profileSettings',Auth::guard('employee')->user()->emp_slug ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
-                                    <span>Setting Profile</span>
+                                    <span>Profile</span>
                                 </a>
 
                                 <div class="dropdown-divider"></div>
@@ -413,10 +414,10 @@
                 <div class="page-container">
                     <div class="row">
                         <div class="col-md-12 text-center">
+                            {{strip_tags($basic->copyright)}}</span>
                             <script>
                                 document.write(new Date().getFullYear())
-
-                            </script>{{$basic->copyright}}</span>
+                            </script>
                         </div>
                     </div>
                 </div>

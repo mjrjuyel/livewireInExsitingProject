@@ -6,10 +6,10 @@
     <title>{{ config('app.name', 'Laravel') }} | Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="SupreoX" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('contents/admin')}}/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{asset('uploads/basic/'.$basic->favlogo)}}">
     <!-- Vendor css -->
     <link href="{{asset('contents/admin')}}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
     <!-- App css -->
@@ -33,8 +33,8 @@
                                 <div class="text-center">
                                     <div class="my-3">
                                         <a href="index.html">
-                                            <span><img src="{{asset('contents/admin')}}/assets/images/logo-dark.png"
-                                                    alt="" height="28"></span>
+                                            <span><img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"
+                                                    alt="" height="50"></span>
                                         </a>
                                     </div>
                                     <h5 class="text-muted text-uppercase py-3 font-16">Employe Login</h5>
@@ -70,7 +70,7 @@
 
                                 </form>
 
-                                <div class="text-center mt-4">
+                                {{-- <div class="text-center mt-4">
                                     <h5 class="text-muted py-2"><b>Sign in with</b></h5>
 
                                     <div class="row">
@@ -91,7 +91,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             </div> <!-- end card-body -->
                         </div>

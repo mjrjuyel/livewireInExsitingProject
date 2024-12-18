@@ -10,7 +10,7 @@
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
@@ -31,7 +31,7 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <h3 class="card_header"><i
-                                                class="fa-solid fa-shirt header_icon"></i>{{$view->role_name}}
+                                                class="mdi mdi-shield-crown header_icon"></i>{{$view->role_name}}
                                         </h3>
                                     </div>
                                     <div class="col-md-3 text-end"><a href="{{route('superadmin.role')}}"
@@ -56,7 +56,7 @@
                                     <td>:</td>
                                     <td>
                                         @foreach($view->admin as $admin)
-                                            <button class="btn bg-primary">{{optional($admin)->name}}</button>
+                                            <button class="btn bg-dark text-white">{{optional($admin)->name}}</button>
                                         @endforeach
                                     </td>
                                 </tr>
@@ -65,8 +65,8 @@
                                     <td>:</td>
                                     <td>
                                         @foreach($view->employe as $employe)
-                                        <button class="btn btn-primary">
-                                            {{optional($employe)->emp_name}},
+                                        <button class="btn btn-info">
+                                            {{optional($employe)->emp_name}}
                                         </button>
                                         @endforeach
                                     </td>
