@@ -22,7 +22,7 @@
         }
 
         .email-header {
-            background-color: #4CAF50;
+            background-color: #1a2e44;
             color: white;
             text-align: center;
             padding: 20px;
@@ -54,21 +54,22 @@
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             width: 100%;
         }
 
-        .action-form button {
+         .button {
             padding: 10px 20px;
             font-size: 16px;
             color: white;
+            text-decoration: none;
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .action-form button:hover {
+        .button:hover {
             background-color: #3e8e41;
         }
 
@@ -90,17 +91,23 @@
             Response From Admin
         </div>
         <div class="email-body">
-            <p><strong>Employee:</strong></p>
-            <p><strong>Reason:</strong> </p>
-            <p><strong>Start Date:</strong> {{ $data['end_date'] }}</p>
-            <p><strong>End Date:</strong> {{ $data['end_date'] }}</p>
-            <p>Choose an action and submit your response:</p>
+            <p><strong>Employee:</strong>{{ $data['employe']->emp_name }}</p>
+            <p><strong>Reason:</strong>{{ $data['reason'] }} </p>
+            <p><strong>Start Date:</strong> {{ $data['start_date']->format('Y-m-D') }}</p>
+            <p><strong>End Date:</strong> {{ $data['end_date']->format('Y-m-D') }}</p>
+            <p><strong>Comments:</strong> {{ $data['comments'] }}</p>
             <div class="action-form">
-                <a href="{{route('dashboard.leave.view',$data['slug'])}}" class="">Go To Dashboard</a>
+                <select name="action" required>     
+                    <option class="text-warning" value="1" @if ($data['status'] == 2) Selected @endif>
+                        Approved</option>
+                    <option class="text-warning" value="1" @if ($data['status'] == 3) Selected @endif>
+                        Cancle</option>
+                </select>
+                <a href="{{url('dashboard/leave/history/'.$data['employe']->emp_slug)}}" class="button">Go To Your Dashboard </a>
             </div>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} Your Company Name. All rights reserved.
+            &copy; {{ date('Y') }}
         </div>
     </div>
 </body>

@@ -55,7 +55,6 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Employee Pic</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Role</th>
@@ -68,12 +67,7 @@
                                     <td>
                                         {{ $employe->emp_name }}
                                     </td>
-
-                                    <td>
-                                        @if ($employe->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
-                                        @endif
-                                    </td>
+                                    
                                     <td>{{ optional($employe->emp_desig)->title }}</td>
                                     <td>
                                         {{ $employe->email }}

@@ -128,14 +128,21 @@
 
 
                                     <td>
+                                        
                                         <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" employe-bs-toggle="dropdown" aria-expanded="false">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.employe.view',$employe->emp_slug) }}"><i class="uil-table"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.employe.edit',$employe->emp_slug) }}"><i class="uil-edit"></i>Edit</a></li>
-                                                <li><a class="dropdown-item" id="softDelete" href="#" data-bs-toggle="modal" data-bs-target="#softDelete_modal" data-id="{{ $employe->id }}">Delete</a></li>
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                        </i>View</a></li>
+                                                </li>
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.$employe->emp_slug) }}"><i class="mdi mdi-octagram-edit-outline">
+                                                        </i>Edit</a></li>
+                                                </li>
+                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                        </i>Delete</a></li>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
@@ -143,26 +150,27 @@
                                 </tr>
 
                                 {{-- soft delete MOdal  --}}
-                                <div id="softDelete_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <form method="post" action="{{ route ('superadmin.employe.softdelete') }}">
-                                            @csrf
-                                            <div class="modal-content">
-                                                <div class="modal-header modal-colored-header bg-warning">
-                                                    <h4 class="modal-title" id="primary-header-modalLabel">Service</h4>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                </div>
-                                                <div class="modal-body modal_body">
-                                                    Are You Sure want to Delete?
-                                                    <input type="text" name="modal_id" id="modal_id" value="{{$employe->id}}">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                    <button type="Submit" class="btn btn-primary">Yes</button>
-                                                </div>
+                                <div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content bg-warning">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                             </div>
-                                        </form>
-                                    </div>
+                                            <form action="{{route('superadmin.employe.softdelete')}}" method="post">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                                                    <input type="hidden" name="slug" value="{{$employe->slug}}">
+                                                </div>
+                                                
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
                                 </div>
                                 @endforeach
 

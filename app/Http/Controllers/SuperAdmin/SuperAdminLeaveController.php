@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\LeaveResponseByAdmin;
 use Illuminate\Http\Request;
 use App\Models\Leave;
+use App\Models\Employee;
 use App\Models\LeaveType;
 use App\Models\EmployeLeaveSetting;
 use Carbon\Carbon;
