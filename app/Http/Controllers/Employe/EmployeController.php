@@ -17,65 +17,24 @@ use Session;
 class EmployeController extends Controller
 {
     public function index(){
-        $employe = Employee::with(['emp_role','emp_desig'])->latest('id')->get();
+        $employe = Employee::with(['emp_role'=>function($query){
+            $query->select('id','role_name');
+        },'emp_desig'=>function($query){
+            $query->select('id','title');
+        },])->latest('id')->get();
         $desig = Designation::with('employe')->get();
-        return $employe;
+        // return $employe;
         return view('employe.employe.all',compact('employe'));
     }
 
     public function view($slug){
-        $view = Employee::where('emp_slug',$slug)->first();
+        $view = Employee::with(['emp_role'=>function($query){
+            $query->select('id','role_name');
+        },'emp_desig'=>function($query){
+            $query->select('id','title');
+        },])->where('emp_slug',$slug)->first();
         return view('employe.employe.view',compact('view'));
     }
-
-    // Edit Admin
-    // public function edit($slug){
-    //     $edit= Employee::where('emp_slug',$slug)->where('status',1)->first();
-    //     $role= UserRole::all();
-    //     $designation= Designation::all();
-    //     // return $role;
-    //     return view('employe.employe.edit',compact(['edit','role','designation']));
-    // }
-
-    // public function update(Request $request){
-    //     $id = $request['id'];
-    //     $slug = $request['slug'];
-    //     // return $request->all();
-    //     $request->validate([
-    //         'name'=>'required',
-    //         'email'=>'required | email:rfc,dns',
-    //     ]);
-
-    //     if($request->hasFile('image')){
-    //         $imageTake = $request->file('image');
-    //         $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
-    //         $manager = new ImageManager(new Driver());
-    //         $image = $manager->read($imageTake);
-    //         // $image->scale(width: 300);
-    //         $image->save('uploads/employe/profile/'.$image_name);
-            
-    //         Employee::where('id',$id)->update([
-    //             'image'=>$image_name,
-    //         ]);
-
-    //         Session::flash('success','Profile Update Successfully');
-    //         return redirect()->route('dashboard.admin');
-    //     }
-        
-    //     $update = Employee::where('id',$id)->update([
-    //         'name'=>$request['name'],
-    //         'email'=>$request['email'],
-    //         'role_id'=>$request['role'],
-    //         'designation_id'=>$request['designation'],
-    //         'slug'=>$slug,
-    //         'updated_at'=>Carbon::now(),
-    //     ]);
-
-    //     if($update){
-    //         Session::flash('success','Profile Update Successfully');
-    //         return redirect()->route('dashboard.admin');
-    //     }
-    // }
 
     public function profileSettings($slug){
         // return $slug;
@@ -91,7 +50,6 @@ class EmployeController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
         // return $request->all();
-           // return $request->all();
         $request->validate([
             'name'=>'required',
             'email'=>'required | email:rfc,dns',
@@ -99,7 +57,7 @@ class EmployeController extends Controller
 
         if($request->pass != ''){
              $request->validate([
-                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(4)->letters()],
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()],
                 'repass' => 'required | same:pass',
              ]);
 
@@ -111,6 +69,7 @@ class EmployeController extends Controller
         $date = strtotime($request['join']);
 
         $old= Employee::find($id);
+        
         $path = public_path('uploads/employe/profile/');
 
         if($request->hasFile('pic')){

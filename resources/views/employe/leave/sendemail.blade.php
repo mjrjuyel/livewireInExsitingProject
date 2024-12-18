@@ -22,7 +22,7 @@
         }
 
         .email-header {
-            background-color: #4CAF50;
+            background-color: #1a2e44;
             color: white;
             text-align: center;
             padding: 20px;
@@ -54,22 +54,23 @@
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             width: 100%;
         }
 
-        .action-form button {
+         button {
             padding: 10px 20px;
             font-size: 16px;
             color: white;
+            text-decoration: none;
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .action-form button:hover {
-            background-color: #3e8e41;
+        button:hover {
+            background-color:rgb(196, 219, 197);
         }
 
         .footer {
@@ -90,22 +91,23 @@
             New Leave Request
         </div>
         <div class="email-body">
-            <p><strong>Employee:</strong></p>
-            <p><strong>Reason:</strong> </p>
-            <p><strong>Start Date:</strong></p>
+            <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
+            <p><strong>Leave: {{$leave['leavetype']->type_title}}</strong></p>
+            <p><strong>Reason: {{$leave['reason']}}</strong> </p>
+            <p><strong>Start Date: {{$leave['start_date']}}</strong></p>
             <p><strong>End Date:</strong> {{ $leave['end_date'] }}</p>
+            <p><strong>total Paid:</strong> {{ $leave['total_paid'] }} Days</p>
+            <p><strong>total Paid:</strong> {{ $leave['total_unpaid'] }} Days</p>
             <p>Choose an action and submit your response:</p>
             <div class="action-form">
                  
-                    <input type="hidden" name="leave_request_id" value="{{ $leave['id'] }}">
-                    <select name="action" required>
-                        
-                        <option class="text-warning" value="1" @if ($leave['status'] == 1) Selected @endif>
-                            Pending</option>
-                    </select>
-                </form>
-
-                <a href="{{route('superadmin.leave.view',$leave['slug'])}}" class="">Go To Dashboard</a>
+            <input type="hidden" name="leave_request_id" value="{{ $leave['id'] }}">
+                <select name="action" required>
+                            
+                    <option class="text-warning" value="1" @if ($leave['status'] == 1) Selected @endif>
+                        Pending</option>
+                </select>
+                <a href="{{url('superadmin/leave/view/'.$leave['slug'])}}" class="">Go To Dashboard</a>
             </div>
         </div>
         <div class="footer">

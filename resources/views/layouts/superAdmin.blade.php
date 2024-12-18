@@ -23,13 +23,13 @@
             <a href="{{route('superadmin')}}" class="logo">
                 <span class="logo-light">
                     <span class="logo-lg">
-                    <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
+                    <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:80px; object-fit:cover;" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:40px; object-fit:cover;" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"class=" img-fluid" style="width:80px; object-fit:cover;" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}"class="img-fluid" style="width:40px; object-fit:cover;" alt="logo"></span>
                 </span>
             </a>
 

@@ -70,7 +70,7 @@ class AdminEmployeController extends Controller
     
     // Fethch All Employer Data
     public function index(){
-        $employe = Employee::with(['emp_role','emp_desig.title'])->latest('id')->get();
+        $employe = Employee::with(['emp_role','emp_desig'])->latest('id')->get();
         // return $employe;
         return view('superadmin.employe.index',compact('employe'));
     }

@@ -23,6 +23,7 @@ class Employee extends Authenticatable
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'emp_join'   => 'datetime'
     ];
 
     public function emp_role(){

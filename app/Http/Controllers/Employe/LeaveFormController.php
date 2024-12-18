@@ -30,7 +30,7 @@ class LeaveFormController extends Controller
     public function insert(Request $request){
                 // validation
 
-                return $request->all();
+                // return $request->all();
                     $request->validate([
                         'start'=>'required',
                         'reason'=>'required',
