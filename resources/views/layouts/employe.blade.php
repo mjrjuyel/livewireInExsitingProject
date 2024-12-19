@@ -26,13 +26,13 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="logo">
                <span class="logo-light">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"  class=" img-fluid" style="width:100px; object-fit:cover;"  alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:40px; object-fit:cover;"  alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"  class=" img-fluid" style="width:60%; height:auto"  alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto;" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:100px; object-fit:cover;"   alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:40px; object-fit:cover;"   alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto"  alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto;" alt="logo"></span>
                 </span>
             </a>
 
@@ -53,7 +53,7 @@
                     <li class="side-nav-title">General Navigation Bar</li>
 
                     <li class="side-nav-item">
-                        <a href="{{ route('dashboard') }}" class="side-nav-link">
+                        <a href="{{ route('dashboard',Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Dashboard </span>
                             <span class="badge bg-success rounded-pill">5</span>
@@ -65,14 +65,14 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
-                            <span class="menu-text"> Employe</span>
+                            <span class="menu-text"> Employees</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.employe') }}" class="side-nav-link">
-                                        <span class="menu-text">All Employe</span>
+                                        <span class="menu-text">All Employee</span>
                                     </a>
                                 </li>
                             </ul>
@@ -111,12 +111,12 @@
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.dailyreport') }}" class="side-nav-link">
-                                        <span class="menu-text">All Role</span>
+                                        <span class="menu-text">Reports</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.dailyreport.add') }}" class="side-nav-link">
-                                        <span class="menu-text">Add Role</span>
+                                        <span class="menu-text">Submit Report</span>
                                     </a>
                                 </li>
                             </ul>
@@ -137,7 +137,7 @@
 
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
-                                        <span class="menu-text">Leave</span>
+                                        <span class="menu-text">Leave Request Form</span>
                                     </a>
                                 </li>
 

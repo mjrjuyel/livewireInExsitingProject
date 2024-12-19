@@ -5,7 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
@@ -19,9 +19,17 @@ use Auth;
 
 class AdminProfileController extends Controller
 {
+    public function viewProfile($id){
+        $userId = Crypt::decrypt($id);
+        // return $userId;
+        $view = User::where('id',$userId)->first();
+        return view('superadmin.adminprofile.view',compact('view'));
+    }
+
     public function profileAdmin($slug){
         // return $slug;
-        $pass = User::where('slug',$slug)->first();
+        $userId = Crypt::decrypt($slug);
+        $pass = User::where('id',$userId)->first();
         $role= UserRole::all();
         // return $pass;
         return view('superadmin.adminprofile.updateProfile',compact(['pass','role']));

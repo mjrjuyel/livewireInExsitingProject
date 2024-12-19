@@ -61,13 +61,13 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Add Employe
-                                    
+                                <h3 class="card_header"><i class="mdi mdi-account-plus header_icon"></i>Add Employee
+
                                 </h3>
                             </div>
 
                             <div class="col-md-2 offset-md-2 text-end"><a href="{{ route('superadmin.employe') }}" class="btn btn-bg btn-primary btn_header ">
-                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Admin</a>
+                                    <i class="mdi mdi-account-group-outline btn_icon"></i>All Employee</a>
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                                         <option value="">Select Employe Role
                                         </option>
                                         @foreach($role as $role)
-                                        <option value="{{ $role->id }}" >{{ $role->role_name }}
+                                        <option value="{{ $role->id }}">{{ $role->role_name }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -124,7 +124,7 @@
                                 <div class="row mt-3">
                                     <label class="form-label text-primary">Provide Password</label>
                                     <div class="col-6">
-                                        
+
                                         <div class="mb-3">
                                             <label class="form-label">Password<span class="text-danger">*</span>:</label>
                                             <input type="password" class="form-control" name="pass">
@@ -154,7 +154,7 @@
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                
+
 
                                 <div class="mb-3">
                                     <label class="form-label">Addres<span class="text-danger">*</span> :</label>
@@ -167,7 +167,7 @@
                                 {{-- data-provide="datepicker" --}}
                                 <div class="mb-3">
                                     <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
-                                    <input type="text" class="form-control" id="humanfd-datepicker"  name="join" value="{{ old('join') }}" placeholder="Joining From">
+                                    <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ old('join') }}" placeholder="Joining From">
                                     @error('join')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -184,7 +184,16 @@
                                 </div>
 
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                        </div>
+                        <div class="card-footer bg-primary">
+                            <div class="row">
+                                <div class="col-md-6 offset-3 text-center">
+                                    <button type="submit" class="btn btn-dark">Submit</button>
+                                </div>
+                                <div class="col-md-5">
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

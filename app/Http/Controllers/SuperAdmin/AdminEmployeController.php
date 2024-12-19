@@ -10,6 +10,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Models\EmployeLeaveSetting;
 use App\Models\UserRole;
 use App\Models\Designation;
 use Carbon\Carbon;
@@ -79,15 +80,23 @@ class AdminEmployeController extends Controller
 
     // view for employe Dashboard
     public function view($slug){
+        $defaultLeave = EmployeLeaveSetting::first();
         $view = Employee::with(['emp_role','emp_desig','creator'])->where('emp_slug',$slug)->first();
-        $activeEmploye = Employee::count();
-        $role = UserRole::count();
-        $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
-        $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
-        $paidRemainingMonth = Leave::where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
 
-        // return $totalleaveRequest;
-        return view('superadmin.employe.view',compact(['view','activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth']));
+        $activeEmploye = Employee::where('emp_status',1)->count();
+
+        $whole_approved_leave = Leave::where('emp_id',$view->id)->where('status',2)->sum('total_leave_this_month');
+        $leaveRequestInMonth = Leave::where('emp_id',$view->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
+        $leaveRequestInYear = Leave::where('emp_id',$view->id)->whereYear('start_date',date('Y'))->count();
+
+        $paidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
+        $paidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
+
+        $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
+
+        // return $paidRemainingYear;
+        return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear']));
     }
 
     // Edit Admin

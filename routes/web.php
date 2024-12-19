@@ -80,6 +80,7 @@ Route::middleware(['auth','verified'])->group(function(){
         // Admin Profile Controller 
         Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
         Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
+        Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
 
         
         // Admin Edit Access 
