@@ -26,6 +26,11 @@ class DailyReportController extends Controller
 
     public function submit(Request $request){
 
+        $request->validate([
+            'name'=>'required',
+            'submit_date'=>'required',
+            'detail'=>'required',
+        ]);
         //Check that is There any chances to Same Date  
         $submitDate = Carbon::parse($request->submit_date);
         $checkDate=DailyReport::where('status',1)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
@@ -45,11 +50,7 @@ class DailyReportController extends Controller
                 if($maximumPreviousDate <= $submit){
 
                     // return "3 day after";
-                    $request->validate([
-                        'name'=>'required',
-                        'submit_date'=>'required',
-                        'detail'=>'required',
-                    ]);
+                    
         
                     $insert= DailyReport::create([
                         'submit_by'=>$request['name'],

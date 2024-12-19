@@ -60,12 +60,12 @@
     <div class="page-title-box">
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="font-18 mb-0">Dashboard</h4>
+                <h4 class="font-18 mb-0">Dashboard</h4> 
             </div>
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
@@ -82,7 +82,7 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Leave Application Form
+                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Leave Application Form
                                 </h3>
                             </div>
                         </div>

@@ -24,11 +24,30 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
+                    @php
+                    $datetime1 = date_create($view->emp_join->format('Y-m-d'));
+                    $datetime2 = date_create(date('Y-m-d'));
+
+                    // Calculates the difference between DateTime objects
+                    $interval = date_diff($datetime1, $datetime2); 
+                    @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Total Employe</h6>
-                    <h3 class="my-3" data-plugin="counterup"></h3>
-                    <span class="badge bg-success me-1"> +11% </span> <span class="text-muted">From previous
-                        period</span>
+                    <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">{{$view->emp_join->format('Y-M-d')}}</span></h6>
+                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y Years %m Mons %d Days %R');}}</h3>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">His Life Time Leave<span class="text-danger text-italic"> : {{$view->emp_join->format('Y-m-d')}} to {{date('Y-m-d')}}</span></h6>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span>Days</h3>
+                    
+                    </a>
                 </div>
             </div>
         </div>
@@ -78,6 +97,66 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                @php
+                    $remainYear = $defaultLeave->year_limit - $paidRemainingYear;
+                @endphp
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    @if($remainYear >= 1 )
+                      @if($remainYear  >= 2)
+                      <h3 class="my-3" ><span data-plugin="counterup">{{$remainYear}}</span>Days</h3>
+                      @else
+                       <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span>Day</h3>
+                      @endif
+                    @else
+                      <h3 class="my-3 text-danger">Out of Paid Leave</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    @if($unpaidRemainingMonth != null)
+                      @if($unpaidRemainingMonth  >= 2)
+                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span>Days</h3>
+                      @else
+                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span>Day</h3>
+                      @endif
+                    @else
+                      <h3 class="my-3 text-danger">Not Yet</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    @if($unpaidRemainingYear != null)
+                      @if($unpaidRemainingYear  >= 2)
+                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingYear}} </span>Days +</h3>
+                      @else
+                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span>Day +</h3>
+                      @endif
+                    @else
+                      <h3 class="my-3 text-danger">Not Yet</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        
+
     </div> <!-- end row -->
 
     <div class="row">

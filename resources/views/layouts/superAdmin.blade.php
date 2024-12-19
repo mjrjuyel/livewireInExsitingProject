@@ -57,19 +57,19 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
-                            <span class="menu-text"> Employe</span>
+                            <span class="menu-text"> Employees</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
-                                        <span class="menu-text">Add Employe</span>
+                                        <span class="menu-text">Add Employee</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.employe')}}" class="side-nav-link">
-                                        <span class="menu-text">All Employe</span>
+                                        <span class="menu-text">All Employee</span>
                                     </a>
                                 </li>
                             </ul>
@@ -451,7 +451,7 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('superadmin.profile',Auth::user()->slug ) }}" class="dropdown-item notify-item">
+                                <a href="{{ route('superadmin.view.profile',Crypt::encrypt(Auth::user()->id) ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Profile</span>
                                 </a>

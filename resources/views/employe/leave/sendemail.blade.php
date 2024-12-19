@@ -88,7 +88,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Leave Request
+            New Leave Request 
         </div>
         <div class="email-body">
             <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>

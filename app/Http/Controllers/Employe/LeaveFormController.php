@@ -32,14 +32,17 @@ class LeaveFormController extends Controller
 
                 // return $request->all();
                     $request->validate([
+                        'leave_type'=>'required',
                         'start'=>'required',
                         'reason'=>'required',
                         'end'=>'required',
                     ]);
 
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
+                    $lastLeave = Leave::latest('id')->first();
 
-                    // Convert English date into Unix time stamp 
+             if($lastLeave == Null || $lastLeave->status != 1){
+                          // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
                     $end_time = strtotime($request['end']);
                     $curr = strtotime(date('Y-m-d'));
@@ -137,14 +140,13 @@ class LeaveFormController extends Controller
 
                             $start_date = Carbon::parse($leavePermonth['start_date']); // Parsing day in Month, year;
                             $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
-                            
-                            // return $start_date . "Start Date " . "end date " .$end_date;
 
                             // check total Paid of in a month
                             $checkMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
                             $previousLeave = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
                             // return $previousLeave !== null ? "this have value " : "Its A  null property";
+
                             // check total paid off in an annual year
                             $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
@@ -154,8 +156,6 @@ class LeaveFormController extends Controller
                             $paidLeaves = min($remainingMonthlyPaidLeave,$leavePermonth['totalDays']);
                             // return $paidLeaves;
                             $unPaidLeaves = $leavePermonth['totalDays'] - $paidLeaves;
-
-                            // return $paidLeaves . "Paid leave - nonpaid leaves " . $unPaidLeaves;
 
                                     $insert = Leave::create([
                                         'leave_type_id'=>$request['leave_type'],
@@ -173,7 +173,6 @@ class LeaveFormController extends Controller
             
                                     // Send Mail to Admin
                                     Mail::to('mjrcoder7@gmail.com')->send(new LeaveMailToAdmin($insert));
-                                    // return $insert;
 
                                     if ($insert) {
                                         if ($unPaidLeaves > 0) {
@@ -190,6 +189,10 @@ class LeaveFormController extends Controller
                 }
             Session::flash('error','Date Is not Correct!');
             return redirect()->route('dashboard.leave.add');
+        }
+        Session::flash('error','Already Your last Leave Request Is Pending');
+        return redirect()->route('dashboard.leave.add');
+                  
     }
 
     public function view($slug){

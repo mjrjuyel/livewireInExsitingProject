@@ -15,7 +15,7 @@ class BasicSeeder extends Seeder
     public function run(): void
     {
         Basic::create([
-            'copyright'=>date('Y').'E-TeamfY - By SupereoX',
+            'copyright'=>'E-TeamifY - By SupreoX',
             'created_at'=>Carbon::now(),
         ]);
     }
