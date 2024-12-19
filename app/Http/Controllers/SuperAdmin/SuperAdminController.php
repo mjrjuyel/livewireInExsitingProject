@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Employe;
+namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Employee;
+use App\Models\UserRole;
+use App\Models\Leave;
 
 class SuperAdminController extends Controller
 {
     public function dashboard(){
-        return view('superadmin.dashboard.index');
+        $activeEmploye = Employee::count();
+        $role = UserRole::count();
+        $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
+        $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
+        // return $totalleaveRequest;
+        return view('superadmin.dashboard.index',compact(['activeEmploye','role','leaveRequestInMonth','leaveRequestInYear']));
     }
 
     public function insert(Request $request){

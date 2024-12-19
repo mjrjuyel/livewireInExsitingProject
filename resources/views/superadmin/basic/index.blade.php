@@ -81,9 +81,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 mt-5">
                                          @if($basic->Mlogo != '')
-                                        <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class="img-fluid" alt="" style="width:150px height:100px; object-fit:cover;">
+                                        <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class="img-fluid" alt="" style="width:50%; height:auto; object-fit:cover;">
                                         @endif
                                     </div>
                                 </div>
@@ -100,9 +100,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 mt-5">
                                          @if($basic->Flogo != '')
-                                        <img src="{{asset('uploads/basic/'.$basic->Flogo)}}" class="img-fluid" alt="" style="width:150px height:100px; object-fit:cover;">
+                                        <img src="{{asset('uploads/basic/'.$basic->Flogo)}}" class="img-fluid" alt="" style="width:50%; height:auto; object-fit:cover;">
                                         @endif
                                     </div>
                                 </div>
@@ -119,9 +119,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-6 mt-3">
                                         @if($basic->favlogo != '')
-                                        <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class="img-fluid" alt="" style="width:150px height:100px; object-fit:cover;">
+                                        <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class="img-fluid" alt="" style="width:50%; height:auto; object-fit:cover;">
                                         @endif
                                     </div>
                                 </div>

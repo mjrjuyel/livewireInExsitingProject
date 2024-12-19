@@ -35,7 +35,7 @@
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
@@ -76,13 +76,13 @@
 
                                     <td class="text-danger">
                                         @foreach($role->admin as $admin)
-                                        {{optional($admin)->name}},
+                                         <span class="btn btn-dark"> {{optional($admin)->name}}</span>
                                         @endforeach
                                     </td>
 
                                      <td class="text-primary">
                                         @foreach($role->employe as $admin)
-                                        {{optional($admin)->emp_name}},
+                                        <span class="btn btn-info">{{optional($admin)->emp_name}}</span>
                                         @endforeach
                                     </td>
 

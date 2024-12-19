@@ -87,7 +87,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            Response From Admin
+            Response From {{ config('app.name', 'Laravel') }} by Admin
         </div>
         <div class="email-body">
             <p><strong>Employee:</strong></p>

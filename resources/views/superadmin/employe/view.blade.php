@@ -5,12 +5,12 @@
 
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="font-18 mb-0">Dashboard</h4>
+                <h4 class="font-18 mb-0"> Dashboard Of: <span class="text-primary">{{$view->emp_name}}</span></h4>
             </div>
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
@@ -19,6 +19,66 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Total Employe</h6>
+                    <h3 class="my-3" data-plugin="counterup"></h3>
+                    <span class="badge bg-success me-1"> +11% </span> <span class="text-muted">From previous
+                        period</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
+                    
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.employe')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
+                    
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
+                      @if($paidRemainingMonth == 1)
+                      <h3 class="my-3" data-plugin="counterup">2</h3>Days
+                      @elseif($paidRemainingMonth == 2)
+                      <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
+                      @elseif($paidRemainingMonth >= 3)
+                      <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
+                      @endif
+                    @else
+                      <h3 class="my-3 text-success" data-plugin="counterup">3</h3>Days
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div> <!-- end row -->
 
     <div class="row">
         <div class="col-12">

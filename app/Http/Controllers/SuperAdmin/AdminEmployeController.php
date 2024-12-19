@@ -8,6 +8,7 @@ use Illuminate\Validation\Rules;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
+use App\Models\Leave;
 use App\Models\Employee;
 use App\Models\UserRole;
 use App\Models\Designation;
@@ -75,10 +76,18 @@ class AdminEmployeController extends Controller
         return view('superadmin.employe.index',compact('employe'));
     }
 
+
+    // view for employe Dashboard
     public function view($slug){
         $view = Employee::with(['emp_role','emp_desig','creator'])->where('emp_slug',$slug)->first();
-        // return $view;
-        return view('superadmin.employe.view',compact('view'));
+        $activeEmploye = Employee::count();
+        $role = UserRole::count();
+        $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
+        $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
+        $paidRemainingMonth = Leave::where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
+
+        // return $totalleaveRequest;
+        return view('superadmin.employe.view',compact(['view','activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth']));
     }
 
     // Edit Admin
@@ -98,13 +107,15 @@ class AdminEmployeController extends Controller
            // return $request->all();
         $request->validate([
             'name'=>'required',
-            'email'=>'required | email:rfc,dns',
+            'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
             'phone'=>'required',
         ]);
 
         if($request->pass != ''){
             $request->validate([
-                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(4)->letters()],
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+                ->numbers()
+                ->symbols()],
                 'repass' => 'required | same:pass',
              ]);
 
@@ -146,13 +157,14 @@ class AdminEmployeController extends Controller
             'emp_desig_id'=>$request['desig'],
             'emp_role_id'=>$request['role'],
             'emp_join'=>$request['join'],
+            'emp_resign'=>$request['resign'],
             'emp_status'=>$request['status'],
-            'emp_creator'=>Auth::user()->id,
+            'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now(),
         ]);
 
         if($insert){
-            Session::flash('success','New Employee Edit SuccessFully ');
+            Session::flash('success','Employee Edit SuccessFully ');
             return redirect()->route('superadmin.employe.view',$slug);
         }
     }
@@ -214,6 +226,23 @@ class AdminEmployeController extends Controller
         
         Session::flash('success','Profile Update Successfully');
         return redirect()->back();
+    }
+
+    // Softy Delete 
+
+    public function softdele(Request $request){
+        $id = $request['id'];
+
+        $softdel = Employee::where('id',$id)->update([
+            'emp_status'=>0,
+            'emp_editor'=>Auth::user()->id,
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        if($softdel){
+            Session::flash('success','Employe is Deactivated!');
+            return redirect()->back();
+        }
     }
     
     public function delete($slug){

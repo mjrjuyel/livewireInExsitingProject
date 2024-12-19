@@ -88,7 +88,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            Response From Admin
+            Response From Admin-> ({{ config('app.name', 'Laravel') }})
         </div>
         <div class="email-body">
             <p><strong>Employee:</strong>{{ $data['employe']->emp_name }}</p>

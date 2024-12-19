@@ -11,7 +11,7 @@
 
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Uplon</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
@@ -52,8 +52,8 @@
                                     <td>:</td>
                                     <td>
                                         @foreach($view->employe as $employe)
-                                        <button type="button" class="btn btn-warning " style="cursor:none;">
-                                            {{optional($employe)->emp_name}},
+                                        <button type="button" class="btn btn-info ">
+                                            {{optional($employe)->emp_name}}
                                         </button>
                                         @endforeach
                                     </td>

@@ -23,13 +23,13 @@
             <a href="{{route('superadmin')}}" class="logo">
                 <span class="logo-light">
                     <span class="logo-lg">
-                    <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:80px; object-fit:cover;" alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:40px; object-fit:cover;" alt="logo"></span>
+                    <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"class=" img-fluid" style="width:80px; object-fit:cover;" alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}"class="img-fluid" style="width:40px; object-fit:cover;" alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}"class="img-fluid" style="width:100%; height:auto;" alt="logo"></span>
                 </span>
             </a>
 
@@ -137,20 +137,20 @@
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarBasicSetting" aria-expanded="false" aria-controls="sidebarBasicSetting" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
-                            <span class="menu-text">Basic Setting</span>
+                            <span class="menu-icon"><i class="mdi mdi-octagram-edit-outline"></i></span>
+                            <span class="menu-text">Settings</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarBasicSetting">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.basic')}}" class="side-nav-link">
-                                        <span class="menu-text">Website Setting</span>
+                                        <span class="menu-text">Website</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.leavesetting')}}" class="side-nav-link">
-                                        <span class="menu-text">Leave Setting</span>
+                                        <span class="menu-text">Leave</span>
                                     </a>
                                 </li>
                             </ul>
@@ -435,9 +435,9 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::user()->image != '')
-                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover;"  alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;"  alt="user-image">
                                 @else
-                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" width="32"class="rounded-circle me-lg-2 d-flex img-fluid" style="width:40px; object-fit:cover;" alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::user()->name }}</h6>
@@ -447,13 +447,13 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
-                                    <h6 class="text-overflow text-white m-0">Welcome !</h6>
+                                    <h6 class="text-overflow text-white m-0">Welcome ! </h6>
                                 </div>
 
                                 <!-- item-->
                                 <a href="{{ route('superadmin.profile',Auth::user()->slug ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
-                                    <span>Update Profile</span>
+                                    <span>Profile</span>
                                 </a>
 
                                 <div class="dropdown-divider"></div>
@@ -485,10 +485,10 @@
                 <div class="page-container">
                     <div class="row">
                         <div class="col-md-12 text-center">
+                            {{strip_tags($basic->copyright)}}</span>
                             <script>
                                 document.write(new Date().getFullYear())
-
-                            </script> {{strip_tags($basic->copyright)}}</span>
+                            </script>
                         </div>
                     </div>
                 </div>
