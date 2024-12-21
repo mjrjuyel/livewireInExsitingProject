@@ -127,7 +127,7 @@
                                         <label class="form-label">Short Reason<span class="text-danger">* </span>:
                                         </label>
 
-                                        <textarea type="text" style="resize:none;" rows="4" name="reason" class="form-control" placeholder="Write Some Reason"></textarea>
+                                        <textarea type="text" style="resize:none;" rows="4" name="reason" class="form-control" placeholder="Write Some Reason">{{old('reason')}}</textarea>
 
                                         @error('reason')
                                         <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

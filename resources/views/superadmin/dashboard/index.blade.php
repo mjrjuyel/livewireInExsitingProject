@@ -76,6 +76,42 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
+                    <a href="{{route('superadmin.leave.pending')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In Pending <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInPending}}</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.leave.approved')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request Approved in<span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInApproved}}</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('superadmin.leave.cancled')}}">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request Cancled in<span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInCancled}}</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
                     <i class="icon-chart float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Average Price</h6>
                     <h3 class="my-3">$<span data-plugin="counterup">15.9</span></h3>

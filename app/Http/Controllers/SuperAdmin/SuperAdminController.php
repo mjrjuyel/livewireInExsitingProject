@@ -15,8 +15,11 @@ class SuperAdminController extends Controller
         $role = UserRole::count();
         $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
         $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
+        $leaveRequestInPending = Leave::whereYear('start_date',date('Y'))->where('status',1)->count();
+        $leaveRequestInApproved = Leave::whereYear('start_date',date('Y'))->where('status',2)->count();
+        $leaveRequestInCancled = Leave::whereYear('start_date',date('Y'))->where('status',3)->count();
         // return $totalleaveRequest;
-        return view('superadmin.dashboard.index',compact(['activeEmploye','role','leaveRequestInMonth','leaveRequestInYear']));
+        return view('superadmin.dashboard.index',compact(['activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled']));
     }
 
     public function insert(Request $request){

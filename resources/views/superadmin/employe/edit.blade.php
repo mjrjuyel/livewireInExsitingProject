@@ -167,7 +167,7 @@
 
 
                                 <div class="mb-3">
-                                    <label class="form-label">Addres<span class="text-danger">*</span> :</label>
+                                    <label class="form-label">Address<span class="text-danger">*</span> :</label>
                                     <input type="text" class="form-control" name="add" value="{{ $edit->emp_address }}" placeholder="Enter Present Address">
                                     @error('add')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -184,7 +184,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Resign Date<span class="text-danger">*</span> :</label>
+                                    <label class="form-label">Resign Date :</label>
                                     <input type="text" class="form-control" id="humanfd-datepicke" name="resign" value="{{ $edit->resign_date }}" placeholder="Resign Date">
                                     @error('resign')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

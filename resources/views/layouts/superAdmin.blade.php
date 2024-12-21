@@ -122,6 +122,28 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarLeaveType" aria-expanded="false" aria-controls="sidebarLeaveType" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-emoticon-sick-outline"></i></span>
+                            <span class="menu-text">Leave Type</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarLeaveType">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
+                                        <span class="menu-text">All Type</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.leavetype.add')}}" class="side-nav-link">
+                                        <span class="menu-text">Add Type</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a href="{{route('superadmin.leave')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Leave Application </span>
@@ -151,6 +173,11 @@
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.leavesetting')}}" class="side-nav-link">
                                         <span class="menu-text">Leave</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.timezone')}}" class="side-nav-link">
+                                        <span class="menu-text">Time Zone</span>
                                     </a>
                                 </li>
                             </ul>
