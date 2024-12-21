@@ -51,7 +51,7 @@ class AdminEmployeController extends Controller
         
         $insert = Employee::create([
             'emp_name'=>$request['name'],
-            'email'=>$request['email'],
+            'email'=>$request['email1'],
             'emp_phone'=>$request['phone'],
             'emp_address'=>$request['add'],
             'emp_image'=>$image_name ?? null,
@@ -112,8 +112,7 @@ class AdminEmployeController extends Controller
 
         $id = $request['id'];
         $slug = $request['slug'];
-        return $request->all();
-           // return $request->all();
+        // return $request->all();
         $request->validate([
             'name'=>'required',
             'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,

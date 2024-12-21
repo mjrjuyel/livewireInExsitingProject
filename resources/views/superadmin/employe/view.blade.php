@@ -33,7 +33,7 @@
                     @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">{{$view->emp_join->format('Y-M-d')}}</span></h6>
-                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y Years %m Mons %d Days %R');}}</h3>
+                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y Y %m M %d D %R');}}</h3>
                    
                 </div>
             </div>

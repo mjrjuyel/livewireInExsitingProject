@@ -137,7 +137,7 @@
 
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
-                                        <span class="menu-text">Leave Request Form</span>
+                                        <span class="menu-text">Request Form</span>
                                     </a>
                                 </li>
 

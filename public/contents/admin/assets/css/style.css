@@ -100,3 +100,6 @@ a{
 .note-editable {
     resize: none; /* Disable resizing */
 }
+.hiddenInput{
+    display: none;
+}

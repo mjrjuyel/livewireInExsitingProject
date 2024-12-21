@@ -24,6 +24,8 @@ use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; // Super Admin Ma
 use App\Http\Controllers\SuperAdmin\AdminDailyReportController; /// Super admin can view detail who send dailyreport.
 use App\Http\Controllers\SuperAdmin\AdminRoleController; /// Role Create,View,edit,delete.
 use App\Http\Controllers\SuperAdmin\LeaveSettingController; // Leave Settings .
+use App\Http\Controllers\SuperAdmin\TimeZoneController; // TimeZone Settings .
+use App\Http\Controllers\SuperAdmin\LeaveTypeController; // Leave Type Add, create, edit .
 
 
 Route::get('/', function () {
@@ -116,9 +118,21 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
         Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
         Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
+
+        // Leave Management 
+        Route::get('/superadmin/leavetype',[LeaveTypeController::class,'index'])->name('superadmin.leavetype');
+        Route::get('/superadmin/leavetype/add',[LeaveTypeController::class,'add'])->name('superadmin.leavetype.add');
+        Route::post('/superadmin/leavetype/insert',[LeaveTypeController::class,'insert'])->name('superadmin.leavetype.insert');
+        Route::get('/superadmin/leavetype/edit/{id}',[LeaveTypeController::class,'edit'])->name('superadmin.leavetype.edit');
+        Route::post('/superadmin/leavetype/update',[LeaveTypeController::class,'update'])->name('superadmin.leavetype.update');
+        Route::get('/superadmin/leavetype/view/{id}',[LeaveTypeController::class,'view'])->name('superadmin.leavetype.view');
+        Route::delete('/superadmin/leavetype/delete/{id}',[LeaveTypeController::class,'delete'])->name('superadmin.leavetype.delete');
         
         // Leave Application status
         Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
+        Route::get('/superadmin/leave/pending',[SuperAdminLeaveController::class,'pending'])->name('superadmin.leave.pending');
+        Route::get('/superadmin/leave/approved',[SuperAdminLeaveController::class,'approved'])->name('superadmin.leave.approved');
+        Route::get('/superadmin/leave/cancled',[SuperAdminLeaveController::class,'cancled'])->name('superadmin.leave.cancled');
         Route::get('/superadmin/leave/view/{slug}',[SuperAdminLeaveController::class,'view'])->name('superadmin.leave.view');
         Route::post('/superadmin/leave/update',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.update');
         Route::delete('/superadmin/leave/delete/{slug}',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.view');
@@ -137,6 +151,10 @@ Route::middleware(['auth','verified'])->group(function(){
         //SuperAdmin Basic Controller
         Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
         Route::post('/superadmin/basic/update',[BasicController::class,'update'])->name('superadmin.basic.update');
+
+        //TimeZone Basic Controller
+        Route::get('/superadmin/timezone',[TimeZoneController::class,'index'])->name('superadmin.timezone');
+        Route::post('/superadmin/timezone/update',[TimeZoneController::class,'update'])->name('superadmin.timezone.update');
         // 404 for not authrized
     });
 

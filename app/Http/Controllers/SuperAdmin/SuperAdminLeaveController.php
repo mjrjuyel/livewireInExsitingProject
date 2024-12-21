@@ -23,6 +23,23 @@ class SuperAdminLeaveController extends Controller
         return view('superadmin.leave.index',compact('alldata'));
     }
 
+    public function pending(){
+        $alldata = Leave::with(['admin','leavetype'])->where('status',1)->latest('id')->get();
+        // return $alldata;
+        return view('superadmin.leave.pending',compact('alldata'));
+    }
+    public function approved(){
+        $alldata = Leave::with(['admin','leavetype'])->where('status',2)->latest('id')->get();
+        // return $alldata;
+        return view('superadmin.leave.approved',compact('alldata'));
+    }
+
+    public function cancled(){
+        $alldata = Leave::with(['admin','leavetype'])->where('status',3)->latest('id')->get();
+        // return $alldata;
+        return view('superadmin.leave.cancled',compact('alldata'));
+    }
+
     // view per role
     public function view($slug){
         $view = Leave::with(['employe'=>function($query){
