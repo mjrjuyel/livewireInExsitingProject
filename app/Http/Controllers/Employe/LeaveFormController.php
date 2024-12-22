@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Employe;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LeaveMailToAdmin;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\LeaveToAdminNotification;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\LeaveType;
@@ -42,6 +44,7 @@ class LeaveFormController extends Controller
                     $lastLeave = Leave::latest('id')->first();
 
              if($lastLeave == Null || $lastLeave->status != 1){
+
                           // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
                     $end_time = strtotime($request['end']);
@@ -50,6 +53,23 @@ class LeaveFormController extends Controller
                     // return $start_time . " > Start Time <br>" . "current time " .$curr;
                 // 2 dates are valid or not!
                 if($start_time <= $end_time && $start_time >= $curr){
+
+                    // **NEW CONDITION: Check for overlapping leaves**
+                        $overlappingLeaves = Leave::where('emp_id', Auth::guard('employee')->user()->id)
+                            ->where(function ($query) use ($request) {
+                                $query->whereBetween('start_date', [$request['start'], $request['end']])
+                                    ->orWhereBetween('end_date', [$request['start'], $request['end']])
+                                    ->orWhere(function ($query) use ($request) {
+                                        $query->where('start_date', '<=', $request['start'])
+                                                ->where('end_date', '>=', $request['end']);
+                                    });
+                            })
+                            ->exists();
+
+                        if ($overlappingLeaves) {
+                            Session::flash('error', 'Your leave request overlaps with a previously submitted leave.');
+                            return redirect()->route('dashboard.leave.add');
+                        }
                     
                     // Check Date And Count Total Day between 2 dates
 
@@ -174,6 +194,7 @@ class LeaveFormController extends Controller
                                     // Send Mail to Admin
                                     Mail::to('mjrcoder7@gmail.com')->send(new LeaveMailToAdmin($insert));
 
+                                    // Notification::send(User::all(), new LeaveToAdminNotification($insert));
                                     if ($insert) {
                                         if ($unPaidLeaves > 0) {
                                             Session::flash('success', 'Monthly leave limit reached! Extra days counted as unpaid.');

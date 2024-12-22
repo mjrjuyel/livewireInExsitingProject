@@ -136,10 +136,14 @@
                                                 <label class="form-label">Request Paid Leave<span class="text-danger">* </span>:
                                                 </label>
                                                  @if($view->total_paid <= 1) 
+                                                     @if($view->total_paid == 1) 
                                                     <span class="text-danger">
-                                                    {{ $view->total_paid }}Day
+                                                    {{ $view->total_paid  }}Day
                                                     </span>
                                                     @else
+                                                    0 Day
+                                                    @endif
+                                                @else
                                                     <span class="text-danger">
                                                         {{ $view->total_paid }}Days
                                                     </span>
@@ -150,10 +154,14 @@
                                                 <label class="form-label">Request UnPaid Leave<span class="text-danger">* </span>:
                                                 </label>
                                                  @if($view->total_unpaid <= 1) 
+                                                    @if($view->total_unpaid == 1) 
                                                     <span class="text-danger">
                                                     {{ $view->total_unpaid  }}Day
                                                     </span>
                                                     @else
+                                                    0 Day
+                                                    @endif
+                                                @else
                                                     <span class="text-danger">
                                                         {{ $view->total_unpaid }}Days
                                                     </span>

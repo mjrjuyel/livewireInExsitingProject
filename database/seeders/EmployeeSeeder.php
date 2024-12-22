@@ -22,7 +22,6 @@ class EmployeeSeeder extends Seeder
             'emp_slug'=>'Emp-'.uniqId(),
             'emp_desig_id'=>rand(1,2),
             'emp_phone'=>'01754172525',
-            'emp_role_id'=>1,
             'emp_creator'=>1,
             'emp_join'=>Carbon::now(),
             'password'=>Hash::make('employe%%@'),

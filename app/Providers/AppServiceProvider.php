@@ -24,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $basic = Basic::where('id','1')->first();
         view()->share('basic',$basic);
+        
     }
 }
