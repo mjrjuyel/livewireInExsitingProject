@@ -29,7 +29,7 @@ class LeaveTypeController extends Controller
         ]);
 
         $insert=LeaveType::create([
-            'name'=>$request['name'],
+            'type_title'=>$request['name'],
             'created_at'=>Carbon::now(),
         ]);
 

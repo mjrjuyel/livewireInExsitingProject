@@ -92,7 +92,7 @@
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Full Name <span class="text-danger">*</span> :</label>
                                                             <div>
-                                                                <input class="form-control" id="userName2" name="name" type="text">
+                                                                <input class="form-control" id="userName2" name="name" value="{{old('name')}}" type="text">
                                                             </div>
                                                             @error('name')
                                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -216,7 +216,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Email<span class="text-danger">*</span> :</label>
-                                                            <input class="required form-control" id="userName2" name="email" type="email">
+                                                            <input class="required form-control" id="userName2" value="{{old('email')}}" name="email" type="email">
                                                             @error('email')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -226,7 +226,7 @@
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Email : <span class="text-info">(Alternate Email)</span></label>
                                                             <div>
-                                                                <input class="form-control" id="userName2" name="email2" type="email1">
+                                                                <input class="form-control" id="userName2" value="{{old('email2')}}" name="email2" type="email1">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -234,7 +234,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label for="email2">Phone Number <span class="text-danger">*</span> :</label>
-                                                                <input id="email2" name="phone" type="text" class="required form-control">
+                                                                <input id="email2" name="phone" type="text" value="{{old('phone')}}" class="form-control">
                                                             @error('phone')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -247,14 +247,14 @@
                                                         <div class="form-group clearfix">
                                                             <label for="address2">Phone Number<span>(optional)</span></label>
                                                             <div>
-                                                                <input id="address2" name="phone2" type="text" class="form-control">
+                                                                <input id="address2" name="phone2" value="{{old('phone2')}}" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label for="email2">Emergency Contact Number <span class="text-danger">*</span> :</label>
-                                                                <input id="email2" name="emerPhone" type="text" class="required form-control">
+                                                                <input id="email2" name="emerPhone" type="text" value="{{old('emerPhone')}}" class="required form-control">
                                                             @error('emerPhone')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -264,7 +264,7 @@
                                                         <div class="form-group clearfix">
                                                             <label for="address2">Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
                                                           
-                                                                <input id="address2" name="emerRelation" type="text" class="required form-control">
+                                                                <input id="address2" name="emerRelation" type="text" value="{{old('emerRelation')}}" class="required form-control">
                                                            @error('emerRelation')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -276,7 +276,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label for="email2">Parmanent Address <span class="text-danger">*</span> :</label>
-                                                            <input id="email2" name="add" type="text" class="required form-control" value="{{old('parAdd')}}">
+                                                            <input id="email2" name="add" type="text" class="required form-control" value="{{old('add')}}">
                                                             @error('add')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -312,7 +312,7 @@
                                                         <div class="form-group">
                                                             <label for="address2">Present Address</label>
                                                             <div>
-                                                                <input id="address2" name="preAdd" type="text" class="form-control">
+                                                                <input id="address2" name="preAdd" type="text" value="{{old('preAdd')}}" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -327,7 +327,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Designation <span class="text-danger">*</span> :</label>
-                                                            <select type="text" class="form-control" name="desig">
+                                                            <select type="text" class="form-control" name="desig" value="{{old('desig')}}">
                                                                 <option value="">Select One</option>
                                                                 @foreach($designation as $desig)
                                                                 <option value="{{ $desig->id }}">{{ $desig->title }}
@@ -434,25 +434,22 @@
                                                     <div class="col-sm-5 offset-sm-3">
                                                         <div id="national_id_input" class="hiddenInput">
                                                             <label for="national_id" class="form-label">National ID/Passport Number:</label>
-                                                            <input type="text" id="national_id" class="form-control" name="id_number">
-                                                            @error('id_number')
-                                                            <small class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
+                                                            <input type="text" id="national_id" class="form-control" value="{{old('id_number')}}" name="id_number">
+                                                            
                                                         </div>
                                                         <div id="ssn_input" class="hiddenInput">
                                                             <label for="ssn" class="form-label">Social Security Number (SSN):</label>
-                                                            <input type="text" id="ssn" class="form-control" name="id_number">
-                                                            @error('id_number')
-                                                            <small class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
+                                                            <input type="text" id="ssn" class="form-control" value="{{old('id_number')}}" name="id_number">
+                                                           
                                                         </div>
                                                         <div id="driver_license_input" class="hiddenInput">
                                                             <label for="driver_license" class="form-label">Driver’s License Number:</label>
-                                                            <input type="text" id="driver_license" class="form-control" name="id_number">
-                                                            @error('id_number')
-                                                            <small class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
+                                                            <input type="text" id="driver_license"  value="{{old('id_number')}}" class="form-control" name="id_number">
+                                                           
                                                         </div>
+                                                         @error('id_number')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                         @enderror
                                                     </div>
                                                 </fieldset>
                                             </section>
@@ -481,7 +478,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Last Academic Degree :- <span class="text-danger">*</span> :</label>
-                                                            <input class="required form-control" id="userName2" name="degree" type="text">
+                                                            <input class="required form-control" id="userName2" value="{{old('degree')}}" name="degree" type="text">
                                                             @error('degree')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -489,7 +486,7 @@
 
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Passing Year:- <span class="text-danger">*</span> :</label>
-                                                            <input class="required form-control" id="userName2" name="degreYear" type="text">
+                                                            <input class="required form-control" id="userName2" value="{{old('degreYear')}}" name="degreYear" type="date">
                                                             @error('degreYear')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -586,7 +583,7 @@
                                                         <div class="form-group clearfix">
                                                             <label class="form-label" for="userName2">Account No <span class="text-danger">*</span> :</label>
                                                             <div>
-                                                                <input class="form-control" name="accountNo" type="text">
+                                                                <input class="form-control" name="accountNo" value="{{old('accountNo')}}" type="text">
                                                             </div>
                                                             @error('accountNo')
                                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -598,7 +595,7 @@
                                                         <div class="form-group clearfix">
                                                             <label class="form-label" for="userName2">Account Name <span class="text-danger">*</span> :</label>
                                                             <div>
-                                                                <input class="form-control" name="accountName" type="text">
+                                                                <input class="form-control" name="accountName" value="{{old('accountName')}}" type="text">
                                                             </div>
                                                             @error('accountName')
                                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -625,7 +622,7 @@
                                                         <div class="form-group clearfix">
                                                             <label>IFSC/Sort Code</label>
                                                             <div>
-                                                                <input id="address2" name="sortCode" type="number" class="form-control">
+                                                                <input id="address2" name="sortCode" value="{{old('sortCode')}}" type="number" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -693,7 +690,7 @@
                                                         <div class="form-group clearfix">
                                                             <label class="form-label" for="userName2">Access Card Number <span class="text-danger">*</span> :</label>
                                                             <div>
-                                                                <input class="form-control" name="accessCard" type="number">
+                                                                <input class="form-control" value="{{old('accessCard')}}" name="accessCard" type="number">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -702,7 +699,7 @@
                                                         <div class="form-group clearfix">
                                                             <label for="email2">System/IT Requirement</label>
                                                             <div>
-                                                                <input class="form-control" name="system" type="text">
+                                                                <input class="form-control" value="{{old('syste')}}" name="system" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
