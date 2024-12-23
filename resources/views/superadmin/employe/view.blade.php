@@ -250,7 +250,7 @@
                                 <tr>
                                     <td>Employe Joining Date</td>
                                     <td>:</td>
-                                    <td>{{$view->emp_join}}</td>
+                                    <td>{{$view->emp_join->format('d-M-Y')}}</td>
                                 </tr>
 
                                 <tr>

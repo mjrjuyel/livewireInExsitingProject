@@ -23,13 +23,13 @@
             <a href="{{route('superadmin')}}" class="logo">
                 <span class="logo-light">
                     <span class="logo-lg">
-                    <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
+                        <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
                     <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}"class="img-fluid" style="width:100%; height:auto;" alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class="img-fluid" style="width:100%; height:auto;" alt="logo"></span>
                 </span>
             </a>
 
@@ -144,6 +144,116 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarBranchName" aria-expanded="false" aria-controls="sidebarBranchName" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-office-building-plus"></i></span>
+                            <span class="menu-text">Office Branch</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarBranchName">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.office_branch')}}" class="side-nav-link">
+                                        <span class="menu-text">All Branch</span>
+                                    </a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.office_branch.add')}}" class="side-nav-link">
+                                        <span class="menu-text">Add Branch</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarBank" aria-expanded="false" aria-controls="sidebarBank" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-bank"></i></span>
+                            <span class="menu-text"> Bank Detail </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarBank">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarBankName" aria-expanded="false" aria-controls="sidebarBankName" class="side-nav-link">
+                                        <span class="menu-text">Bank</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarBankName">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.bank_name')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Bank</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.bank_name.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Bank</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarBankBranch" aria-expanded="false" aria-controls="sidebarBankBranch" class="side-nav-link">
+                                        <span class="menu-text">Bank Branches</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarBankBranch">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.bank_branch')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Branch</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.bank_branch.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Branch</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarDepartment" aria-expanded="false" aria-controls="sidebarDepartment" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-slash-forward-box"></i></span>
+                            <span class="menu-text"> Department </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarDepartment">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarDepartmentList" aria-expanded="false" aria-controls="sidebarDepartmentList" class="side-nav-link">
+                                        <span class="menu-text">Department</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarDepartmentList">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.department')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Department</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.department.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Department</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a href="{{route('superadmin.leave')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Leave Application </span>
@@ -185,12 +295,12 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarBank" aria-expanded="false" aria-controls="sidebarBank" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-card-multiple-outline"></i></span>
                             <span class="menu-text"> Multi Level </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="sidebarMultiLevel">
+                        <div class="collapse" id="sidebarBank">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel" class="side-nav-link">
@@ -334,8 +444,8 @@
 
                                 <div class="position-relative z-2" style="max-height: 300px;" data-simplebar>
                                     <!-- item-->
-                                
-                                    
+
+
                                     <!-- item-->
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
@@ -356,7 +466,7 @@
                                             </span>
                                         </span>
                                     </div>
-                                    
+
                                 </div>
 
                                 <!-- All-->
@@ -372,7 +482,7 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::user()->image != '')
-                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;"  alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @else
                                 <img src="{{ asset('uploads/adminprofile/img.jpg')}}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif
@@ -425,6 +535,7 @@
                             {{strip_tags($basic->copyright)}}</span>
                             <script>
                                 document.write(new Date().getFullYear())
+
                             </script>
                         </div>
                     </div>

@@ -65,6 +65,7 @@ class SuperAdminLeaveController extends Controller
             $update= Leave::where('slug',$slug)->update([
                 'status'=>$request['status'],
                 'comments'=>$request['comment'],
+                'status'=>4,
                 'editor'=>Auth::user()->id,
                 'updated_at'=>Carbon::now(),
             ]);
@@ -91,7 +92,6 @@ class SuperAdminLeaveController extends Controller
                     'updated_at'=>Carbon::now(),
                 ]);
                
-
                 if($update){
                     Session::flash('success','Request Leave Cancle!');
                 }

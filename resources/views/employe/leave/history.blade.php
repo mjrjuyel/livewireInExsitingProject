@@ -113,17 +113,21 @@
 
                                      <td>
                                         @if($leavehistory->status == 1)
-                                        <button type="button" class="btn btn-warning ">
-                                            Pending
-                                        </button>
-                                        @elseif($leavehistory->status == 2)
-                                        <button type="button" class="btn btn-primary " >
-                                            Approved
-                                        </button>
-                                        @else
-                                        <button type="button" class="btn btn-warning">
-                                            Cancle
-                                        </button>
+                                            <button type="button" class="btn btn-warning ">
+                                                Pending
+                                            </button>
+                                            @elseif($leavehistory->status == 2)
+                                            <button type="button" class="btn btn-primary " >
+                                                Approved
+                                            </button>
+                                            @elseif($leavehistory->status == 3)
+                                            <button type="button" class="btn btn-primary " >
+                                                Cancled
+                                            </button>
+                                            @elseif($leavehistory->status == 4)
+                                            <button type="button" class="btn btn-primary " >
+                                            Only FeedBack
+                                            </button>
                                         @endif
                                     </td>
 

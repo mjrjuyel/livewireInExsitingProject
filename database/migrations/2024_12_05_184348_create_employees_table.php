@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('emp_name',100)->nullable();
-            $table->integer('emp_id_card_number')->nullable();
             $table->string('email',40)->nullable();
             $table->string('email2',40)->nullable();
             $table->string('emp_phone',20)->nullable();
@@ -22,8 +21,8 @@ return new class extends Migration
             $table->string('emp_address',100)->nullable();
             $table->string('emp_present',100)->nullable();
             $table->string('emp_emer_contact',20)->nullable();
-            $table->string('emp_emer_relation',20)->nullable();
-            $table->date('dateofbirth',100)->nullable();
+            $table->string('emp_emer_relation',100)->nullable();
+            $table->date('emp_dob',100)->nullable();
             $table->string('gender',20)->nullable();
             $table->string('marriage',20)->nullable();
             $table->string('emp_image',100)->nullable();
@@ -31,7 +30,7 @@ return new class extends Migration
             $table->string('emp_slug',24)->nullable();
             // job detail
             $table->integer('emp_report_manager')->nullable();
-            $table->integer('emp_department')->nullable();
+            $table->integer('emp_depart_name_id')->nullable();
             $table->integer('emp_desig_id')->nullable();
             $table->integer('emp_role_id')->nullable();
             $table->string('emp_type_id')->nullable();
@@ -46,7 +45,8 @@ return new class extends Migration
             $table->date('emp_rec_year')->nullable();
 
             // bank statement
-            $table->string('emp_bank_name')->nullable();
+            $table->integer('emp_bank_id')->nullable();
+            $table->integer('emp_bank_branch_id')->nullable();
             $table->string('emp_bank_account_name')->nullable();
             $table->string('emp_bank_account_number')->nullable();
             $table->string('emp_bank_swift_code')->nullable();
@@ -55,7 +55,8 @@ return new class extends Migration
             // company Specific field
         
             // Office 
-            $table->string('emp_office_name')->nullable();
+            $table->integer('emp_office_branch_id')->nullable();
+            $table->string('emp_office_id_number')->nullable();
             $table->string('emp_office_card_number')->nullable();
             $table->string('emp_office_IT_requirement')->nullable();
             $table->string('emp_office_work_schedule')->nullable();

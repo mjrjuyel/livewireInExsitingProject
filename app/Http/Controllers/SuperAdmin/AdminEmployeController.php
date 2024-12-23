@@ -12,7 +12,10 @@ use App\Models\Leave;
 use App\Models\Employee;
 use App\Models\EmployeLeaveSetting;
 use App\Models\UserRole;
+use App\Models\OfficeBranch;
 use App\Models\Designation;
+use App\Models\BankName;
+use App\Models\BankBranch;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -24,7 +27,12 @@ class AdminEmployeController extends Controller
         $role = UserRole::all();
         $designation= Designation::all();
         $allEmploye = Employee::where('emp_status',1)->get();
-        return view('superadmin.employe.add',compact(['role','designation','allEmploye']));
+        $officeBranch = OfficeBranch::all();
+        $bankName = BankName::all();
+        $bankBranch = BankBranch::all();
+    
+        // return $bankName;
+        return view('superadmin.employe.add',compact(['designation','allEmploye','officeBranch','bankName','bankBranch']));
     }
     public function insert(Request $request){
         // return $request->all();
@@ -47,8 +55,8 @@ class AdminEmployeController extends Controller
             'reporting'=>'required',
             'id_type'=>'required',
             'id_number'=>'unique:employees,emp_id_number',
-            'degree'=>'required',
-            'degreeYear'=>'required',
+            'degre'=>'required',
+            'degreYear'=>'required',
             'bankName'=>'required',
             'accountNo'=>'required',
             'accountName'=>'required',
@@ -70,28 +78,60 @@ class AdminEmployeController extends Controller
             // $image->scale(width: 300);
             $image->save('uploads/employe/profile/'.$image_name);
         }
+        if($request->hasFile('signature')){
+            $imageTake = $request->file('signature');
+            $image_signa = 'signa-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($imageTake);
+            // $image->scale(width: 300);
+            $image->save('uploads/employe/profile/'.$image_signa);
+        }
         
         $insert = Employee::create([
             'emp_name'=>$request['name'],
+            'emp_dob'=>$request['dob'],
             'email'=>$request['email'],
             'email2'=>$request['email2'],
             'emp_phone'=>$request['phone'],
+            'emp_phone2'=>$request['phone2'],
             'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_address'=>$request['add'],
-            'emp_image'=>$image_name ?? null,
-            'emp_slug'=>'emp-'.uniqId(),
+            'emp_present'=>$request->sameAdd == 1 ? $request->add : $request->preAdd,
+            'gender'=>$request['gender'],
+            'marriage'=>$request['marriage'],
+            'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_relation'=>$request['emerRelation'],
+            'emp_report_manager'=>$request['reporting'],
+            'emp_department'=>1,
             'emp_desig_id'=>$request['desig'],
-            'emp_role_id'=>$request['role'],
+            'emp_type_id'=>$request['empType'],
+
+            // identity verification
+            'emp_id_type'=>$request['id_type'],
+            'emp_id_number'=>$request['id_number'],
+
+            'emp_rec_degree'=>$request['degre'],
+            'emp_rec_year'=>$request['degreYear'],
+
+            'emp_bank_id'=>$request['bankName'],
+            'emp_bank_branch_id'=>$request['bankName'],
+            'emp_bank_account_name'=>$request['accountName'],
+            'emp_bank_account_number'=>$request['accountNumber'],
+            'emp_bank_swift_code'=>$request['swiftCode'],
+            // 'emp_bank_routing_number'=>$request['add'],
+            // 'emp_bank_country'=>$request['add'],
+
+            'emp_office_name'=>$request['OffBranch'],
+            'emp_office_id_number'=>rand(10000,99999),
+            'emp_office_card_number'=>$request['accessCard'],
+            'emp_office_IT_requirement'=>$request['system'],
+            'emp_office_work_schedule'=>$request['schedule'],
+
+            'emp_aggrement'=>$request['accept'],
+            'emp_signature'=>$image_signa ?? null,
+            
+            'emp_image'=>$image_name ?? null,
+
+            'emp_slug'=>'emp-'.uniqId(),
             'emp_join'=>$request['join'],
             'password'=>Hash::make($request['pass']),
             'emp_creator'=>Auth::user()->id,
@@ -136,10 +176,10 @@ class AdminEmployeController extends Controller
     // Edit Admin
     public function edit($slug){
         $edit= Employee::where('emp_slug',$slug)->first();
-        $role= UserRole::all();
+        // $role= UserRole::all();
         $designation= Designation::all();
         // return $role;
-        return view('superadmin.employe.edit',compact(['edit','role','designation']));
+        return view('superadmin.employe.edit',compact(['edit','designation']));
     }
 
     public function update(Request $request){

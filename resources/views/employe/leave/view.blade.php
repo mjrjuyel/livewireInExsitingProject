@@ -72,9 +72,13 @@
                                         <button type="button" class="btn btn-primary " >
                                             Approved
                                         </button>
-                                        @else
-                                        <button type="button" class="btn btn-warning">
-                                            Cancle
+                                        @elseif($view->status == 3)
+                                        <button type="button" class="btn btn-primary " >
+                                            Cancled
+                                        </button>
+                                        @elseif($view->status == 4)
+                                        <button type="button" class="btn btn-primary " >
+                                            FeedBack Mes
                                         </button>
                                         @endif
                                     </td>

@@ -54,7 +54,7 @@ class LeaveTypeController extends Controller
         ]);
 
         $update = LeaveType::where('id',$id)->update([
-            'name'=>$request['name'],
+            'type_title'=>$request['name'],
             'updated_at'=>Carbon::now(),
         ]);
 

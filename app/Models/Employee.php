@@ -23,7 +23,9 @@ class Employee extends Authenticatable
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'emp_join'   => 'datetime'
+        'emp_join'   => 'datetime',
+        'emp_dob'    => 'datetime',
+        'emp_resign' => 'datetime',
     ];
 
     public function emp_role(){
@@ -40,6 +42,14 @@ class Employee extends Authenticatable
 
     public function dailyreport(){
         return $this->hasMany(DailyReport::class);
+    }
+
+    public function reporting(){
+        return $this->belongsTo(Employee::class,'emp_report_manager','id');
+    }
+
+    public function bankName(){
+        return $this->belongsTo(BankName::class,'emp_bank_name_id','id');
     }
 
 }

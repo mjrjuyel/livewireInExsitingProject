@@ -21,6 +21,7 @@ class EmployeeSeeder extends Seeder
             'emp_address'=>'Dhaka-1230',
             'emp_slug'=>'Emp-'.uniqId(),
             'emp_desig_id'=>rand(1,2),
+            'emp_report_manager'=>1,
             'emp_phone'=>'01754172525',
             'emp_creator'=>1,
             'emp_join'=>Carbon::now(),

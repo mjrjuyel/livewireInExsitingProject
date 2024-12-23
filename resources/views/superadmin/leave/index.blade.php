@@ -126,9 +126,13 @@ swal({
                                         <button type="button" class="btn btn-primary " >
                                             Approved
                                         </button>
-                                        @else
-                                        <button type="button" class="btn btn-warning">
-                                            Cancle
+                                        @elseif($data->status == 3)
+                                        <button type="button" class="btn btn-primary " >
+                                            Cancled
+                                        </button>
+                                        @elseif($data->status == 4)
+                                        <button type="button" class="btn btn-primary " >
+                                           FeedBack
                                         </button>
                                         @endif
                                     </td>

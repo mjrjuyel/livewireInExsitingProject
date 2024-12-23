@@ -66,7 +66,7 @@
                                     <th class="text-center">Admin Pic</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-center">Role</th>
+                                    <th class="text-center">Reporting Manager</th>
                                     
                                     <th class="text-center">Staus</th>
                                     @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
@@ -94,15 +94,7 @@
                                     </td>
 
                                     <td>
-                                        @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                                        <a href="{{ route('superadmin') }}" class="btn btn-primary">
-                                            {{ optional($employe->emp_role)->role_name }}
-                                        </a>
-                                        @else
-                                        <button class="btn btn-primary disable">
-                                            {{ optional($employe->emp_role)->role_name }}
-                                        </button>
-                                        @endif
+                                        {{ optional($employe->reporting)->emp_name }}
                                     </td>
                                     <td>
                                         @if($employe->emp_status == 1)
