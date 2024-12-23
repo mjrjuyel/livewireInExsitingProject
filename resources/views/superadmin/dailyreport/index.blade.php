@@ -66,9 +66,11 @@
                                     @endforeach
                                 </select> 
                             </div>
+                            @if($alldata->count() != null)
                             <div class="col-4" style="margin-top: 20px;"> 
                                 <button class="btn btn-danger" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
                             </div>
+                            @endif
                         </div>
                      </form>
                     <div class="">

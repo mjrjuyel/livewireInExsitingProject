@@ -66,9 +66,11 @@
                                     @endforeach
                                 </select> 
                             </div>
-                            <div class="col-4" style="margin-top: 24px;"> 
-                                <button class="btn btn-danger" style="padding:2px 8px;" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
+                            @if($alldata->count() != null)
+                            <div class="col-4" style="margin-top: 20px;"> 
+                                <button class="btn btn-danger" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
                             </div>
+                            @endif
                             <div class="col-5 text-end " style="margin-top: 24px;">
                                <a href="{{route('superadmin.dailyreport')}}" class="btn btn-primary">All Report</a>
                             </div>

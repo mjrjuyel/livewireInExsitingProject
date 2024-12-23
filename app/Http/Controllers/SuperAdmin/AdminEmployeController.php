@@ -23,22 +23,44 @@ class AdminEmployeController extends Controller
     public function add(){
         $role = UserRole::all();
         $designation= Designation::all();
-        return view('superadmin.employe.add',compact(['role','designation']));
+        $allEmploye = Employee::where('emp_status',1)->get();
+        return view('superadmin.employe.add',compact(['role','designation','allEmploye']));
     }
     public function insert(Request $request){
         // return $request->all();
         $request->validate([
             'name'=>'required',
+            'pic'=>'required',
             'email'=>'required | email:rfc,dns | unique:employees,email',
             'phone'=>'required',
+            'gender'=>'required',
+            'marriage'=>'required',
+            'dob'=>'required',
+            'emerPhone'=>'required',
+            'emerRelation'=>'required',
+            'add'=>'required',
+            'sameAdd'=>'required',
+            'preAdd'=>'required',
+            'desig'=>'required',
+            'empType'=>'required',
+            'join'=>'required',
+            'reporting'=>'required',
+            'id_type'=>'required',
+            'id_number'=>'unique:employees,emp_id_number',
+            'degree'=>'required',
+            'degreeYear'=>'required',
+            'bankName'=>'required',
+            'accountNo'=>'required',
+            'accountName'=>'required',
+            'OffBranch'=>'required',
+            'accept'=>'required',
+            'signature'=>'required',
             'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
             ->numbers()
             ->symbols()],
             'repass' => 'required | same:pass',
             
         ]);
-
-        $date = strtotime($request['join']);
 
         if($request->hasFile('pic')){
             $imageTake = $request->file('pic');
@@ -51,7 +73,7 @@ class AdminEmployeController extends Controller
         
         $insert = Employee::create([
             'emp_name'=>$request['name'],
-            'email'=>$request['email1'],
+            'email'=>$request['email'],
             'emp_phone'=>$request['phone'],
             'emp_address'=>$request['add'],
             'emp_image'=>$image_name ?? null,

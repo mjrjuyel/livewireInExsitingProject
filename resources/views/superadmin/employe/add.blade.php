@@ -82,17 +82,21 @@
                                 </div>
                                 <div class="card-body pt-2">
 
-                                    <form id="" action="#">
+                                    <form action="{{ route('superadmin.employe.insert') }}" method="post" enctype="multipart/form-data">
+                                        @csrf
                                         <div>
-                                            <h3 class="text-info">Personal Information</h3>
+                                            <h3 class="text-info">Personal Information :-</h3>
                                             <section>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label for="userName2">Full Name</label>
+                                                            <label for="userName2">Full Name <span class="text-danger">*</span> :</label>
                                                             <div>
                                                                 <input class="form-control" id="userName2" name="name" type="text">
                                                             </div>
+                                                            @error('name')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -100,8 +104,11 @@
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Date of Birth</label>
                                                             <div>
-                                                                <input class="form-control" id="humanfd-datepicke" name="dateofbirth" type="text">
+                                                                <input class="form-control" id="humanfd-datepicke" name="dob" type="text">
                                                             </div>
+                                                            @error('dob')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -110,19 +117,21 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label>Profile Picture *</label>
-                                                            <div>
-                                                                <input name="pic" type="file" class="dropify">
-                                                            </div>
+                                                            <label>Profile Picture <span class="text-danger">*</span> :</label>
+                                                            <input name="pic" type="file" class="dropify">
+
+                                                            @error('pic')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-4">
                                                         <fieldset class="row mt-5">
-                                                            <legend class="col-form-label col-sm-6 pt-0">Gender *</legend>
+                                                            <legend class="col-form-label col-sm-6 pt-0">Gender <span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male" checked>
+                                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male">
                                                                     <label class="form-check-label" for="gridRadios1">
                                                                         Male
                                                                     </label>
@@ -139,6 +148,9 @@
                                                                         None Binary
                                                                     </label>
                                                                 </div>
+                                                            @error('gender')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                             </div>
                                                         </fieldset>
                                                     </div>
@@ -147,7 +159,7 @@
 
                                                     <div class="col-sm-4">
                                                         <fieldset class="row mt-5">
-                                                            <legend class="col-form-label col-sm-6 pt-0">Maritial Status *</legend>
+                                                            <legend class="col-form-label col-sm-6 pt-0">Maritial Status <span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="radio" name="marriage" id="gridRadios1" value="Married" checked>
@@ -161,6 +173,10 @@
                                                                         Single
                                                                     </label>
                                                                 </div>
+                                                            
+                                                            @error('marriage')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                             </div>
                                                         </fieldset>
                                                     </div>
@@ -170,21 +186,21 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label for="password2"> Password *</label>
-
-                                                            <div>
-                                                                <input id="password2" name="pass" type="text" class="required form-control">
-
-                                                            </div>
+                                                            <label for="password2"> Password <span class="text-danger">*</span> :</label>
+                                                            <input id="password2" name="pass" type="text" class="required form-control">
+                                                            @error('pass')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label for="confirm2">Confirm Password *</label>
-                                                            <div>
-                                                                <input id="confirm2" name="repass" type="text" class="required form-control">
-                                                            </div>
+                                                            <label for="confirm2">Confirm Password <span class="text-danger">*</span> :</label>
+                                                            <input id="confirm2" name="repass" type="text" class="required form-control">
+                                                            @error('repass')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -199,30 +215,33 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="userName2">Email 1 *</label>
-                                                            <div>
-                                                                <input class="required form-control" id="userName2" name="email1" type="email">
-                                                            </div>
+                                                            <label for="userName2">Email<span class="text-danger">*</span> :</label>
+                                                            <input class="required form-control" id="userName2" name="email" type="email">
+                                                            @error('email')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="userName2">Email 2</label>
+                                                            <label for="userName2">Email : <span class="text-info">(Alternate Email)</span></label>
                                                             <div>
-                                                                <input class="form-control" id="userName2" name="email2" type="email">
+                                                                <input class="form-control" id="userName2" name="email2" type="email1">
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Phone Number *</label>
-                                                            <div>
-                                                                <input id="email2" name="phone1" type="text" class="required form-control">
-                                                            </div>
+                                                            <label for="email2">Phone Number <span class="text-danger">*</span> :</label>
+                                                                <input id="email2" name="phone" type="text" class="required form-control">
+                                                            @error('phone')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
+
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
@@ -234,18 +253,21 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Emergency Contact Number *</label>
-                                                            <div>
+                                                            <label for="email2">Emergency Contact Number <span class="text-danger">*</span> :</label>
                                                                 <input id="email2" name="emerPhone" type="text" class="required form-control">
-                                                            </div>
+                                                            @error('emerPhone')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="address2">Emgerncy Contact Relationship *</label>
-                                                            <div>
-                                                                <input id="address2" name="relation" type="text" class="required form-control">
-                                                            </div>
+                                                            <label for="address2">Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
+                                                          
+                                                                <input id="address2" name="emerRelation" type="text" class="required form-control">
+                                                           @error('emerRelation')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -253,34 +275,40 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Parmanet Address *</label>
-                                                            <div>
-                                                                <input id="email2" name="parAdd" type="text" class="required form-control" value="{{old('parAdd')}}">
-                                                            </div>
+                                                            <label for="email2">Parmanent Address <span class="text-danger">*</span> :</label>
+                                                            <input id="email2" name="add" type="text" class="required form-control" value="{{old('parAdd')}}">
+                                                            @error('add')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-2">
+                                                    
+
+                                                    <div class="col-sm-4">
                                                         <fieldset class="row mt-3">
-                                                            <legend class="col-form-label col-sm-6 pt-0">Same*</legend>
+                                                            <legend class="col-form-label col-sm-6 pt-0">Same As Parmanent?<span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="same" id="gridRadios1" value="1" checked>
+                                                                    <input class="form-check-input" type="radio" name="sameAdd" id="gridRadios1" value="1">
                                                                     <label class="form-check-label" for="gridRadios1">
                                                                         Yes
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="same" id="gridRadios2" value="0">
+                                                                    <input class="form-check-input" type="radio" name="sameAdd" id="gridRadios2" value="0">
                                                                     <label class="form-check-label" for="gridRadios2">
                                                                         No
                                                                     </label>
                                                                 </div>
+                                                                    @error('sameAdd')
+                                                                    <small class="form-text text-warning">{{ $message }}</small>
+                                                                    @enderror
                                                             </div>
                                                         </fieldset>
                                                     </div>
 
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label for="address2">Present Address</label>
                                                             <div>
@@ -296,9 +324,9 @@
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Designation</label>
+                                                            <label class="form-label">Designation <span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="desig">
                                                                 <option value="">Select One</option>
                                                                 @foreach($designation as $desig)
@@ -312,7 +340,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Department</label>
                                                             <select type="text" class="form-control" name="department">
@@ -327,9 +355,28 @@
                                                             @enderror
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
+                                                            <select type="text" class="form-control" name="empType">
+                                                                <option value="">Select One</option>
+                                                                <option value="1">Full Time </option>
+                                                                <option value="2">Part Time</option>
+                                                                <option value="3">Frelance</option>
+                                                                <option value="4">Contract</option>
+                                                                <option value="5">Internship</option>
+                                                                <option value="6">Remote</option>
+                                                            </select>
+                                                            @error('empType')
+                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
                                                 </div><!-- end row -->
                                                 <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
                                                             <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ old('join') }}" placeholder="Joining From">
@@ -338,57 +385,16 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Employement Type</label>
-                                                            <select type="text" class="form-control" name="desig">
-                                                                <option value="">Select One</option>
-                                                                <option value="1">Full Time </option>
-                                                                <option value="2">Part Time</option>
-                                                                <option value="3">Frelance</option>
-                                                                <option value="4">Contract</option>
-                                                                <option value="5">Internship</option>
-                                                                <option value="6">Remote</option>
-                                                            </select>
-                                                            @error('employeType')
-                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end row -->
-
-                                                <div class="row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Reporting Manager<span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="reporting">
                                                                 <option value="">Select One</option>
-                                                                <option value="1">Full Time </option>
-                                                                <option value="2">Part Time</option>
-                                                                <option value="3">Frelance</option>
-                                                                <option value="4">Contract</option>
-                                                                <option value="5">Internship</option>
-                                                                <option value="6">Remote</option>
+                                                                @foreach($allEmploye as $employe)
+                                                                <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
+                                                                @endforeach
                                                             </select>
                                                             @error('reporting')
-                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Employement Type</label>
-                                                            <select type="text" class="form-control" name="desig">
-                                                                <option value="">Select One</option>
-                                                                <option value="1">Full Time </option>
-                                                                <option value="2">Part Time</option>
-                                                                <option value="3">Frelance</option>
-                                                                <option value="4">Contract</option>
-                                                                <option value="5">Internship</option>
-                                                                <option value="6">Remote</option>
-                                                            </select>
-                                                            @error('desig')
                                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
                                                         </div>
@@ -401,10 +407,10 @@
                                             <hr class="text-info">
                                             <section>
                                                 <fieldset class="row mt-3">
-                                                    <legend class="col-form-label col-sm-3 pt-0">Select One*</legend>
+                                                    <legend class="col-form-label col-sm-3 pt-0">Select One<span class="text-danger">*</span> :</legend>
                                                     <div class="col-sm-6">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="id_type" value="national_id" onclick="showInput('national_id_input')" checked>
+                                                            <input class="form-check-input" type="radio" name="id_type" value="national_id" onclick="showInput('national_id_input')">
                                                             <label class="form-check-label" for="gridRadios1">
                                                                 National ID/Passport Number
                                                             </label>
@@ -421,137 +427,72 @@
                                                                 Driver’s License Number (if applicable)
                                                             </label>
                                                         </div>
+                                                        @error('id_type')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                     <div class="col-sm-5 offset-sm-3">
                                                         <div id="national_id_input" class="hiddenInput">
                                                             <label for="national_id" class="form-label">National ID/Passport Number:</label>
-                                                            <input type="text" id="national_id" class="form-control" name="national_id">
+                                                            <input type="text" id="national_id" class="form-control" name="id_number">
+                                                            @error('id_number')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                         <div id="ssn_input" class="hiddenInput">
                                                             <label for="ssn" class="form-label">Social Security Number (SSN):</label>
-                                                            <input type="text" id="ssn" class="form-control" name="ssn">
+                                                            <input type="text" id="ssn" class="form-control" name="id_number">
+                                                            @error('id_number')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                         <div id="driver_license_input" class="hiddenInput">
                                                             <label for="driver_license" class="form-label">Driver’s License Number:</label>
-                                                            <input type="text" id="driver_license" class="form-control" name="driver_license">
+                                                            <input type="text" id="driver_license" class="form-control" name="id_number">
+                                                            @error('id_number')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </fieldset>
-
-                                                <div class="form-group clearfix">
-                                                    <div class="col-lg-12">
-                                                        <!-- Input fields -->
-                                                        <div id="national_id_input" class="hiddenInput">
-                                                            <label for="national_id">National ID/Passport Number:</label>
-                                                            <input type="text" id="national_id" name="national_id">
-                                                        </div>
-                                                        <div id="ssn_input" class="hiddenInput">
-                                                            <label for="ssn">Social Security Number (SSN):</label>
-                                                            <input type="text" id="ssn" name="ssn">
-                                                        </div>
-                                                        <div id="driver_license_input" class="hiddenInput">
-                                                            <label for="driver_license">Driver’s License Number:</label>
-                                                            <input type="text" id="driver_license" name="driver_license">
-                                                        </div>
-                                                        <input id="acceptTerms-2" name="acceptTerms2" type="checkbox" class="form-check-input required">
-                                                        <label for="acceptTerms-2">I agree with the Terms and Conditions.</label>
-                                                    </div>
-                                                </div>
                                             </section>
 
                                             <h3 class="text-info mt-5">Education And Experience :-</h3>
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
-                                                    <div class="col-sm-4">
+                                                    {{-- <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="userName2">Email 1 *</label>
-                                                            <div>
-                                                                <input class="required form-control" id="userName2" name="email1" type="email">
-                                                            </div>
+                                                            <label for="userName2">Institute HSC:- <span class="text-danger">*</span> :</label>
+                                                            <input class="required form-control" id="userName2" name="hsc" type="text">
+                                                            @error('hsc')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group clearfix">
-                                                            <label for="userName2">Email 2</label>
-                                                            <div>
-                                                                <input class="form-control" id="userName2" name="email2" type="email">
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
+                                                        <div class="form-group clearfix">
+                                                            <label for="userName2">Passing Year HSC:- <span class="text-danger">*</span> :</label>
+                                                            <input class="required form-control" id="userName2" name="hscYear" type="text">
+                                                            @error('hscYear')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div> --}}
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Phone Number *</label>
-                                                            <div>
-                                                                <input id="email2" name="phone1" type="text" class="required form-control">
-                                                            </div>
+                                                            <label for="userName2">Last Academic Degree :- <span class="text-danger">*</span> :</label>
+                                                            <input class="required form-control" id="userName2" name="degree" type="text">
+                                                            @error('degree')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
-                                                    </div>
-                                                </div><!-- end row -->
-                                                <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group clearfix">
-                                                            <label for="address2">Phone Number<span>(optional)</span></label>
-                                                            <div>
-                                                                <input id="address2" name="phone2" type="text" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group clearfix">
-                                                            <label for="email2">Emergency Contact Number *</label>
-                                                            <div>
-                                                                <input id="email2" name="emerPhone" type="text" class="required form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group clearfix">
-                                                            <label for="address2">Emgerncy Contact Relationship *</label>
-                                                            <div>
-                                                                <input id="address2" name="relation" type="text" class="required form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end row -->
 
-                                                <div class="row">
-                                                    <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Parmanet Address *</label>
-                                                            <div>
-                                                                <input id="email2" name="parAdd" type="text" class="required form-control" value="{{old('parAdd')}}">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-2">
-                                                        <fieldset class="row mt-3">
-                                                            <legend class="col-form-label col-sm-6 pt-0">Same*</legend>
-                                                            <div class="col-sm-6">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="same" id="gridRadios1" value="1" checked>
-                                                                    <label class="form-check-label" for="gridRadios1">
-                                                                        Yes
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="same" id="gridRadios2" value="0">
-                                                                    <label class="form-check-label" for="gridRadios2">
-                                                                        No
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </fieldset>
-                                                    </div>
-
-                                                    <div class="col-sm-5">
-                                                        <div class="form-group">
-                                                            <label for="address2">Present Address</label>
-                                                            <div>
-                                                                <input id="address2" name="preAdd" type="text" class="form-control">
-                                                            </div>
+                                                            <label for="userName2">Passing Year:- <span class="text-danger">*</span> :</label>
+                                                            <input class="required form-control" id="userName2" name="degreYear" type="text">
+                                                            @error('degreYear')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -628,37 +569,58 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="userName2">Bank Name *</label>
+                                                            <label for="userName2">Bank Name <span class="text-danger">*</span> :</label>
                                                             <div>
                                                                 <select class="required form-control" name="bankName" type="text">
                                                                     @foreach($bankName as $bankName => $branch)
                                                                     <option value="">{{$bankName}}</option>
                                                                     @endforeach
                                                                 </select>
+                                                                @error('bankName')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label class="form-label" for="userName2">Account No *</label>
+                                                            <label class="form-label" for="userName2">Account No <span class="text-danger">*</span> :</label>
                                                             <div>
                                                                 <input class="form-control" name="accountNo" type="text">
                                                             </div>
+                                                            @error('accountNo')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
+                                                            <label class="form-label" for="userName2">Account Name <span class="text-danger">*</span> :</label>
+                                                            <div>
+                                                                <input class="form-control" name="accountName" type="text">
+                                                            </div>
+                                                            @error('accountName')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+
+                                                </div><!-- end row -->
+
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group clearfix">
                                                             <label for="email2">Branch Name</label>
                                                             <div>
-                                                                <select class="required form-control" name="bankName" type="text">
-                                                                   
+                                                                <select class="required form-control" name="branchName" type="text">
+
                                                                 </select>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div><!-- end row -->
-                                                <div class="row">
+
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label>IFSC/Sort Code</label>
@@ -670,33 +632,29 @@
                                                 </div><!-- end row -->
                                             </section>
 
-                                            <h3 class="text-info mt-5">Tax And Legal Details :-</h3>
+
+
+                                            {{-- <h3 class="text-info mt-5">Tax And Legal Details :-</h3>
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label >Taxpayer Identification Number(TIN)</label>
-                                                            <div>
                                                                 <input class="form-control" name="tin" type="number">
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label class="form-label" for="userName2">Work Visa/Permit Number *</label>
-                                                            <div>
                                                                 <input class="form-control" name="permitNum" type="number">
-                                                            </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label for="email2">Insurance Details</label>
-                                                            <div>
-                                                                <select class="form-control" name="insurance" type="text">
-                                                            </div>
+                                                            <input class="form-control" name="insurance" type="text">
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -705,35 +663,37 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label>IFSC/Sort Code</label>
-                                                            <div>
-                                                                <input id="address2" name="sortCode" type="number" class="form-control">
-                                                            </div>
+                                                            <input id="address2" name="sortCode" type="number" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
-                                            </section>
+                                            </section> --}}
 
                                             <h3 class="text-info mt-5">Company Specific Field :-</h3>
                                             <hr class="text-info">
                                             <section>
+
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label>Office Branch</label>
+                                                            <label>Office Branch<span class="text-danger">*</span> :</label>
                                                             <div>
-                                                                <select class="required form-control" name="ComBranch" type="text">
+                                                                <select class="required form-control" name="OffBranch" type="text">
                                                                     <option value="">Select A Branch </option>
                                                                     <option value="">Mirpur </option>
                                                                     <option value="">Gulsan</option>
                                                                 </select>
+                                                                @error('OffBranch')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label class="form-label" for="userName2">Access Card Number *</label>
+                                                            <label class="form-label" for="userName2">Access Card Number <span class="text-danger">*</span> :</label>
                                                             <div>
-                                                                <input class="form-control" name="accesscard" type="number">
+                                                                <input class="form-control" name="accessCard" type="number">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -742,19 +702,16 @@
                                                         <div class="form-group clearfix">
                                                             <label for="email2">System/IT Requirement</label>
                                                             <div>
-                                                                <select class="form-control" name="system" type="text">
+                                                                <input class="form-control" name="system" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
+                                                </div><!-- end row -->
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
                                                             <label>Work Schedule </label>
-                                                            <div>
-                                                                <input name="schedule" type="text" class="form-control">
-                                                            </div>
+                                                            <input name="schedule" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->
@@ -764,24 +721,41 @@
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
-                                                    <div class="col-sm-4">
+
+                                                    <div class="col-sm-3 offset-sm-2">
                                                         <div class="form-group clearfix">
-                                                            <input id="acceptTerms-2" name="accept" type="checkbox" class="form-check-input required">
-                                                            <label for="acceptTerms-2">I agree with the Terms and Conditions.</label>
+                                                            
+                                                           <label for="acceptTerms-2">I agree with the Terms and Conditions.<span class="text-danger">*</span> : </label>
+                                                            <input id="acceptTerms-2" name="accept" type="checkbox" class="form-check-input text-info" >
+                                                            
                                                         </div>
+                                                           @error('accept')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                     </div>
+
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label class="form-label" for="userName2">Upload Signature *</label>
-                                                            <div>
-                                                                <input class="dropify" style="width:100px; height: 200px;" name="signature" type="file">
-                                                            </div>
+                                                            <label class="form-label" for="userName2">Upload Signature <span class="text-danger">*</span> :</label>
+                                                            <input class="dropify" name="signature" type="file">
+                                                            @error('signature')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
 
                                             </section>
 
+                                        </div>
+                                        <div class="card-footer bg-primary">
+                                            <div class="row">
+                                                <div class="col-md-6 offset-3 text-center">
+                                                    <button type="submit" class="btn btn-dark">Submit</button>
+                                                </div>
+                                                <div class="col-md-5">
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
 

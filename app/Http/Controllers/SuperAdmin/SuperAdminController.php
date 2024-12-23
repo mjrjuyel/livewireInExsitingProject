@@ -12,6 +12,7 @@ class SuperAdminController extends Controller
 {
     public function dashboard(){
         $activeEmploye = Employee::count();
+        $notifications = auth()->user()->notifications;
         $role = UserRole::count();
         $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
         $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
@@ -19,7 +20,7 @@ class SuperAdminController extends Controller
         $leaveRequestInApproved = Leave::whereYear('start_date',date('Y'))->where('status',2)->count();
         $leaveRequestInCancled = Leave::whereYear('start_date',date('Y'))->where('status',3)->count();
         // return $totalleaveRequest;
-        return view('superadmin.dashboard.index',compact(['activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled']));
+        return view('superadmin.dashboard.index',compact(['notifications','activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled']));
     }
 
     public function insert(Request $request){
