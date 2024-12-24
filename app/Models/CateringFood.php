@@ -16,11 +16,11 @@ class CateringFood extends Model
         'order_date' => 'datetime',
     ];
 
-    public function creator(){
+    public function creatorUser(){
         return $this->belongsTo(User::class,'creator');
     }
 
-    public function report_editor(){
-        return $this->belongsTo(User::class,'editor','id');
+    public function editorUser(){
+        return $this->belongsTo(User::class,'editor');
     }
 }

@@ -111,17 +111,15 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/designation/insert',[DesgnationController::class,'insert'])->name('superadmin.designation.insert');
         Route::get('/superadmin/designation/view/{id}',[DesgnationController::class,'view'])->name('superadmin.designation.view');
         Route::get('/superadmin/designation/edit/{id}',[DesgnationController::class,'edit'])->name('superadmin.designation.edit');
-        Route::get('/superadmin/designation/edit',[DesgnationController::class,'update'])->name('superadmin.designation.update');
         Route::post('/superadmin/designation/update',[DesgnationController::class,'update'])->name('superadmin.designation.update');
         Route::delete('/superadmin/designation/delete/{id}',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
        
-        // Designation Controller
+        // Catering Food
         Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
         Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
         Route::post('/superadmin/cateringfood/insert',[CateringFoodController::class,'insert'])->name('superadmin.cateringfood.insert');
         Route::get('/superadmin/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('superadmin.cateringfood.view');
         Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
-        Route::get('/superadmin/cateringfood/edit',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
         Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
         Route::delete('/superadmin/cateringfood/delete/{id}',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
 

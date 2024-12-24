@@ -74,12 +74,12 @@
                                 <tr>
                                     <td>Meal Added By</td>
                                     <td>:</td>
-                                    <td>{{ optional($view->creator)->name }}</td>
+                                    <td>{{ $view->creatorUser->name }}</td>
                                 </tr>
                                 <tr>
                                     <td>Meal Last Updated By</td>
                                     <td>:</td>
-                                    <td>{{ optional($view->editor)->name }}</td>
+                                    <td>{{ optional($view->editorUser)->name }}</td>
                                 </tr>
                                 <tr>
                                     <td>Created At</td>

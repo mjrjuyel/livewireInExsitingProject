@@ -88,9 +88,10 @@ class CateringFoodController extends Controller
             'quantity'=>'required',
             'perCost'=>'required',
         ]);
-        return $request->all();
+        
+        // return $request->all();
         $update = CateringFood::where('id',$id)->update([
-            'order_date'=>$request['date'],
+            'order_date'=>Carbon::parse($request['date']),
             'quantity'=>$request['quantity'],
             'per_cost'=>$request['perCost'],
             'total_cost'=>$request['quantity'] * $request['perCost'],

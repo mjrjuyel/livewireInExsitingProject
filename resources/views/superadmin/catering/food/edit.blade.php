@@ -65,10 +65,11 @@ swal({
                         <div class="row mt-3">
                             <div class="col-3 offset-1">
 
+                            <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
                                     <label class="form-label">Order Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{$edit->order_date->format('d-m-Y')}}"
+                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{$edit->order_date->format('F d, Y')}}"
                                         placeholder="Date">
                                     @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -102,7 +103,7 @@ swal({
                         </div>
                         <div class="row">
                            <div class="col-6 offset-5">
-                           <button type="submit" class="btn btn-primary">Add To</button>
+                           <button type="submit" class="btn btn-primary">Update</button>
                            </div>
                         </div>
                     </form>
