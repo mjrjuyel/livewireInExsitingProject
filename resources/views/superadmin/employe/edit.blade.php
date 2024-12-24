@@ -81,11 +81,13 @@
                     </div>
                     <form action="{{ route('superadmin.employe.update') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <div>
+                        <div class="mt-5">
                             <h3 class="text-info">Personal Information :-</h3>
                             <section>
                                 <div class="row">
                                     <div class="col-sm-6">
+                                    <input type="hidden" name="id" value="{{$edit->id}}">
+                                    <input type="hidden" name="slug" value="{{$edit->emp_slug}}">
                                         <div class="form-group clearfix">
                                             <label for="userName2">Full Name <span class="text-danger">*</span> :</label>
                                             <div>
@@ -135,20 +137,21 @@
                                         <fieldset class="row mt-5">
                                             <legend class="col-form-label col-sm-6 pt-0">Gender <span class="text-danger">*</span> :</legend>
                                             <div class="col-sm-6">
+
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male">
+                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male" @if($edit->gender == 'Male') Checked @endif>
                                                     <label class="form-check-label" for="gridRadios1">
                                                         Male
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="Female">
+                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="Female" @if($edit->gender == 'Female') Checked @endif>
                                                     <label class="form-check-label" for="gridRadios2">
                                                         Female
                                                     </label>
                                                 </div>
                                                 <div class="form-check disabled">
-                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios3" value="option3">
+                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios3" value="option3" @if($edit->gender == 'option3') Checked @endif>
                                                     <label class="form-check-label" for="gridRadios3">
                                                         None Binary
                                                     </label>
@@ -167,13 +170,13 @@
                                             <legend class="col-form-label col-sm-6 pt-0">Maritial Status <span class="text-danger">*</span> :</legend>
                                             <div class="col-sm-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="marriage" id="gridRadios1" value="Married" checked>
+                                                    <input class="form-check-input" type="radio" name="marriage" id="gridRadios1" value="Married" @if($edit->marriage == 'Married') Checked @endif>
                                                     <label class="form-check-label" for="gridRadios1">
                                                         Married
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="marriage" id="gridRadios2" value="Sinlge">
+                                                    <input class="form-check-input" type="radio" name="marriage" id="gridRadios2" value="Single" @if($edit->marriage == 'Single') Checked @endif>
                                                     <label class="form-check-label" for="gridRadios2">
                                                         Single
                                                     </label>
@@ -188,12 +191,13 @@
 
                                 </div><!-- end row -->
 
+                                <h3 class="text-dark">Password Change</h3>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label for="password2"> Password <span class="text-danger">*</span> :</label>
-                                            <input id="password2" name="pass" type="password" class="form-control">
-                                            @error('pass')
+                                            <label for="password2">Current Password <span class="text-danger">*</span> :</label>
+                                            <input id="password2" name="oldpass" type="password" class="form-control">
+                                            @error('oldpass')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -201,9 +205,9 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label for="confirm2">Confirm Password <span class="text-danger">*</span> :</label>
-                                            <input id="confirm2" name="repass" type="password" class="form-control">
-                                            @error('repass')
+                                            <label for="confirm2">New Password <span class="text-danger">*</span> :</label>
+                                            <input id="confirm2" name="newpass" type="password" class="form-control">
+                                            @error('newpass')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -287,32 +291,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
-
-
-                                    <div class="col-sm-4">
-                                        <fieldset class="row mt-3">
-                                            <legend class="col-form-label col-sm-6 pt-0">Same As Parmanent?<span class="text-danger">*</span> :</legend>
-                                            <div class="col-sm-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="sameAdd" id="gridRadios1" value="1">
-                                                    <label class="form-check-label" for="gridRadios1">
-                                                        Yes
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="sameAdd" id="gridRadios2" value="0">
-                                                    <label class="form-check-label" for="gridRadios2">
-                                                        No
-                                                    </label>
-                                                </div>
-                                                @error('sameAdd')
-                                                <small class="form-text text-warning">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </fieldset>
-                                    </div>
-
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="address2">Present Address</label>
@@ -329,17 +307,17 @@
                             <hr class="text-info">
                             <section>
                                 <div class="row">
+
                                     <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Designation <span class="text-danger">*</span> :</label>
-                                            <select type="text" class="form-control" name="desig" value="{{$edit->emp_desig }}">
+                                            <label class="form-label">Department</label>
+                                            <select type="text" class="form-control" name="department">
                                                 <option value="">Select One</option>
-                                                @foreach($designation as $desig)
-                                                <option value="{{ $desig->id }}">{{ $desig->title }}
-                                                </option>
+                                                @foreach($department as $department)
+                                                <option value="{{$department->id}}" @if($edit->emp_depart_id == $department->id) Selected @endif>{{$department->depart_name}}</option>
                                                 @endforeach
                                             </select>
-                                            @error('desig')
+                                            @error('department')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -347,15 +325,14 @@
 
                                     <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Department</label>
-                                            <select type="text" class="form-control" name="department">
+                                            <label class="form-label">Designation <span class="text-danger">*</span> :</label>
+                                            <select type="text" class="form-control" name="desig" value="{{$edit->emp_desig }}">
                                                 <option value="">Select One</option>
-                                                @foreach($designation as $desig)
-                                                <option value="{{ $desig->id }}">{{ $desig->title }}
-                                                </option>
+                                                 @foreach($designation as $designation)
+                                                <option value="{{$designation->id}}" @if($edit->emp_desig_id == $designation->id) Selected @endif>{{$designation->title}}</option>
                                                 @endforeach
                                             </select>
-                                            @error('department')
+                                            @error('desig')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -380,29 +357,29 @@
                                     </div>
 
                                 </div><!-- end row -->
+
                                 <div class="row">
-                                    <div class="col-sm-4">
+
+                                   <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
-                                            <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ old('join') }}" placeholder="Joining From">
-                                            @error('join')
+                                            <label class="form-label">Report Manager <span class="text-danger">*</span> :</label>
+                                            <select type="text" class="form-control" name="reporting">
+                                                <option value="">Select One</option>
+                                                 @foreach($report as $repor)
+                                                <option value="{{$repor->id}}" @if($edit->emp_report_manager == $repor->id) Selected @endif>{{$repor->emp_name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('reporting')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
 
-
                                     <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Designation</label>
-                                            <select type="text" class="form-control" name="desig">
-                                                <option value="">Select One</option>
-                                                @foreach($designation as $desig)
-                                                <option value="{{ $desig->id }}" @if($edit->emp_desig_id == $desig->id) selected @endif>{{ $desig->title }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                            @error('desig')
+                                            <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
+                                            <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join }}" placeholder="Joining From">
+                                            @error('join')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -516,79 +493,16 @@
                 <h3 class="text-info mt-5">Banking Information :-</h3>
                 <hr class="text-info">
                 <section>
-                    @php
-                    function getBanksAndBranchesInBangladesh() {
-                    // Banks with branches
-                    return [
-                    'AB Bank Limited' => [
-                    'Motijheel Branch',
-                    'Dhanmondi Branch',
-                    'Gulshan Branch',
-                    'Chittagong Branch',
-                    ],
-                    'Agrani Bank Limited' => [
-                    'Motijheel Corporate Branch',
-                    'Uttara Branch',
-                    'Mirpur Branch',
-                    'Chittagong EPZ Branch',
-                    ],
-                    'Al-Arafah Islami Bank Limited' => [
-                    'Mohakhali Branch',
-                    'Panthapath Branch',
-                    'Kawran Bazar Branch',
-                    'Chittagong Branch',
-                    ],
-                    'BRAC Bank Limited' => [
-                    'Banani Branch',
-                    'Uttara Branch',
-                    'Bashundhara Branch',
-                    'Sylhet Branch',
-                    ],
-                    'Dutch-Bangla Bank Limited' => [
-                    'Motijheel Branch',
-                    'Uttara Branch',
-                    'Dhanmondi Branch',
-                    'Rajshahi Branch',
-                    ],
-                    'Islami Bank Bangladesh Limited' => [
-                    'Paltan Branch',
-                    'Dhanmondi Branch',
-                    'Chittagong Branch',
-                    'Sylhet Branch',
-                    ],
-                    'Janata Bank Limited' => [
-                    'Motijheel Branch',
-                    'Kawran Bazar Branch',
-                    'Mirpur Branch',
-                    'Comilla Branch',
-                    ],
-                    'Sonali Bank Limited' => [
-                    'Motijheel Corporate Branch',
-                    'Gulshan Branch',
-                    'Kawran Bazar Branch',
-                    'Sylhet Branch',
-                    ],
-                    'Trust Bank Limited' => [
-                    'Banani Branch',
-                    'Bashundhara Branch',
-                    'Motijheel Branch',
-                    'Cox’s Bazar Branch',
-                    ],
-                    ];
-                    }
-
-                    $bankName = getBanksAndBranchesInBangladesh();
-                    @endphp
-
                     <div class="row">
+
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <div class="mb-3">
-                                    <label class="form-label">Designation <span class="text-danger">*</span> :</label>
-                                    <select type="text" class="form-control" name="bankName" value="{{$edit->emp_desig }}">
+                                <label for="email2">Bank Name</label>
+                                <div>
+                                    <select type="text" class="form-control" name="bankName">
                                         <option value="">Select One</option>
                                         @foreach($bankName as $bankName)
-                                        <option value="{{ $bankName }}" @if($edit->emp_bank_name == $bankName) Selected @endif>{{ $bankName }}
+                                        <option value="{{ $bankName->id }}" @if($edit->emp_bank_id == $bankName->id) Selected @endif>{{ $bankName->bank_name }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -598,15 +512,18 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <label class="form-label" for="userName2">Account No <span class="text-danger">*</span> :</label>
+                                <label for="email2">Bank Branch Name</label>
                                 <div>
-                                    <input class="form-control" name="accountNo" value="{{$edit->emp_bank_account_number }}" type="number">
+                                    <select class="required form-control" name="bankName" type="text">
+                                        <option value="">Select One</option>
+                                        @foreach($bankBranch as $bankBranch)
+                                        <option value="{{$bankBranch->id}}" @if($edit->emp_bank_branch_id == $bankBranch->id) Selected @endif>{{$bankBranch->bank_branch_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                @error('accountNo')
-                                <small class="form-text text-warning">{{ $message }}</small>
-                                @enderror
                             </div>
                         </div>
 
@@ -621,19 +538,19 @@
                                 @enderror
                             </div>
                         </div>
-
-
                     </div><!-- end row -->
 
                     <div class="row">
+
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <label for="email2">Branch Name</label>
+                                <label class="form-label" for="userName2">Account No <span class="text-danger">*</span> :</label>
                                 <div>
-                                    <select class="required form-control" name="branchName" type="text">
-
-                                    </select>
+                                    <input class="form-control" name="accountNumber" value="{{$edit->emp_bank_account_number }}" type="number">
                                 </div>
+                                @error('accountNumber')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
 
@@ -641,7 +558,7 @@
                             <div class="form-group clearfix">
                                 <label>IFSC/Sort Code</label>
                                 <div>
-                                    <input id="address2" name="sortCode" value="" type="number" class="form-control">
+                                    <input id="address2" name="sortCode" value="{{$edit->emp_bank_sort_code }}" type="number" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -667,8 +584,10 @@
                                 <label>Office Branch<span class="text-danger">*</span> :</label>
                                 <div>
                                     <select class="required form-control" name="OffBranch" type="text">
-                                        <option value="">Select A Branch </option>
-                                        <option value="{{$edit->emp_office_name}}">{{$edit->emp_office_name}} </option>
+                                        <option value="">Select One</option>
+                                        @foreach($officeBranch as $officeBranch)
+                                        <option value="{{$officeBranch->id}}" @if($edit->emp_office_branch_id == $officeBranch->id) Selected @endif>{{$officeBranch->branch_name}}</option>
+                                        @endforeach
                                     </select>
                                     @error('OffBranch')
                                     <small class="form-text text-warning">{{ $message }}</small>
@@ -676,6 +595,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
                                 <label class="form-label" for="userName2">Access Card Number <span class="text-danger">*</span> :</label>
@@ -702,45 +622,6 @@
                             </div>
                         </div>
                     </div><!-- end row -->
-                </section>
-
-                <h3 class="text-info mt-5">Declarations and Agreements :-</h3>
-                <hr class="text-info">
-                <section>
-                    <div class="row">
-
-                        <div class="col-sm-3 offset-sm-2">
-                            <div class="form-group clearfix">
-
-                                <label for="acceptTerms-2">I agree with the Terms and Conditions.<span class="text-danger">*</span> : </label>
-                                <input id="acceptTerms-2" name="accept" type="checkbox" value="1" class="form-check-input text-info">
-
-                            </div>
-                            @error('accept')
-                            <small class="form-text text-warning">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="row mb-3">
-                                    <div class="col-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Profile Pic<span class="text-danger">*</span>:</label>
-                                            <input type="file" class="dropify" name="pic">
-                                            <small id="emailHelp" class="form-text text-muted"></small>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="mb-3">
-                                            @if ($edit->emp_signature != '')
-                                            <img src="{{ asset('uploads/employe/profile/'.$edit->emp_signature) }}" class="img-fluid" alt="" style="width:150px height:100px; object-fit:cover;">
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-
                 </section>
 
             </div>

@@ -22,4 +22,8 @@ class Designation extends Model
     public function employe(){
         return $this->hasMany(Employee::class,'emp_desig_id');
     }
+
+    public function department(){
+        return $this->belongsTo(Department::class,'depart_id','id');
+    }
 }

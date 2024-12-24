@@ -30,6 +30,7 @@ use App\Http\Controllers\SuperAdmin\OfficeBranchController; // Office branches T
 use App\Http\Controllers\SuperAdmin\BankNameController; // bank anme Type Add, create, edit .
 use App\Http\Controllers\SuperAdmin\BankBranchController; // Bank Branches Type Add, create, edit .
 use App\Http\Controllers\SuperAdmin\DepartmentController; // Bank Branches Type Add, create, edit .
+use App\Http\Controllers\SuperAdmin\CateringFoodController; // Bank Branches Type Add, create, edit .
 
 
 Route::get('/', function () {
@@ -113,6 +114,16 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/designation/edit',[DesgnationController::class,'update'])->name('superadmin.designation.update');
         Route::post('/superadmin/designation/update',[DesgnationController::class,'update'])->name('superadmin.designation.update');
         Route::delete('/superadmin/designation/delete/{id}',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
+       
+        // Designation Controller
+        Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
+        Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
+        Route::post('/superadmin/cateringfood/insert',[CateringFoodController::class,'insert'])->name('superadmin.cateringfood.insert');
+        Route::get('/superadmin/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('superadmin.cateringfood.view');
+        Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
+        Route::get('/superadmin/cateringfood/edit',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
+        Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
+        Route::delete('/superadmin/cateringfood/delete/{id}',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
 
         // Role Management 
         Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');

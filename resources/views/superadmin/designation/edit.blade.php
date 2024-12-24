@@ -64,7 +64,23 @@ swal({
                     <form action="{{route('superadmin.designation.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
+                                 
                             <div class="col-6 offset-2">
+                                <div class="mb-3">
+                                    <label class="form-label">Deparment Name<span class="text-danger">* </span>:
+                                    </label>
+                                    <select type="text" class="form-control" name="depart">
+                                        <option value=""> Select a Department</option>
+
+                                        @foreach($depart as $depart)
+                                            <option value="{{$depart->id}}" @if($edit->depart_id == $depart->id) Selected @endif>{{$depart->depart_name}}</option>   
+                                        @endforeach
+                                         
+                                    <select>
+                                    @error('depart')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
                             <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
                                     <label class="form-label">Designation Name<span class="text-danger">* </span>:

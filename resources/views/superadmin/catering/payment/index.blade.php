@@ -40,7 +40,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Designation</li>
+                    <li class="breadcrumb-item active">Department</li>
                 </ol>
             </div>
         </div>
@@ -52,8 +52,8 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.designation.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
-                                Designation</a>
+                            <a href="{{route('superadmin.department.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                                Department</a>
                         </div>
                     </div>
 
@@ -61,31 +61,21 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="text-center">Designation</th>
                                     <th class="text-center">Department</th>
-                                    <th class="text-center">Belongs To</th>
+                                    <th class="text-center">Employees</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($desig as $desig)
+                                @foreach($department as $department)
                                 <tr>
                                     <td>
-                                        {{ $desig->title }}
-                                    </td>
-                                    
-                                     <td>
-                                        
-                                        <button type="button" class="btn btn-info">
-                                            {{optional($desig->department)->depart_name}}
-                                        </button>
+                                        {{ $department->depart_name }}
                                     </td>
 
                                     <td>
-                                        @foreach($desig->employe as $admin)
-                                        <button type="button" class="btn btn-info">
-                                            {{optional($admin)->emp_name}}
-                                        </button>
+                                      @foreach( $department->employe as $employe)
+                                          <button class="btn btn-info">{{$employe->emp_name}}</button>
                                         @endforeach
                                     </td>
 
@@ -95,10 +85,10 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$desig->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.designation.edit',$desig->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.department.view',Crypt::encrypt($department->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.department.edit',Crypt::encrypt($department->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 <li>
-                                                    <form action="{{ route('superadmin.designation.delete',$desig->id) }}" method="post">
+                                                    <form action="{{ route('superadmin.department.delete',Crypt::encrypt($department->id)) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>

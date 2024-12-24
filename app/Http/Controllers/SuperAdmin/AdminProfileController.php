@@ -78,7 +78,7 @@ class AdminProfileController extends Controller
         if($request->oldpass){
             $request->validate([
                 'oldpass' => 'required',
-                'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters(1)->numbers(1)->symbols()],
+                'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()->numbers()],
             ]);
     
             if (!Hash::check($request->oldpass,auth()->user()->password)) {

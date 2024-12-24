@@ -30,10 +30,10 @@ return new class extends Migration
             $table->string('emp_slug',24)->nullable();
             // job detail
             $table->integer('emp_report_manager')->nullable();
-            $table->integer('emp_depart_name_id')->nullable();
+            $table->integer('emp_depart_id')->nullable();
             $table->integer('emp_desig_id')->nullable();
             $table->integer('emp_role_id')->nullable();
-            $table->string('emp_type_id')->nullable();
+            $table->string('emp_type')->nullable();
             $table->date('emp_join',100)->nullable();
             $table->date('emp_resign',100)->nullable();
             // identi verification
@@ -48,8 +48,9 @@ return new class extends Migration
             $table->integer('emp_bank_id')->nullable();
             $table->integer('emp_bank_branch_id')->nullable();
             $table->string('emp_bank_account_name')->nullable();
-            $table->string('emp_bank_account_number')->nullable();
+            $table->integer('emp_bank_account_number')->nullable();
             $table->string('emp_bank_swift_code')->nullable();
+            $table->string('emp_bank_sort_code')->nullable();
             $table->string('emp_bank_routing_number')->nullable();
             $table->string('emp_bank_country')->nullable();
             // company Specific field

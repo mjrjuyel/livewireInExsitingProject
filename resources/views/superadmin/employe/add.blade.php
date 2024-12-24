@@ -162,14 +162,14 @@
                                                             <legend class="col-form-label col-sm-6 pt-0">Maritial Status <span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="marriage" id="gridRadios1" value="Married" checked>
-                                                                    <label class="form-check-label" for="gridRadios1">
+                                                                    <input class="form-check-input" type="radio" name="marriage"  value="Married">
+                                                                    <label class="form-check-label">
                                                                         Married
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="marriage" id="gridRadios2" value="Sinlge">
-                                                                    <label class="form-check-label" for="gridRadios2">
+                                                                    <input class="form-check-input" type="radio" name="marriage" value="Single">
+                                                                    <label class="form-check-label" >
                                                                         Single
                                                                     </label>
                                                                 </div>
@@ -186,8 +186,8 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label for="password2"> Password <span class="text-danger">*</span> :</label>
-                                                            <input id="password2" name="pass" type="password" class="form-control">
+                                                            <label> Password <span class="text-danger">*</span> :</label>
+                                                            <input name="pass" type="password" class="form-control">
                                                             @error('pass')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -196,8 +196,8 @@
 
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label for="confirm2">Confirm Password <span class="text-danger">*</span> :</label>
-                                                            <input id="confirm2" name="repass" type="password" class="form-control">
+                                                            <label >Confirm Password <span class="text-danger">*</span> :</label>
+                                                            <input name="repass" type="password" class="form-control">
                                                             @error('repass')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -324,6 +324,23 @@
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
+
+                                                    <div class="col-sm-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Department</label>
+                                                            <select type="text" class="form-control" name="department">
+                                                                <option value="">Select One</option>
+                                                                @foreach($department as $depart)
+                                                                <option value="{{ $depart->id }}">{{ $depart->depart_name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('department')
+                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                     
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Designation <span class="text-danger">*</span> :</label>
@@ -340,33 +357,19 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-4">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Department</label>
-                                                            <select type="text" class="form-control" name="department">
-                                                                <option value="">Select One</option>
-                                                                @foreach($designation as $desig)
-                                                                <option value="{{ $desig->id }}">{{ $desig->title }}
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('department')
-                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+                                                    
 
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="empType">
                                                                 <option value="">Select One</option>
-                                                                <option value="1">Full Time </option>
-                                                                <option value="2">Part Time</option>
-                                                                <option value="3">Frelance</option>
-                                                                <option value="4">Contract</option>
-                                                                <option value="5">Internship</option>
-                                                                <option value="6">Remote</option>
+                                                                <option value="Full Time">Full Time </option>
+                                                                <option value="Part Time">Part Time</option>
+                                                                <option value="Frelance">Frelance</option>
+                                                                <option value="Contract">Contract</option>
+                                                                <option value="Internship">Internship</option>
+                                                                <option value="Remote">Remote</option>
                                                             </select>
                                                             @error('empType')
                                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -390,7 +393,7 @@
                                                             <label class="form-label">Reporting Manager<span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="reporting">
                                                                 <option value="">Select One</option>
-                                                                @foreach($allEmploye as $employe)
+                                                                @foreach($report as $employe)
                                                                 <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
                                                                 @endforeach
                                                             </select>
@@ -408,7 +411,7 @@
                                             <section>
                                                 <fieldset class="row mt-3">
                                                     <legend class="col-form-label col-sm-3 pt-0">Select One<span class="text-danger">*</span> :</legend>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-4">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="id_type" value="national_id" onclick="showInput('national_id_input')">
                                                             <label class="form-check-label" for="gridRadios1">
@@ -431,7 +434,8 @@
                                                         <small class="form-text text-warning">{{ $message }}</small>
                                                         @enderror
                                                     </div>
-                                                    <div class="col-sm-5 offset-sm-3">
+
+                                                    <div class="col-sm-5">
                                                         <div id="national_id_input" class="hiddenInput">
                                                             <label for="national_id" class="form-label">National ID/Passport Number:</label>
                                                             <input type="text" id="national_id" class="form-control" value="{{old('id_number')}}" name="id_number">
@@ -538,9 +542,9 @@
                                             <div class="form-group clearfix">
                                                 <label class="form-label" for="userName2">Account No <span class="text-danger">*</span> :</label>
                                                 <div>
-                                                    <input class="form-control" name="accountNo" value="{{old('accountNo')}}" type="number">
+                                                    <input class="form-control" name="accountNumber" value="{{old('accountNo')}}" type="number">
                                                 </div>
-                                                @error('accountNo')
+                                                @error('accountNumber')
                                                 <small class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
                                             </div>

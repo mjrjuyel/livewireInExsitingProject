@@ -92,21 +92,6 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Role</label>
-                                    <select type="text" class="form-control" name="role" disabled>
-                                        <option value="">Select Employe Role
-                                        </option>
-                                        @foreach($role as $role)
-                                        <option value="{{ $role->id }}" @if($edit->emp_role->id == $role->id) selected @endif >{{ $role->role_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    @error('role')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
                                     <label class="form-label">Designation</label>
                                     <select type="text" class="form-control" name="desig" disabled>
                                         <option value="">Select One</option>
@@ -195,13 +180,10 @@
                                     <div class="col-md-4">
                                         <label class="form-label">Employe Status</label>
                                         <select type="text" class="form-control text-first" name="status" disabled>
-                                            <option value="1" class="text-primary" @if($edit->emp_status == 1) Selected @endif>Active <span class="menu-arrow"></span></option>
-                                            <option value="2" class="text-warning" @if($edit->emp_status == 2) Selected @endif>Suspend <span class="menu-arrow"></span></option>
-                                            <option value="0" class="text-danger" @if($edit->emp_status == 0) Selected @endif>Recycle Bin <span class="menu-arrow"></span></option>
+                                            <option value="1" class="text-primary" @if($edit->emp_status == 1) Selected @endif>Active</option>
+                                            <option value="2" class="text-warning" @if($edit->emp_status == 2) Selected @endif>Suspend</option>
+                                            <option value="0" class="text-danger" @if($edit->emp_status == 0) Selected @endif>Recycle Bin</option>
                                         </select>
-                                        @error('status')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
                                     </div>
                                 </div>
 

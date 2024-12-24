@@ -39,10 +39,10 @@ class EmployeController extends Controller
     public function profileSettings($slug){
         // return $slug;
         $edit = Employee::where('emp_slug',$slug)->first();
-        $role= UserRole::all();
+        // $role= UserRole::all();
         $designation= Designation::all();
         // return $data;
-        return view('employe.employe.updateProfile',compact(['edit','role','designation']));
+        return view('employe.employe.updateProfile',compact(['edit','designation']));
     }
 
     public function profileSettingUpdate(Request $request){
@@ -62,7 +62,7 @@ class EmployeController extends Controller
              ]);
 
             Employee::where('id',$id)->update([
-                'pass'=>$request['pass'],
+                'password'=>Hash::make($request['pass']),
             ]);
         }
 
@@ -100,7 +100,6 @@ class EmployeController extends Controller
             'emp_desig_id'=>$request['desig'],
             'emp_role_id'=>$request['role'],
             'emp_join'=>$request['join'],
-            'emp_status'=>$request['status'],
             'updated_at'=>Carbon::now(),
         ]);
 

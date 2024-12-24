@@ -16,6 +16,7 @@ class DesignationSeeder extends Seeder
     {
         Designation::create([
             'title'=>'Laravel Web Developer',
+            'depart_id'=>1,
             'created_at'=>Carbon::now(),
         ]);
     }

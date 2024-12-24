@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Designation;
+use App\Models\Department;
 use Carbon\Carbon;
 use Session;
 
@@ -13,23 +14,29 @@ class DesgnationController extends Controller
 
     //  All Role 
     public function index(){
-        $desig = Designation::with('employe')->get();
+        $desig = Designation::with(['employe'=>function($query){
+            $query->select('id','emp_name');
+        },'department'])->get();
+        
         // return $desig;
-        return view('superadmin.designation.index',compact('desig'));
+        return view('superadmin.designation.index',compact(['desig']));
     }
 
     // Add 
     public function add(){
-        return view('superadmin.designation.add');
+        $depart = Department::all();
+        return view('superadmin.designation.add',compact('depart'));
     }
     
     public function insert(Request $request){
         $request->validate([
+            'depart'=>'required',
             'title'=>'required | unique:designations,title',
         ]);
 
         $insert=Designation::create([
             'title'=>$request['title'],
+            'depart_id'=>$request['depart'],
             'created_at'=>Carbon::now(),
         ]);
 
@@ -42,7 +49,8 @@ class DesgnationController extends Controller
     //  Edit Designation 
     public function edit($id){
         $edit = Designation::where('id',$id)->first();
-        return view('superadmin.designation.edit',compact('edit'));
+        $depart = Department::all();
+        return view('superadmin.designation.edit',compact(['edit','depart']));
     }
 
     public function update(Request $request){
@@ -54,6 +62,7 @@ class DesgnationController extends Controller
         
         $update = Designation::where('id',$id)->update([
             'title'=>$request['title'],
+            'depart_id'=>$request['depart'],
             'updated_at'=>Carbon::now(),
         ]);
 

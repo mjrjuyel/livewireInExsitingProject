@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('designations', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->integer('depart_id')->nullable();
             $table->timestamps();
         });
     }

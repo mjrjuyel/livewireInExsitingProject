@@ -38,7 +38,7 @@ swal({
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Designation</li>
+                    <li class="breadcrumb-item active">Department</li>
                 </ol>
             </div>
         </div>
@@ -51,42 +51,27 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i> Insert New Designation 
+                                <h3 class="card_header"><i class="mdi mdi-office-building-plus header_icon"></i>Department Update
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('superadmin.designation')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.department')}}"
                                     class="btn btn-bg btn-primary btn_header ">
-                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
+                                    <i class="mdi mdi-emoticon-sick-outline btn_icon"></i>All Department</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.designation.insert')}}" method="post">
+                    <form action="{{route('superadmin.department.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
-
+                            <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
-                                    <label class="form-label">Deparment Name<span class="text-danger">* </span>:
+                                    <label class="form-label">Department Name<span class="text-danger">* </span>:
                                     </label>
-                                    <select type="text" class="form-control" name="depart">
-                                        <option value=""> Select a Department</option>    
-                                        @foreach($depart as $depart)
-                                            <option value="{{$depart->id}}">{{$depart->depart_name}}</option>   
-                                        @endforeach
-                                         
-                                    <select>
-                                    @error('depart')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Designation Name<span class="text-danger">* </span>:
-                                    </label>
-                                    <input type="text" class="form-control" name="title" value="{{old('title')}}"
-                                        placeholder="Enter Designation">
-                                    @error('title')
+                                    <input type="text" class="form-control" name="name" value="{{$edit->depart_name}}"
+                                        placeholder="Enter Department">
+                                    @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>

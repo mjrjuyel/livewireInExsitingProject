@@ -220,6 +220,8 @@
                         </div>
                     </li>
 
+
+
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarDepartment" aria-expanded="false" aria-controls="sidebarDepartment" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-slash-forward-box"></i></span>
@@ -244,6 +246,39 @@
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.department.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Department</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarCatering" aria-expanded="false" aria-controls="sidebarCatering" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-noodles"></i></span>
+                            <span class="menu-text"> Catering </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarCatering">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarFood" aria-expanded="false" aria-controls="sidebarFood" class="side-nav-link">
+                                        <span class="menu-text">Food Order</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarFood">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.cateringfood')}}" class="side-nav-link">
+                                                    <span class="menu-text">History</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.cateringfood.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Food</span>
                                                 </a>
                                             </li>
                                         </ul>

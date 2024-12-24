@@ -25,7 +25,6 @@ swal({
 
 <div class="page-container">
     <div class="page-title-box">
-
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
                 <h4 class="font-18 mb-0">Dashboard</h4>
@@ -38,7 +37,7 @@ swal({
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Designation</li>
+                    <li class="breadcrumb-item active">Catering Food</li>
                 </ol>
             </div>
         </div>
@@ -51,48 +50,60 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i> Insert New Designation 
+                                <h3 class="card_header"><i class="mdi mdi-office-building-plus header_icon"></i>Catering Food Update
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('superadmin.designation')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.cateringfood')}}"
                                     class="btn btn-bg btn-primary btn_header ">
-                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
+                                    <i class="mdi mdi-emoticon-sick-outline btn_icon"></i>All Catering Food</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.designation.insert')}}" method="post">
+                    <form action="{{route('superadmin.cateringfood.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
-                            <div class="col-6 offset-2">
+                            <div class="col-3 offset-1">
 
                                 <div class="mb-3">
-                                    <label class="form-label">Deparment Name<span class="text-danger">* </span>:
+                                    <label class="form-label">Order Date<span class="text-danger">* </span>:
                                     </label>
-                                    <select type="text" class="form-control" name="depart">
-                                        <option value=""> Select a Department</option>    
-                                        @foreach($depart as $depart)
-                                            <option value="{{$depart->id}}">{{$depart->depart_name}}</option>   
-                                        @endforeach
-                                         
-                                    <select>
-                                    @error('depart')
+                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{$edit->order_date->format('d-m-Y')}}"
+                                        placeholder="Date">
+                                    @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Designation Name<span class="text-danger">* </span>:
-                                    </label>
-                                    <input type="text" class="form-control" name="title" value="{{old('title')}}"
-                                        placeholder="Enter Designation">
-                                    @error('title')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
                             </div>
+
+                            <div class="col-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Total Quantity<span class="text-danger">* </span>:
+                                    </label>
+                                    <input type="number" id="humanfd-datepicker" class="form-control" name="quantity" value="{{$edit->quantity}}"
+                                        placeholder="Enter Total Quantity">
+                                    @error('quantity')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-3">
+                                <div class="mb-3">
+                                    <label class="form-label">Cost Per Quantity<span class="text-danger">* </span>:
+                                    </label>
+                                    <input type="number"  class="form-control" name="perCost" value="{{$edit->quantity}}"
+                                        placeholder="Each Meal Price">
+                                    @error('perCost')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-6 offset-5">
+                           <button type="submit" class="btn btn-primary">Add To</button>
+                           </div>
                         </div>
                     </form>
                 </div>
