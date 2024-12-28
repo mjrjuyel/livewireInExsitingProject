@@ -4,7 +4,9 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 use App\Mail\LeaveResponseByAdmin;
+use App\Notifications\LeaveToEmployeNotification;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\Employee;
@@ -13,6 +15,7 @@ use App\Models\EmployeLeaveSetting;
 use Carbon\Carbon;
 use Session;
 use Auth;
+use DB;
 
 class SuperAdminLeaveController extends Controller
 {
@@ -42,9 +45,10 @@ class SuperAdminLeaveController extends Controller
 
     // view per role
     public function view($slug){
+        $getId = Crypt::decrypt($slug);
         $view = Leave::with(['employe'=>function($query){
             $query->select('id','emp_name');
-        }])->where('slug',$slug)->first();
+        }])->where('id',$getId)->first();
         $leave_type = LeaveType::all();
         $defaultValue = EmployeLeaveSetting::where('id',1)->first();
         // return $view;
@@ -81,7 +85,6 @@ class SuperAdminLeaveController extends Controller
                 if($update){
                     Session::flash('success','Request Leave Approved');
                 }
-
             }
 
             if($request->status == 3){
@@ -91,14 +94,17 @@ class SuperAdminLeaveController extends Controller
                     'editor'=>Auth::user()->id,
                     'updated_at'=>Carbon::now(),
                 ]);
-               
+
                 if($update){
                     Session::flash('success','Request Leave Cancle!');
                 }
             }
+
             $alldata = Leave::where('id',$id)->first();
             // LeaveResponseByAdmin
             Mail::to($employe->email)->send(new LeaveResponseByAdmin($alldata));
+
+            auth('employee')->user()->notify(new LeaveToEmployeNotification($alldata->id));
 
             Session::flash('success','Updated Successfully');
             return redirect()->back();
@@ -117,6 +123,14 @@ class SuperAdminLeaveController extends Controller
             }
         Session::flash('success','Leave Application Delete');
         return redirect()->back();
+        }
+    }
+
+    public function removeNotification($id){
+        // return $id;
+        $data = DB::table('notifications')->where('id',$id)->delete();
+        if($data){
+            return redirect()->back();
         }
     }
 }

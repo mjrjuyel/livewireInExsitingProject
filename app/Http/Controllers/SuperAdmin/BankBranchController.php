@@ -96,4 +96,10 @@ class BankBranchController extends Controller
         return redirect()->back();
         }
     }
+
+    public function getBankBranch($id){
+        $data = BankBranch::where('bank_id',$id)->get();
+
+        return response()->json($data);
+     }
 }

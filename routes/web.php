@@ -55,7 +55,7 @@ Route::middleware('isEmploye')->group(function(){
         // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
         Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
         Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-        // Route::post('/dashboard/employe/delete',[EmployeController::class,'delete'])->name('dashboard.employe.delete');
+        
     // Role ManageMent
         Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
         Route::get('/dashboard/role/add',[RoleController::class,'add'])->name('dashboard.role.add');
@@ -103,6 +103,9 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/employe/softdelete',[AdminEmployeController::class,'softdele'])->name('superadmin.employe.softdelete');
         Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
         Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
+        // get data from select
+        Route::get('/get_designation/{id}',[DesgnationController::class,'getDesigantion']);
+        Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
         // log in as a employee
         Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
         // Designation Controller
@@ -122,6 +125,9 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
         Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
         Route::delete('/superadmin/cateringfood/delete/{id}',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
+
+        // Search by month
+        Route::get('/superadmin/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
 
         // Role Management 
         Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
@@ -186,6 +192,8 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/leave/update',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.update');
         Route::delete('/superadmin/leave/delete/{slug}',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.view');
         
+        // remove notifuication
+        Route::delete('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'removeNotification']);
         // Daily reports 
         Route::get('/superadmin/dailyreport',[AdminDailyReportController::class,'index'])->name('superadmin.dailyreport');
         Route::get('/superadmin/dailyreport/view/{slug}',[AdminDailyReportController::class,'view'])->name('superadmin.dailyreport.view');

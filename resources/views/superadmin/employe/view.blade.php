@@ -29,12 +29,12 @@
                     $datetime2 = date_create(date('Y-m-d'));
 
                     // Calculates the difference between DateTime objects
-                    $interval = date_diff($datetime1, $datetime2); 
+                    $interval = date_diff($datetime1, $datetime2);
                     @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">{{$view->emp_join->format('Y-M-d')}}</span></h6>
                     <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y Y %m M %d D %R');}}</h3>
-                   
+
                 </div>
             </div>
         </div>
@@ -43,10 +43,14 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <a href="{{route('superadmin.employe')}}">
-                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">His Life Time Leave<span class="text-danger text-italic"> : {{$view->emp_join->format('Y-m-d')}} to {{date('Y-m-d')}}</span></h6>
-                    <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span>Days</h3>
-                    
+                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                        <h6 class="text-muted text-uppercase mt-0">Career Total Leave<span class="text-danger text-italic"> : {{$view->emp_join->format('Y-m-d')}} to {{date('Y-m-d')}}</span></h6>
+                        <h3 class="my-3"><span data-plugin="counterup">
+                                @if($whole_approved_leave >= 2 )
+                                <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Days</h3>
+                                @else
+                                <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Day</h3>
+                                @endif
                     </a>
                 </div>
             </div>
@@ -56,10 +60,10 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <a href="{{route('superadmin.employe')}}">
-                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
-                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
-                    
+                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                        <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                        <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
+
                     </a>
                 </div>
             </div>
@@ -69,10 +73,10 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <a href="{{route('superadmin.employe')}}">
-                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
-                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
-                    
+                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                        <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
+                        <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
+
                     </a>
                 </div>
             </div>
@@ -84,15 +88,15 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
-                      @if($paidRemainingMonth == 1)
-                      <h3 class="my-3" data-plugin="counterup">2</h3>Days
-                      @elseif($paidRemainingMonth == 2)
-                      <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
-                      @elseif($paidRemainingMonth >= 3)
-                      <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
-                      @endif
+                    @if($paidRemainingMonth == 1)
+                    <h3 class="my-3" data-plugin="counterup">2</h3>Days
+                    @elseif($paidRemainingMonth == 2)
+                    <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
+                    @elseif($paidRemainingMonth >= 3)
+                    <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
+                    @endif
                     @else
-                      <h3 class="my-3 text-success" data-plugin="counterup">3</h3>Days
+                    <h3 class="my-3 text-success"><span data-plugin="counterup">3</span> Days</h3>
                     @endif
                 </div>
             </div>
@@ -101,19 +105,19 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                @php
+                    @php
                     $remainYear = $defaultLeave->year_limit - $paidRemainingYear;
-                @endphp
+                    @endphp
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($remainYear >= 1 )
-                      @if($remainYear  >= 2)
-                      <h3 class="my-3" ><span data-plugin="counterup">{{$remainYear}}</span>Days</h3>
-                      @else
-                       <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span>Day</h3>
-                      @endif
+                    @if($remainYear >= 2)
+                    <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span> Days</h3>
                     @else
-                      <h3 class="my-3 text-danger">Out of Paid Leave</h3>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span> Day</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Out of Paid Leave</h3>
                     @endif
                 </div>
             </div>
@@ -125,13 +129,13 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($unpaidRemainingMonth != null)
-                      @if($unpaidRemainingMonth  >= 2)
-                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span>Days</h3>
-                      @else
-                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span>Day</h3>
-                      @endif
+                    @if($unpaidRemainingMonth >= 2)
+                    <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span> Days</h3>
                     @else
-                      <h3 class="my-3 text-danger">Not Yet</h3>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span> Day</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Not Yet</h3>
                     @endif
                 </div>
             </div>
@@ -143,19 +147,19 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($unpaidRemainingYear != null)
-                      @if($unpaidRemainingYear  >= 2)
-                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingYear}} </span>Days +</h3>
-                      @else
-                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span>Day +</h3>
-                      @endif
+                    @if($unpaidRemainingYear >= 2)
+                    <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span> Days +</h3>
                     @else
-                      <h3 class="my-3 text-danger">Not Yet</h3>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span> Day +</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Not Yet</h3>
                     @endif
                 </div>
             </div>
         </div>
 
-        
+
 
     </div> <!-- end row -->
 
@@ -165,19 +169,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
+
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i
-                                                class="fa-solid fa-user header_icon"></i>{{$view->emp_name}}
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>{{$view->emp_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.employe')}}"
-                                            class="btn btn-bg btn-primary btn_header ">
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.employe')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Employe</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('superadmin.employe.edit',$view->emp_slug)}}"
-                                            class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                    <div class="col-md-2"><a href="{{route('superadmin.employe.edit',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
@@ -198,7 +200,7 @@
                                             Active
                                         </button>
                                         @elseif($view->emp_status == 2)
-                                        <button type="button" class="btn btn-primary " >
+                                        <button type="button" class="btn btn-primary ">
                                             Suspend
                                         </button>
                                         @elseif($view->emp_status == 0)
@@ -206,15 +208,14 @@
                                             Recycle Bin
                                         </button>
                                         @endif
-                                        </td>
+                                    </td>
                                 </tr>
 
                                 <tr>
                                     <td>Profile Picture</td>
                                     <td>:</td>
                                     <td>@if($view->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/'.$view->emp_image) }}" class="img-fluid"
-                                            alt="" style="width:200px; object-fit:cover;">
+                                        <img src="{{ asset('uploads/employe/profile/'.$view->emp_image) }}" class="img-fluid" alt="" style="width:200px; object-fit:cover;">
                                         @endif
                                     </td>
                                 </tr>
@@ -258,7 +259,7 @@
                                     <td>:</td>
                                     <td>{{$view->creator->name}}</td>
                                 </tr>
-                                
+
 
                                 <tr>
                                     <td>Created At</td>
@@ -271,8 +272,112 @@
                                     <td>{{optional($view->updated_at)->format('d-M-Y | h:i:s A')}}</td>
                                 </tr>
                             </table>
-
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Employee Details</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                 <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
+                                    <li class="list-group-item">Department : {{optional($view->department)->depart_name}}</li>
+                                    <li class="list-group-item">Designation : {{optional($view->emp_desig)->title}}</li>
+                                    <li class="list-group-item">Employee Job Type : {{$view->emp_type}}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Joining Information</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Joinig Date : {{$view->emp_join->format('d-M-Y')}}</li>
+                                    <li class="list-group-item">Office Located In : {{optional($view->officeBranch)->branch_name}}</li>
+                                    <li class="list-group-item">Office Id Card Number : {{$view->emp_office_id_number}}</li>
+                                    <li class="list-group-item">Work Schedule : {{$view->emp_office_work_schedule}}</li>
+                                    @if($view->emp_resign){
+                                        <li class="list-group-item">Work Schedule : {{$view->emp_resign->format('d-M-Y')}}</li>
+                                    }
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Contact Information</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Gender : {{$view->gender}}</li>
+                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob}}</li>
+                                    <li class="list-group-item">Marriage Status : {{$view->marriage}}</li>
+                                    <li class="list-group-item">Personal Number : <a href="tel:{{$view->emp_phone}}">{{$view->emp_phone}}</a></li>
+                                    @if($view->emp_phone2 != '')
+                                    <li class="list-group-item">Personal Number : <a href="tel:{{$view->emp_phone2}}">{{$view->emp_phone2}}</a></li>
+                                    @endif
+                                    <li class="list-group-item">Email : <a href="mailto:{{$view->email}}">{{$view->email}}</a></li>
+                                    @if($view->email2 != '')
+                                    <li class="list-group-item">AlterNate Email : <a href="mailto:{{$view->email2}}">{{$view->email2}}</a></li>
+                                    @endif
+
+                                    <li class="list-group-item">Parmanent Address : {{$view->emp_address}}</li>
+                                    <li class="list-group-item">Present Address : {{$view->emp_present}}</li>
+
+                                    <h5 class="card-title text-info" style="padding:10px 0px 10px 15px;">Emergency Contact Information :-</h5>
+
+                                    <li class="list-group-item">Emergency Contact Number : <a href="tel:{{$view->emp_emer_contact}}">{{$view->emp_emer_contact}}</a></li>
+
+                                    @if($view->emp_emer_relation != '')
+                                    <li class="list-group-item">Who : {{$view->emp_emer_relation}}</li>
+                                    @endif
+
+                                    @if($view->emp_id_type == 'national_id')
+                                    <li class="list-group-item">Identity Type : National Id</li>
+                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    @elseif($view->emp_id_type == 'ssn')
+                                    <li class="list-group-item">Identity Type : Social Security Number</li>
+                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    @elseif($view->emp_id_type == 'driver_license')
+                                    <li class="list-group-item">Identity Type : Driver License</li>
+                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    @endif
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Bank Information</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Bank Name : {{optional($view->bankName)->bank_name}}</li>
+                                    <li class="list-group-item">Branch Name : {{optional($view->bankBranch)->emp_bank_branch_name}}</li>
+                                    <li class="list-group-item">Account Name : {{$view->emp_bank_account_name}}</li>
+                                    <li class="list-group-item">Account Number : {{$view->emp_bank_account_name}}</li>
+                                    <li class="list-group-item">Branch Name : {{$view->emp_bank_branch_name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Education and Skills</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_degree}}</li>
+                                    <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_year}}</li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div> <!-- end card-body-->

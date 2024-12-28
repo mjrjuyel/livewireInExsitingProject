@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employe;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LeaveMailToAdmin;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\LeaveToAdminNotification;
 use Illuminate\Http\Request;
@@ -192,9 +193,10 @@ class LeaveFormController extends Controller
                                     ]);
             
                                     // Send Mail to Admin
-                                    Mail::to('mjrcoder7@gmail.com')->send(new LeaveMailToAdmin($insert));
+                                    // Mail::to('mjrcoder7@gmail.com')->send(new LeaveMailToAdmin($insert));
 
-                                    // Notification::send(User::all(), new LeaveToAdminNotification($insert));
+                                    auth()->user()->notify(new LeaveToAdminNotification($insert));
+
                                     if ($insert) {
                                         if ($unPaidLeaves > 0) {
                                             Session::flash('success', 'Monthly leave limit reached! Extra days counted as unpaid.');
@@ -219,7 +221,10 @@ class LeaveFormController extends Controller
     public function view($slug){
         $emp = Employee::where('emp_slug',Auth::guard('employee')->user()->emp_slug)->first();
         // dd($emp);
-        $view = Leave::with(['employe','leavetype'])->where('emp_id',$emp->id)->first();
+        $useId = Crypt::decrypt($slug);
+        $view = Leave::with(['employe'=>function($query){
+            $query->select('id','emp_name');
+        },'leavetype'])->where('id',$useId)->where('emp_id',$emp->id)->first();
         // return $view;
         return view('employe.leave.view',compact('view'));
     } 

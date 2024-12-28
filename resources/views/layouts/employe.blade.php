@@ -9,7 +9,7 @@
     <meta content="" name="description" />
     <meta content="SupreoX" name="author" />
     <!-- App favicon -->
-   <link rel="shortcut icon" href="{{asset('uploads/basic/'.$basic->favlogo)}}">
+    <link rel="shortcut icon" href="{{asset('uploads/basic/'.$basic->favlogo)}}">
 
     {{-- partial Css --}}
     @include('layouts.partials.css.dashboardcss')
@@ -25,13 +25,13 @@
 
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="logo">
-               <span class="logo-light">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"  class=" img-fluid" style="width:60%; height:auto"  alt="logo"></span>
+                <span class="logo-light">
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
                     <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto;" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
-                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto"  alt="logo"></span>
+                    <span class="logo-lg"> <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
                     <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto;" alt="logo"></span>
                 </span>
             </a>
@@ -281,11 +281,18 @@
                         </button>
                     </div>
                     <!-- Email Dropdown -->
+
+                    @php
+                        $count = auth('employee')->user()->notifications()->count();
+                    @endphp
+
                     <div class="topbar-item">
                         <div class="dropdown position-relative">
                             <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
                                 <i class="mdi mdi-email-outline font-22"></i>
+                                @if($count >= 1)
                                 <span class="noti-icon-badge"></span>
+                                @endif
                             </button>
 
                             <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg" style="min-height: 300px;">
@@ -299,57 +306,50 @@
 
                                 <div class="position-relative z-2" style="max-height: 300px;" data-simplebar>
                                     <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap active" id="notification-1">
+                                    @if($count >=1)
+                                    @foreach (auth('employee')->user()->notifications as $item)
+
+                                    <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
-                                            <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-2.jpg" class="avatar-md rounded-circle" alt="" />
-                                                <span class="position-absolute rounded-pill bg-danger notification-badge">
-                                                    <i class="mdi mdi-message-check-outline"></i>
-                                                    <span class="visually-hidden">unread messages</span>
+                                            <div class="avatar-md flex-shrink-0 me-3">
+                                                <span class="avatar-title bg-success-subtle text-success rounded-circle font-22">
+                                                    <iconify-icon icon="solar:wallet-money-bold-duotone"></iconify-icon>
                                                 </span>
-                                            </span>
-                                            <span class="flex-grow-1 text-muted">
-                                                <span class="fw-medium text-body">Glady Haid</span> commented on <span class="fw-medium text-body">Uplon admin status</span>
-                                                <br />
-                                                <span class="font-12">25m ago</span>
-                                            </span>
+                                            </div>
+                                            <a href="{{url('dashboard/leave/view/'.Crypt::encrypt($item->data['leave_id']))}}">
+                                                <span class="flex-grow-1 text-muted">
+                                                    You have a notification <span class="fw-medium text-body"></span><span class="fw-medium text-body">From Admin</span>
+                                                    <br />
+                                                    <span class="font-12"></span>
+                                                </span>
+                                            </a>
                                             <span class="notification-item-close">
-                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-1">
-                                                    <i class="mdi mdi-close font-16"></i>
-                                                </button>
+                                                <form action="{{url('/notificationAdmin/remove/'.$item->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-3" type="sumbit"><i class="mdi mdi-delete"></i></button>
+                                                </form>
                                             </span>
                                         </span>
                                     </div>
-
-                                    <!-- item-->
-                                    <div class="dropdown-item notification-item py-2 text-wrap" id="notification-2">
+                                    @endforeach
+                                    @else
+                                    <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
-                                            <span class="me-3 position-relative flex-shrink-0">
-                                                <img src="{{ asset('contents/admin') }}/assets/images/users/avatar-4.jpg" class="avatar-md rounded-circle" alt="" />
-                                                <span class="position-absolute rounded-pill bg-info notification-badge">
-                                                    <i class="mdi mdi-currency-usd"></i>
-                                                    <span class="visually-hidden">unread messages</span>
+                                            <div class="avatar-md flex-shrink-0 me-3">
+                                                <span class="avatar-title bg-success-subtle text-success rounded-circle font-22">
+                                                    <span class="mdi mdi-flask-empty"></span>
                                                 </span>
-                                            </span>
-
+                                            </div>
                                             <span class="flex-grow-1 text-muted">
-                                                <span class="fw-medium text-body">Tommy Berry</span> donated <span class="text-success">$100.00</span> for <span class="fw-medium text-body">Carbon removal program</span>
+                                                Empty Notification <span class="fw-medium text-body"></span><span class="fw-medium text-body"></span>
                                                 <br />
-                                                <span class="font-12">58m ago</span>
-                                            </span>
-                                            <span class="notification-item-close">
-                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-2">
-                                                    <i class="mdi mdi-close font-16"></i>
-                                                </button>
+                                                <span class="font-12"></span>
                                             </span>
                                         </span>
                                     </div>
+                                    @endif
                                 </div>
-
-                                <!-- All-->
-                                <a href="javascript:void(0);" class="dropdown-item notification-item position-fixed z-2 bottom-0 text-center text-reset text-decoration-underline link-offset-2 fw-bold notify-item border-top border-light py-2">
-                                    View All
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -361,7 +361,7 @@
                                 @if(Auth::guard('employee')->user()->emp_image != '')
                                 <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @else
-                                <img src="{{ asset('uploads/employe/profile/img.jpg') }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
+                                <img src="{{ asset('uploads/adminprofile/img.jpg')}}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h6 class="my-0">{{ Auth::guard('employee')->user()->emp_name }}</h6>
@@ -417,6 +417,7 @@
                             {{strip_tags($basic->copyright)}}</span>
                             <script>
                                 document.write(new Date().getFullYear())
+
                             </script>
                         </div>
                     </div>

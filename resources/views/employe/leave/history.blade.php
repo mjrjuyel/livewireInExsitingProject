@@ -144,17 +144,14 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ url('dashboard/leave/view/'.Auth::guard('employee')->user()->emp_slug) }}"><i
+                                                        href="{{ url('dashboard/leave/view/'.Crypt::encrypt($leavehistory->id)) }}"><i
                                                             class="mdi mdi-view-agenda"></i>View</a>
                                                 </li>
                                             </ul>
                                         </div>
-                                        </td>
-
+                                    </td>
                                 </tr>
                                 @endforeach
-
-
                             </tbody>
                             <tfoot>
                             </tfoot>

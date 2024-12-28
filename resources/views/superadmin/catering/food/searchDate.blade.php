@@ -54,48 +54,51 @@
                         <div class="col-2">
                             <a href="{{route('superadmin.cateringfood.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Catring Food</a>
+                                
                                
                         </div>
+
                         <div class="col-8">
                                 <div class="row text-center">
                                   <div class="col-1">
-                                <a href="{{url('superadmin/cateringfood/'.('Jan-2024'))}}" class="btn btn-primary">Jan</a>
+                                <a href="{{url('superadmin/cateringfood/'.('Jan-2024'))}}" class="btn btn-danger">Jan</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Feb-2024'))}}" class="btn btn-primary">Feb</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Feb-2024'))}}" class="btn btn-danger">Feb</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Mar-2024'))}}" class="btn btn-primary">March</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Mar-2024'))}}" class="btn btn-danger">March</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('April-2024'))}}" class="btn btn-primary">April</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('April-2024'))}}" class="btn btn-danger">April</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('May-2024'))}}" class="btn btn-primary">May</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('May-2024'))}}" class="btn btn-danger">May</a>
                                 </div>
                                   <div class="col-1">
-                                <a href="{{url('superadmin/cateringfood/'.('Jun-2024'))}}" class="btn btn-primary">June</a>
+                                <a href="{{url('superadmin/cateringfood/'.('Jun-2024'))}}" class="btn btn-danger">June</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('July-2024'))}}" class="btn btn-primary">July</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('July-2024'))}}" class="btn btn-danger">July</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Aug-2024'))}}" class="btn btn-primary">Aug</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Aug-2024'))}}" class="btn btn-danger">Aug</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Sep-2024'))}}" class="btn btn-primary">Sept</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Sep-2024'))}}" class="btn btn-danger">Sept</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Oct-2024'))}}" class="btn btn-primary">Oct</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Oct-2024'))}}" class="btn btn-danger">Oct</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Nov-2024'))}}" class="btn btn-primary">Nov</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Nov-2024'))}}" class="btn btn-danger">Nov</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.('Dec-2024'))}}" class="btn btn-primary">Dec</a>
+                                    <a href="{{url('superadmin/cateringfood/'.('Dec-2024'))}}" class="btn btn-danger">Dec</a>
                                 </div>
                         </div>
                     </div>
+                    {{$seach_date->format('F-Y')}}
 
                     <div class="">
                         <table class="table table-centered text-center border" id="datatable">

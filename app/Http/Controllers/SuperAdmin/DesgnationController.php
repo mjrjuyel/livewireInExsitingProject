@@ -93,4 +93,9 @@ class DesgnationController extends Controller
         return redirect()->back();
         }
     }
+
+    public function getDesigantion($id){
+        $data = Designation::where('depart_id',$id)->get();
+        return response()->json($data);
+    }
 }

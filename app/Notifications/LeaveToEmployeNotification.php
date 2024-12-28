@@ -6,21 +6,19 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Employee;
+use App\Models\Leave;
 
-class LeaveToAdminNotification extends Notification
+class LeaveToEmployeNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public $data;
-
-
-    public function __construct($insert)
+    public $id;
+    public function __construct($id)
     {
-       $this->data = $insert;
+        $this->id = $id;
     }
 
     /**
@@ -35,10 +33,11 @@ class LeaveToAdminNotification extends Notification
 
     public function toArray(object $notifiable): array
     {
-        $employe = Employee::where('id',$this->data->emp_id)->first();
+        $allData = Leave::where('id',$this->id)->first();
         return [
-            'leave_id' => $this->data['id'], 
-            'emp_name' => $employe->emp_name, 
+            'leave_id' => $allData->id,
+            'emp_id'=>$allData->emp_id,
+            'updated_at' => $allData->updated_at,
         ];
     }
 }

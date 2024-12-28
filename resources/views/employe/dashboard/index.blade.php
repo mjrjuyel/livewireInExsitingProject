@@ -86,14 +86,14 @@
                     <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
                       @if($paidRemainingMonth == 1)
-                      <h3 class="my-3" data-plugin="counterup">2</h3>Days
+                      <h3 class="my-3"><span data-plugin="counterup">2</span> Days</h3>
                       @elseif($paidRemainingMonth == 2)
                       <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
                       @elseif($paidRemainingMonth >= 3)
                       <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
                       @endif
                     @else
-                      <h3 class="my-3 text-success" data-plugin="counterup">3</h3>Days
+                    <h3 class="my-3"><span data-plugin="counterup">3</span> Days</h3>
                     @endif
                 </div>
             </div>

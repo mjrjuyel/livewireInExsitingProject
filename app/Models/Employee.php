@@ -48,8 +48,20 @@ class Employee extends Authenticatable
         return $this->belongsTo(Employee::class,'emp_report_manager','id');
     }
 
+    public function department(){
+        return $this->belongsTo(Department::class,'emp_depart_id','id');
+    }
+    
+    public function officeBranch(){
+        return $this->belongsTo(OfficeBranch::class,'emp_office_branch','id');
+    }
+
     public function bankName(){
-        return $this->belongsTo(BankName::class,'emp_bank_name_id','id');
+        return $this->belongsTo(BankName::class,'emp_bank_id','id');
+    }
+
+    public function bankBranch(){
+        return $this->belongsTo(BankBranch::class,'emp_bank_branch_id','id');
     }
 
 }

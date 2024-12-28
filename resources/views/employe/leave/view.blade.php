@@ -65,20 +65,20 @@
                                     <td>:</td>
                                     <td>
                                         @if($view->status == 1)
-                                        <button type="button" class="btn btn-warning ">
+                                        <button type="button" class="btn btn-warning">
                                             Pending
                                         </button>
                                         @elseif($view->status == 2)
-                                        <button type="button" class="btn btn-primary " >
+                                        <button type="button" class="btn btn-primary">
                                             Approved
                                         </button>
                                         @elseif($view->status == 3)
-                                        <button type="button" class="btn btn-primary " >
+                                        <button type="button" class="btn btn-primary">
                                             Cancled
                                         </button>
                                         @elseif($view->status == 4)
-                                        <button type="button" class="btn btn-primary " >
-                                            FeedBack Mes
+                                        <button type="button" class="btn btn-primary">
+                                            FeedBack Message
                                         </button>
                                         @endif
                                     </td>

@@ -328,7 +328,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Department</label>
-                                                            <select type="text" class="form-control" name="department">
+                                                            <select type="text" class="form-control" id="department" name="department">
                                                                 <option value="">Select One</option>
                                                                 @foreach($department as $depart)
                                                                 <option value="{{ $depart->id }}">{{ $depart->depart_name }}
@@ -345,19 +345,12 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Designation <span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="desig" value="{{old('desig')}}">
-                                                                <option value="">Select One</option>
-                                                                @foreach($designation as $desig)
-                                                                <option value="{{ $desig->id }}">{{ $desig->title }}
-                                                                </option>
-                                                                @endforeach
                                                             </select>
                                                             @error('desig')
                                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
                                                         </div>
                                                     </div>
-
-                                                    
 
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
@@ -509,7 +502,7 @@
                                             <div class="form-group clearfix">
                                                 <label for="userName2">Bank Name <span class="text-danger">*</span> :</label>
                                                 <div>
-                                                    <select class="required form-control" name="bankName" type="text" id="bankName">
+                                                    <select class="required form-control" name="bankName" type="text" id="bankName" >
                                                     <option value="">Select a Bank</option>
                                                         @foreach($bankName as $bank)
                                                         <option value="{{$bank->id}}">{{$bank->bank_name}}</option>
@@ -526,10 +519,8 @@
                                             <div class="form-group clearfix">
                                                 <label for="email2">Branch Name</label>
                                                 <div>
-                                                    <select class="required form-control" name="bankBranch" type="text">
-                                                        @foreach($bankBranch as $branch)
-                                                        <option value="{{$branch->id}}">{{$branch->bank_branch_name}}</option>
-                                                        @endforeach
+                                                    <select class="form-control" name="bankBranch" type="text">
+                                                        
                                                     </select>
                                                     @error('bankBranch')
                                                     <small class="form-text text-warning">{{ $message }}</small>
@@ -637,8 +628,8 @@
                                                         @foreach($officeBranch as $office)
                                                         <option value="{{$office->id}}">{{$office->branch_name}} </option>
                                                         @endforeach
-
                                                     </select>
+                                                    
                                                     @error('OffBranch')
                                                     <small class="form-text text-warning">{{ $message }}</small>
                                                     @enderror
@@ -734,6 +725,38 @@
 </div> <!-- container -->
 <!--end Footer -->
 <script>
+
+    $('body').ready(function(){
+        $('#department').on('change',function(){
+            var id = $(this).val();
+            
+            $.ajax({
+                url:"{{url('/get_designation/')}}/"+id,
+                type:"get",
+                success:function(data){
+                $('select[name="desig"]').empty();
+                $.each(data,function(key,data){
+                    $('select[name="desig"]').append('<option value="'+data.id+'">'+data.title+'</option>');
+                })
+                }
+            })
+        });
+
+        $('#bankName').on('change',function(){
+            var id = $(this).val();
+            $.ajax({
+                url:"{{url('/get_bankBranch/')}}/"+id,
+                type:"get",
+                success:function(data){
+                $('select[name="bankBranch"]').empty();
+                $.each(data,function(key,data){
+                    $('select[name="bankBranch"]').append('<option value="'+data.id+'">'+data.bank_branch_name+'</option>');
+                })
+                }
+            })
+        });
+    });
+
     function showInput(inputId) {
         // Hide all input fields and disable them
         document.querySelectorAll('.hiddenInput').forEach(el => {
@@ -758,20 +781,7 @@
         }
     });
 
-    $("#bankName").change(function(){
-        var id = $(this).val();
-        alert(id)
-      //  $.ajax({
-         //   url: "{{url('/get-childid/')}}/"+id,
-        //    type: "get",
-      //      success: function(data){
-    //            $('select[name="childcategory"]').empty();
-               // $.each(data,function(key,data){
-             //       $('select[name="childcategory"]').append('<option value="'+data.id+'">'+data.child_cat_title+'</option>');
-           //     })
-         //   }
-       // })
-    })
+    
 
 </script>
 

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Basic;
+use DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
         $basic = Basic::where('id','1')->first();
         view()->share('basic',$basic);
         
+        // Fetch Notification
+        $notificAdmin = DB::table('notifications')->count('id');
+        view()->share('notificAdmin',$notificAdmin);
     }
 }

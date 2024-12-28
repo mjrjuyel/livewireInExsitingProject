@@ -272,13 +272,13 @@
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.cateringfood')}}" class="side-nav-link">
-                                                    <span class="menu-text">History</span>
+                                                    <span class="menu-text">{{date('F')}}</span>
                                                 </a>
                                             </li>
 
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.cateringfood.add')}}" class="side-nav-link">
-                                                    <span class="menu-text">Add Food</span>
+                                                    <span class="menu-text">Add Item</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -308,6 +308,7 @@
                             <span class="menu-text">Settings</span>
                             <span class="menu-arrow"></span>
                         </a>
+
                         <div class="collapse" id="sidebarBasicSetting">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
@@ -329,70 +330,6 @@
                         </div>
                     </li>
 
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarBank" aria-expanded="false" aria-controls="sidebarBank" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-card-multiple-outline"></i></span>
-                            <span class="menu-text"> Multi Level </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarBank">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel" class="side-nav-link">
-                                        <span class="menu-text"> Second Level </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarSecondLevel">
-                                        <ul class="sub-menu">
-                                            <li class="side-nav-item">
-                                                <a href="javascript: void(0);" class="side-nav-link">
-                                                    <span class="menu-text">Item 1</span>
-                                                </a>
-                                            </li>
-                                            <li class="side-nav-item">
-                                                <a href="javascript: void(0);" class="side-nav-link">
-                                                    <span class="menu-text">Item 2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel" class="side-nav-link">
-                                        <span class="menu-text"> Third Level </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarThirdLevel">
-                                        <ul class="sub-menu">
-                                            <li class="side-nav-item">
-                                                <a href="javascript: void(0);" class="side-nav-link">Item 1</a>
-                                            </li>
-                                            <li class="side-nav-item">
-                                                <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false" aria-controls="sidebarFourthLevel" class="side-nav-link">
-                                                    <span class="menu-text"> Item 2 </span>
-                                                    <span class="menu-arrow"></span>
-                                                </a>
-                                                <div class="collapse" id="sidebarFourthLevel">
-                                                    <ul class="sub-menu">
-                                                        <li class="side-nav-item">
-                                                            <a href="javascript: void(0);" class="side-nav-link">
-                                                                <span class="menu-text">Item 2.1</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="side-nav-item">
-                                                            <a href="javascript: void(0);" class="side-nav-link">
-                                                                <span class="menu-text">Item 2.2</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li class="side-nav-title">Logout</li>
 
                     <li class="side-nav-item">
@@ -465,7 +402,9 @@
                         <div class="dropdown position-relative">
                             <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
                                 <i class="mdi mdi-email-outline font-22"></i>
+                                @if($notificAdmin >= 1)
                                 <span class="noti-icon-badge"></span>
+                                @endif
                             </button>
 
                             <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-lg" style="min-height: 300px;">
@@ -482,6 +421,9 @@
 
 
                                     <!-- item-->
+                                @if($notificAdmin >=1)
+                                    @foreach (auth()->user()->notifications as $item)
+                                    
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
                                             <div class="avatar-md flex-shrink-0 me-3">
@@ -489,25 +431,41 @@
                                                     <iconify-icon icon="solar:wallet-money-bold-duotone"></iconify-icon>
                                                 </span>
                                             </div>
+                                            <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($item->data['leave_id']))}}">
                                             <span class="flex-grow-1 text-muted">
-                                                You withdraw a <span class="fw-medium text-body"></span> by <span class="fw-medium text-body">New York ATM</span>
+                                                You have a notification <span class="fw-medium text-body"></span> From <span class="fw-medium text-body">{{$item->data['emp_name']}}</span>
                                                 <br />
-                                                <span class="font-12">2h ago</span>
+                                                <span class="font-12"></span>
                                             </span>
+                                            </a>
                                             <span class="notification-item-close">
-                                                <button type="button" class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-3">
-                                                    <i class="mdi mdi-close font-16"></i>
-                                                </button>
+                                                    <form action="{{url('/notificationAdmin/remove/'.$item->id)}}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-3" type="sumbit"><i class="mdi mdi-delete"></i></button>
+                                                    </form>
                                             </span>
                                         </span>
                                     </div>
+                                    @endforeach
+                                    @else
+                                    <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
+                                        <span class="d-flex align-items-center">
+                                            <div class="avatar-md flex-shrink-0 me-3">
+                                                <span class="avatar-title bg-success-subtle text-success rounded-circle font-22">
+                                                    <span class="mdi mdi-flask-empty"></span>
+                                                </span>
+                                            </div>
+                                            <span class="flex-grow-1 text-muted">
+                                                Empty Notification <span class="fw-medium text-body"></span><span class="fw-medium text-body"></span>
+                                                <br/>
+                                                <span class="font-12"></span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                @endif
 
                                 </div>
-
-                                <!-- All-->
-                                <a href="javascript:void(0);" class="dropdown-item notification-item position-fixed z-2 bottom-0 text-center text-reset text-decoration-underline link-offset-2 fw-bold notify-item border-top border-light py-2">
-                                    View All
-                                </a>
                             </div>
                         </div>
                     </div>

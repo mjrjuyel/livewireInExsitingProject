@@ -38,40 +38,40 @@ class AdminEmployeController extends Controller
     }
     public function insert(Request $request){
         // return $request->all();
-        $request->validate([
-            'name'=>'required',
-            'pic'=>'required',
-            'email'=>'required | email:rfc,dns | unique:employees,email',
-            'phone'=>'required',
-            'gender'=>'required',
-            'marriage'=>'required',
-            'dob'=>'required',
-            'emerPhone'=>'required',
-            'emerRelation'=>'required',
-            'add'=>'required',
-            'sameAdd'=>'required',
-            'preAdd'=>'required',
-            'department'=>'required',
-            'desig'=>'required',
-            'empType'=>'required',
-            'join'=>'required',
-            'reporting'=>'required',
-            'id_type'=>'required',
-            'id_number'=>'unique:employees,emp_id_number',
-            'degre'=>'required',
-            'degreYear'=>'required',
-            'bankName'=>'required',
-            'accountNumber'=>'required',
-            'accountName'=>'required',
-            'OffBranch'=>'required',
-            'accept'=>'required',
-            'signature'=>'required',
-            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-            ->numbers()
-            ->symbols()],
-            'repass' => 'required | same:pass',
+        // $request->validate([
+        //     'name'=>'required',
+        //     'pic'=>'required',
+        //     'email'=>'required | email:rfc,dns | unique:employees,email',
+        //     'phone'=>'required',
+        //     'gender'=>'required',
+        //     'marriage'=>'required',
+        //     'dob'=>'required',
+        //     'emerPhone'=>'required',
+        //     'emerRelation'=>'required',
+        //     'add'=>'required',
+        //     'sameAdd'=>'required',
+        //     'preAdd'=>'required',
+        //     'department'=>'required',
+        //     'desig'=>'required',
+        //     'empType'=>'required',
+        //     'join'=>'required',
+        //     'reporting'=>'required',
+        //     'id_type'=>'required',
+        //     'id_number'=>'unique:employees,emp_id_number',
+        //     'degre'=>'required',
+        //     'degreYear'=>'required',
+        //     'bankName'=>'required',
+        //     'accountNumber'=>'required',
+        //     'accountName'=>'required',
+        //     'OffBranch'=>'required',
+        //     'accept'=>'required',
+        //     'signature'=>'required',
+        //     'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+        //     ->numbers()
+        //     ->symbols()],
+        //     'repass' => 'required | same:pass',
             
-        ]);
+        // ]);
 
         if($request->hasFile('pic')){
             $imageTake = $request->file('pic');
@@ -116,7 +116,7 @@ class AdminEmployeController extends Controller
             'emp_rec_year'=>$request['degreYear'],
 
             'emp_bank_id'=>$request['bankName'],
-            'emp_bank_branch_id'=>$request['bankName'],
+            'emp_bank_branch_id'=>$request['bankBranch'],
             'emp_bank_account_name'=>$request['accountName'],
             'emp_bank_account_number'=>$request['accountNumber'],
             'emp_bank_sort_code'=>$request['sortCode'],
@@ -188,7 +188,7 @@ class AdminEmployeController extends Controller
         $department = Department::all();
         $edit = Employee::where('emp_slug',$slug)->first();
     
-        // return $report;
+        // return $bankBranch;
         return view('superadmin.employe.edit',compact(['edit','designation','report','officeBranch','bankName','bankBranch','department']));
     }
 
@@ -197,40 +197,40 @@ class AdminEmployeController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
         // return $request->all();
-        // $request->validate([
-        //     'name'=>'required',
-        //     'pic'=>'required',
-        //     'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
-        //     'phone'=>'required',
-        //     'gender'=>'required',
-        //     'marriage'=>'required',
-        //     'dob'=>'required',
-        //     'emerPhone'=>'required',
-        //     'emerRelation'=>'required',
-        //     'add'=>'required',
-        //     'sameAdd'=>'required',
-        //     'preAdd'=>'required',
-        //     'desig'=>'required',
-        //     'empType'=>'required',
-        //     'join'=>'required',
-        //     'reporting'=>'required',
-        //     'id_type'=>'required',
-        //     'id_number'=>'unique:employees,emp_id_number,'.$id,
-        //     'degre'=>'required',
-        //     'degreYear'=>'required',
-        //     'bankName'=>'required',
-        //     'accountNumber'=>'required',
-        //     'accountName'=>'required',
-        //     'OffBranch'=>'required',
-        // ]);
+        $request->validate([
+            'name'=>'required',
+            'pic'=>'required',
+            'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
+            'phone'=>'required',
+            'gender'=>'required',
+            'marriage'=>'required',
+            'dob'=>'required',
+            'emerPhone'=>'required',
+            'emerRelation'=>'required',
+            'add'=>'required',
+            'sameAdd'=>'required',
+            'preAdd'=>'required',
+            'desig'=>'required',
+            'empType'=>'required',
+            'join'=>'required',
+            'reporting'=>'required',
+            'id_type'=>'required',
+            'id_number'=>'unique:employees,emp_id_number,'.$id,
+            'degre'=>'required',
+            'degreYear'=>'required',
+            'bankName'=>'required',
+            'accountNumber'=>'required',
+            'accountName'=>'required',
+            'OffBranch'=>'required',
+        ]);
 
-        // if($request->pass != ''){
-        //     $request->validate([
-        //         'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-        //         ->numbers()
-        //         ->symbols()],
-        //         'repass' => 'required | same:pass',
-        //      ]);
+        if($request->pass != ''){
+            $request->validate([
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+                ->numbers()
+                ->symbols()],
+                'repass' => 'required | same:pass',
+             ]);
 
              if($request->oldpass){
                 $request->validate([
@@ -245,7 +245,7 @@ class AdminEmployeController extends Controller
                     'password' => Hash::make($request->newpass),
                 ]);
             }
-        // }
+        }
 
         $old= Employee::find($id);
         $path = public_path('uploads/employe/profile/');
@@ -314,7 +314,7 @@ class AdminEmployeController extends Controller
             'emp_rec_year'=>$request['degreYear'],
 
             'emp_bank_id'=>$request['bankName'],
-            'emp_bank_branch_id'=>$request['bankName'],
+            'emp_bank_branch_id'=>$request['bankBranch'],
             'emp_bank_account_name'=>$request['accountName'],
             'emp_bank_account_number'=>$request['accountNumber'],
             'emp_bank_sort_code'=>$request['sortCode'],

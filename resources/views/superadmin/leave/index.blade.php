@@ -146,7 +146,7 @@ swal({
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ url('superadmin/leave/view/'.$data->slug) }}"><i
+                                                        href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i
                                                             class="mdi mdi-view-agenda"></i>View</a></li>
                                                     <form action="{{ url('superadmin/leave/delete/'.$data->slug) }}"
                                                         method="post">
