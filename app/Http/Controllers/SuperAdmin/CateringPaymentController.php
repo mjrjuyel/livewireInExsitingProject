@@ -138,11 +138,12 @@ class CateringPaymentController extends Controller
             $checkTotalCost = CateringFood::sum('total_cost');
             $checkTotalPayment = CateringPayment::sum('payment');
 
-            if($checkTotalCost < $checkTotalPayment + $request['amount']){
-                // return "its Hight";
-                Session::flash('error','Your payment Is high Than Total Due');
-                return redirect()->back();
-            }
+            // if($checkTotalCost < $checkTotalPayment + $request['amount']){
+            //     // return "its Hight";
+            //     Session::flash('error','Your payment Is high Than Total Due');
+            //     return redirect()->back();
+            // }
+            
             $insert=CateringPayment::where('id',$id)->update([
             'payment_date'=>$request['date'],
             'payment'=>$request['amount'],

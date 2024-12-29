@@ -113,6 +113,39 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarDepartment" aria-expanded="false" aria-controls="sidebarDepartment" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-slash-forward-box"></i></span>
+                            <span class="menu-text"> Department </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarDepartment">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarDepartmentList" aria-expanded="false" aria-controls="sidebarDepartmentList" class="side-nav-link">
+                                        <span class="menu-text">Department</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarDepartmentList">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.department')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Department</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.department.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Department</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarDesignation" aria-expanded="false" aria-controls="sidebarDesignation" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-material-design"></i></span>
                             <span class="menu-text">Designation</span>
@@ -233,40 +266,6 @@
                         </div>
                     </li>
 
-
-
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarDepartment" aria-expanded="false" aria-controls="sidebarDepartment" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-slash-forward-box"></i></span>
-                            <span class="menu-text"> Department </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarDepartment">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarDepartmentList" aria-expanded="false" aria-controls="sidebarDepartmentList" class="side-nav-link">
-                                        <span class="menu-text">Department</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarDepartmentList">
-                                        <ul class="sub-menu">
-                                            <li class="side-nav-item">
-                                                <a href="{{route('superadmin.department')}}" class="side-nav-link">
-                                                    <span class="menu-text">All Department</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="side-nav-item">
-                                                <a href="{{route('superadmin.department.add')}}" class="side-nav-link">
-                                                    <span class="menu-text">Add Department</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarCatering" aria-expanded="false" aria-controls="sidebarCatering" class="side-nav-link">
