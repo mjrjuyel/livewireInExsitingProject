@@ -90,7 +90,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Total Quantity<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="number" id="humanfd-datepicker" class="form-control" name="quantity" value="{{old('totalLunch')}}"
+                                    <input type="number"  class="form-control" name="quantity" value="{{old('totalLunch')}}"
                                         placeholder="Enter Total Quantity">
                                     @error('quantity')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -111,7 +111,7 @@ swal({
                         </div>
                         <div class="row">
                            <div class="col-6 offset-5">
-                           <button type="submit" class="btn btn-primary">Add To</button>
+                           <button type="submit" class="btn btn-primary">Save</button>
                            </div>
                         </div>
                     </form>

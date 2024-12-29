@@ -17,8 +17,8 @@ class CateringFoodController extends Controller
        
     //  All Role 
     public function index(){
-        $allFood = CateringFood::orderBy('order_date','ASC')->whereMonth('order_date',date('m'))->whereYear('order_date',date('Y'))->get();
-        // return $allFood;
+        $allFood = CateringFood::whereMonth('order_date',date('m'))->whereYear('order_date',date('Y'))->orderBy('order_date','ASC')->get();
+        // return $allFood->sum('total_cost');
         return view('superadmin.catering.food.index',compact('allFood'));
     }
     // role Add
@@ -59,7 +59,7 @@ class CateringFoodController extends Controller
                 'created_at'=>Carbon::now(),
             ]);
             if($insert){
-                Session::flash('success','New Bank Insert This Application');
+                Session::flash('success','Item Added in Current Month');
                 return redirect()->back();
             }
              }

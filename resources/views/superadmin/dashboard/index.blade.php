@@ -112,11 +112,11 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <i class="icon-chart float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Average Price</h6>
-                    <h3 class="my-3">$<span data-plugin="counterup">15.9</span></h3>
-                    <span class="badge bg-danger me-1"> 0% </span> <span class="text-muted">From previous
-                        period</span>
+                    <a href="{{route('superadmin.cateringfood')}}">
+                     <i class="icon-chart float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Catering Cost of {{date('M')}}</h6>
+                    <h3 class="my-3"><span data-plugin="counterup">{{number_format($curFoodCost,'2','.','')}}</span></h3>
+                    </a>
                 </div>
             </div>
         </div>
@@ -124,11 +124,12 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
+                    <a href="{{route('superadmin.cateringpayment')}}">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Product Sold</h6>
-                    <h3 class="my-3" data-plugin="counterup">1,890</h3>
-                    <span class="badge bg-warning me-1"> +89% </span> <span class="text-muted">Last
-                        year</span>
+                    <h6 class="text-muted text-uppercase mt-0">Payment This Month</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$curTotalPay}}</h3>
+                    </a>
+                    
                 </div>
             </div>
         </div>

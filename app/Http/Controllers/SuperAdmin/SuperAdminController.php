@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\UserRole;
 use App\Models\Leave;
+use App\Models\CateringFood;
+use App\Models\CateringPayment;
 
 class SuperAdminController extends Controller
 {
@@ -19,8 +21,10 @@ class SuperAdminController extends Controller
         $leaveRequestInPending = Leave::whereYear('start_date',date('Y'))->where('status',1)->count();
         $leaveRequestInApproved = Leave::whereYear('start_date',date('Y'))->where('status',2)->count();
         $leaveRequestInCancled = Leave::whereYear('start_date',date('Y'))->where('status',3)->count();
-        // return $totalleaveRequest;
-        return view('superadmin.dashboard.index',compact(['notifications','activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled']));
+        $curFoodCost = CateringFood::whereMonth('order_date',now()->month)->whereYear('order_date',now()->year)->sum('total_cost');
+        $curTotalPay = CateringPayment::whereMonth('payment_date',now()->month)->whereYear('payment_date',now()->year)->sum('payment');
+        // return $curTotalPay;
+        return view('superadmin.dashboard.index',compact(['notifications','activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled','curFoodCost','curTotalPay']));
     }
 
     public function insert(Request $request){

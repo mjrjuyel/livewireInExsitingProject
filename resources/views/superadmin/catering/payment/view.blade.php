@@ -15,7 +15,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Department </li>
+                    <li class="breadcrumb-item active">Food Payment </li>
                 </ol>
             </div>
         </div>
@@ -31,14 +31,14 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <h3 class="card_header"><i
-                                                class="mdi mdi-Department header_icon"></i>{{$view->depart_name}}
+                                                class="mdi mdi-noodles header_icon"></i>{{$view->order_date->format('D-m-Y')}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.department')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.cateringfood')}}"
                                             class="btn btn-bg btn-primary btn_header ">
-                                            <i class="mdi mdi-Department btn_icon"></i>All Department </a>
+                                            <i class="mdi mdi-noodles btn_icon"></i>All Food Payment</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('superadmin.department.edit',Crypt::encrypt($view->id))}}"
+                                    <div class="col-md-2"><a href="{{route('superadmin.cateringfood.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>
@@ -47,37 +47,38 @@
 
                             <table class="table border view_table">
                                 <tr>
-                                    <td>Department</td>
+                                    <td>Order Date</td>
                                     <td>:</td>
-                                    <td>{{ $view->depart_name }}</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Under The Branche Have</td>
-                                    <td>:</td>
-                                    <td>
-                                       @foreach( $view->employe as $employe)
-                                          <button class="btn btn-info">{{$employe->emp_name}}</button>
-                                        @endforeach
-                                    </td>
+                                    <td>{{ $view->payment_date->format('d-m-Y') }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Department Info Creator</td>
+                                    <td>Order Day</td>
                                     <td>:</td>
-                                    <td>{{ $view->creator->name }}</td>
+                                    <td>{{ $view->payment_date->format('l') }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Department Info Editor</td>
+                                    <td>Total Payment</td>
                                     <td>:</td>
-                                    <td>{{ optional($view->editor)->name }}</td>
+                                    <td>{{ $view->payment }}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Meal Added By</td>
+                                    <td>:</td>
+                                    <td>{{ $view->creatorUser->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Department Created At</td>
+                                    <td>Meal Last Updated By</td>
+                                    <td>:</td>
+                                    <td>{{ optional($view->editorUser)->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Created At</td>
                                     <td>:</td>
                                     <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Department Edited At</td>
+                                    <td>Last Edited At</td>
                                     <td>:</td>
                                     <td>{{optional($view->updated_at)->format('d-m-Y | h:i:s A')}}</td>
                                 </tr>

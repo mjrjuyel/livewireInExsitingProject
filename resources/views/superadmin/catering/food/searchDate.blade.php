@@ -113,23 +113,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($allFood as $allFood)
+                                @foreach($allFood as $food)
                                 <tr>
                                     <td>
-                                        {{ $allFood->order_date->format('d-m-Y') }}
+                                        {{ $food->order_date->format('d-m-Y') }}
                                     </td>
                                     <td>
-                                        {{ $allFood->order_date->format('l') }}
+                                        {{ $food->order_date->format('l') }}
                                     </td>
                                     <td>
-                                      {{ $allFood->quantity }}
+                                      {{ $food->quantity }}
                                     </td>
                                     <td>
-                                      {{ $allFood->per_cost }}
+                                      {{ $food->per_cost }}
                                     </td>
                                     
                                     <td>
-                                      {{ $allFood->total_cost }}
+                                      {{ $food->total_cost }}
                                     </td>
 
                                     <td>
@@ -138,10 +138,10 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.cateringfood.view',Crypt::encrypt($allFood->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.cateringfood.edit',Crypt::encrypt($allFood->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.cateringfood.view',Crypt::encrypt($food->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.cateringfood.edit',Crypt::encrypt($food->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 <li>
-                                                    <form action="{{ route('superadmin.cateringfood.delete',Crypt::encrypt($allFood->id)) }}" method="post">
+                                                    <form action="{{ route('superadmin.cateringfood.delete',Crypt::encrypt($food->id)) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>

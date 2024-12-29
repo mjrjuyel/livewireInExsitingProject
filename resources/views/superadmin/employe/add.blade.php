@@ -359,7 +359,7 @@
                                                                 <option value="">Select One</option>
                                                                 <option value="Full Time">Full Time </option>
                                                                 <option value="Part Time">Part Time</option>
-                                                                <option value="Frelance">Frelance</option>
+                                                                <option value="Frelance">Freelance</option>
                                                                 <option value="Contract">Contract</option>
                                                                 <option value="Internship">Internship</option>
                                                                 <option value="Remote">Remote</option>

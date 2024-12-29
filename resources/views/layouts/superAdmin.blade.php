@@ -55,6 +55,20 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a href="{{route('superadmin.leave')}}" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                            <span class="menu-text"> Leave Application </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
+                        <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
+                            <span class="menu-text"> Daily Report </span>
+                        </a>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
                             <span class="menu-text"> Employees</span>
@@ -75,7 +89,6 @@
                             </ul>
                         </div>
                     </li>
-
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false" aria-controls="sidebarRole" class="side-nav-link">
@@ -284,22 +297,22 @@
                                         </ul>
                                     </div>
                                 </li>
+
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.cateringpayment.checkbill')}}" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                                        <span class="menu-text"> Check Balance </span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.cateringpayment')}}" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                                        <span class="menu-text"> Payment History </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a href="{{route('superadmin.leave')}}" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
-                            <span class="menu-text"> Leave Application </span>
-                        </a>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
-                            <span class="menu-text"> Daily Report </span>
-                        </a>
                     </li>
 
                     <li class="side-nav-item">
