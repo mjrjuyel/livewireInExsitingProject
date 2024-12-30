@@ -44,16 +44,18 @@ class LeaveFormController extends Controller
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
                     $lastLeave = Leave::latest('id')->first();
 
-             if($lastLeave == Null || $lastLeave->status != 1){
+             if($lastLeave == Null || $lastLeave->status == 2){
 
                           // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
                     $end_time = strtotime($request['end']);
-                    $curr = strtotime(date('Y-m-d'));
-        
+                    $currTime = strtotime(now());
+
+                    $before5Days = strtotime('-5 days', $currTime);
+                    // return "Now Date" .$currTime . "Before 5 days" . $before5Days;
                     // return $start_time . " > Start Time <br>" . "current time " .$curr;
                 // 2 dates are valid or not!
-                if($start_time <= $end_time && $start_time >= $curr){
+                if($start_time <= $end_time && $start_time >= $before5Days){
 
                     // **NEW CONDITION: Check for overlapping leaves**
                         $overlappingLeaves = Leave::where('emp_id', Auth::guard('employee')->user()->id)
@@ -193,7 +195,7 @@ class LeaveFormController extends Controller
                                     ]);
             
                                     // Send Mail to Admin
-                                    // Mail::to('mjrcoder7@gmail.com')->send(new LeaveMailToAdmin($insert));
+                                    Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
 
                                     auth()->user()->notify(new LeaveToAdminNotification($insert));
 
@@ -222,6 +224,7 @@ class LeaveFormController extends Controller
         $emp = Employee::where('emp_slug',Auth::guard('employee')->user()->emp_slug)->first();
         // dd($emp);
         $useId = Crypt::decrypt($slug);
+
         $view = Leave::with(['employe'=>function($query){
             $query->select('id','emp_name');
         },'leavetype'])->where('id',$useId)->where('emp_id',$emp->id)->first();
@@ -230,8 +233,32 @@ class LeaveFormController extends Controller
     } 
 
     public function history($slug){
-        $employe = Employee::where('emp_slug',$slug)->first();
+
+        $userId = Crypt::decrypt($slug);
+        // return $userId;
+
+        $employe = Employee::where('id',$userId)->first();
         $leavehistory = Leave::where('emp_id',$employe->id)->latest('id')->get();
+        // return $leavehistory;
+        return view('employe.leave.history',compact('leavehistory'));
+    }
+
+    public function historyMonth($slug){
+        // return $slug;
+        $date = new DateTime($slug);
+        $parseDate = Carbon::parse($date);
+        // return $parseDate;/
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->month)->latest('id')->get();
+        // return $leavehistory;
+        return view('employe.leave.history',compact('leavehistory'));
+    }
+
+    public function historYear($slug){
+        // return $slug;
+        $date = new DateTime($slug);
+        $parseDate = Carbon::parse($date);
+        // return $parseDate;/
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->year)->latest('id')->get();
         // return $leavehistory;
         return view('employe.leave.history',compact('leavehistory'));
     }

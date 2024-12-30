@@ -123,11 +123,11 @@
                                                 </label>
                                                 @if($view->total_unpaid + $view->total_paid <= 1) 
                                                     <span class="text-danger">
-                                                    {{ $view->total_unpaid + $view->total_paid }}Day
+                                                    {{ $view->total_unpaid + $view->total_paid }} Day
                                                     </span>
                                                     @else
                                                     <span class="text-danger">
-                                                        {{ $view->total_unpaid + $view->total_paid }}Days
+                                                        {{ $view->total_unpaid + $view->total_paid }} Days
                                                     </span>
                                                 @endif
                                             </div>
@@ -138,14 +138,14 @@
                                                  @if($view->total_paid <= 1) 
                                                      @if($view->total_paid == 1) 
                                                     <span class="text-danger">
-                                                    {{ $view->total_paid  }}Day
+                                                    {{ $view->total_paid  }} Day
                                                     </span>
                                                     @else
                                                     0 Day
                                                     @endif
                                                 @else
                                                     <span class="text-danger">
-                                                        {{ $view->total_paid }}Days
+                                                        {{ $view->total_paid }} Days
                                                     </span>
                                                 @endif
                                             </div>
@@ -156,14 +156,14 @@
                                                  @if($view->total_unpaid <= 1) 
                                                     @if($view->total_unpaid == 1) 
                                                     <span class="text-danger">
-                                                    {{ $view->total_unpaid  }}Day
+                                                    {{ $view->total_unpaid  }} Day
                                                     </span>
                                                     @else
                                                     0 Day
                                                     @endif
                                                 @else
                                                     <span class="text-danger">
-                                                        {{ $view->total_unpaid }}Days
+                                                        {{ $view->total_unpaid }} Days
                                                     </span>
                                                 @endif
                                             </div>

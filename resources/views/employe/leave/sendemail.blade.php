@@ -58,7 +58,7 @@
             width: 100%;
         }
 
-         button {
+        button {
             padding: 10px 20px;
             font-size: 16px;
             color: white;
@@ -70,7 +70,7 @@
         }
 
         button:hover {
-            background-color:rgb(196, 219, 197);
+            background-color: rgb(196, 219, 197);
         }
 
         .footer {
@@ -82,33 +82,63 @@
             border-top: 1px solid #e0e0e0;
             background-color: #f9f9f9;
         }
+
     </style>
 </head>
 
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Leave Request 
+            New Leave Request
         </div>
         <div class="email-body">
             <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
             <p><strong>Leave: {{$leave['leavetype']->type_title}}</strong></p>
             <p><strong>Reason: {{$leave['reason']}}</strong> </p>
-            <p><strong>Start Date: {{$leave['start_date']}}</strong></p>
-            <p><strong>End Date:</strong> {{ $leave['end_date'] }}</p>
-            <p><strong>total Paid:</strong> {{ $leave['total_paid'] }} Days</p>
-            <p><strong>total Paid:</strong> {{ $leave['total_unpaid'] }} Days</p>
-            <p>Choose an action and submit your response:</p>
-            <div class="action-form">
-                 
-            <input type="hidden" name="leave_request_id" value="{{ $leave['id'] }}">
-                <select name="action" required>
-                            
-                    <option class="text-warning" value="1" @if ($leave['status'] == 1) Selected @endif>
-                        Pending</option>
-                </select>
-                <a href="{{url('superadmin/leave/view/'.$leave['slug'])}}" class="">Go To Dashboard</a>
-            </div>
+            <p><strong>Start Date: {{$leave['start_date']->format('d-M-Y')}}</strong></p>
+            <p><strong>End Date:</strong> {{ $leave['end_date']->format('d-M-Y') }}</p>
+           @if($leave['total_paid'] != 0)
+
+                @if($leave['total_paid'] <= 1) 
+                    <td class="text-danger">
+                    @if($leave['total_paid'] !== null)
+                    <p><strong>Total Paid:</p> {{ $leave['total_paid']}} Day
+                    @endif
+                    </td>
+                    @else
+                    <td class="text-danger">
+                    <p><strong>Total Paid:</p> {{ $leave['total_paid'] }} Days
+                    </td>
+                @endif
+
+            @endif
+
+            @if($leave['total_unpaid'] != 0)
+
+                @if($leave['total_unpaid'] <= 1) 
+                    <td class="text-danger">
+                    @if($leave['total_unpaid'] !== null)
+                    <p><strong>Total Paid:</p> {{ $leave['total_unpaid']}} Day
+                    @endif
+                    </td>
+                    @else
+                    <td class="text-danger">
+                    <p><strong>Total Paid:</p> {{ $leave['total_unpaid'] }} Days
+                    </td>
+                @endif
+
+            @endif
+                <p>Choose an action and submit your response:</p>
+                <div class="action-form">
+
+                    <input type="hidden" name="leave_request_id" value="{{ $leave['id'] }}">
+                    <select name="action" required>
+
+                        <option class="text-warning" value="1" @if ($leave['status']==1) Selected @endif>
+                            Pending</option>
+                    </select>
+                    <a href="{{url('superadmin/leave/view/'.$leave['slug'])}}" class="">Go To Dashboard</a>
+                </div>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} Your Company Name. All rights reserved.

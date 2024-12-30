@@ -62,7 +62,7 @@
 
                     <li class="side-nav-title">Extra Pages</li>
 
-                    <li class="side-nav-item">
+                    {{-- <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
                             <span class="menu-text"> Employees</span>
@@ -71,13 +71,13 @@
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{ route('dashboard.employe') }}" class="side-nav-link">
+                                    <a href="#" class="side-nav-link">
                                         <span class="menu-text">All Employee</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
 
                     {{-- <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false" aria-controls="sidebarRole" class="side-nav-link">
@@ -142,7 +142,7 @@
                                 </li>
 
                                 <li class="side-nav-item">
-                                    <a href="{{ url('/dashboard/leave/history/'.Auth::guard('employee')->user()->emp_slug) }}" class="side-nav-link">
+                                    <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="side-nav-link">
                                         <span class="menu-text">My History</span>
                                     </a>
                                 </li>

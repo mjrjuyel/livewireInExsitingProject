@@ -31,12 +31,12 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <h3 class="card_header"><i
-                                                class="mdi mdi-Department header_icon"></i>{{$view->depart_name}}
+                                                class="mdi mdi-sitemap header_icon"></i>{{$view->depart_name}}
                                         </h3>
                                     </div>
                                     <div class="col-md-3 text-end"><a href="{{route('superadmin.department')}}"
                                             class="btn btn-bg btn-primary btn_header ">
-                                            <i class="mdi mdi-Department btn_icon"></i>All Department </a>
+                                            <i class="mdi mdi-sitemap btn_icon"></i>All Department </a>
                                     </div>
                                     <div class="col-md-2"><a href="{{route('superadmin.department.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
@@ -53,7 +53,17 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Under The Branche Have</td>
+                                    <td>Designations</td>
+                                    <td>:</td>
+                                    <td>
+                                       @foreach( $view->designation as $desig)
+                                          <button class="btn btn-info">{{$desig->title}}</button>
+                                        @endforeach
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Under Department Have</td>
                                     <td>:</td>
                                     <td>
                                        @foreach( $view->employe as $employe)

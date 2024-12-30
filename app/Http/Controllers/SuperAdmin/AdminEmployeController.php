@@ -38,40 +38,39 @@ class AdminEmployeController extends Controller
     }
     public function insert(Request $request){
         // return $request->all();
-        // $request->validate([
-        //     'name'=>'required',
-        //     'pic'=>'required',
-        //     'email'=>'required | email:rfc,dns | unique:employees,email',
-        //     'phone'=>'required',
-        //     'gender'=>'required',
-        //     'marriage'=>'required',
-        //     'dob'=>'required',
-        //     'emerPhone'=>'required',
-        //     'emerRelation'=>'required',
-        //     'add'=>'required',
-        //     'sameAdd'=>'required',
-        //     'preAdd'=>'required',
-        //     'department'=>'required',
-        //     'desig'=>'required',
-        //     'empType'=>'required',
-        //     'join'=>'required',
-        //     'reporting'=>'required',
-        //     'id_type'=>'required',
-        //     'id_number'=>'unique:employees,emp_id_number',
-        //     'degre'=>'required',
-        //     'degreYear'=>'required',
-        //     'bankName'=>'required',
-        //     'accountNumber'=>'required',
-        //     'accountName'=>'required',
-        //     'OffBranch'=>'required',
-        //     'accept'=>'required',
-        //     'signature'=>'required',
-        //     'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-        //     ->numbers()
-        //     ->symbols()],
-        //     'repass' => 'required | same:pass',
+        $request->validate([
+            'name'=>'required',
+            'pic'=>'required',
+            'email'=>'required | email:rfc,dns | unique:employees,email',
+            'phone'=>'required',
+            'gender'=>'required',
+            'marriage'=>'required',
+            'dob'=>'required',
+            'emerPhone'=>'required',
+            'emerRelation'=>'required',
+            'add'=>'required',
+            'sameAdd'=>'required',
+            // 'preAdd'=>'required',
+            'department'=>'required',
+            'desig'=>'required',
+            'empType'=>'required',
+            'join'=>'required',
+            'reporting'=>'required',
+            'id_type'=>'required',
+            'id_number'=>'unique:employees,emp_id_number',
+            'degre'=>'required',
+            'degreYear'=>'required',
+            'bankName'=>'required',
+            'accountNumber'=>'required',
+            'accountName'=>'required',
+            'OffBranch'=>'required',
+            'signature'=>'required',
+            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+            ->numbers()
+            ->symbols()],
+            'repass' => 'required | same:pass',
             
-        // ]);
+        ]);
 
         if($request->hasFile('pic')){
             $imageTake = $request->file('pic');

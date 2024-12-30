@@ -6,7 +6,8 @@
 
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="font-18 mb-0">Dashboard of {{$view->emp_name}}</h4><div>Date : <span>{{date('d-M-Y')}}</span></div><div>Time : <span id="time"></span></div>
+              
+                <h4 class="font-18 mb-0">Dashboard of {{$view->emp_name}}</h4><div>Date : <span>{{date('d-M-Y | h:i:s A')}}</span></div><div>Time : <span id="time"></span></div>
             </div>
 
             <div class="text-end">
@@ -34,7 +35,7 @@
                     @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">{{$view->emp_join->format('Y-M-d')}}</span></h6>
-                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y Y %m M %d D %R');}}</h3>
+                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y y, %m m, %d d');}}</h3>
                    
                 </div>
             </div>
@@ -43,12 +44,11 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.employe')}}">
+                    
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">His Life Time Leave<span class="text-danger text-italic"> : {{$view->emp_join->format('Y-m-d')}} to {{date('Y-m-d')}}</span></h6>
-                    <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span>Days</h3>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Days</h3>
                     
-                    </a>
                 </div>
             </div>
         </div>
@@ -56,11 +56,10 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.employe')}}">
+                    <a href="{{route('dashboard.leave.historyMonth',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
-                    
                     </a>
                 </div>
             </div>
@@ -69,7 +68,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.employe')}}">
+                    <a href="{{route('dashboard.employe')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
@@ -109,9 +108,9 @@
                     <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($remainYear >= 1 )
                       @if($remainYear  >= 2)
-                      <h3 class="my-3" ><span data-plugin="counterup">{{$remainYear}}</span>Days</h3>
+                      <h3 class="my-3" ><span data-plugin="counterup">{{$remainYear}}</span> Days</h3>
                       @else
-                       <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span>Day</h3>
+                       <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span> Day</h3>
                       @endif
                     @else
                       <h3 class="my-3 text-danger">Out of Paid Leave</h3>
@@ -127,9 +126,9 @@
                     <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($unpaidRemainingMonth != null)
                       @if($unpaidRemainingMonth  >= 2)
-                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span>Days</h3>
+                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span> Days</h3>
                       @else
-                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span>Day</h3>
+                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span> Day</h3>
                       @endif
                     @else
                       <h3 class="my-3 text-danger">Not Yet</h3>
@@ -145,13 +144,33 @@
                     <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($unpaidRemainingYear != null)
                       @if($unpaidRemainingYear  >= 2)
-                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingYear}} </span>Days +</h3>
+                      <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingYear}} </span> Days +</h3>
                       @else
-                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span>Day +</h3>
+                       <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span> Day +</h3>
                       @endif
                     @else
                       <h3 class="my-3 text-danger">Not Yet</h3>
                     @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="">
+                        <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                        <h6 class="text-muted text-uppercase mt-0">Total Daily Report Submit <span class="text-danger text-italic"></span></h6>
+                        @if($totalReportSubmit != null)
+                        @if($totalReportSubmit  >= 2)
+                        <h3 class="my-3" ><span data-plugin="counterup">{{$totalReportSubmit}} </span></h3>
+                        @else
+                        <h3 class="my-3"><span data-plugin="counterup">{{$totalReportSubmit}} </span></h3>
+                        @endif
+                        @else
+                        <h3 class="my-3 text-danger">Not Yet</h3>
+                        @endif
+                    </a>
                 </div>
             </div>
         </div>
@@ -166,12 +185,15 @@
 <script>
       const timeDiv = document.getElementById("time");
 
-      function updateTime() {
-        const now = new Date();
-        const formattedTime = now.toLocaleTimeString();
-        timeDiv.textContent = formattedTime;
-      }
+        const userTimezone = "{{ config('app.timezone') }}"; 
 
-      setInterval(updateTime, 1000);
+        function updateTime() {
+            const now = new Date();
+            const options = { timeZone: userTimezone }; 
+            const formattedTime = now.toLocaleTimeString('en-US', options); 
+            timeDiv.textContent = formattedTime;
+        }
+
+        setInterval(updateTime, 1000); 
     </script>
 @endsection

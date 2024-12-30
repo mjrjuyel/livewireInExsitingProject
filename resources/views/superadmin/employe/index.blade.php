@@ -68,7 +68,7 @@
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Reporting Manager</th>
                                     
-                                    <th class="text-center">Staus</th>
+                                    <th class="text-center">Status</th>
                                     @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                                     <th class="text-center">Dashboard login</th>
                                     @endif

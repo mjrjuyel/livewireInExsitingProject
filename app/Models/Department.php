@@ -16,7 +16,11 @@ class Department extends Model
     ];
     
     public function employe(){
-        return $this->hasMany(Employee::class,'emp_depart_name_id','id');
+        return $this->hasMany(Employee::class,'emp_depart_id','id');
+    }
+
+    public function designation(){
+        return $this->hasMany(Designation::class,'depart_id','id');
     }
 
     public function creator(){

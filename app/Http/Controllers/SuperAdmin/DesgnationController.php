@@ -14,9 +14,7 @@ class DesgnationController extends Controller
 
     //  All Role 
     public function index(){
-        $desig = Designation::with(['employe'=>function($query){
-            $query->select('id','emp_name');
-        },'department'])->get();
+        $desig = Designation::with(['employe','department'])->get();
         
         // return $desig;
         return view('superadmin.designation.index',compact(['desig']));

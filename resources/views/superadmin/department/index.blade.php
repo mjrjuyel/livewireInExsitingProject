@@ -62,6 +62,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Department</th>
+                                    <th class="text-center">Designation</th>
                                     <th class="text-center">Employees</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -74,10 +75,17 @@
                                     </td>
 
                                     <td>
+                                      @foreach( $department->designation as $desig)
+                                          <button class="btn btn-info">{{$desig->title}}</button>
+                                        @endforeach
+                                    </td>
+
+                                    <td>
                                       @foreach( $department->employe as $employe)
                                           <button class="btn btn-info">{{$employe->emp_name}}</button>
                                         @endforeach
                                     </td>
+                                    
 
                                     <td>
                                         <div class="btn-group" role="group">

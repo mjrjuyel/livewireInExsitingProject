@@ -15,7 +15,7 @@ class DepartmentController extends Controller
        
     //  All Role 
     public function index(){
-        $department = Department::all();
+        $department = Department::with('designation','employe')->get();
         // return $role;
         return view('superadmin.department.index',compact('department'));
     }
@@ -70,7 +70,7 @@ class DepartmentController extends Controller
 
     public function view($id){
         $userId = Crypt::decrypt($id);
-        $view = Department::where('id',$userId)->first();
+        $view = Department::with(['designation','employe'])->where('id',$userId)->first();
         return view('superadmin.department.view',compact('view'));
     }
 

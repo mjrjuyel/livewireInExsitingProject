@@ -16,7 +16,7 @@ class BankName extends Model
     ];
     
     public function employe(){
-        return $this->hasMany(Employee::class,'emp_bank_name_id','id');
+        return $this->hasMany(Employee::class,'emp_bank_id','id');
     }
 
     public function bankbranch(){

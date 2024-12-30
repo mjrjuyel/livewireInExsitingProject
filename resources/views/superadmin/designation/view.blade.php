@@ -48,7 +48,7 @@
                                     <td>{{ $view->title }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Designation Name</td>
+                                    <td>Designation Department</td>
                                     <td>:</td>
                                     <td>
                                         <button type="button" class="btn btn-info">

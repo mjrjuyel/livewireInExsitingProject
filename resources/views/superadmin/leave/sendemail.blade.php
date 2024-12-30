@@ -88,14 +88,47 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            Response From Admin-> ({{ config('app.name', 'Laravel') }})
+            Response From ({{ config('app.name', 'Laravel') }}) by Admin
         </div>
         <div class="email-body">
             <p><strong>Employee:</strong>{{ $data['employe']->emp_name }}</p>
             <p><strong>Reason:</strong>{{ $data['reason'] }} </p>
             <p><strong>Start Date:</strong> {{ $data['start_date']->format('Y-m-D') }}</p>
             <p><strong>End Date:</strong> {{ $data['end_date']->format('Y-m-D') }}</p>
+            <p><strong>
+              @if($data['total_paid'] != 0)
+                @if($data['total_paid'] <= 1) 
+                    <td class="text-danger">
+                    @if($data['total_paid'] !== null)
+                    <p><strong>Total Paid:</p> {{ $data['total_paid']}} Day
+                    @endif
+                    </td>
+                    @else
+                    <td class="text-danger">
+                    <p><strong>Total Paid:</p> {{ $data['total_paid'] }} Days
+                    </td>
+                @endif
+            @endif
+            @if($data['total_unpaid'] != 0)
+                @if($data['total_unpaid'] <= 1) 
+                    <td class="text-danger">
+                    @if($data['total_unpaid'] !== null)
+                    <p><strong>Total Paid:</p> {{ $data['total_unpaid']}} Day
+                    @endif
+                    </td>
+                    @else
+                    <td class="text-danger">
+                    <p><strong>Total Paid:</p> {{ $data['total_unpaid'] }} Days
+                    </td>
+                @endif
+
+            @endif
+            </strong></p>
+             
             <p><strong>Comments:</strong> {{ $data['comments'] }}</p>
+
+           
+
             <div class="action-form">
                 <select name="action" required>     
                     <option class="text-warning" value="1" @if ($data['status'] == 2) Selected @endif>

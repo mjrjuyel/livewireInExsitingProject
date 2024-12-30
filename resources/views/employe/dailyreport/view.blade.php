@@ -62,7 +62,7 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of !{{$view->employe->emp_name}}!
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->emp_name}}!
                                         </h3>
                                     </div>
 
@@ -92,16 +92,8 @@
                                     </td>
                                 </tr>
 
-                                 <tr>
-                                    <td>Role Is</td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$view->employe->emp_role->role_name}}
-                                    </td>
-                                </tr>
-
                                 <tr>
-                                    <td>Type</td>
+                                    <td>Work Details</td>
                                     <td>:</td>
                                     <td class="text-danger">
                                         {{$view->detail}}
@@ -112,25 +104,7 @@
                                 <tr>
                                     <td>Submited Date</td>
                                     <td>:</td>
-
                                     <td>{{$view->submit_date->format('d-M-Y ')}}</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Data Editor</td>
-                                    <td>:</td>
-                                    <td class="text-danger">{{optional($view)->editor}}</td>
-                                </tr>
-
-                                <tr>
-                                    <td>Created At</td>
-                                    <td>:</td>
-                                    <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Edited At</td>
-                                    <td>:</td>
-                                    <td>{{optional($view->updated_at)->format('d-M-Y | h:i:s A')}}</td>
                                 </tr>
                             </table>
 

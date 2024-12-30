@@ -33,7 +33,7 @@
                     @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">{{$view->emp_join->format('Y-M-d')}}</span></h6>
-                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y Y %m M %d D %R');}}</h3>
+                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y y, %m m, %d d');}}</h3>
 
                 </div>
             </div>
@@ -373,7 +373,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_degree}}</li>
-                                    <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_year}}</li>
+                                    <li class="list-group-item">Passing Year Degree : {{$view->emp_rec_year}}</li>
                                 </ul>
                             </div>
                         </div>

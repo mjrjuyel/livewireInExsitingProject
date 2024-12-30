@@ -61,7 +61,7 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="text-center">Bank Name Type</th>
+                                    <th class="text-center">Bank Name</th>
                                     <th class="text-center">Employees</th>
                                     <th class="text-center">Branches Name</th>
                                     <th class="text-center">Action</th>

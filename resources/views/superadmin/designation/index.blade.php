@@ -82,9 +82,9 @@
                                     </td>
 
                                     <td>
-                                        @foreach($desig->employe as $admin)
-                                        <button type="button" class="btn btn-info">
-                                            {{optional($admin)->emp_name}}
+                                        @foreach($desig->employe as $employe)
+                                        <button type="button" class="btn btn-dark">
+                                            {{optional($employe)->emp_name}}
                                         </button>
                                         @endforeach
                                     </td>

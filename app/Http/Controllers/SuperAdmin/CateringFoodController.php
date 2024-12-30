@@ -129,7 +129,7 @@ class CateringFoodController extends Controller
 
     public function searchMonth($month){
 
-        $seach_date= new DateTime($month);
+        $search_date= new DateTime($month);
         // $date = Carbon::parse($month);
         
         $parseDate = Carbon::parse($seach_date);

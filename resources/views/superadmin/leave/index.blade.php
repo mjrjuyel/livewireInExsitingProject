@@ -132,7 +132,7 @@ swal({
                                         </button>
                                         @elseif($data->status == 4)
                                         <button type="button" class="btn btn-primary " >
-                                           FeedBack
+                                           Feedback
                                         </button>
                                         @endif
                                     </td>

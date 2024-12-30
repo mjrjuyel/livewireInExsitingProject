@@ -42,13 +42,13 @@ return new class extends Migration
 
             // education qualification
             $table->string('emp_rec_degree')->nullable();
-            $table->date('emp_rec_year')->nullable();
+            $table->string('emp_rec_year')->nullable();
 
             // bank statement
             $table->integer('emp_bank_id')->nullable();
             $table->integer('emp_bank_branch_id')->nullable();
             $table->string('emp_bank_account_name')->nullable();
-            $table->integer('emp_bank_account_number')->nullable();
+            $table->string('emp_bank_account_number',50)->nullable();
             $table->string('emp_bank_swift_code')->nullable();
             $table->string('emp_bank_sort_code')->nullable();
             $table->string('emp_bank_routing_number')->nullable();
@@ -62,7 +62,7 @@ return new class extends Migration
             $table->string('emp_office_IT_requirement')->nullable();
             $table->string('emp_office_work_schedule')->nullable();
 
-            $table->integer('emp_aggrement')->nullable();
+            // $table->integer('emp_aggrement')->nullable();
             $table->string('emp_signature')->nullable();
 
             $table->integer('emp_creator');

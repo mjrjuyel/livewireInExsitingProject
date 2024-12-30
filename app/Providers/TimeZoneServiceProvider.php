@@ -21,8 +21,8 @@ class TimeZoneServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // $timeZone = TimeZone::where('id',1)->first();
-        // date_default_timezone_set($timeZone->name);
-        // config(['app.timezone' => $timeZone->name]);
+        $timeZone = TimeZone::where('id',1)->first();
+        date_default_timezone_set($timeZone->name);
+        config(['app.timezone' => $timeZone->name]);
     }
 }

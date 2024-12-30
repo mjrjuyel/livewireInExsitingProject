@@ -33,7 +33,7 @@ class DailyReportController extends Controller
         ]);
         //Check that is There any chances to Same Date  
         $submitDate = Carbon::parse($request->submit_date);
-        $checkDate=DailyReport::where('status',1)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
+        $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::guard('employee')->user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
 
         // return $request->all();
         if($checkDate == null || $checkDate == 0){

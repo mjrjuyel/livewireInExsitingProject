@@ -20,7 +20,7 @@ class Designation extends Model
     }
 
     public function employe(){
-        return $this->hasMany(Employee::class,'emp_desig_id');
+        return $this->hasMany(Employee::class,'emp_desig_id','id');
     }
 
     public function department(){

@@ -62,7 +62,7 @@
                 <div class="card-body">
                     <div class="col-sm-5 mb-2">
                         <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
-                            Designation</a>
+                            Employee</a>
                     </div>
                     <div class="card-header bg-dark">
                         <div class="row">
@@ -86,8 +86,8 @@
                             <section>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                    <input type="hidden" name="id" value="{{$edit->id}}">
-                                    <input type="hidden" name="slug" value="{{$edit->emp_slug}}">
+                                        <input type="hidden" name="id" value="{{$edit->id}}">
+                                        <input type="hidden" name="slug" value="{{$edit->emp_slug}}">
                                         <div class="form-group clearfix">
                                             <label for="userName2">Full Name <span class="text-danger">*</span> :</label>
                                             <div>
@@ -311,7 +311,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label class="form-label">Department</label>
-                                            <select type="text" class="form-control" name="department">
+                                            <select type="text" class="form-control" id="department" name="department">
                                                 <option value="">Select One</option>
                                                 @foreach($department as $department)
                                                 <option value="{{$department->id}}" @if($edit->emp_depart_id == $department->id) Selected @endif>{{$department->depart_name}}</option>
@@ -328,7 +328,7 @@
                                             <label class="form-label">Designation <span class="text-danger">*</span> :</label>
                                             <select type="text" class="form-control" name="desig" value="{{$edit->emp_desig }}">
                                                 <option value="">Select One</option>
-                                                 @foreach($designation as $designation)
+                                                @foreach($designation as $designation)
                                                 <option value="{{$designation->id}}" @if($edit->emp_desig_id == $designation->id) Selected @endif>{{$designation->title}}</option>
                                                 @endforeach
                                             </select>
@@ -360,12 +360,12 @@
 
                                 <div class="row">
 
-                                   <div class="col-sm-4">
+                                    <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label class="form-label">Report Manager <span class="text-danger">*</span> :</label>
                                             <select type="text" class="form-control" name="reporting">
                                                 <option value="">Select One</option>
-                                                 @foreach($report as $repor)
+                                                @foreach($report as $repor)
                                                 <option value="{{$repor->id}}" @if($edit->emp_report_manager == $repor->id) Selected @endif>{{$repor->emp_name}}</option>
                                                 @endforeach
                                             </select>
@@ -499,7 +499,7 @@
                             <div class="form-group clearfix">
                                 <label for="email2">Bank Name</label>
                                 <div>
-                                    <select type="text" class="form-control" name="bankName">
+                                    <select type="text" class="form-control" id="bankName" name="bankName">
                                         <option value="">Select One</option>
                                         @foreach($bankName as $bankName)
                                         <option value="{{ $bankName->id }}" @if($edit->emp_bank_id == $bankName->id) Selected @endif>{{ $bankName->bank_name }}
@@ -518,10 +518,7 @@
                                 <label for="email2">Bank Branch Name</label>
                                 <div>
                                     <select class="required form-control" name="bankName" type="text">
-                                        <option value="">Select One</option>
-                                        @foreach($bankBranch as $bankBranch)
-                                        <option value="{{$bankBranch->id}}" @if($edit->emp_bank_branch_id == $bankBranch->id) Selected @endif>{{$bankBranch->bank_branch_name}}</option>
-                                        @endforeach
+
                                     </select>
                                 </div>
                             </div>
@@ -647,6 +644,67 @@
 <!--end Footer -->
 
 <script>
+    $('body').ready(function() {
+
+
+        $(document).ready(function() {
+            // Pre-set values (replace with actual values fetched from the database)
+            var storeBankId = "{{ $edit->emp_bank_id }}"; // PHP/Laravel variable
+            var storeBankBranchId = "{{ $edit->emp_bank_branch_id }}"; // PHP/Laravel variable
+
+            alert(storeBankBranchId);
+            // Pre-select the subcategory
+            $('select[name="subcategory"]').val(storeBankId);
+
+            // Fetch and populate child categories if editing an existing record
+            if (storeBankId) {
+                fetchBankBranch(storeBankId, storeBankBranchId);
+            }
+
+            // Event listener for subcategory changes
+            $("#bankName").change(function() {
+                var bankId = $(this).val();
+                if (bankId) {
+                    fetchBankBranch(bankId, null);
+                }
+            });
+
+            function fetchBankBranch(bankId, storeBankBranchId) {
+                $.ajax({
+                    url: "{{ url('/get_bankBranch/') }}/" + bankId
+                    , type: "get"
+                    , success: function(data) {
+                        $('select[name="bankBranch"]').empty();
+                        $.each(data, function(key, data) {
+                            $('select[name="bankBranch"]').append('<option value="' + data.id + '">' + data.bank_branch_name + '</option>');
+                        });
+                        // Set the pre-selected child category if editing
+                        if (storeBankBranchId) {
+                            $('select[name="bankBranch"]').val(storeBankBranchId);
+                        }
+                    }
+                    , error: function() {
+                        alert("Error fetching BankBranch.");
+                    }
+                });
+            }
+        });
+
+        $('#department').on('change', function() {
+            var id = $(this).val();
+            $.ajax({
+                url: "{{url('/get_designation/')}}/" + id
+                , type: "get"
+                , success: function(data) {
+                    $('select[name="desig"]').empty();
+                    $.each(data, function(key, data) {
+                        $('select[name="desig"]').append('<option value="' + data.id + '">' + data.title + '</option>');
+                    })
+                }
+            })
+        });
+    });
+
     function showInput(inputId) {
         // Hide all input fields and disable them
         document.querySelectorAll('.hiddenInput').forEach(el => {

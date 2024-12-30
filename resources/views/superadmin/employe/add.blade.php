@@ -104,7 +104,7 @@
                                                         <div class="form-group clearfix">
                                                             <label for="userName2">Date of Birth</label>
                                                             <div>
-                                                                <input class="form-control" id="humanfd-datepicke" name="dob" type="text">
+                                                                <input class="form-control" id="humanfd-datepicke" name="dob" type="text" value="{{old('dob')}}">
                                                             </div>
                                                             @error('dob')
                                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -131,20 +131,20 @@
                                                             <legend class="col-form-label col-sm-6 pt-0">Gender <span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male">
-                                                                    <label class="form-check-label" for="gridRadios1">
+                                                                    <input class="form-check-input" type="radio" name="gender" id="gender1" {{ old('gender') == 'Male' ? 'checked' : '' }} value="Male">
+                                                                    <label class="form-check-label" for="gender1">
                                                                         Male
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="Female">
-                                                                    <label class="form-check-label" for="gridRadios2">
+                                                                    <input class="form-check-input" type="radio" name="gender" id="gender2" value="Female" {{ old('gender') == 'Female' ? 'checked' : '' }}>
+                                                                    <label class="form-check-label" for="gender2">
                                                                         Female
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check disabled">
-                                                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios3" value="option3">
-                                                                    <label class="form-check-label" for="gridRadios3">
+                                                                    <input class="form-check-input" type="radio" name="gender" id="gender3" value="option3" {{ old('gender') == 'option3' ? 'checked' : '' }}>
+                                                                    <label class="form-check-label" for="gender3">
                                                                         None Binary
                                                                     </label>
                                                                 </div>
@@ -162,14 +162,14 @@
                                                             <legend class="col-form-label col-sm-6 pt-0">Maritial Status <span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="marriage"  value="Married">
-                                                                    <label class="form-check-label">
+                                                                    <input class="form-check-input" type="radio" id="marriage1" name="marriage" {{old('marriage') == 'Married' ? 'Checked' : ''}}  value="Married">
+                                                                    <label for="marriage1" class="form-check-label">
                                                                         Married
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="marriage" value="Single">
-                                                                    <label class="form-check-label" >
+                                                                    <input class="form-check-input" id="marriage2" type="radio" name="marriage" value="Single" {{old('marriage') == 'Single' ? 'Checked' : ''}} >
+                                                                    <label for="marriage2" class="form-check-label" >
                                                                         Single
                                                                     </label>
                                                                 </div>
@@ -186,7 +186,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label> Password <span class="text-danger">*</span> :</label>
+                                                            <label> Password <span class="text-danger">*</span> : <small class="txet-info">(min:5, 1 later, 1 number and 1 symbol must need)</small></label>
                                                             <input name="pass" type="password" class="form-control">
                                                             @error('pass')
                                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -245,7 +245,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="address2">Phone Number<span>(optional)</span></label>
+                                                            <label>Phone Number<span>(optional)</span></label>
                                                             <div>
                                                                 <input id="address2" name="phone2" value="{{old('phone2')}}" type="number" class="form-control">
                                                             </div>
@@ -253,8 +253,8 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Emergency Contact Number <span class="text-danger">*</span> :</label>
-                                                            <input id="email2" name="emerPhone" type="number" value="{{old('emerPhone')}}" class="required form-control">
+                                                            <label>Emergency Contact Number <span class="text-danger">*</span> :</label>
+                                                            <input name="emerPhone" type="number" value="{{old('emerPhone')}}" class="required form-control">
                                                             @error('emerPhone')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -262,7 +262,7 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="address2">Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
+                                                            <label>Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
 
                                                             <input id="address2" name="emerRelation" type="text" value="{{old('emerRelation')}}" class="required form-control">
                                                             @error('emerRelation')
@@ -275,8 +275,8 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Parmanent Address <span class="text-danger">*</span> :</label>
-                                                            <input id="email2" name="add" type="text" class="required form-control" value="{{old('add')}}">
+                                                            <label>Parmanent Address <span class="text-danger">*</span> :</label>
+                                                            <input name="add" type="text" class="required form-control" value="{{old('add')}}">
                                                             @error('add')
                                                             <small class="form-text text-warning">{{ $message }}</small>
                                                             @enderror
@@ -290,14 +290,14 @@
                                                             <legend class="col-form-label col-sm-6 pt-0">Same As Parmanent?<span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="sameAdd" id="gridRadios1" value="1">
-                                                                    <label class="form-check-label" for="gridRadios1">
+                                                                    <input class="form-check-input" type="radio" name="sameAdd" id="sameAdd1" value="1" {{old('sameAdd') == 1 ? 'Checked' : ''}}>
+                                                                    <label class="form-check-label" for="sameAdd1">
                                                                         Yes
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="sameAdd" id="gridRadios2" value="0">
-                                                                    <label class="form-check-label" for="gridRadios2">
+                                                                    <input class="form-check-input" type="radio" name="sameAdd" id="sameAdd2" value="0" {{old('sameAdd') == 0 ? 'Checked': ''}}>
+                                                                    <label class="form-check-label" for="sameAdd2">
                                                                         No
                                                                     </label>
                                                                 </div>
@@ -310,7 +310,7 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <label for="address2">Present Address</label>
+                                                            <label>Present Address</label>
                                                             <div>
                                                                 <input id="address2" name="preAdd" type="text" value="{{old('preAdd')}}" class="form-control">
                                                             </div>
@@ -331,7 +331,7 @@
                                                             <select type="text" class="form-control" id="department" name="department">
                                                                 <option value="">Select One</option>
                                                                 @foreach($department as $depart)
-                                                                <option value="{{ $depart->id }}">{{ $depart->depart_name }}
+                                                                <option value="{{ $depart->id }}" {{old('department') == $depart->id ? 'Selected' : '' }}>{{ $depart->depart_name }}
                                                                 </option>
                                                                 @endforeach
                                                             </select>
@@ -357,12 +357,12 @@
                                                             <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="empType">
                                                                 <option value="">Select One</option>
-                                                                <option value="Full Time">Full Time </option>
-                                                                <option value="Part Time">Part Time</option>
-                                                                <option value="Frelance">Freelance</option>
-                                                                <option value="Contract">Contract</option>
-                                                                <option value="Internship">Internship</option>
-                                                                <option value="Remote">Remote</option>
+                                                                <option value="Full Time"  {{old('empType') == 'Full Time' ? 'Selected' : '' }}>Full Time </option>
+                                                                <option value="Part Time"  {{old('empType') == 'Part Time' ? 'Selected' : '' }}>Part Time</option>
+                                                                <option value="Freelance"  {{old('empType') == 'Freelance' ? 'Selected' : '' }}>Freelance</option>
+                                                                <option value="Contract"  {{old('empType') == 'Contract' ? 'Selected' : '' }}>Contract</option>
+                                                                <option value="Internship"  {{old('empType') == 'Internship' ? 'Selected' : '' }}>Internship</option>
+                                                                <option value="Remote" {{old('empType') == 'Remote' ? 'Selected' : '' }}>Remote</option>
                                                             </select>
                                                             @error('empType')
                                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -384,10 +384,10 @@
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Reporting Manager<span class="text-danger">*</span> :</label>
-                                                            <select type="text" class="form-control" name="reporting">
+                                                            <select type="text" class="form-control" name="reporting" value="{{old('reporting')}}">
                                                                 <option value="">Select One</option>
                                                                 @foreach($report as $employe)
-                                                                <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
+                                                                <option value="{{$employe->id}}" {{old('reporting') == $employe->id ? 'Selected' : '' }}>{{$employe->emp_name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('reporting')
@@ -406,20 +406,20 @@
                                                     <legend class="col-form-label col-sm-3 pt-0">Select One<span class="text-danger">*</span> :</legend>
                                                     <div class="col-sm-4">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="id_type" value="national_id" onclick="showInput('national_id_input')">
+                                                            <input class="form-check-input" type="radio" id="gridRadios1" name="id_type" value="national_id" {{old('id_type') == 'national_id' ? 'Checked' : '' }} onclick="showInput('national_id_input')">
                                                             <label class="form-check-label" for="gridRadios1">
                                                                 National ID/Passport Number
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="id_type" value="ssn" onclick="showInput('ssn_input')">
-                                                            <label class="form-check-label" for="gridRadios2">
+                                                            <input class="form-check-input" type="radio" id="gridRadios2" name="id_type" value="ssn" onclick="showInput('ssn_input')" {{old('id_type') == 'ssn' ? 'Checked' : ''}}>
+                                                            <label class="form-check-label" for="gridRadios2" >
                                                                 Social Security Number (SSN) (or local equivalent)
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="id_type" value="driver_license" onclick="showInput('driver_license_input')">
-                                                            <label class="form-check-label" for="gridRadios2">
+                                                            <input class="form-check-input" type="radio" id="gridRadios3" name="id_type" value="driver_license" onclick="showInput('driver_license_input')" {{old('id_type') == 'driver_license' ? 'Checked' : ''}}>
+                                                            <label class="form-check-label" for="gridRadios3">
                                                                 Driver’s License Number (if applicable)
                                                             </label>
                                                         </div>
@@ -475,15 +475,15 @@
                                         <div class="col-sm-4">
                                             <div class="form-group clearfix">
                                                 <label for="">Last Academic Degree :- <span class="text-danger">*</span> :</label>
-                                                <input class="required form-control" id="" value="{{old('degree')}}" name="degre" type="text">
-                                                @error('degree')
+                                                <input class="required form-control" id="" value="{{old('degre')}}" name="degre" type="text">
+                                                @error('degre')
                                                 <small class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
                                             </div>
 
                                             <div class="form-group clearfix">
-                                                <label for="userName2">Passing Year:- <span class="text-danger">*</span> :</label>
-                                                <input class="required form-control" id="userName2" value="{{old('degreYear')}}" name="degreYear" type="date">
+                                                <label for="passingYear">Passing Year:- <span class="text-danger">*</span> :</label>
+                                                <input class="required form-control" id="passingYear" value="{{old('degreYear')}}" name="degreYear" type="text">
                                                 @error('degreYear')
                                                 <small class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
@@ -502,10 +502,10 @@
                                             <div class="form-group clearfix">
                                                 <label for="userName2">Bank Name <span class="text-danger">*</span> :</label>
                                                 <div>
-                                                    <select class="required form-control" name="bankName" type="text" id="bankName" >
+                                                    <select class="required form-control" name="bankName" type="text" id="bankName">
                                                     <option value="">Select a Bank</option>
                                                         @foreach($bankName as $bank)
-                                                        <option value="{{$bank->id}}">{{$bank->bank_name}}</option>
+                                                        <option value="{{$bank->id}}" {{old('bankName') == $bank->id ? 'Selected' : '' }}>{{$bank->bank_name}}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('bankName')
@@ -517,7 +517,7 @@
 
                                         <div class="col-sm-4">
                                             <div class="form-group clearfix">
-                                                <label for="email2">Branch Name</label>
+                                                <label for="">Branch Name</label>
                                                 <div>
                                                     <select class="form-control" name="bankBranch" type="text">
                                                         
@@ -533,7 +533,7 @@
                                             <div class="form-group clearfix">
                                                 <label class="form-label" for="userName2">Account No <span class="text-danger">*</span> :</label>
                                                 <div>
-                                                    <input class="form-control" name="accountNumber" value="{{old('accountNo')}}" type="number">
+                                                    <input class="form-control" name="accountNumber" value="{{old('accountNumber')}}" type="number">
                                                 </div>
                                                 @error('accountNumber')
                                                 <small class="form-text text-warning">{{ $message }}</small>
@@ -561,7 +561,7 @@
                                             <div class="form-group clearfix">
                                                 <label>IFSC/Sort Code</label>
                                                 <div>
-                                                    <input id="address2" name="sortCode" value="{{old('sortCode')}}" type="number" class="form-control">
+                                                    <input id="" name="sortCode" value="{{old('sortCode')}}" type="number" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -570,7 +570,7 @@
                                             <div class="form-group clearfix">
                                                 <label>Swift Code</label>
                                                 <div>
-                                                    <input id="address2" name="swiftCode" value="{{old('swiftCode')}}" type="number" class="form-control">
+                                                    <input id="" name="swiftCode" value="{{old('swiftCode')}}" type="number" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -598,7 +598,7 @@
 
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label for="email2">Insurance Details</label>
+                                                            <label>Insurance Details</label>
                                                             <input class="form-control" name="insurance" type="text">
                                                         </div>
                                                     </div>
@@ -626,7 +626,7 @@
                                                     <select class="required form-control" name="OffBranch" type="text">
                                                         <option value="">Select A Branch </option>
                                                         @foreach($officeBranch as $office)
-                                                        <option value="{{$office->id}}">{{$office->branch_name}} </option>
+                                                        <option value="{{$office->id}}" {{old('OffBranch') == $office->id ? 'Selected' : '' }} >{{$office->branch_name}} </option>
                                                         @endforeach
                                                     </select>
                                                     
@@ -638,18 +638,21 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group clearfix">
-                                                <label class="form-label" for="userName2">Access Card Number <span class="text-danger">*</span> :</label>
+                                                <label class="form-label" for="userName2">Access Card Number :</label>
                                                 <div>
                                                     <input class="form-control" value="{{old('accessCard')}}" name="accessCard" type="number">
                                                 </div>
+                                                @error('accessCard')
+                                                    <small class="form-text text-warning">{{ $message }}</small>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="col-sm-4">
                                             <div class="form-group clearfix">
-                                                <label for="email2">System/IT Requirement</label>
+                                                <label>System/IT Requirement</label>
                                                 <div>
-                                                    <input class="form-control" value="{{old('syste')}}" name="system" type="text">
+                                                    <input class="form-control" value="{{old('system')}}" name="system" type="text" >
                                                 </div>
                                             </div>
                                         </div>
@@ -658,7 +661,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group clearfix">
                                                 <label>Work Schedule </label>
-                                                <input name="schedule" type="text" class="form-control">
+                                                <input name="schedule" type="text" class="form-control" value="{{old('schedule')}}">
                                             </div>
                                         </div>
                                     </div><!-- end row -->
@@ -669,21 +672,19 @@
                                 <section>
                                     <div class="row">
 
-                                        <div class="col-sm-3 offset-sm-2">
+                                        {{-- <div class="col-sm-3 offset-sm-2">
                                             <div class="form-group clearfix">
 
                                                 <label for="acceptTerms-2">I agree with the Terms and Conditions.<span class="text-danger">*</span> : </label>
                                                 <input id="acceptTerms-2" name="accept" type="checkbox" value="1" class="form-check-input text-info">
 
                                             </div>
-                                            @error('accept')
-                                            <small class="form-text text-warning">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                                            <small class="form-text text-warning"></small>
+                                        </div> --}}
 
                                         <div class="col-sm-4">
                                             <div class="form-group clearfix">
-                                                <label class="form-label" for="userName2">Upload Signature <span class="text-danger">*</span> :</label>
+                                                <label class="form-label" for="">Upload Signature <span class="text-danger">*</span> :</label>
                                                 <input class="dropify" name="signature" type="file">
                                                 @error('signature')
                                                 <small class="form-text text-warning">{{ $message }}</small>
