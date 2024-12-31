@@ -38,39 +38,39 @@ class AdminEmployeController extends Controller
     }
     public function insert(Request $request){
         // return $request->all();
-        $request->validate([
-            'name'=>'required',
-            'pic'=>'required',
-            'email'=>'required | email:rfc,dns | unique:employees,email',
-            'phone'=>'required',
-            'gender'=>'required',
-            'marriage'=>'required',
-            'dob'=>'required',
-            'emerPhone'=>'required',
-            'emerRelation'=>'required',
-            'add'=>'required',
-            'sameAdd'=>'required',
-            // 'preAdd'=>'required',
-            'department'=>'required',
-            'desig'=>'required',
-            'empType'=>'required',
-            'join'=>'required',
-            'reporting'=>'required',
-            'id_type'=>'required',
-            'id_number'=>'unique:employees,emp_id_number',
-            'degre'=>'required',
-            'degreYear'=>'required',
-            'bankName'=>'required',
-            'accountNumber'=>'required',
-            'accountName'=>'required',
-            'OffBranch'=>'required',
-            'signature'=>'required',
-            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-            ->numbers()
-            ->symbols()],
-            'repass' => 'required | same:pass',
+        // $request->validate([
+        //     'name'=>'required',
+        //     'pic'=>'required',
+        //     'email'=>'required | email:rfc,dns | unique:employees,email',
+        //     'phone'=>'required',
+        //     'gender'=>'required',
+        //     'marriage'=>'required',
+        //     'dob'=>'required',
+        //     'emerPhone'=>'required',
+        //     'emerRelation'=>'required',
+        //     'add'=>'required',
+        //     'sameAdd'=>'required',
+        //     // 'preAdd'=>'required',
+        //     'department'=>'required',
+        //     'desig'=>'required',
+        //     'empType'=>'required',
+        //     'join'=>'required',
+        //     'reporting'=>'required',
+        //     'id_type'=>'required',
+        //     'id_number'=>'unique:employees,emp_id_number',
+        //     'degre'=>'required',
+        //     'degreYear'=>'required',
+        //     'bankName'=>'required',
+        //     'accountNumber'=>'required',
+        //     'accountName'=>'required',
+        //     'OffBranch'=>'required',
+        //     'signature'=>'required',
+        //     'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+        //     ->numbers()
+        //     ->symbols()],
+        //     'repass' => 'required | same:pass',
             
-        ]);
+        // ]);
 
         if($request->hasFile('pic')){
             $imageTake = $request->file('pic');
@@ -129,7 +129,7 @@ class AdminEmployeController extends Controller
             'emp_office_IT_requirement'=>$request['system'],
             'emp_office_work_schedule'=>$request['schedule'],
 
-            'emp_aggrement'=>$request['accept'],
+            
             'emp_signature'=>$image_signa ?? null,
             
             'emp_image'=>$image_name ?? null,
@@ -162,7 +162,7 @@ class AdminEmployeController extends Controller
 
         $activeEmploye = Employee::where('emp_status',1)->count();
 
-        $whole_approved_leave = Leave::where('emp_id',$view->id)->where('status',2)->sum('total_leave_this_month');
+        $whole_approved_leave = Leave::where('emp_id',$view->id)->where('status',2)->latest('id')->sum('total_leave_this_month');
         $leaveRequestInMonth = Leave::where('emp_id',$view->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
         $leaveRequestInYear = Leave::where('emp_id',$view->id)->whereYear('start_date',date('Y'))->count();
 
@@ -172,7 +172,7 @@ class AdminEmployeController extends Controller
         $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
-        // return $paidRemainingYear;
+        // return $whole_approved_leave;
         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear']));
     }
 
@@ -195,10 +195,10 @@ class AdminEmployeController extends Controller
 
         $id = $request['id'];
         $slug = $request['slug'];
-        // return $request->all();
+        
+
         $request->validate([
             'name'=>'required',
-            'pic'=>'required',
             'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
             'phone'=>'required',
             'gender'=>'required',
@@ -207,7 +207,7 @@ class AdminEmployeController extends Controller
             'emerPhone'=>'required',
             'emerRelation'=>'required',
             'add'=>'required',
-            'sameAdd'=>'required',
+            // 'sameAdd'=>'required',
             'preAdd'=>'required',
             'desig'=>'required',
             'empType'=>'required',
@@ -218,18 +218,13 @@ class AdminEmployeController extends Controller
             'degre'=>'required',
             'degreYear'=>'required',
             'bankName'=>'required',
-            'accountNumber'=>'required',
+            'accountNumber'=>'required | unique:employees,emp_bank_account_number,'.$id,
             'accountName'=>'required',
             'OffBranch'=>'required',
         ]);
 
-        if($request->pass != ''){
-            $request->validate([
-                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-                ->numbers()
-                ->symbols()],
-                'repass' => 'required | same:pass',
-             ]);
+        if($request->oldpass != ''){
+            
 
              if($request->oldpass){
                 $request->validate([
@@ -327,8 +322,6 @@ class AdminEmployeController extends Controller
             'emp_office_IT_requirement'=>$request['system'],
             'emp_office_work_schedule'=>$request['schedule'],
 
-            'emp_aggrement'=>$request['accept'],
-
             'emp_slug'=>$slug,
             'emp_join'=>$request['join'],
             'emp_editor'=>Auth::user()->id,
@@ -336,7 +329,7 @@ class AdminEmployeController extends Controller
         ]);
 
         if($update){
-            Session::flash('success','New Employee Add ');
+            Session::flash('success','Update Employe Details ');
             return redirect()->back();
         }
     }

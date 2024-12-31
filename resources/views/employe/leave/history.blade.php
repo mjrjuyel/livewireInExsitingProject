@@ -75,39 +75,39 @@
 
                                     @if($leavehistory->total_unpaid + $leavehistory->total_paid <= 1) 
                                     <td class="text-danger">
-                                        {{ $leavehistory->total_unpaid + $leavehistory->total_paid }}Day
+                                        {{ $leavehistory->total_unpaid + $leavehistory->total_paid }} Day
                                     </td>
                                     @else 
                                     <td class="text-danger">
-                                        {{ $leavehistory->total_unpaid + $leavehistory->total_paid }}Days
+                                        {{ $leavehistory->total_unpaid + $leavehistory->total_paid }} Days
                                     </td>
                                     @endif
 
                                         @if($leavehistory->total_paid <= 1) 
                                         <td>
                                             @if($leavehistory->total_paid !== null)
-                                            {{ $leavehistory->total_paid}}Day
+                                            {{ $leavehistory->total_paid}} Day
                                             @else
                                             0 Day
                                             @endif
                                         </td>
                                         @else 
                                         <td>
-                                            {{ $leavehistory->total_paid }}Days
+                                            {{ $leavehistory->total_paid }} Days
                                         </td>
                                         @endif
                                     
                                     @if($leavehistory->total_unpaid <= 1) 
                                     <td class="text-danger">
                                        @if($leavehistory->total_unpaid !== null)
-                                        {{ $leavehistory->total_unpaid}}Day
+                                        {{ $leavehistory->total_unpaid}} Day
                                         @else
                                         0 Day
                                         @endif
                                     </td>
                                     @else 
                                     <td class="text-danger">
-                                        {{ $leavehistory->total_unpaid }}Days
+                                        {{ $leavehistory->total_unpaid }} Days
                                     </td>
                                     @endif
 

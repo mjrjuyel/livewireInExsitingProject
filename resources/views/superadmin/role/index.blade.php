@@ -52,9 +52,21 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
+                        @if($role->count('id') <= 2)
                             <a href="{{route('superadmin.role.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Role</a>
+                        @endif        
                         </div>
+
+                        <div class="col-sm-6">
+                            <ul>
+                             <li><span class="text-info">Only Super Admin Can Access Whole Feture Of This Application</span></li>
+                             <li><span class="text-warning">HR only can Create,View,Edit and Others Things</span></li>
+                             <li><span class="text-warning">Assistant only can Access Catering feature</span></li>
+                             <li><span class="text-dark">Only 3 Role Type Can Add</span></li>
+                            </ul>
+                        </div>
+
                     </div>
 
                     <div class="">
@@ -63,7 +75,6 @@
                                 <tr>
                                     <th class="text-center">Role Type</th>
                                     <th class="text-center text-danger">Role As A SuperAdmin Dashboard</th>
-                                    <th class="text-center">Role As A Staff Dasboard</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -80,12 +91,6 @@
                                         @endforeach
                                     </td>
 
-                                     <td class="text-primary">
-                                        @foreach($role->employe as $admin)
-                                        <span class="btn btn-info">{{optional($admin)->emp_name}}</span>
-                                        @endforeach
-                                    </td>
-
                                     <td>
                                         <div class="btn-group" role="group">
                                             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,14 +98,11 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
-                                                <li>
-                                                    <form action="{{ route('superadmin.role.delete',$role->id) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
-                                                    </form>
-                                                </li>
+
+                                                @if($role->id != 1)
+                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                @endif
+                                              
                                             </ul>
                                         </div>
                                     </td>

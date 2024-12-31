@@ -42,16 +42,15 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.employe')}}">
                         <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                         <h6 class="text-muted text-uppercase mt-0">Career Total Leave<span class="text-danger text-italic"> : {{$view->emp_join->format('Y-m-d')}} to {{date('Y-m-d')}}</span></h6>
-                        <h3 class="my-3"><span data-plugin="counterup">
-                                @if($whole_approved_leave >= 2 )
+                        <h3 class="my-3">
+                                @if($whole_approved_leave <= 1 )
                                 <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Days</h3>
                                 @else
                                 <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Day</h3>
                                 @endif
-                    </a>
+                        </h3>
                 </div>
             </div>
         </div>
@@ -59,12 +58,9 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.employe')}}">
                         <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                         <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                         <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
-
-                    </a>
                 </div>
             </div>
         </div>
@@ -72,12 +68,11 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.employe')}}">
+                   
                         <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                         <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
                         <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
 
-                    </a>
                 </div>
             </div>
         </div>
@@ -88,15 +83,15 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
-                    @if($paidRemainingMonth == 1)
-                    <h3 class="my-3" data-plugin="counterup">2</h3>Days
-                    @elseif($paidRemainingMonth == 2)
-                    <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
-                    @elseif($paidRemainingMonth >= 3)
-                    <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
-                    @endif
+                      @if($paidRemainingMonth == 1)
+                      <h3 class="my-3"><span data-plugin="counterup">2</span> Days</h3>
+                      @elseif($paidRemainingMonth == 2)
+                      <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
+                      @elseif($paidRemainingMonth >= 3)
+                      <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
+                      @endif
                     @else
-                    <h3 class="my-3 text-success"><span data-plugin="counterup">3</span> Days</h3>
+                    <h3 class="my-3"><span data-plugin="counterup">3</span> Days</h3>
                     @endif
                 </div>
             </div>

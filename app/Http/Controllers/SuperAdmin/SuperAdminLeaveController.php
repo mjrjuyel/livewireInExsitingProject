@@ -25,20 +25,37 @@ class SuperAdminLeaveController extends Controller
         // return $alldata;
         return view('superadmin.leave.index',compact('alldata'));
     }
+    //index by month
+    public function indexMonth($slug){
+        $parseDate = Carbon::parse($slug);
+        // return $parseDate;
+        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->whereMonth('start_date',$parseDate->month)->whereYear('start_date',$parseDate->year)->latest('id')->get();
+        // return $alldata;
+        return view('superadmin.leave.indexMonth',compact(['alldata','parseDate']));
+    }
+
+    public function indexYear($slug){
+        $parseDate = Carbon::parse($slug);
+        // return $parseDate;
+        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->whereYear('start_date',$parseDate->year)->latest('id')->get();
+        // return $alldata;
+        return view('superadmin.leave.indexYear',compact(['alldata','parseDate']));
+    }
 
     public function pending(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status',1)->latest('id')->get();
+        $alldata = Leave::with(['admin','leavetype'])->where('status',1)->whereYear('start_date',now()->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.pending',compact('alldata'));
     }
+
     public function approved(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status',2)->latest('id')->get();
+        $alldata = Leave::with(['admin','leavetype'])->where('status',2)->whereYear('start_date',now()->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.approved',compact('alldata'));
     }
 
     public function cancled(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status',3)->latest('id')->get();
+        $alldata = Leave::with(['admin','leavetype'])->where('status',3)->whereYear('start_date',now()->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.cancled',compact('alldata'));
     }
@@ -104,7 +121,7 @@ class SuperAdminLeaveController extends Controller
             // LeaveResponseByAdmin
             Mail::to('mjrjuyel8@gmail.com')->send(new LeaveResponseByAdmin($alldata));
 
-            auth('employee')->user()->notify(new LeaveToEmployeNotification($alldata->id));
+            $employe->notify(new LeaveToEmployeNotification($alldata));
 
             Session::flash('success','Updated Successfully');
             return redirect()->back();

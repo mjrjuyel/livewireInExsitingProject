@@ -123,7 +123,7 @@
                                 <p class="text-danger">Previous Dues <span class="text-info">( Pre Month Due : {{number_format($preTotalCost-$preTotalPayment,'2','.','')}} - Running Month Payment {{$runningPayment}} )</span> :  {{number_format($preDue,'2','.','')}}</p>
 
 
-                                <p class="text-info">subTotal : {{number_format($subtotal,'2','.','')}}</p>
+                                <p class="text-info">SubTotal : {{number_format($subtotal,'2','.','')}}</p>
                                 <hr>
                                 <h3>Total Due : {{number_format($totalDue,'2','.','')}}</h3>
                             </div>

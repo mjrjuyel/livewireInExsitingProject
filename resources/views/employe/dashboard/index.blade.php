@@ -68,7 +68,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('dashboard.employe')}}">
+                    <a href="{{route('dashboard.leave.historyYear',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
@@ -82,7 +82,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Paid Leave Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
                       @if($paidRemainingMonth == 1)
                       <h3 class="my-3"><span data-plugin="counterup">2</span> Days</h3>
@@ -105,7 +105,7 @@
                     $remainYear = $defaultLeave->year_limit - $paidRemainingYear;
                 @endphp
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Paid Leave Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($remainYear >= 1 )
                       @if($remainYear  >= 2)
                       <h3 class="my-3" ><span data-plugin="counterup">{{$remainYear}}</span> Days</h3>
@@ -123,7 +123,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Leave Take in <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($unpaidRemainingMonth != null)
                       @if($unpaidRemainingMonth  >= 2)
                       <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span> Days</h3>
@@ -141,7 +141,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Leave in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($unpaidRemainingYear != null)
                       @if($unpaidRemainingYear  >= 2)
                       <h3 class="my-3" ><span data-plugin="counterup">{{$unpaidRemainingYear}} </span> Days +</h3>

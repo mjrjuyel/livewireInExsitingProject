@@ -24,6 +24,7 @@ class AdminRoleController extends Controller
     }
     
     public function insert(Request $request){
+        
         $request->validate([
             'name'=>'required | unique:user_roles,role_name',
         ]);
@@ -67,20 +68,5 @@ class AdminRoleController extends Controller
     public function view($id){
         $view = UserRole::with(['employe','admin'])->where('id',$id)->first();
         return view('superadmin.role.view',compact('view'));
-    }
-
-    public function delete($id){
-        $delete = UserRole::where('id',$id)->first();
-        $delete->delete();
-        if($delete){
-        //     $admin = User::all();
-        // // Update the auto-incrementing column values
-        //     foreach ($admin as $index => $row) {
-        //         $row->id = $index + 1;
-        //         $row->save();
-        //     }
-        Session::flash('success','Role Delete!');
-        return redirect()->back();
-        }
     }
 }

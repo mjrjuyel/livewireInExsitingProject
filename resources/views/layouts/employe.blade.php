@@ -283,14 +283,14 @@
                     <!-- Email Dropdown -->
 
                     @php
-                        $count = auth('employee')->user()->notifications()->count();
+                        $notification = auth('employee')->user()->unreadNotifications;
                     @endphp
 
                     <div class="topbar-item">
                         <div class="dropdown position-relative">
                             <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
                                 <i class="mdi mdi-email-outline font-22"></i>
-                                @if($count >= 1)
+                                @if($notification->count('id') >= 1)
                                 <span class="noti-icon-badge"></span>
                                 @endif
                             </button>
@@ -306,8 +306,8 @@
 
                                 <div class="position-relative z-2" style="max-height: 300px;" data-simplebar>
                                     <!-- item-->
-                                    @if($count >=1)
-                                    @foreach (auth('employee')->user()->notifications as $item)
+                                    @if($notification->count('id') >=1)
+                                    @foreach ($notification as $item)
 
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
@@ -330,6 +330,7 @@
                                                     <button class="btn btn-ghost-danger rounded-circle btn-sm btn-icon" data-dismissible="#notification-3" type="sumbit"><i class="mdi mdi-delete"></i></button>
                                                 </form>
                                             </span>
+
                                         </span>
                                     </div>
                                     @endforeach

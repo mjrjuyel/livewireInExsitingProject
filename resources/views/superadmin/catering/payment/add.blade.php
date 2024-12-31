@@ -31,6 +31,25 @@ swal({
 </script>
 @endif
 
+@if(Session::has('over'))
+<script type="text/javascript">
+swal({
+  title: "Are you sure?",
+  text: "{{Session::get('over')}}",
+  type: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#DD6B55",
+  confirmButtonText: "Yes, delete it!",
+  cancelButtonText: "No, cancel plx!",
+  closeOnConfirm: false,
+  closeOnCancel: false
+});
+
+</script>
+@endif
+
+
+
 <div class="page-container">
     <div class="page-title-box">
 
@@ -102,7 +121,7 @@ swal({
                         </div>
                         <div class="row">
                            <div class="col-6 offset-5">
-                           <button type="submit" class="btn btn-primary">Save Data</button>
+                           <button type="submit" class="btn btn-primary">Pay Bill</button>
                            </div>
                         </div>
                     </form>

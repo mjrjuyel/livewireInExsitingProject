@@ -99,7 +99,7 @@ class BankBranchController extends Controller
 
     public function getBankBranch($id){
         $data = BankBranch::where('bank_id',$id)->get();
-
+        // return $data;
         return response()->json($data);
      }
 }

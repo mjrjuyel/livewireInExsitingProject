@@ -18,6 +18,7 @@ class LeaveMailToAdmin extends Mailable
      */
     public $leave;
 
+
     public function __construct($insert)
     {
        $this->leave = $insert;
@@ -30,7 +31,7 @@ class LeaveMailToAdmin extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Leave Mail To Admin',
+            subject: 'Leave Application To Admin',
         );
     }
 

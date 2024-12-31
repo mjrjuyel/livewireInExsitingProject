@@ -15,10 +15,10 @@ class LeaveToEmployeNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public $id;
-    public function __construct($id)
+    public $data;
+    public function __construct($alldata)
     {
-        $this->id = $id;
+        $this->data = $alldata;
     }
 
     /**
@@ -33,7 +33,7 @@ class LeaveToEmployeNotification extends Notification
 
     public function toArray(object $notifiable): array
     {
-        $allData = Leave::where('id',$this->id)->first();
+        $allData = Leave::where('id',$this->data->id)->first();
         return [
             'leave_id' => $allData->id,
             'emp_id'=>$allData->emp_id,

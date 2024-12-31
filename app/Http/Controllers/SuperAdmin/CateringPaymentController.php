@@ -69,8 +69,16 @@ class CateringPaymentController extends Controller
 
             if($checkTotalCost < $checkTotalPayment + $request['amount']){
                 // return "its Hight";
-                Session::flash('error','Your payment Is high Than Total Due');
+                Session::flash('over','Your payment Is high Than Total Due');
+                $insert=CateringPayment::create([
+                    'payment_date'=>$request['date'],
+                    'payment'=>$request['amount'],
+                    'p_creator'=>Auth::user()->id,
+                    'created_at'=>Carbon::now(),
+                ]);
+                
                 return redirect()->back();
+
             }
             $insert=CateringPayment::create([
             'payment_date'=>$request['date'],

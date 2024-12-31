@@ -128,14 +128,11 @@ class CateringFoodController extends Controller
     }
 
     public function searchMonth($month){
-
         $search_date= new DateTime($month);
         // $date = Carbon::parse($month);
-        
-        $parseDate = Carbon::parse($seach_date);
-        // return $parseDate->month;
+        $parseDate = Carbon::parse($search_date);
         $allFood = CateringFood::whereMonth('order_date',$parseDate->month)->whereYear('order_date',$parseDate->year)->get();
 
-        return view('superadmin.catering.food.index',compact(['allFood','seach_date']));
+        return view('superadmin.catering.food.index',compact(['allFood','search_date']));
     } 
 }

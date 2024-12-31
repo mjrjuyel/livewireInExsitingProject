@@ -69,6 +69,7 @@ Route::middleware('isEmploye')->group(function(){
         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
         Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
         Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
+        Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
 
         // Employe Daily Reports Submit
         Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
@@ -78,6 +79,8 @@ Route::middleware('isEmploye')->group(function(){
 });
 
 
+// remove notifuication
+Route::post('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'removeNotification']);
 // Super Admin Dashboard
 
 Route::middleware(['auth','verified'])->group(function(){
@@ -122,27 +125,7 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::post('/superadmin/designation/update',[DesgnationController::class,'update'])->name('superadmin.designation.update');
         Route::delete('/superadmin/designation/delete/{id}',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
        
-        // Catering Food
-        Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
-        Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
-        Route::post('/superadmin/cateringfood/insert',[CateringFoodController::class,'insert'])->name('superadmin.cateringfood.insert');
-        Route::get('/superadmin/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('superadmin.cateringfood.view');
-        Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
-        Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
-        Route::delete('/superadmin/cateringfood/delete/{id}',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
         
-        // Catering Payment
-        Route::get('/superadmin/cateringpayment',[CateringPaymentController::class,'index'])->name('superadmin.cateringpayment');
-        Route::get('/superadmin/cateringpayment/checkbill',[CateringPaymentController::class,'checkBill'])->name('superadmin.cateringpayment.checkbill');
-        Route::get('/superadmin/cateringpayment/add',[CateringPaymentController::class,'add'])->name('superadmin.cateringpayment.add');
-        Route::post('/superadmin/cateringpayment/insert',[CateringPaymentController::class,'insert'])->name('superadmin.cateringpayment.insert');
-        Route::get('/superadmin/cateringpayment/view/{id}',[CateringPaymentController::class,'view'])->name('superadmin.cateringpayment.view');
-        Route::get('/superadmin/cateringpayment/edit/{id}',[CateringPaymentController::class,'edit'])->name('superadmin.cateringpayment.edit');
-        Route::post('/superadmin/cateringpayment/update',[CateringPaymentController::class,'update'])->name('superadmin.cateringpayment.update');
-        Route::delete('/superadmin/cateringpayment/delete/{id}',[CateringPaymentController::class,'delete'])->name('superadmin.cateringpayment.delete');
-
-        // Search by month
-        Route::get('/superadmin/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
 
         // Role Management 
         Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
@@ -151,7 +134,7 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
         Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
         Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
-        Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
+        // Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
 
         // Office Branch 
         Route::get('/superadmin/office_branch',[OfficeBranchController::class,'index'])->name('superadmin.office_branch');
@@ -200,6 +183,8 @@ Route::middleware(['auth','verified'])->group(function(){
         
         // Leave Application status
         Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
+        Route::get('/superadmin/leavemonth/{slug}',[SuperAdminLeaveController::class,'indexMonth'])->name('superadmin.leaveMonth');
+        Route::get('/superadmin/leaveYear/{slug}',[SuperAdminLeaveController::class,'indexYear'])->name('superadmin.leaveYear');
         Route::get('/superadmin/leave/pending',[SuperAdminLeaveController::class,'pending'])->name('superadmin.leave.pending');
         Route::get('/superadmin/leave/approved',[SuperAdminLeaveController::class,'approved'])->name('superadmin.leave.approved');
         Route::get('/superadmin/leave/cancled',[SuperAdminLeaveController::class,'cancled'])->name('superadmin.leave.cancled');
@@ -228,6 +213,30 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/timezone',[TimeZoneController::class,'index'])->name('superadmin.timezone');
         Route::post('/superadmin/timezone/update',[TimeZoneController::class,'update'])->name('superadmin.timezone.update');
         // 404 for not authrized
+    });
+
+    Route::middleware('is_adminAndAssistant')->group(function(){
+        // Catering Food
+        Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
+        Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
+        Route::post('/superadmin/cateringfood/insert',[CateringFoodController::class,'insert'])->name('superadmin.cateringfood.insert');
+        Route::get('/superadmin/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('superadmin.cateringfood.view');
+        Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
+        Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
+        Route::delete('/superadmin/cateringfood/delete/{id}',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
+        
+        // Catering Payment
+        Route::get('/superadmin/cateringpayment',[CateringPaymentController::class,'index'])->name('superadmin.cateringpayment');
+        Route::get('/superadmin/cateringpayment/checkbill',[CateringPaymentController::class,'checkBill'])->name('superadmin.cateringpayment.checkbill');
+        Route::get('/superadmin/cateringpayment/add',[CateringPaymentController::class,'add'])->name('superadmin.cateringpayment.add');
+        Route::post('/superadmin/cateringpayment/insert',[CateringPaymentController::class,'insert'])->name('superadmin.cateringpayment.insert');
+        Route::get('/superadmin/cateringpayment/view/{id}',[CateringPaymentController::class,'view'])->name('superadmin.cateringpayment.view');
+        Route::get('/superadmin/cateringpayment/edit/{id}',[CateringPaymentController::class,'edit'])->name('superadmin.cateringpayment.edit');
+        Route::post('/superadmin/cateringpayment/update',[CateringPaymentController::class,'update'])->name('superadmin.cateringpayment.update');
+        Route::delete('/superadmin/cateringpayment/delete/{id}',[CateringPaymentController::class,'delete'])->name('superadmin.cateringpayment.delete');
+
+        // Search by month
+        Route::get('/superadmin/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
     });
 
     // Not As A Super Admin

@@ -51,7 +51,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                   <span class="text-info">{{$parseDate->format('M-Y') }} Month History</span>
+                   <span class="text-info">Total {{$parseDate->format('Y') }} History</span>
                     <div class="">
                         <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">

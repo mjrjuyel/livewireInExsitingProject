@@ -173,7 +173,7 @@ class SuperAdminController extends Controller
             Session::flash('error','You cant request more than 3 days!');
            return redirect()->route('dashboard.leave.add'); 
         }
-
+        
         Session::flash('error','Date Is not Correct!');
         return redirect()->route('dashboard.leave.add');
 }

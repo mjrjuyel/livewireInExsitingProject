@@ -50,7 +50,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.leave')}}">
+                    <a href="{{route('superadmin.leaveMonth',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
@@ -63,7 +63,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('superadmin.leave')}}">
+                    <a href="{{route('superadmin.leaveYear',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>

@@ -20,6 +20,7 @@ use Auth;
 use DateTime;
 use DateInterval;
 use DatePeriod;
+use Exception;
 
 
 
@@ -42,7 +43,7 @@ class LeaveFormController extends Controller
                     ]);
 
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
-                    $lastLeave = Leave::latest('id')->first();
+                    $lastLeave = Leave::latest('id')->where('emp_id',Auth::guard('employee')->user()->id)->first();
 
              if($lastLeave == Null || $lastLeave->status == 2){
 
@@ -185,7 +186,8 @@ class LeaveFormController extends Controller
                                         'start_date'=>Carbon::parse($leavePermonth['start_date']),
                                         'end_date'=>$leavePermonth['end_date'],
                                         'reason'=>$request['reason'],
-                                        'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
+                                        'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
+                                        // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
                                         'total_paid'=>$paidLeaves,
                                         'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
                                         'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
@@ -195,7 +197,14 @@ class LeaveFormController extends Controller
                                     ]);
             
                                     // Send Mail to Admin
-                                    Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
+                                    // Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
+
+                                    // try {
+                                        Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
+                                        // return "Email sent successfully!";
+                                    // } catch (Exception $e) {
+                                    //     return "Email failed to send. Error: " . $e->getMessage();
+                                    // }
 
                                     auth()->user()->notify(new LeaveToAdminNotification($insert));
 
@@ -210,7 +219,7 @@ class LeaveFormController extends Controller
                              
                     }
 
-                    return redirect()->route('dashboard.leave.history',Auth::guard('employee')->user()->emp_slug);
+                    return redirect()->route('dashboard.leave.history',Crypt::encrypt(Auth::guard('employee')->user()->id));
                 }
             Session::flash('error','Date Is not Correct!');
             return redirect()->route('dashboard.leave.add');
@@ -233,12 +242,11 @@ class LeaveFormController extends Controller
     } 
 
     public function history($slug){
-
         $userId = Crypt::decrypt($slug);
         // return $userId;
-
         $employe = Employee::where('id',$userId)->first();
-        $leavehistory = Leave::where('emp_id',$employe->id)->latest('id')->get();
+
+        $leavehistory = Leave::where('emp_id',$employe->id)->orderBy('start_date')->get();
         // return $leavehistory;
         return view('employe.leave.history',compact('leavehistory'));
     }
@@ -247,19 +255,19 @@ class LeaveFormController extends Controller
         // return $slug;
         $date = new DateTime($slug);
         $parseDate = Carbon::parse($date);
-        // return $parseDate;/
-        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->month)->latest('id')->get();
+        // return $parseDate;
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->month)->orderBy('start_date')->get();
         // return $leavehistory;
-        return view('employe.leave.history',compact('leavehistory'));
+        return view('employe.leave.historyMonth',compact(['leavehistory','parseDate']));
     }
 
-    public function historYear($slug){
+    public function historyYear($slug){
         // return $slug;
         $date = new DateTime($slug);
         $parseDate = Carbon::parse($date);
         // return $parseDate;/
-        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->year)->latest('id')->get();
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereYear('start_date',$parseDate->year)->orderBy('start_date')->get();
         // return $leavehistory;
-        return view('employe.leave.history',compact('leavehistory'));
+        return view('employe.leave.historyYear',compact(['leavehistory','parseDate']));
     }
 }

@@ -216,6 +216,7 @@
 @endsection
 
 @section('js')
+
 <script src="{{ asset('contents/admin') }}/assets//libs/datatables.net/js/dataTables.min.js"></script>
 <script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
 <script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive/js/dataTables.responsive.min.js">
@@ -235,4 +236,47 @@
 
 <!-- Datatables init -->
 <script src="{{ asset('contents/admin') }}/assets//js/pages/table-datatable.js"></script>
+<script>
+        $(document).ready(function() {
+            var storeBankId = ""; 
+            var storeBankBranchId = "";
+
+            
+            
+            $('select[name="subcategory"]').val(storeBankId);
+
+   
+            if (storeBankId) {
+                fetchBankBranch(storeBankId, storeBankBranchId);
+            }
+
+            
+            $("#bankName").change(function() {
+                var bankId = $(this).val();
+                if (bankId) {
+                    fetchBankBranch(bankId, null);
+                }
+            });
+
+            function fetchBankBranch(bankId, storeBankBranchId) {
+                $.ajax({
+                    url: "{{ url('/get_bankBranch/') }}/" + bankId
+                    , type: "get"
+                    , success: function(data) {
+                        $('select[name="bankBranch"]').empty();
+                        $.each(data, function(key, data) {
+                            $('select[name="bankBranch"]').append('<option value="' + data.id + '">' + data.bank_branch_name + '</option>');
+                        });
+                      
+                        if (storeBankBranchId) {
+                            $('select[name="bankBranch"]').val(storeBankBranchId);
+                        }
+                    }
+                    , error: function() {
+                        alert("Error fetching BankBranch.");
+                    }
+                });
+            }
+        });
+</script>
 @endsection
