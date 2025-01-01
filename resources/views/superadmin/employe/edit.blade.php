@@ -103,7 +103,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label>Date of Birth</label>
+                                            <label>Date of Birth <span class="text-danger">*</span> :</label> </label>
                                             <div>
                                                 <input class="form-control" id="humanfd-datepicke" name="dob" value="{{$edit->emp_dob}}" type="text">
                                             </div>
@@ -124,6 +124,9 @@
                                                     <input type="file" class="dropify" name="pic">
                                                     <small id="emailHelp" class="form-text text-muted"></small>
                                                 </div>
+                                                @error('pic')
+                                                <small class="form-text text-warning">{{ $message }}</small>
+                                                @enderror
                                             </div>
                                             <div class="col-6 mt-5">
                                                 <div class="">
@@ -197,9 +200,9 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label >Current Password <span class="text-danger">*</span> :</label>
-                                            <input name="oldpass" type="password" class="form-control">
-                                            @error('oldpass')
+                                            <label>New Password <span class="text-danger">*</span> : <small class="txet-info">(min:5, 1 later, 1 number and 1 symbol must need)</small></label>
+                                            <input type="password" name="pass" class="form-control">
+                                            @error('pass')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -207,9 +210,9 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label >New Password <span class="text-danger">*</span> : <small class="txet-info">(min:5, 1 later, 1 number and 1 symbol must need)</small></label></label>
-                                            <input  name="newpass" type="password" class="form-control">
-                                            @error('newpass')
+                                            <label>Confirm  Password <span class="text-danger">*</span> : </label>
+                                            <input type="password" name="repass"  class="form-control">
+                                            @error('repass')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -264,7 +267,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
-                                            <label >Emergency Contact Number <span class="text-danger">*</span> :</label>
+                                            <label>Emergency Contact Number <span class="text-danger">*</span> :</label>
                                             <input name="emerPhone" type="number" value="{{$edit->emp_emer_contact }}" class="required form-control">
                                             @error('emerPhone')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -275,7 +278,7 @@
                                         <div class="form-group clearfix">
                                             <label>Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
 
-                                            <input  name="emerRelation" type="text" value="{{$edit->emp_emer_relation }}" class="required form-control">
+                                            <input name="emerRelation" type="text" value="{{$edit->emp_emer_relation }}" class="required form-control">
                                             @error('emerRelation')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -286,8 +289,8 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
-                                            <label >Parmanent Address <span class="text-danger">*</span> :</label>
-                                            <input  name="add" type="text" class="required form-control" value="{{$edit->emp_address }}">
+                                            <label>Parmanent Address <span class="text-danger">*</span> :</label>
+                                            <input name="add" type="text" class="required form-control" value="{{$edit->emp_address }}">
                                             @error('add')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -312,7 +315,7 @@
 
                                     <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Department</label>
+                                            <label class="form-label">Department <span class="text-danger">*</span> :</label></label>
                                             <select type="text" class="form-control" id="department" name="department">
                                                 <option value="">Select One</option>
                                                 @foreach($department as $department)
@@ -345,12 +348,12 @@
                                             <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
                                             <select type="text" class="form-control" name="empType">
                                                 <option value="">Select One</option>
-                                                <option value="Full Time"@if($edit->emp_type == 'Full Time') Selected @endif>Full Time </option>
-                                                <option value="Part Time"@if($edit->emp_type == 'Part Time') Selected @endif>Part Time</option>
-                                                <option value="Freelance"@if($edit->emp_type == 'Freelance') Selected @endif>Frelance</option>
-                                                <option value="Contract"@if($edit->emp_type == 'Contract') Selected @endif>Contract</option>
-                                                <option value="Internship"@if($edit->emp_type == 'Internship') Selected @endif>Internship</option>
-                                                <option value="Remote"@if($edit->emp_type == 'Remote') Selected @endif>Remote</option>
+                                                <option value="Full Time" @if($edit->emp_type == 'Full Time') Selected @endif>Full Time </option>
+                                                <option value="Part Time" @if($edit->emp_type == 'Part Time') Selected @endif>Part Time</option>
+                                                <option value="Freelance" @if($edit->emp_type == 'Freelance') Selected @endif>Frelance</option>
+                                                <option value="Contract" @if($edit->emp_type == 'Contract') Selected @endif>Contract</option>
+                                                <option value="Internship" @if($edit->emp_type == 'Internship') Selected @endif>Internship</option>
+                                                <option value="Remote" @if($edit->emp_type == 'Remote') Selected @endif>Remote</option>
                                             </select>
                                             @error('empType')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -381,6 +384,16 @@
                                         <div class="mb-3">
                                             <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
                                             <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join }}" placeholder="Joining From">
+                                            @error('join')
+                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Resign Date :</label>
+                                            <input type="date" class="form-control" name="resign" value="{{ $edit->emp_join }}" placeholder="Resign Date">
                                             @error('join')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -421,17 +434,17 @@
 
                                     <div class="col-sm-5">
                                         <div id="national_id_input" class="hiddenInput">
-                                            <label for="national_id" class="form-label">National ID/Passport Number:</label>
+                                            <label for="national_id" class="form-label">National ID/Passport Number<span class="text-danger">*</span> :</label> </label>
                                             <input type="text" id="national_id" class="form-control" value="{{$edit->emp_id_number }}" name="id_number">
 
                                         </div>
                                         <div id="ssn_input" class="hiddenInput">
-                                            <label for="ssn" class="form-label">Social Security Number (SSN):</label>
+                                            <label for="ssn" class="form-label">Social Security Number (SSN)<span class="text-danger">*</span> :</label></label>
                                             <input type="text" id="ssn" class="form-control" value="{{$edit->emp_id_number }}" name="id_number">
 
                                         </div>
                                         <div id="driver_license_input" class="hiddenInput">
-                                            <label for="driver_license" class="form-label">Driver’s License Number:</label>
+                                            <label for="driver_license" class="form-label">Driver’s License Number<span class="text-danger">*</span> :</label></label>
                                             <input type="text" id="driver_license" value="{{$edit->emp_id_number }}" class="form-control" name="id_number">
 
                                         </div>
@@ -471,7 +484,7 @@
                                     @enderror
                                 </div>
                         </div> --}}
-                        
+
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
                                 <label for="">Last Academic Degree :- <span class="text-danger">*</span> :</label>
@@ -500,7 +513,7 @@
 
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <label >Bank Name</label>
+                                <label>Bank Name <span class="text-danger">*</span> :</label></label>
                                 <div>
                                     <select type="text" class="form-control" id="bankName" name="bankName">
                                         <option value="">Select One</option>
@@ -518,12 +531,12 @@
 
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <label >Bank Branch Name</label>
+                                <label>Bank Branch Name</label>
                                 <div>
                                     <select class="form-control" name="bankName" type="text">
                                         @foreach($bankBranch as $branch)
-                                           <option value="{{ $branch->id }}" @if($edit->emp_bank_branch_id == $branch->id) Selected @endif>{{ $branch->bank_branch_name }}
-                                           </option>
+                                        <option value="{{ $branch->id }}" @if($edit->emp_bank_branch_id == $branch->id) Selected @endif>{{ $branch->bank_branch_name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -601,7 +614,7 @@
 
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <label class="form-label">Access Card Number <span class="text-danger">*</span> :</label>
+                                <label class="form-label">Access Card Number :</label>
                                 <div>
                                     <input class="form-control" value="{{$edit->emp_office_card_number }}" name="accessCard" type="number">
                                 </div>
@@ -610,7 +623,7 @@
 
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
-                                <label >System/IT Requirement</label>
+                                <label>System/IT Requirement</label>
                                 <div>
                                     <input class="form-control" value="{{$edit->emp_office_IT_requirement }}" name="system" type="text">
                                 </div>
@@ -652,21 +665,21 @@
 <script>
     $('body').ready(function() {
 
-        $('#bankName').on('change',function(){
+        $('#bankName').on('change', function() {
             var id = $(this).val();
-    
+
             $.ajax({
-                url:"{{url('/get_bankBranch/')}}/"+id,
-                type:"get",
-                success:function(data){
-                $('select[name="bankBranch"]').empty();
-                $.each(data,function(key,data){
-                    $('select[name="bankBranch"]').append('<option value="'+data.id+'">'+data.bank_branch_name+'</option>');
-                })
+                url: "{{url('/get_bankBranch/')}}/" + id
+                , type: "get"
+                , success: function(data) {
+                    $('select[name="bankBranch"]').empty();
+                    $.each(data, function(key, data) {
+                        $('select[name="bankBranch"]').append('<option value="' + data.id + '">' + data.bank_branch_name + '</option>');
+                    })
                 }
             })
         });
-        
+
 
         $('#department').on('change', function() {
             var id = $(this).val();

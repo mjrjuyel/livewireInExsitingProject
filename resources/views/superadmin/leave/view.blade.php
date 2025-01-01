@@ -102,7 +102,7 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Reason</label>
-                                                <input class="form-control" type="text" value="{{ $view->reason }}" disabled>
+                                                <textarea class="form-control" rows="6" style="resize:none" type="text" disabled>{{ $view->reason }}</textarea>
                                             </div>
                                             <hr>
                                             <div class="mb-3">

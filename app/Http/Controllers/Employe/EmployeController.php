@@ -52,19 +52,28 @@ class EmployeController extends Controller
         // return $request->all();
         $request->validate([
             'name'=>'required',
-            'email'=>'required | email:rfc,dns',
+            'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
+            'add' => 'required',
+            'emerPhone' => 'required',
+            'emerRelation' => 'required',
+            'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
         ]);
 
-        if($request->pass != ''){
-             $request->validate([
-                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()],
-                'repass' => 'required | same:pass',
-             ]);
-
-            Employee::where('id',$id)->update([
-                'password'=>Hash::make($request['pass']),
-            ]);
-        }
+        if($request->oldpass != ''){
+            if($request->oldpass){
+               $request->validate([
+                   'oldpass' => 'required',
+                   'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()->numbers()],
+               ]);
+       
+               if (!Hash::check($request->oldpass,auth('employee')->user()->password)) {
+                   return back()->withErrors(['oldpass' => 'Incorrect current password.']);
+               }
+               auth('employee')->user()->update([
+                   'password' => Hash::make($request->newpass),
+               ]);
+           }
+       }
 
         $date = strtotime($request['join']);
 
@@ -94,8 +103,13 @@ class EmployeController extends Controller
         $insert = Employee::where('id',$id)->update([
             'emp_name'=>$request['name'],
             'email'=>$request['email'],
+            'email2'=>$request['email2'],
             'emp_phone'=>$request['phone'],
+            'emp_phone2'=>$request['phone2'],
             'emp_address'=>$request['add'],
+            'emp_present'=>$request['preAdd'],
+            'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_relation'=>$request['emerRelation'],
             'emp_slug'=>$slug,
             'emp_desig_id'=>$request['desig'],
             'emp_role_id'=>$request['role'],

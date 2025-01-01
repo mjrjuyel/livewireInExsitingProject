@@ -38,39 +38,39 @@ class AdminEmployeController extends Controller
     }
     public function insert(Request $request){
         // return $request->all();
-        // $request->validate([
-        //     'name'=>'required',
-        //     'pic'=>'required',
-        //     'email'=>'required | email:rfc,dns | unique:employees,email',
-        //     'phone'=>'required',
-        //     'gender'=>'required',
-        //     'marriage'=>'required',
-        //     'dob'=>'required',
-        //     'emerPhone'=>'required',
-        //     'emerRelation'=>'required',
-        //     'add'=>'required',
-        //     'sameAdd'=>'required',
-        //     // 'preAdd'=>'required',
-        //     'department'=>'required',
-        //     'desig'=>'required',
-        //     'empType'=>'required',
-        //     'join'=>'required',
-        //     'reporting'=>'required',
-        //     'id_type'=>'required',
-        //     'id_number'=>'unique:employees,emp_id_number',
-        //     'degre'=>'required',
-        //     'degreYear'=>'required',
-        //     'bankName'=>'required',
-        //     'accountNumber'=>'required',
-        //     'accountName'=>'required',
-        //     'OffBranch'=>'required',
-        //     'signature'=>'required',
-        //     'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-        //     ->numbers()
-        //     ->symbols()],
-        //     'repass' => 'required | same:pass',
+        $request->validate([
+            'name'=>'required',
+            'pic'=>'required | max:512 | image | mimes:jpeg,jpg,png',
+            'email'=>'required | email:rfc,dns | unique:employees,email',
+            'phone'=>'required',
+            'gender'=>'required',
+            'marriage'=>'required',
+            'dob'=>'required',
+            'emerPhone'=>'required',
+            'emerRelation'=>'required',
+            'add'=>'required',
+            'sameAdd'=>'required',
+            // 'preAdd'=>'required',
+            'department'=>'required',
+            'desig'=>'required',
+            'empType'=>'required',
+            'join'=>'required',
+            'reporting'=>'required',
+            'id_type'=>'required',
+            'id_number'=>'unique:employees,emp_id_number',
+            'degre'=>'required',
+            'degreYear'=>'required',
+            'bankName'=>'required',
+            'accountNumber'=>'required',
+            'accountName'=>'required',
+            'OffBranch'=>'required',
+            'signature'=>'required | max:212 | image | mimes:jpeg,jpg,png',
+            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+            ->numbers()
+            ->symbols()],
+            'repass' => 'required | same:pass',
             
-        // ]);
+        ]);
 
         if($request->hasFile('pic')){
             $imageTake = $request->file('pic');
@@ -199,6 +199,7 @@ class AdminEmployeController extends Controller
 
         $request->validate([
             'name'=>'required',
+            'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
             'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
             'phone'=>'required',
             'gender'=>'required',
@@ -223,22 +224,23 @@ class AdminEmployeController extends Controller
             'OffBranch'=>'required',
         ]);
 
-        if($request->oldpass != ''){
-            
-
-             if($request->oldpass){
-                $request->validate([
-                    'oldpass' => 'required',
-                    'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()->numbers()],
-                ]);
-        
-                if (!Hash::check($request->oldpass,auth('employee')->user()->password)) {
-                    return back()->withErrors(['oldpass' => 'Incorrect current password.']);
-                }
-                auth('employee')->user()->update([
-                    'password' => Hash::make($request->newpass),
-                ]);
-            }
+        if($request->pass != ''){
+            $request->validate([
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+                ->numbers()
+                ->symbols()],
+                'repass' => 'required | same:pass',
+            ]);
+    
+            // if (!Hash::check($request->oldpass,auth('employee')->user()->password)) {
+            //     return back()->withErrors(['oldpass' => 'Incorrect current password.']);
+            // }
+            // auth('employee')->user()->update([
+            //     'password' => Hash::make($request->newpass),
+            // ]);
+            Employee::where('id',$id)->update([
+                'password'=>Hash::make($request['pass']),
+            ]);
         }
 
         $old= Employee::find($id);
@@ -324,6 +326,7 @@ class AdminEmployeController extends Controller
 
             'emp_slug'=>$slug,
             'emp_join'=>$request['join'],
+            'emp_resign'=>$request['resign'],
             'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now(),
         ]);

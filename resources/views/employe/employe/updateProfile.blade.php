@@ -1,7 +1,7 @@
 @extends('layouts.employe')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('contents/admin') }}/assets/libs/dropify/css/dropify.min.css"/>
+<link rel="stylesheet" href="{{ asset('contents/admin') }}/assets/libs/dropify/css/dropify.min.css" />
 <link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
@@ -105,14 +105,24 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group clearfix">
+                                    <label>Date of Birth <span class="text-danger">*</span> :</label> </label>
+                                    <div>
+                                        <input class="form-control" id="humanfd-datepicke" name="dob" value="{{$edit->emp_dob}}" type="text">
+                                    </div>
+                                    @error('dob')
+                                    <small class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
                                 <div class="row mt-3">
-                                    <label class="form-label text-primary">Provide Password</label>
+                                    <label class="form-label text-primary">Change Password ?</label>
                                     <div class="col-6">
 
                                         <div class="mb-3">
-                                            <label class="form-label">Password<span class="text-danger">*</span>:</label>
-                                            <input type="password" class="form-control" name="pass">
-                                            @error('pass')
+                                            <label class="form-label">Old Password<span class="text-danger">*</span>:</label>
+                                            <input type="password" class="form-control" name="oldpass">
+                                            @error('oldpass')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -120,9 +130,9 @@
 
                                     <div class="col-6">
                                         <div class="mb-3">
-                                            <label class="form-label">Confirm Password<span class="text-danger">*</span>:</label>
-                                            <input type="password" class="form-control" name="repass">
-                                            @error('repass')
+                                            <label class="form-label">New Password<span class="text-danger">*</span>:</label>
+                                            <input type="password" class="form-control" name="newpass">
+                                            @error('newpass')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -130,6 +140,8 @@
 
                                 </div>
                             </div>
+
+                            
 
                             <div class="col-5">
 
@@ -143,7 +155,7 @@
 
 
                                 <div class="mb-3">
-                                    <label class="form-label">Addres<span class="text-danger">*</span> :</label>
+                                    <label class="form-label">Parmanent Addres<span class="text-danger">*</span> :</label>
                                     <input type="text" class="form-control" name="add" value="{{ $edit->emp_address }}" placeholder="Enter Present Address">
                                     @error('add')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -166,6 +178,9 @@
                                             <input type="file" class="dropify" name="pic">
                                             <small id="emailHelp" class="form-text text-muted"></small>
                                         </div>
+                                        @error('pic')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                     <div class="col-6">
                                         <div class="mb-3">
@@ -188,9 +203,64 @@
                                 </div>
 
                             </div>
+
+                              <section>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group clearfix">
+                                            <label>Email : <span class="text-info">(Alternate Email)</span></label>
+                                            <div>
+                                                <input class="form-control" value="{{$edit->email2 }}" name="email2" type="email1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>Present Address</label>
+                                            <div>
+                                                <input name="preAdd" type="text" value="{{$edit->emp_present }}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div><!-- end row -->
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group clearfix">
+                                            <label>Phone Number<span>(optional)</span></label>
+                                            <div>
+                                                <input name="phone2" value="{{$edit->emp_phone2 }}" type="number" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group clearfix">
+                                            <label>Emergency Contact Number <span class="text-danger">*</span> :</label>
+                                            <input name="emerPhone" type="number" value="{{$edit->emp_emer_contact }}" class="required form-control">
+                                            @error('emerPhone')
+                                            <small class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group clearfix">
+                                            <label>Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
+
+                                            <input name="emerRelation" type="text" value="{{$edit->emp_emer_relation }}" class="required form-control">
+                                            @error('emerRelation')
+                                            <small class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div><!-- end row -->
+
+                            </section>
+
                             <div class="row">
                                 <div class="col-5 offset-5">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
                         </div>

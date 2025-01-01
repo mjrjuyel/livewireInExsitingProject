@@ -55,6 +55,29 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
+                            <span class="menu-text"> Admin</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarAdmin">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.admin.add')}}" class="side-nav-link">
+                                        <span class="menu-text">Add Admin</span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.admin')}}" class="side-nav-link">
+                                        <span class="menu-text">All Admin</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a href="{{route('superadmin.leave')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
                             <span class="menu-text"> Leave Application </span>
@@ -69,12 +92,12 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarEmployee" aria-expanded="false" aria-controls="sidebarEmployee" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
                             <span class="menu-text"> Employees</span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="sidebarAdmin">
+                        <div class="collapse" id="sidebarEmployee">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
@@ -112,7 +135,7 @@
                                         <span class="menu-text">Add Role</span>
                                     </a>
                                   </li>
-                                @endif
+                            @endif
 
                 </ul>
             </div>

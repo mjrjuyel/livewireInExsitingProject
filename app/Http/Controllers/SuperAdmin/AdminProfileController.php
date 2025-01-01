@@ -19,6 +19,54 @@ use Auth;
 
 class AdminProfileController extends Controller
 {
+
+    public function index(){
+        Return "On Processing Please Go Back";
+    }
+
+    public function add(){
+        $role = UserRole::all();
+        return view('superadmin.adminprofile.add',compact('role'));
+    }
+    public function insert(Request $request){
+        $id = $request['id'];
+        $slug = $request['slug'];
+        // return $request->all();
+        $request->validate([
+            'name'=>'required',
+            'image' => 'max:512 | image | mimes:jpeg.jpg,png',
+            'email'=>'required | email:rfc,dns | unique:users,name,'.$id,
+            'role' => 'required',
+            'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+            ->numbers()
+            ->symbols()],
+            'repass' => 'required | same:pass',
+        ]);
+
+        $old= User::find($id);
+        $path = public_path('uploads/adminprofile/');
+
+        if($request->hasFile('image')){
+
+            $imageTake = $request->file('image');
+            $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($imageTake);
+            // $image->scale(width: 300);
+            $image->save('uploads/adminprofile/'.$image_name);
+        }
+        
+        $update = User::where('id',$id)->update([
+            'name'=>$request['name'],
+            'email'=>$request['email'],
+            'image' => $image_name ?? null,
+            'created_at'=>Carbon::now(),
+        ]);
+        
+        Session::flash('success','New Admin Added Successfully');
+        return redirect()->back();
+    }
+
     public function viewProfile($id){
         $userId = Crypt::decrypt($id);
         // return $userId;
@@ -42,6 +90,7 @@ class AdminProfileController extends Controller
         // return $request->all();
         $request->validate([
             'name'=>'required',
+            'image' => 'max:512 | image | mimes:jpeg.jpg,png',
             'email'=>'required | email:rfc,dns | unique:users,name,'.$id,
         ]);
 

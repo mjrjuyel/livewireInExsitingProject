@@ -91,6 +91,14 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::middleware('is_superadmin')->group(function(){
 
         // Admin Profile Controller 
+        
+        
+        Route::get('superadmin/admin',[AdminProfileController::class,'index'])->name('superadmin.admin');
+        Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
+        Route::get('superadmin/admin/insert',[AdminProfileController::class,'insert'])->name('superadmin.admin.insert');
+
+        Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
+
         Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
         Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
         Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
