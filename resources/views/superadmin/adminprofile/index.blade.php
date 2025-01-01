@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('superadmin.admin.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
                         </div>
                     </div>
@@ -63,76 +63,41 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
+                                    <th class="text-center">User Name</th>
                                     <th class="text-center">Admin Pic</th>
-                                    <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-center">Reporting Manager</th>
-                                    
-                                    <th class="text-center">Status</th>
-                                    @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
-                                    <th class="text-center">Dashboard login</th>
-                                    @endif
-
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($employe as $employe)
+                                @foreach ($alladmin as $admin)
                                 <tr>
                                     <td>
-                                        {{ $employe->emp_name }}
+                                        {{ $admin->name }}
+                                    </td>
+                                    <td>
+                                        {{ $admin->username }}
                                     </td>
 
                                     <td>
-                                        @if ($employe->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
+                                        @if ($admin->image != '')
+                                        <img src="{{ asset('uploads/admin/profile/' .$admin->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
                                         @endif
                                     </td>
-                                    <td>{{ optional($employe->emp_desig)->title }}</td>
+                                    
                                     <td>
-                                        {{ $employe->email }}
-                                    </td>
-
-                                    <td>
-                                        {{ optional($employe->reporting)->emp_name }}
+                                        {{ $admin->email }}
                                     </td>
                                     <td>
-                                        @if($employe->emp_status == 1)
-                                        <button type="button" class="btn btn-primary ">
-                                            Active
-                                        </button>
-                                        @elseif($employe->emp_status == 2)
-                                        <button type="button" class="btn btn-warning ">
-                                            Suspend
-                                        </button>
-                                        @elseif($employe->emp_status == 0)
-                                        <button type="button" class="btn btn-danger">
-                                            Recycle Bin
-                                        </button>
-                                        @endif
-                                    </td>
-
-
-                                    <td>
-                                        <form action="{{ url('/superadmin/employe/login/'.$employe->id) }}" method="post">
-                                            @csrf
-                                            @method('post')
-                                            <button class="btn btn-primary " type="sumbit"><i class="uil-trash-alt"></i>Login</button>
-                                        </form>
-                                    </td>
-
-
-                                    <td>
-                                        
                                         <div class="btn-group" role="group">
                                             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/admin/view/'.$admin->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.$employe->emp_slug) }}"><i class="mdi mdi-octagram-edit-outline">
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/admin/edit/'.$admin->emp_slug) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
                                                 </li>
                                                 <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
@@ -149,14 +114,14 @@
                                     <div class="modal-dialog ">
                                         <div class="modal-content bg-warning">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                                                <h5 class="modal-title" id="myModalLabel">Delete A User? </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                             </div>
-                                            <form action="{{route('superadmin.employe.softdelete')}}" method="post">
+                                            <form action="" method="post">
                                                 @csrf
                                                 <div class="modal-body">
                                                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                                                    <input type="hidden" name="id" value="{{$employe->id}}">
+                                                    <input type="hidden" name="id" value="{{$admin->id}}">
                                                 </div>
                                                 
                                                 <div class="modal-footer">

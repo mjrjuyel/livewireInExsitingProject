@@ -62,11 +62,13 @@
                         </a>
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
+                                @if(Auth::user()->role_id == 1)
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.admin.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Admin</span>
                                     </a>
                                 </li>
+                                @endif
 
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.admin')}}" class="side-nav-link">

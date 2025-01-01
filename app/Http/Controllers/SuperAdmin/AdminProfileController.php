@@ -21,7 +21,9 @@ class AdminProfileController extends Controller
 {
 
     public function index(){
-        Return "On Processing Please Go Back";
+        $alladmin = User::where('status',1)->orderBy('role_id')->get();
+        // return $alladmin;
+        return view('superadmin.adminprofile.index',compact('alladmin'));
     }
 
     public function add(){
@@ -29,22 +31,17 @@ class AdminProfileController extends Controller
         return view('superadmin.adminprofile.add',compact('role'));
     }
     public function insert(Request $request){
-        $id = $request['id'];
-        $slug = $request['slug'];
         // return $request->all();
         $request->validate([
             'name'=>'required',
-            'image' => 'max:512 | image | mimes:jpeg.jpg,png',
-            'email'=>'required | email:rfc,dns | unique:users,name,'.$id,
+            // 'image' => 'max:512 | image | mimes:jpeg.jpg,png',
+            'email'=>'required | email:rfc,dns | unique:users,email',
             'role' => 'required',
             'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
             ->numbers()
             ->symbols()],
             'repass' => 'required | same:pass',
         ]);
-
-        $old= User::find($id);
-        $path = public_path('uploads/adminprofile/');
 
         if($request->hasFile('image')){
 
@@ -56,10 +53,14 @@ class AdminProfileController extends Controller
             $image->save('uploads/adminprofile/'.$image_name);
         }
         
-        $update = User::where('id',$id)->update([
+        $update = User::create([
             'name'=>$request['name'],
+            'username'=>$request['name'],
             'email'=>$request['email'],
+            'slug'=>'user-'.uniqId(),
+            'role_id'=>$request['role'],
             'image' => $image_name ?? null,
+            'password'=>$request['pass'],
             'created_at'=>Carbon::now(),
         ]);
         
