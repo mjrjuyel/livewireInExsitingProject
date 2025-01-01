@@ -129,15 +129,14 @@
                                     </a>
                                 </li>
                                 @php
-                                    $role = App\Models\UserRole::all();
+                                $role = App\Models\UserRole::all();
                                 @endphp
-                                @if($role->count('id') <= 2)
-                                 <li class="side-nav-item">
+                                @if($role->count('id') <= 2) <li class="side-nav-item">
                                     <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Role</span>
                                     </a>
-                                  </li>
-                            @endif
+                    </li>
+                    @endif
 
                 </ul>
             </div>
@@ -373,13 +372,21 @@
                 </div>
             </li>
 
+            <li class="side-nav-item">
+                <a href="{{route('superadmin.recycle')}}" class="side-nav-link">
+                    <span class="menu-icon text-warning"><i class="mdi mdi-trash-can"></i></span>
+                    <span class="menu-text text-warning"> Recyclebin </span>
+                </a>
+            </li>
+            <hr>
+
             <li class="side-nav-title">Logout</li>
 
             <li class="side-nav-item">
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="
                             side-nav-link">
-                    <span class="menu-icon"><i class="mdi mdi-logout-variant"></i></span>
-                    <span class="menu-text"> Logout </span>
+                    <span class="menu-icon text-danger"><i class="mdi mdi-logout-variant"></i></span>
+                    <span class="menu-text text-danger"> Logout </span>
                 </a>
             </li>
             </ul>

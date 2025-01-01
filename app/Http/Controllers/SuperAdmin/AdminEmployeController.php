@@ -40,7 +40,7 @@ class AdminEmployeController extends Controller
         // return $request->all();
         $request->validate([
             'name'=>'required',
-            'pic'=>'required | max:512 | image | mimes:jpeg,jpg,png',
+            'pic'=>' max:512 | image | mimes:jpeg,jpg,png',
             'email'=>'required | email:rfc,dns | unique:employees,email',
             'phone'=>'required',
             'gender'=>'required',
@@ -64,7 +64,7 @@ class AdminEmployeController extends Controller
             'accountNumber'=>'required',
             'accountName'=>'required',
             'OffBranch'=>'required',
-            'signature'=>'required | max:212 | image | mimes:jpeg,jpg,png',
+            'signature'=>' max:300 | image | mimes:jpeg,jpg,png',
             'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
             ->numbers()
             ->symbols()],
@@ -412,18 +412,32 @@ class AdminEmployeController extends Controller
             return redirect()->back();
         }
     }
+
+    public function restore(Request $request){
+        $id = $request['id'];
+
+        $softdel = Employee::where('id',$id)->update([
+            'emp_status'=>1,
+            'emp_editor'=>Auth::user()->id,
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        if($softdel){
+            Session::flash('success','Employe is Deactivated!');
+            return redirect()->back();
+        }
+    }
     
-    public function delete($slug){
-        $delete = Employee::where('slug',$slug)->first();
+    public function delete(Request $request){
+
+        $id = $request['id'];
+
+
+        $delete = Employee::where('id',$id)->first();
         $delete->delete();
         if($delete){
-        //     $admin = Employee::all();
-        // // Update the auto-incrementing column values
-        //     foreach ($admin as $index => $row) {
-        //         $row->id = $index + 1;
-        //         $row->save();
-        //     }
-        Session::flash('success',' One Admin Delete!');
+
+        Session::flash('success','Employee Delete!');
         return redirect()->back();
         }
     }

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Exception;
 use Auth;
 
-class isSuperAdminRole
+class isAdminAndHr
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class isSuperAdminRole
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if( Auth::user()->role_id == 1){
+        if( Auth::user()->role_id == 1 || Auth::user()->role_id ==2){
             return $next($request);     
         }
         return redirect()->route('invalidAccess');

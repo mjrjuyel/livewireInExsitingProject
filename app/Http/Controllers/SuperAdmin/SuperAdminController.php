@@ -13,8 +13,7 @@ use App\Models\CateringPayment;
 class SuperAdminController extends Controller
 {
     public function dashboard(){
-        $activeEmploye = Employee::count();
-        $notifications = auth()->user()->notifications;
+        $activeEmploye = Employee::where('emp_status',1)->count();
         $role = UserRole::count();
         $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
         $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
@@ -24,7 +23,7 @@ class SuperAdminController extends Controller
         $curFoodCost = CateringFood::whereMonth('order_date',now()->month)->whereYear('order_date',now()->year)->sum('total_cost');
         $curTotalPay = CateringPayment::whereMonth('payment_date',now()->month)->whereYear('payment_date',now()->year)->sum('payment');
         // return $curTotalPay;
-        return view('superadmin.dashboard.index',compact(['notifications','activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled','curFoodCost','curTotalPay']));
+        return view('superadmin.dashboard.index',compact(['activeEmploye','role','leaveRequestInMonth','leaveRequestInYear','leaveRequestInPending','leaveRequestInApproved','leaveRequestInCancled','curFoodCost','curTotalPay']));
     }
 
     

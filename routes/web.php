@@ -33,6 +33,8 @@ use App\Http\Controllers\SuperAdmin\DepartmentController; // Bank Branches Type 
 use App\Http\Controllers\SuperAdmin\CateringFoodController; // Catring Food Type Add, create, edit .
 use App\Http\Controllers\SuperAdmin\CateringPaymentController; // Catring Food Payment Add, create, edit .
 
+use App\Http\Controllers\SuperAdmin\RecyclebinController; // only Admin Can Access This
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -85,20 +87,27 @@ Route::post('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'
 
 Route::middleware(['auth','verified'])->group(function(){
 
+
         Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
 
-        // Super Admin Dashbaord
-        Route::middleware('is_superadmin')->group(function(){
+
+        // Only SuperAdmin Can access These Route
+         Route::middleware('is_superadmin')->group(function(){
+            Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
+            Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
+            // Add Admin 
+            Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
+         });
+        
+        // Super Admin and Hr Dashboard Dashbaord
+        Route::middleware('isAdminAndHr')->group(function(){
 
         // Admin Profile Controller 
-        
-        
         Route::get('superadmin/admin',[AdminProfileController::class,'index'])->name('superadmin.admin');
-        Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
+        
         Route::post('superadmin/admin/insert',[AdminProfileController::class,'insert'])->name('superadmin.admin.insert');
 
         Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
-
         Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
         Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
         Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
@@ -114,6 +123,7 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin/employe/edit/{slug}',[AdminEmployeController::class,'edit'])->name('superadmin.employe.edit');
         Route::post('/superadmin/employe/update',[AdminEmployeController::class,'update'])->name('superadmin.employe.update');
         Route::post('/superadmin/employe/softdelete',[AdminEmployeController::class,'softdele'])->name('superadmin.employe.softdelete');
+        Route::post('/superadmin/employe/restore',[AdminEmployeController::class,'restore'])->name('superadmin.employe.restore');
         Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
         Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
 

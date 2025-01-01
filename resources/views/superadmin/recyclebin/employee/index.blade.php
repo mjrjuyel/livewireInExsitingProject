@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.admin.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
                         </div>
                     </div>
@@ -63,44 +63,62 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">User Name</th>
                                     <th class="text-center">Admin Pic</th>
+                                    <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
+                                    <th class="text-center">Reporting Manager</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($alladmin as $admin)
+                                @foreach ($employe as $employe)
                                 <tr>
                                     <td>
-                                        {{ $admin->name }}
-                                    </td>
-                                    <td>
-                                        {{ $admin->username }}
+                                        {{ $employe->emp_name }}
                                     </td>
 
                                     <td>
-                                        @if ($admin->image != '')
-                                        <img src="{{ asset('uploads/admin/profile/' .$admin->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
+                                        @if ($employe->emp_image != '')
+                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
                                         @endif
                                     </td>
-                                    
+                                    <td>{{ optional($employe->emp_desig)->title }}</td>
                                     <td>
-                                        {{ $admin->email }}
+                                        {{ $employe->email }}
+                                    </td>
+
+                                    <td>
+                                        {{ optional($employe->reporting)->emp_name }}
                                     </td>
                                     <td>
+                                        @if($employe->emp_status == 1)
+                                        <button type="button" class="btn btn-primary ">
+                                            Active
+                                        </button>
+                                        @elseif($employe->emp_status == 2)
+                                        <button type="button" class="btn btn-warning ">
+                                            Suspend
+                                        </button>
+                                        @elseif($employe->emp_status == 0)
+                                        <button type="button" class="btn btn-danger">
+                                            Recycle Bin
+                                        </button>
+                                        @endif
+                                    </td>
+
+
+                                    <td>
+                                        
                                         <div class="btn-group" role="group">
                                             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/admin/view/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-eye-circle-outline">
-                                                        </i>View</a></li>
+                                                <li><a href="#" class="dropdown-item waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#restore" ><i class="mdi mdi mdi-file-restore">
+                                                        </i>Restore</a></li>
                                                 </li>
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/admin/edit/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
-                                                        </i>Edit</a></li>
-                                                </li>
-                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#delete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a></li>
                                                 </li>
                                             </ul>
@@ -109,19 +127,45 @@
 
                                 </tr>
 
-                                {{-- soft delete MOdal  --}}
-                                <div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                {{--delete MOdal  --}}
+                                <div id="delete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog ">
                                         <div class="modal-content bg-warning">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Delete A User? </h5>
+                                                <h5 class="modal-title" id="myModalLabel">Parment Delete A Employee !</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="{{route('superadmin.employe.delete')}}" method="post">
                                                 @csrf
+                                                @method('delete')
                                                 <div class="modal-body">
                                                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                                                    <input type="hidden" name="id" value="{{$admin->id}}">
+                                                    <input type="hidden" name="id" value="{{$employe->id}}">
+                                                </div>
+                                                
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div>
+
+                                {{-- Restore MOdal  --}}
+                                <div id="restore" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog ">
+                                        <div class="modal-content bg-primary">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="myModalLabel">Restore Data</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                            </div>
+                                            <form action="{{route('superadmin.employe.restore')}}" method="post">
+                                                @csrf
+                                                
+                                                <div class="modal-body">
+                                                    <h5 class="font-16">Are You Sure Want To Restore ?</h5>
+                                                    <input type="hidden" name="id" value="{{$employe->id}}">
                                                 </div>
                                                 
                                                 <div class="modal-footer">
