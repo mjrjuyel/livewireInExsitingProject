@@ -49,9 +49,9 @@
         use Carbon\Carbon;
         $parseMonth = new DateTime($search_date->format('d-m-Y'));
 
-        $preYear = new DateTime($search_date->format('Y'));
+        $preYear = new DateTime($search_date->format('d-m-Y'));
         $preYear->modify('-1 year');
-        $nextYear = new DateTime($search_date->format('Y'));
+        $nextYear = new DateTime($search_date->format('d-m-Y'));
         $nextYear->modify('+1 year');
 
     @endphp
@@ -65,7 +65,9 @@
                                
                         </div>
                         <div class="col-8">
+
                             <div class="row text-center">
+                             <h3 class="text-dark">Filter By Month</h3>
                                 <div class="col-1">
                                 <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-1-Y'))}}" class="btn btn-primary">Jan</a>
                                 </div>
@@ -106,7 +108,7 @@
 
                             <div class="row mt-5">
                                <div class="col-4">
-                               <a href="{{url('superadmin/cateringfood/year/'.$nextYear->format('d-m-Y'))}}" class="btn btn-danger">{{$preYear->format('Y')}}</a>
+                               <a href="{{url('superadmin/cateringfood/year/'.$preYear->format('d-m-Y'))}}" class="btn btn-danger">{{$preYear->format('Y')}}</a>
                                </div>
                                <div class="col-4">
                                <a href="{{url('superadmin/cateringfood/year/'.$parseMonth->format('d-m-Y'))}}" class="btn btn-primary">{{$parseMonth->format('Y')}}</a>
@@ -115,7 +117,6 @@
                                <a href="{{url('superadmin/cateringfood/year/'.$nextYear->format('d-m-Y'))}}" class="btn btn-danger">{{$nextYear->format('Y')}}</a>
                                </div>
                             </div>
-
                         </div>
                     </div>
 

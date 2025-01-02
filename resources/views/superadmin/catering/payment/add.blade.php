@@ -19,6 +19,7 @@ swal({
 });
 </script>
 @endif
+
 @if(Session::has('error'))
 <script type="text/javascript">
 swal({
@@ -30,25 +31,6 @@ swal({
 });
 </script>
 @endif
-
-@if(Session::has('over'))
-<script type="text/javascript">
-swal({
-  title: "Are you sure?",
-  text: "{{Session::get('over')}}",
-  type: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#DD6B55",
-  confirmButtonText: "Yes, delete it!",
-  cancelButtonText: "No, cancel plx!",
-  closeOnConfirm: false,
-  closeOnCancel: false
-});
-
-</script>
-@endif
-
-
 
 <div class="page-container">
     <div class="page-title-box">

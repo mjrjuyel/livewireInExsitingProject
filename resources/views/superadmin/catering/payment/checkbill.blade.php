@@ -30,9 +30,6 @@
                             <h4 class="text-uppercase mt-0">{{ config('app.name', 'Laravel') }} Catering Expense </h4>
                         </div>
                         <div class="float-sm-end mt-4 mt-sm-0">
-                            <h5>Invoice # <br>
-                                <small>2016-04-23654789</small>
-                            </h5>
                         </div>
                     </div>
                     <hr>
@@ -47,7 +44,6 @@
                             </div>
                             <div class="mt-4 text-sm-end">
                                 <p><strong>View Month : </strong>{{$parseDate->format('d-M-Y')}}</p>
-                                <p><strong>Order ID: </strong> #123456</p>
                             </div>
                         </div><!-- end col -->
                     </div>

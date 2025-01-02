@@ -67,44 +67,33 @@ class CateringPaymentController extends Controller
             $checkTotalCost = CateringFood::sum('total_cost');
             $checkTotalPayment = CateringPayment::sum('payment');
 
-            if($checkTotalCost < $checkTotalPayment + $request['amount']){
-                // return "its Hight";
-                Session::flash('over','Your payment Is high Than Total Due');
-                $insert=CateringPayment::create([
-                    'payment_date'=>$request['date'],
-                    'payment'=>$request['amount'],
-                    'p_creator'=>Auth::user()->id,
-                    'created_at'=>Carbon::now(),
-                ]);
-                
-                return redirect()->back();
-
-            }
             $insert=CateringPayment::create([
             'payment_date'=>$request['date'],
             'payment'=>$request['amount'],
             'p_creator'=>Auth::user()->id,
             'created_at'=>Carbon::now(),
-        ]);
-        if($insert){
-            Session::flash('success','New Payment in Current Month');
+            ]);
+
+            if($insert){
+                Session::flash('success','New Payment in Current Month');
+                return redirect()->back();
+            }
+            
+            Session::flash('error','Date is Too Old For Insert');
             return redirect()->back();
         }
-         }
-         Session::flash('error','Date is Too Old For Insert');
-         return redirect()->back();
     }
     Session::flash('error','Date is over from Present date');
     return redirect()->back();
-
-    
+   
    }
 
    public function index(){
+    $search_date = new DateTime(now());
     $allPayment = CateringPayment::whereYear('payment_date',now()->year)->latest('payment_date')->get();
     $totalPayment =  $allPayment->sum('payment');
     // return $allPayment->sum('payment');
-    return view('superadmin.catering.payment.index',compact(['allPayment','totalPayment']));
+    return view('superadmin.catering.payment.index',compact(['allPayment','totalPayment','search_date']));
    }
 
    public function view($id){
@@ -186,6 +175,21 @@ class CateringPaymentController extends Controller
         Session::flash('error','One Extra Payment Delete!');
         return redirect()->back();
         }
-}
+    }
+
+    public function searchMonth(){
+        $search_date = new DateTime(now());
+        $allPayment = CateringPayment::whereYear('payment_date',now()->year)->latest('payment_date')->get();
+        $totalPayment =  $allPayment->sum('payment');
+        // return $allPayment->sum('payment');
+        return view('superadmin.catering.payment.indexMonth',compact(['allPayment','totalPayment','search_date']));
+       }
+    public function searchYear(){
+        $search_date = new DateTime(now());
+        $allPayment = CateringPayment::whereYear('payment_date',now()->year)->latest('payment_date')->get();
+        $totalPayment =  $allPayment->sum('payment');
+        // return $allPayment->sum('payment');
+        return view('superadmin.catering.payment.indexMonth',compact(['allPayment','totalPayment','search_date']));
+       }
 
 }

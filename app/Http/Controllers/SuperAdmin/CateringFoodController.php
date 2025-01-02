@@ -17,9 +17,10 @@ class CateringFoodController extends Controller
        
     //  All Role 
     public function index(){
+        $search_date = new DateTime(now());
         $allFood = CateringFood::whereMonth('order_date',date('m'))->whereYear('order_date',date('Y'))->orderBy('order_date','ASC')->get();
-        // return $allFood->sum('total_cost');
-        return view('superadmin.catering.food.index',compact('allFood'));
+        // return $parseDate;
+        return view('superadmin.catering.food.index',compact(['allFood','search_date']));
     }
     // role Add
     public function add(){
@@ -133,6 +134,15 @@ class CateringFoodController extends Controller
         $parseDate = Carbon::parse($search_date);
         $allFood = CateringFood::whereMonth('order_date',$parseDate->month)->whereYear('order_date',$parseDate->year)->get();
 
-        return view('superadmin.catering.food.index',compact(['allFood','search_date']));
+        return view('superadmin.catering.food.indexMonth',compact(['allFood','search_date']));
+    } 
+
+    public function searchYear($month){
+        $search_date= new DateTime($month);
+        // $date = Carbon::parse($month);
+        $parseDate = Carbon::parse($search_date);
+        $allFood = CateringFood::whereYear('order_date',$parseDate->year)->get();
+
+        return view('superadmin.catering.food.indexYear',compact(['allFood','search_date']));
     } 
 }

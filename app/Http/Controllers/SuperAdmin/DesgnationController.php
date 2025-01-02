@@ -92,7 +92,7 @@ class DesgnationController extends Controller
         }
     }
 
-    public function getDesigantion($id){
+    public function getDesignation($id){
         $data = Designation::where('depart_id',$id)->get();
         return response()->json($data);
     }

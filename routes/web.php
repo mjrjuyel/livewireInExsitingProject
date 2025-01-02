@@ -128,7 +128,7 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
 
         // get data from select
-        Route::get('/get_designation/{id}',[DesgnationController::class,'getDesigantion']);
+        Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
         Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
 
         // log in as a employee
@@ -255,6 +255,10 @@ Route::middleware(['auth','verified'])->group(function(){
 
         // Search by month
         Route::get('/superadmin/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
+        Route::get('/superadmin/cateringfood/year/{month}',[CateringFoodController::class,'searchYear']);
+        // Search by month Payment
+        Route::get('/superadmin/cateringpayment/{month}',[CateringFoodController::class,'searchMonth']);
+        Route::get('/superadmin/cateringpayment/year/{month}',[CateringFoodController::class,'searchYear']);
     });
 
     // Not As A Super Admin
