@@ -32,7 +32,7 @@
 
                                 <div class="text-center">
                                     <div class="my-3">
-                                        <a href="index.html">
+                                        <a href="{{url('/')}}">
                                             <span><img src="{{asset('uploads/basic/'.$basic->Mlogo)}}"
                                                     alt="" height="50"></span>
                                         </a>
