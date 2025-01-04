@@ -5,7 +5,7 @@
 
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="font-18 mb-0">Dashboard</h4>
+                <h4 class="font-18 mb-0"> Dashboard Of: <span class="text-primary">{{$view->emp_name}}</span></h4>
             </div>
 
             <div class="text-end">
@@ -14,7 +14,7 @@
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
 
-                    <li class="breadcrumb-item active">Admin</li>
+                    <li class="breadcrumb-item active">Employe</li>
                 </ol>
             </div>
         </div>
@@ -26,83 +26,106 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
+
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i
-                                                class="fa-solid fa-user header_icon"></i>{{$view->emp_name}}
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>{{$view->emp_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-5 text-end"><a href="{{route('dashboard.employe')}}"
-                                            class="btn btn-bg btn-primary btn_header ">
-                                            <i class="fa-brands fa-servicestack btn_icon"></i>All Employee</a>
+                                    <div class="col-md-2"><a href="{{route('dashboard.employe.profileSettings',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                            btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>
 
                             <table class="table border view_table">
                                 <tr>
-                                    <td>Employee Name</td>
+                                    <td>Employe Name</td>
                                     <td>:</td>
                                     <td>{{ $view->emp_name }}</td>
                                 </tr>
-                                 <tr>
-                                    <td>Employee Status</td>
-                                    <td>:</td>
-                                    @if($view->emp_status == 1 )
-                                    <td class="text-primary"> Active</td>
-                                    @elseif($view->emp_status == 0 )
-                                    <td class="text-warning"> DeActive</td>
-                                    @endif
-                                </tr>
+
                                 <tr>
-                                    <td>Profile Picture</td>
+                                    <td>Employe Status</td>
                                     <td>:</td>
-                                    <td>@if($view->image != '')
-                                        <img src="{{ asset('uploads/employe/profile/'.$view->image) }}" class="img-fluid"
-                                            alt="" style="width:200px; object-fit:cover;">
+                                    <td>@if($view->emp_status == 1)
+                                        <button type="button" class="btn btn-warning ">
+                                            Active
+                                        </button>
+                                        @elseif($view->emp_status == 2)
+                                        <button type="button" class="btn btn-primary ">
+                                            Suspend
+                                        </button>
+                                        @elseif($view->emp_status == 0)
+                                        <button type="button" class="btn btn-warning">
+                                            Recycle Bin
+                                        </button>
                                         @endif
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>Employee Joining Date</td>
+                                    <td>Profile Picture</td>
                                     <td>:</td>
-                                    <td class="text-primary">{{$view->emp_join->format('D-m-Y')}}</td>
+                                    <td>@if($view->emp_image != '')
+                                        <img src="{{ asset('uploads/employe/profile/'.$view->emp_image) }}" class="img-fluid" alt="" style="width:200px; object-fit:cover;">
+                                        @endif
+                                    </td>
                                 </tr>
+
+                                <tr>
+                                    <td>Employe Email</td>
+                                    <td>:</td>
+                                    <td>{{ $view->email }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Employe Addresss</td>
+                                    <td>:</td>
+                                    <td>{{ $view->emp_address }}</td>
+                                </tr>
+
                                 <tr>
                                     <td>Role</td>
                                     <td>:</td>
                                     <td>
-                                        <button class="btn bg-primary">{{optional($view->emp_role)->role_name}}</button> : As a Employe Dashboard
+                                        Working Role Is<button class="btn bg-primary"> {{optional($view->emp_role)->role_name}}</button>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td>Designation</td>
                                     <td>:</td>
                                     <td>
-                                        <button class="btn bg-primary">{{optional($view->emp_desig)->title}}</button>
+                                        Work As A <button class="btn bg-primary">{{optional($view->emp_desig)->title}}</button>
                                     </td>
                                 </tr>
+
                                 <tr>
-                                    <td>Employee Email</td>
+                                    <td>Employe Joining Date</td>
                                     <td>:</td>
-                                    <td>{{$view->email}}</td>
+                                    <td>{{$view->emp_join->format('d-M-Y')}}</td>
                                 </tr>
 
                                 <tr>
-                                    <td>Employee Phone</td>
+                                    <td>Employe Creator</td>
                                     <td>:</td>
-                                    <td>{{$view->emp_phone}}</td>
+                                    <td>{{$view->creator->name}}</td>
                                 </tr>
 
+
                                 <tr>
-                                    <td>Employee Address</td>
+                                    <td>Created At</td>
                                     <td>:</td>
-                                    <td>{{$view->emp_address}}</td>
+                                    <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edited At</td>
+                                    <td>:</td>
+                                    <td>{{optional($view->updated_at)->format('d-M-Y | h:i:s A')}}</td>
                                 </tr>
                             </table>
-
                         </div>
                     </div>
                     <div class="row">
@@ -204,7 +227,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_degree}}</li>
-                                    <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_year}}</li>
+                                    <li class="list-group-item">Passing Year Degree : {{$view->emp_rec_year}}</li>
                                 </ul>
                             </div>
                         </div>

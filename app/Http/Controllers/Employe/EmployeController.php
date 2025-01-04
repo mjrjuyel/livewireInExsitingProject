@@ -28,11 +28,7 @@ class EmployeController extends Controller
     }
 
     public function view($slug){
-        $view = Employee::with(['emp_role'=>function($query){
-            $query->select('id','role_name');
-        },'emp_desig'=>function($query){
-            $query->select('id','title');
-        },])->where('emp_slug',$slug)->first();
+        $view = Employee::where('emp_slug',$slug)->first();
         return view('employe.employe.view',compact('view'));
     }
 

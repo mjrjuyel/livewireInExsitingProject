@@ -96,7 +96,7 @@
                                     <select type="text" class="form-control" name="desig" disabled>
                                         <option value="">Select One</option>
                                         @foreach($designation as $desig)
-                                        <option value="{{ $desig->id }}" @if($edit->emp_role_id == $desig->id) selected @endif>{{ $desig->title }}
+                                        <option value="{{ $desig->id }}" @if($edit->emp_desig_id == $desig->id) selected @endif>{{ $desig->title }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -165,7 +165,7 @@
                                 {{-- data-provide="datepicker" --}}
                                 <div class="mb-3">
                                     <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
-                                    <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join }}" placeholder="Joining From">
+                                    <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join }}" disabled placeholder="Joining From">
                                     @error('join')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror

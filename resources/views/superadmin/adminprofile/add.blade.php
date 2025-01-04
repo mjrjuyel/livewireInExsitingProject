@@ -82,8 +82,8 @@
                                             <div class="mb-3">
                                                 <label class="form-label">User Name<span class="text-danger">* </span>:
                                                 </label>
-                                                <input type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Enter Name">
-                                                @error('username')
+                                                <input type="text" class="form-control" name="user" value="{{ old('user') }}" placeholder="Enter Name">
+                                                @error('user')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
                                             </div>
@@ -136,10 +136,10 @@
                                                 <div class="col-12">
                                                     <div class="mb-3">
                                                         <label class="form-label">Image<span class="text-danger">*</span>:</label>
-                                                        <input type="file" class="dropify" name="image">
+                                                        <input type="file" class="dropify" name="pic">
                                                         <small id="emailHelp" class="form-text text-muted"></small>
 
-                                                        @error('image')
+                                                        @error('pic')
                                                         <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                         @enderror
                                                     </div>

@@ -24,7 +24,7 @@ class EmployeeSeeder extends Seeder
             'emp_report_manager'=>1,
             'emp_phone'=>'01754172525',
             'emp_creator'=>1,
-            'emp_join'=>Carbon::now(),
+            'emp_join'=>Carbon::now()->format('Y-m-d'),
             'password'=>Hash::make('employe%%@'),
             'created_at'=>Carbon::now(),
         ]);

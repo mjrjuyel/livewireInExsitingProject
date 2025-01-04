@@ -302,6 +302,9 @@
                                             <div>
                                                 <input name="preAdd" type="text" value="{{$edit->emp_present }}" class="form-control">
                                             </div>
+                                            @error('preAdd')
+                                            <small class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div><!-- end row -->

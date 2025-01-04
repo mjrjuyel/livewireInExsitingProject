@@ -29,13 +29,12 @@
                     @php
                     $datetime1 = date_create($view->emp_join->format('Y-m-d'));
                     $datetime2 = date_create(date('Y-m-d'));
-
                     // Calculates the difference between DateTime objects
                     $interval = date_diff($datetime1, $datetime2); 
                     @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">{{$view->emp_join->format('Y-M-d')}}</span></h6>
-                    <h3 class="my-3" style="font-size:25px;">{{$interval->format('%y y, %m m, %d d');}}</h3>
+                    <h3 class="my-3" style="font-size:25px;">{{optional($interval)->format('%y y, %m m, %d d');}}</h3>
                    
                 </div>
             </div>

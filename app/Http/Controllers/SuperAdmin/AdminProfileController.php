@@ -30,11 +30,12 @@ class AdminProfileController extends Controller
         $role = UserRole::all();
         return view('superadmin.adminprofile.add',compact('role'));
     }
+
     public function insert(Request $request){
         // return $request->all();
         $request->validate([
             'name'=>'required',
-            // 'image' => 'max:512 | image | mimes:jpeg.jpg,png',
+            'pic' => 'mimes:jpeg.jpg,png',
             'email'=>'required | email:rfc,dns | unique:users,email',
             'role' => 'required',
             'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
@@ -43,9 +44,8 @@ class AdminProfileController extends Controller
             'repass' => 'required | same:pass',
         ]);
 
-        if($request->hasFile('image')){
-
-            $imageTake = $request->file('image');
+        if($request->hasFile('pic')){
+            $imageTake = $request->file('pic');
             $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
             $manager = new ImageManager(new Driver());
             $image = $manager->read($imageTake);
@@ -53,9 +53,9 @@ class AdminProfileController extends Controller
             $image->save('uploads/adminprofile/'.$image_name);
         }
         
-        $update = User::create([
+        $insert = User::create([
             'name'=>$request['name'],
-            'username'=>$request['name'],
+            'username'=>$request['user'],
             'email'=>$request['email'],
             'slug'=>'user-'.uniqId(),
             'role_id'=>$request['role'],
@@ -63,6 +63,24 @@ class AdminProfileController extends Controller
             'password'=>$request['pass'],
             'created_at'=>Carbon::now(),
         ]);
+        if($insert){
+               if($insert->image){
+                $imageTake = $request->file('pic');
+                $employe_name = 'user-'.uniqId().$insert->image;
+                // $image->scale(width: 300);
+                $image->save('uploads/employe/profile/'.$employe_name);
+               }
+                $employe = Employee::create([
+                'emp_name'=>$insert->name,
+                'email'=>$insert->email,
+                'emp_image'=>$employe_name ?? null,
+                'emp_join'=>Carbon::now()->format('Y-m-d'),
+                'emp_slug'=>'user-'.uniqId(),
+                'emp_creator'=>Auth::user()->id,
+                'password'=>$request['pass'],
+                'created_at'=>Carbon::now(),
+            ]);
+        }
         
         Session::flash('success','New Admin Added Successfully');
         return redirect()->back();

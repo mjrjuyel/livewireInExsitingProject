@@ -56,7 +56,7 @@
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
+                            <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
                             <span class="menu-text"> Admin</span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -457,7 +457,7 @@
                         <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
                             <i class="mdi mdi-email-outline font-22"></i>
                             @if($notification->count('id') >= 1)
-                            <span class="text-warning">{{$notification->count('id')}}</span>
+                            <span class="noti-icon-badge"></span>
                             @endif
                         </button>
 

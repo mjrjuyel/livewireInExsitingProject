@@ -54,7 +54,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.admin.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
-                                New Employe</a>
+                                New Admin</a>
                         </div>
                     </div>
                     <div class="">
@@ -94,44 +94,17 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/admin/view/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/view/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/admin/edit/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
-                                                </li>
-                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
-                                                        </i>Delete</a></li>
                                                 </li>
                                             </ul>
                                         </div>
                                     </td>
 
                                 </tr>
-
-                                {{-- soft delete MOdal  --}}
-                                <div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content bg-warning">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Delete A User? </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                            </div>
-                                            <form action="" method="post">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                                                    <input type="hidden" name="id" value="{{$admin->id}}">
-                                                </div>
-                                                
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
-                                                </div>
-                                            </form>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div>
                                 @endforeach
 
 
@@ -149,6 +122,30 @@
 </div> <!-- container -->
 
 {{-- delete modal --}}
+{{-- soft delete MOdal  --}}
+<div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('superadmin.employe.softdelete')}}" method="post">
+                @csrf
+                <div class="modal-body modal_body">
+                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                    <input type="hidden" name="id" id="modal_id" value="">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 @endsection
 
 @section('js')
@@ -172,47 +169,4 @@
 
 <!-- Datatables init -->
 <script src="{{ asset('contents/admin') }}/assets//js/pages/table-datatable.js"></script>
-<script>
-        $(document).ready(function() {
-            var storeBankId = ""; 
-            var storeBankBranchId = "";
-
-            
-            
-            $('select[name="subcategory"]').val(storeBankId);
-
-   
-            if (storeBankId) {
-                fetchBankBranch(storeBankId, storeBankBranchId);
-            }
-
-            
-            $("#bankName").change(function() {
-                var bankId = $(this).val();
-                if (bankId) {
-                    fetchBankBranch(bankId, null);
-                }
-            });
-
-            function fetchBankBranch(bankId, storeBankBranchId) {
-                $.ajax({
-                    url: "{{ url('/get_bankBranch/') }}/" + bankId
-                    , type: "get"
-                    , success: function(data) {
-                        $('select[name="bankBranch"]').empty();
-                        $.each(data, function(key, data) {
-                            $('select[name="bankBranch"]').append('<option value="' + data.id + '">' + data.bank_branch_name + '</option>');
-                        });
-                      
-                        if (storeBankBranchId) {
-                            $('select[name="bankBranch"]').val(storeBankBranchId);
-                        }
-                    }
-                    , error: function() {
-                        alert("Error fetching BankBranch.");
-                    }
-                });
-            }
-        });
-</script>
 @endsection

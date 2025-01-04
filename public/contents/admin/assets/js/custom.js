@@ -1,3 +1,27 @@
+// soft delete modal 
+$(document).ready(function() {
+    
+     //Soft Delete
+     $(document).on("click", "#softDel", function() {
+        let deleteID = $(this).data('id');
+       
+        $(".modal_body #modal_id").val(deleteID);
+    });
+    //    Restore Id
+    $(document).on("click", "#restore", function () {
+           let restoreID = $(this).data('id');
+           //alert(restoreID);
+           $(".modal_body #modal_id").val( restoreID );
+      });
+    //   Parmanent
+     $(document).on("click", "#delete", function () {
+           let deleteID = $(this).data('id');
+           $(".modal_body #modal_id").val( deleteID ); 
+});
+});
+
+
+
 !function(t) {
     "use strict";
     function e() {}
@@ -77,3 +101,9 @@ function() {
     "use strict";
     window.jQuery.FormPickers.init()
 }();
+
+$('body').ready(function() {
+    $('#datatable').DataTable({
+        "ordering": false
+    , });
+});

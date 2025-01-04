@@ -56,7 +56,6 @@
                         <a href="{{ route('dashboard',Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Dashboard </span>
-                            <span class="badge bg-success rounded-pill">5</span>
                         </a>
                     </li>
 
@@ -150,70 +149,6 @@
                         </div>
                     </li>
 
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-card-multiple-outline"></i></span>
-                            <span class="menu-text"> Multi Level </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarMultiLevel">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel" class="side-nav-link">
-                                        <span class="menu-text"> Second Level </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarSecondLevel">
-                                        <ul class="sub-menu">
-                                            <li class="side-nav-item">
-                                                <a href="javascript: void(0);" class="side-nav-link">
-                                                    <span class="menu-text">Item 1</span>
-                                                </a>
-                                            </li>
-                                            <li class="side-nav-item">
-                                                <a href="javascript: void(0);" class="side-nav-link">
-                                                    <span class="menu-text">Item 2</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel" class="side-nav-link">
-                                        <span class="menu-text"> Third Level </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarThirdLevel">
-                                        <ul class="sub-menu">
-                                            <li class="side-nav-item">
-                                                <a href="javascript: void(0);" class="side-nav-link">Item 1</a>
-                                            </li>
-                                            <li class="side-nav-item">
-                                                <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false" aria-controls="sidebarFourthLevel" class="side-nav-link">
-                                                    <span class="menu-text"> Item 2 </span>
-                                                    <span class="menu-arrow"></span>
-                                                </a>
-                                                <div class="collapse" id="sidebarFourthLevel">
-                                                    <ul class="sub-menu">
-                                                        <li class="side-nav-item">
-                                                            <a href="javascript: void(0);" class="side-nav-link">
-                                                                <span class="menu-text">Item 2.1</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="side-nav-item">
-                                                            <a href="javascript: void(0);" class="side-nav-link">
-                                                                <span class="menu-text">Item 2.2</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
                     <li class="side-nav-title">Logout</li>
 
                     <li class="side-nav-item">
@@ -376,7 +311,7 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('dashboard.employe.profileSettings',Auth::guard('employee')->user()->emp_slug ) }}" class="dropdown-item notify-item">
+                                <a href="{{ route('dashboard.employe.view',Auth::guard('employee')->user()->emp_slug ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Profile</span>
                                 </a>

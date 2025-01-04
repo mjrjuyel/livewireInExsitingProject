@@ -67,7 +67,7 @@ class CateringPaymentController extends Controller
             $checkTotalCost = CateringFood::sum('total_cost');
             $checkTotalPayment = CateringPayment::sum('payment');
 
-            $insert=CateringPayment::create([
+            $insert= CateringPayment::create([
             'payment_date'=>$request['date'],
             'payment'=>$request['amount'],
             'p_creator'=>Auth::user()->id,
