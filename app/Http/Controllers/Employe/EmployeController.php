@@ -108,8 +108,6 @@ class EmployeController extends Controller
             'emp_emer_relation'=>$request['emerRelation'],
             'emp_slug'=>$slug,
             'emp_desig_id'=>$request['desig'],
-            'emp_role_id'=>$request['role'],
-            'emp_join'=>$request['join'],
             'updated_at'=>Carbon::now(),
         ]);
 

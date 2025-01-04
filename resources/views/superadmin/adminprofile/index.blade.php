@@ -63,7 +63,7 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">User Name</th>
+                                    <th class="text-center">Role</th>
                                     <th class="text-center">Admin Pic</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Action</th>
@@ -76,7 +76,7 @@
                                         {{ $admin->name }}
                                     </td>
                                     <td>
-                                        {{ $admin->username }}
+                                        <button class="btn bg-primary">{{optional($admin->role)->role_name}}</button>
                                     </td>
 
                                     <td>

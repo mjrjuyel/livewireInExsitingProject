@@ -111,7 +111,7 @@
                                 <tr>
                                     <td>Employe Creator</td>
                                     <td>:</td>
-                                    <td>{{$view->creator->name}}</td>
+                                    <td>{{optional($view->creator)->name}}</td>
                                 </tr>
 
 

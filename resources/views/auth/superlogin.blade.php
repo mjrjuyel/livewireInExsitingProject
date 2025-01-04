@@ -59,9 +59,8 @@
                                     <div class="form-group text-center mb-3">
                                         <button class="btn btn-success btn-block waves-effect waves-light w-100" type="submit"> Log In </button>
                                     </div>
-
-                                    <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock me-1"></i>
-                                        Forgot your password?</a>
+                                     <a href="{{route('employe.login')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
+                                        Are you an Employee??</a>
 
                                 </form>
 
@@ -90,11 +89,11 @@
                         <!-- end card -->
                     </div>
 
-                    <div class="row mt-3">
+                    {{-- <div class="row mt-3">
                         <div class="col-12 text-center">
                             <p class="text-white-50">Don't have an account? <a href="auth-register.html" class="text-white ms-1"><b>Sign Up</b></a></p>
                         </div> <!-- end col -->
-                    </div>
+                    </div> --}}
                     <!-- end row -->
 
                 </div> <!-- end col -->

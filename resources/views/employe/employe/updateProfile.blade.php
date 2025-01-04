@@ -185,7 +185,7 @@
                                     <div class="col-6">
                                         <div class="mb-3">
                                             @if ($edit->emp_image != '')
-                                            <img src="{{ asset('uploads/employe/profile/'.$edit->emp_image) }}" class="img-fluid" alt="" style="width:150px height:100px; object-fit:cover;">
+                                            <img src="{{ asset('uploads/employe/profile/'.$edit->emp_image) }}" class="img-fluid" alt="" style="width:100px height:80px; object-fit:cover;">
                                             @endif
                                         </div>
                                     </div>

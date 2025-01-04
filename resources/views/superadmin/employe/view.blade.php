@@ -228,14 +228,6 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        Working Role Is<button class="btn bg-primary"> {{optional($view->emp_role)->role_name}}</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
                                     <td>Designation</td>
                                     <td>:</td>
                                     <td>
@@ -252,7 +244,7 @@
                                 <tr>
                                     <td>Employe Creator</td>
                                     <td>:</td>
-                                    <td>{{$view->creator->name}}</td>
+                                    <td>{{optional($view->creator)->name}}</td>
                                 </tr>
 
 

@@ -29,6 +29,7 @@
                     @php
                     $datetime1 = date_create($view->emp_join->format('Y-m-d'));
                     $datetime2 = date_create(date('Y-m-d'));
+
                     // Calculates the difference between DateTime objects
                     $interval = date_diff($datetime1, $datetime2); 
                     @endphp

@@ -65,8 +65,8 @@
                                             type="submit"> Log In </button>
                                     </div>
 
-                                    <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock me-1"></i>
-                                        Forgot your password?</a>
+                                    <a href="{{route('login')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
+                                        Are you an Admin?</a>
 
                                 </form>
 
@@ -96,13 +96,6 @@
                             </div> <!-- end card-body -->
                         </div>
                         <!-- end card -->
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p class="text-white-50">Don't have an account? <a href="auth-register.html"
-                                    class="text-white ms-1"><b>Sign Up</b></a></p>
-                        </div> <!-- end col -->
                     </div>
                     <!-- end row -->
 

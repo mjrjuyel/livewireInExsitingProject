@@ -36,7 +36,7 @@ use App\Http\Controllers\SuperAdmin\CateringPaymentController; // Catring Food P
 use App\Http\Controllers\SuperAdmin\RecyclebinController; // only Admin Can Access This
 
 
-Route::get('/', function () {
+Route::get('/superadmin', function () {
     return view('welcome');
 })->name('.');
 
