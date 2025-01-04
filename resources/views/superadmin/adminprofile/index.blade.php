@@ -81,7 +81,8 @@
 
                                     <td>
                                         @if ($admin->image != '')
-                                        <img src="{{ asset('uploads/admin/profile/' .$admin->image) }}" class="img-fluid" alt="" style="width: 100%; max-width:75px; height: auto; object-fit: cover; border-radius: 100%;">
+                                        <img src="{{ asset('uploads/adminprofile/' .$admin->image) }}" class="img-fluid" alt="" style="width: 100%;
+                                         max-width: 70px;height: 100%;object-fit: cover;border-radius: 50%;max-height: 70px;object-position: top;">
                                         @endif
                                     </td>
 
