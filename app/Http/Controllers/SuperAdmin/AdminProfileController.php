@@ -160,4 +160,15 @@ class AdminProfileController extends Controller
         Session::flash('success','Profile Update Successfully');
         return redirect()->back();
     }
+
+    // Delete
+    public function delete($id){
+        $userId = Crypt::decrypt($id);
+        $delete = User::where('id',$userId)->first();
+        $delete->delete();
+        if($delete){
+        Session::flash('success','Admin Delete Successfully!');
+        return redirect()->back();
+        }
+    }
 }

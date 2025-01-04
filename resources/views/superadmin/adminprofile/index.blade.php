@@ -100,6 +100,15 @@
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
                                                 </li>
+                                                @if(Auth::user()->role_id == 1)
+                                                <li>
+                                                    <form action="{{ route('dashboard.admin.delete',Crypt::encrypt($admin->id)) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
+                                                    </form>
+                                                </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>

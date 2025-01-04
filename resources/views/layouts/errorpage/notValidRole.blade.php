@@ -43,7 +43,6 @@
                 <div class="font-80 text-dark">4<i class="mdi mdi-emoticon-sad-outline mx-2"></i>4</div>
                 <h3 class="text-uppercase">Sorry You have No Acces To Visit The Page !</h3>
                 <p class="text-muted mt-4" style="color:red;">
-                    
                     @if(Auth::user()->role_id == 2)
                     <li><span class="text-dark">It's looking like you may have taken a wrong turn.<br>You only can Create,View,Edit and Other Things</span></li>
                     @elseif(Auth::user()->role_id == 3)
