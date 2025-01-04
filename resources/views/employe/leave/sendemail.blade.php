@@ -133,11 +133,10 @@
 
                     <input type="hidden" name="leave_request_id" value="{{ $leave['id'] }}">
                     <select name="action" required>
-
                         <option class="text-warning" value="1" @if ($leave['status']==1) Selected @endif>
                             Pending</option>
                     </select>
-                    <a href="{{url('superadmin/leave/view/'.$leave['slug'])}}" class="">Go To Dashboard</a>
+                    <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($leave['id']))}}" class="">Go To Dashboard</a>
                 </div>
         </div>
         <div class="footer">

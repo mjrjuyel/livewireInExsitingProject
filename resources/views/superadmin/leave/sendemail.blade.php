@@ -127,16 +127,9 @@
              
             <p><strong>Comments:</strong> {{ $data['comments'] }}</p>
 
-           
 
             <div class="action-form">
-                <select name="action" required>     
-                    <option class="text-warning" value="1" @if ($data['status'] == 2) Selected @endif>
-                        Approved</option>
-                    <option class="text-warning" value="1" @if ($data['status'] == 3) Selected @endif>
-                        Cancle</option>
-                </select>
-                <a href="{{url('dashboard/leave/history/'.$data['employe']->emp_slug)}}" class="button">Go To Your Dashboard </a>
+                <a href="{{url('dashboard/leave/history/'.Crypt::encrypt($data['employe']->id))}}" class="button">Go To Your Dashboard </a>
             </div>
         </div>
         <div class="footer">
