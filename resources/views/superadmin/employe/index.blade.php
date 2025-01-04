@@ -85,7 +85,7 @@
 
                                     <td>
                                         @if ($employe->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
+                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" alt="" style="width: 100%;max-width:70px; height: auto; object-fit: cover; border-radius: 50%;">
                                         @endif
                                     </td>
                                     <td>{{ optional($employe->emp_desig)->title }}</td>

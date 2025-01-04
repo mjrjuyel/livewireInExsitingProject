@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    
+
 
     <div class="row">
         <div class="col-12">
@@ -81,10 +81,10 @@
 
                                     <td>
                                         @if ($admin->image != '')
-                                        <img src="{{ asset('uploads/admin/profile/' .$admin->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
+                                        <img src="{{ asset('uploads/admin/profile/' .$admin->image) }}" class="img-fluid" alt="" style="width: 100%;height: auto; object-fit: cover; border-radius: 100%;">
                                         @endif
                                     </td>
-                                    
+
                                     <td>
                                         {{ $admin->email }}
                                     </td>
