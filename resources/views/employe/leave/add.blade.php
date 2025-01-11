@@ -93,6 +93,7 @@
                             <div class="row mt-3">
                                 <div class="col-6 offset-2">
                                     <div class="mb-3">
+                                   
                                         <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                         </label>
                                         <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">

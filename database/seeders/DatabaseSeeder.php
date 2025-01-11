@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             EmployeLeaveSettingSeeder::class,
             BasicSeeder::class,
             TimeZoneSeeder::class,
+            AdminEmailSeeder::class,
         ]);
 
             // User::factory(10)->create();

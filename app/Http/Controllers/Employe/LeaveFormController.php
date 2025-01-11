@@ -13,6 +13,7 @@ use App\Models\Leave;
 use App\Models\LeaveType;
 use App\Models\EmployeLeaveSetting;
 use App\Models\Employee;
+use App\Models\AdminEmail;
 use App\Models\User;
 use Carbon\Carbon;
 use Session;
@@ -198,9 +199,9 @@ class LeaveFormController extends Controller
             
                                     // Send Mail to Admin
                                     // Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
-
+                                    $email = AdminEmail::where('id',1)->first();
                                     // try {
-                                        Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
+                                        Mail::to($email->email)->send(new LeaveMailToAdmin($insert));
                                         // return "Email sent successfully!";
                                     // } catch (Exception $e) {
                                     //     return "Email failed to send. Error: " . $e->getMessage();

@@ -58,7 +58,7 @@
             width: 100%;
         }
 
-        button {
+        .button {
             padding: 10px 20px;
             font-size: 16px;
             color: white;
@@ -69,8 +69,8 @@
             cursor: pointer;
         }
 
-        button:hover {
-            background-color: rgb(196, 219, 197);
+        .button:hover {
+            background-color: rgb(26, 46, 27);
         }
 
         .footer {
@@ -89,7 +89,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Leave Request
+            New Leave Request From <strong style="color:#4CAF50;">{{$leave['employe']->emp_name}}</strong>
         </div>
         <div class="email-body">
             <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
@@ -97,50 +97,33 @@
             <p><strong>Reason: {{$leave['reason']}}</strong> </p>
             <p><strong>Start Date: {{$leave['start_date']->format('d-M-Y')}}</strong></p>
             <p><strong>End Date:</strong> {{ $leave['end_date']->format('d-M-Y') }}</p>
-           @if($leave['total_paid'] != 0)
-
+            @if($leave['total_paid'] != 0)
                 @if($leave['total_paid'] <= 1) 
-                    <td class="text-danger">
                     @if($leave['total_paid'] !== null)
-                    <p><strong>Total Paid:</p> {{ $leave['total_paid']}} Day
+                    <p><strong>Total Paid:</strong> {{ $leave['total_paid']}} Day</p>
                     @endif
-                    </td>
                     @else
-                    <td class="text-danger">
-                    <p><strong>Total Paid:</p> {{ $leave['total_paid'] }} Days
-                    </td>
+                    <p><strong>Total Paid:</strong>{{ $leave['total_paid'] }} Days</p> 
                 @endif
-
             @endif
 
             @if($leave['total_unpaid'] != 0)
-
                 @if($leave['total_unpaid'] <= 1) 
-                    <td class="text-danger">
                     @if($leave['total_unpaid'] !== null)
-                    <p><strong>Total Paid:</p> {{ $leave['total_unpaid']}} Day
+                    <p><strong>Total Paid: </strong>{{ $leave['total_unpaid']}} Day</p> 
                     @endif
-                    </td>
                     @else
-                    <td class="text-danger">
-                    <p><strong>Total Paid:</p> {{ $leave['total_unpaid'] }} Days
-                    </td>
+                    <p><strong>Total Paid: </strong>{{ $leave['total_unpaid']}} Days</p>
                 @endif
-
             @endif
-                <p>Choose an action and submit your response:</p>
-                <div class="action-form">
-
-                    <input type="hidden" name="leave_request_id" value="{{ $leave['id'] }}">
-                    <select name="action" required>
-                        <option class="text-warning" value="1" @if ($leave['status']==1) Selected @endif>
-                            Pending</option>
-                    </select>
-                    <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($leave['id']))}}" class="">Go To Dashboard</a>
-                </div>
+            @if($leave['status']==1)
+                <strong style="color:red;">Pending</strong>
+            @endif
+                   
+            <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} Your Company Name. All rights reserved.
+            &copy; {{ date('Y') }} All rights reserved.
         </div>
     </div>
 </body>

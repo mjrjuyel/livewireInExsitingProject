@@ -31,7 +31,7 @@ class LeaveMailToAdmin extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Leave Application To Admin',
+            subject: 'Leave Application From ' . $this->leave->employe->emp_name,
         );
     }
 

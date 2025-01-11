@@ -32,6 +32,7 @@ use App\Http\Controllers\SuperAdmin\BankBranchController; // Bank Branches Type 
 use App\Http\Controllers\SuperAdmin\DepartmentController; // Bank Branches Type Add, create, edit .
 use App\Http\Controllers\SuperAdmin\CateringFoodController; // Catring Food Type Add, create, edit .
 use App\Http\Controllers\SuperAdmin\CateringPaymentController; // Catring Food Payment Add, create, edit .
+use App\Http\Controllers\SuperAdmin\AdminEmailController; // Dynamic Email Controller.
 
 use App\Http\Controllers\SuperAdmin\RecyclebinController; // only Admin Can Access This
 
@@ -227,7 +228,11 @@ Route::middleware(['auth','verified'])->group(function(){
                 //TimeZone Basic Controller
                 Route::get('/superadmin/timezone',[TimeZoneController::class,'index'])->name('superadmin.timezone');
                 Route::post('/superadmin/timezone/update',[TimeZoneController::class,'update'])->name('superadmin.timezone.update');
-                // 404 for not authrized
+
+                //Email  Controller
+                Route::get('/superadmin/email',[AdminEmailController::class,'index'])->name('superadmin.email');
+                Route::post('/superadmin/email/update',[AdminEmailController::class,'update'])->name('superadmin.email.update');
+                
     });
 
     // Admin And Assistant Access Route *********
@@ -259,7 +264,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/cateringpayment/year/{month}',[CateringFoodController::class,'searchYear']);
             });
 
-    // Not As A Super Admin
+    // Not As A Super Admin // 404 for not authrized
     Route::get('invalidAccess',function(){ 
         return view('layouts.errorpage.notValidRole');
         })->name('invalidAccess');

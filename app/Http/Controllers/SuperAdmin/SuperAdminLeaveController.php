@@ -118,8 +118,8 @@ class SuperAdminLeaveController extends Controller
             }
 
             $alldata = Leave::where('id',$id)->first();
-            // LeaveResponseByAdmin
-            Mail::to('eteamify@gmail.com')->send(new LeaveResponseByAdmin($alldata));
+            
+            Mail::to($employe->email)->send(new LeaveResponseByAdmin($alldata));
 
             $employe->notify(new LeaveToEmployeNotification($alldata));
 

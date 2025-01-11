@@ -88,7 +88,7 @@
                                     <td>Employe As a</td>
                                     <td>:</td>
                                     <td>
-                                        {{$view->employe->emp_desig->title}}
+                                        {{optional($view->emp_desig)->title}}
                                     </td>
                                 </tr>
 
