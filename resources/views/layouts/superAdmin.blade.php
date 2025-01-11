@@ -80,11 +80,46 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="{{route('superadmin.leave')}}" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#sidebarLeave" aria-expanded="false" aria-controls="sidebarLeave" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
-                            <span class="menu-text"> Leave Application </span>
+                            <span class="menu-text"> Leave </span>
+                            <span class="menu-arrow"></span>
                         </a>
+                        <div class="collapse" id="sidebarLeave">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{route('superadmin.leave')}}" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
+                                        <span class="menu-text"> Leave Application </span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarLeaveType" aria-expanded="false" aria-controls="sidebarLeaveType" class="side-nav-link">
+                                        <span class="menu-text">Leave Type</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarLeaveType">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
+                                                    <span class="menu-text">All</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.leavetype.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add New</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
+
+                    
 
                     <li class="side-nav-item">
                         <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
@@ -131,11 +166,12 @@
                                 @php
                                 $role = App\Models\UserRole::all();
                                 @endphp
-                                @if($role->count('id') <= 2) <li class="side-nav-item">
+                                @if($role->count('id') <= 2) 
+                                <li class="side-nav-item">
                                     <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Role</span>
                                     </a>
-                    </li>
+                               </li>
                     @endif
 
                 </ul>
@@ -197,27 +233,7 @@
                 </div>
             </li>
 
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarLeaveType" aria-expanded="false" aria-controls="sidebarLeaveType" class="side-nav-link">
-                    <span class="menu-icon"><i class="mdi mdi-emoticon-sick-outline"></i></span>
-                    <span class="menu-text">Leave Type</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarLeaveType">
-                    <ul class="sub-menu">
-                        <li class="side-nav-item">
-                            <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
-                                <span class="menu-text">All Type</span>
-                            </a>
-                        </li>
-                        <li class="side-nav-item">
-                            <a href="{{route('superadmin.leavetype.add')}}" class="side-nav-link">
-                                <span class="menu-text">Add Type</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarBranchName" aria-expanded="false" aria-controls="sidebarBranchName" class="side-nav-link">
