@@ -47,40 +47,47 @@ Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit']
 
 // ========= Employe Dashboard
 Route::middleware('isEmploye')->group(function(){
-        // Logout 
-        Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
+       Route::middleware('isEmployeActive')->group(function(){
+         // Logout 
+         Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
 
-        // Dsahboard Index
-        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+         // Dsahboard Index
+         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+ 
+         // Admin Controller 
+         Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
+         Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
+         // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
+         // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
+         Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
+         Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
+         
+        // Role ManageMent
+         Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
+         Route::get('/dashboard/role/add',[RoleController::class,'add'])->name('dashboard.role.add');
+         Route::post('/dashboard/role/insert',[RoleController::class,'insert'])->name('dashboard.role.insert');
+         Route::get('/dashboard/role/view/{id}',[RoleController::class,'view'])->name('dashboard.role.view');
+         Route::delete('/dashboard/role/delete/{id}',[RoleController::class,'delete'])->name('dashboard.role.view');
+     
+         // Leave Application status by General User
+         Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
+         Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
+         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
+         Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
+         Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
+         Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
+ 
+         // Employe Daily Reports Submit
+         Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
+         Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
+         Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
+         Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
+       });
 
-        // Admin Controller 
-        Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
-        Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
-        // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
-        // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
-        Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
-        Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-        
-       // Role ManageMent
-        Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
-        Route::get('/dashboard/role/add',[RoleController::class,'add'])->name('dashboard.role.add');
-        Route::post('/dashboard/role/insert',[RoleController::class,'insert'])->name('dashboard.role.insert');
-        Route::get('/dashboard/role/view/{id}',[RoleController::class,'view'])->name('dashboard.role.view');
-        Route::delete('/dashboard/role/delete/{id}',[RoleController::class,'delete'])->name('dashboard.role.view');
-    
-        // Leave Application status by General User
-        Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
-        Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
-        Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
-        Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
-        Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
-        Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
+       Route::get('invalidAccess',function(){ 
+        return view('layouts.errorpage.notValidRole');
+        })->name('invalidAccess');
 
-        // Employe Daily Reports Submit
-        Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
-        Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
-        Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
-        Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
 });
 
 

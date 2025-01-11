@@ -91,41 +91,33 @@
             Response From ({{ config('app.name', 'Laravel') }}) by Admin
         </div>
         <div class="email-body">
-            <p><strong>Employee:</strong>{{ $data['employe']->emp_name }}</p>
-            <p><strong>Reason:</strong>{{ $data['reason'] }} </p>
-            <p><strong>Start Date:</strong> {{ $data['start_date']->format('Y-m-D') }}</p>
-            <p><strong>End Date:</strong> {{ $data['end_date']->format('Y-m-D') }}</p>
+            <p><strong>Employee: </strong> {{ $data['employe']->emp_name }}</p>
+            <p><strong>Reason: </strong> {{ $data['reason'] }} </p>
+            <p><strong>Start Date: </strong> {{ $data['start_date']->format('Y-M-d') }}</p>
+            <p><strong>End Date: </strong> {{ $data['end_date']->format('Y-M-d') }}</p>
             <p><strong>
               @if($data['total_paid'] != 0)
                 @if($data['total_paid'] <= 1) 
-                    <td class="text-danger">
                     @if($data['total_paid'] !== null)
-                    <p><strong>Total Paid:</p> {{ $data['total_paid']}} Day
+                    <p><strong>Total Paid: </strong> {{ $data['total_paid']}} Day</p> 
                     @endif
-                    </td>
                     @else
-                    <td class="text-danger">
-                    <p><strong>Total Paid:</p> {{ $data['total_paid'] }} Days
-                    </td>
+                    <p><strong>Total Paid: </strong> {{ $data['total_paid'] }} Days</p> 
                 @endif
             @endif
             @if($data['total_unpaid'] != 0)
                 @if($data['total_unpaid'] <= 1) 
-                    <td class="text-danger">
                     @if($data['total_unpaid'] !== null)
-                    <p><strong>Total Paid:</p> {{ $data['total_unpaid']}} Day
+                    <p><strong>Total Paid: </strong> {{ $data['total_unpaid']}} Day</p> 
                     @endif
-                    </td>
                     @else
-                    <td class="text-danger">
-                    <p><strong>Total Paid:</p> {{ $data['total_unpaid'] }} Days
-                    </td>
+                    <p><strong>Total Paid: </strong> {{ $data['total_unpaid'] }} Days</p> 
                 @endif
 
             @endif
             </strong></p>
              
-            <p><strong>Comments:</strong> {{ $data['comments'] }}</p>
+            <p><strong>Comments: </strong> {{ $data['comments'] }}</p>
 
 
             <div class="action-form">

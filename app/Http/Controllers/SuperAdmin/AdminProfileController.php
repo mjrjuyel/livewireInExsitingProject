@@ -63,8 +63,15 @@ class AdminProfileController extends Controller
             'password'=>$request['pass'],
             'created_at'=>Carbon::now(),
         ]);
-        if($insert){
-               if($insert->image){
+
+        $exsitEmploye = Employee::where('email',$insert->email)->exists();
+
+        if($exsitEmploye){
+            Session::flash('success','Only Add In Admin List');
+            return redirect()->back();
+        }
+        else{
+            if($insert->image){
                 $imageTake = $request->file('pic');
                 $employe_name = 'user-'.uniqId().$insert->image;
                 // $image->scale(width: 300);
@@ -82,7 +89,7 @@ class AdminProfileController extends Controller
             ]);
         }
         
-        Session::flash('success','New Admin Added Successfully');
+        Session::flash('success','New Admin and Employee Added Successfully');
         return redirect()->back();
     }
 

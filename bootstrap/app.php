@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'isEmploye' => \App\Http\Middleware\isEmploye::class,
             'is_adminAndAssistant' => \App\Http\Middleware\is_adminAndAssistant::class,
             'isAdminAndHr' => \App\Http\Middleware\isAdminAndHr::class,
+            'isEmployeActive' => \App\Http\Middleware\isEmployeActive::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
