@@ -84,9 +84,9 @@ Route::middleware('isEmploye')->group(function(){
          Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
        });
 
-       Route::get('invalidAccess',function(){ 
-        return view('layouts.errorpage.notValidRole');
-        })->name('invalidAccess');
+       Route::get('/notActiveUser',function(){ 
+        return view('employe.notActiveUser');
+        })->name('notActiveUser');
 
 });
 

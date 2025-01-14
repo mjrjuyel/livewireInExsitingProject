@@ -116,7 +116,7 @@ class AdminProfileController extends Controller
         // return $request->all();
         $request->validate([
             'name'=>'required',
-            'image' => 'max:512 | image | mimes:jpeg.jpg,png',
+            'image' => 'max:512 | image | mimes:jpeg,jpg,png',
             'email'=>'required | email:rfc,dns | unique:users,name,'.$id,
         ]);
 
@@ -177,5 +177,11 @@ class AdminProfileController extends Controller
         Session::flash('success','Admin Delete Successfully!');
         return redirect()->back();
         }
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return redirect('/login');
     }
 }

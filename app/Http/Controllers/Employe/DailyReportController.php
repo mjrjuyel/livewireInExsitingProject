@@ -50,8 +50,6 @@ class DailyReportController extends Controller
                 if($maximumPreviousDate <= $submit){
 
                     // return "3 day after";
-                    
-        
                     $insert= DailyReport::create([
                         'submit_by'=>$request['name'],
                         'submit_date'=>$request['submit_date'],

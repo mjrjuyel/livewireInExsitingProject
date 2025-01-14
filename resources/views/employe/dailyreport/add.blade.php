@@ -88,7 +88,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Date of Work<span class="text-danger">* </span>:(<small id="emailHelp" class="form-text text-warning">You Only Can Submit Present and Previous 2 days If You Missed</small>)
                                     </label>
-                                    <input type="text" id="inline-datepicker" name="submit_date" class="form-control" onfocus="disablePastDates()" value="" placeholder="">
+                                    <input type="text" id="inline-datepicker" name="submit_date" class="form-control" onfocus="disablePastDates()" value="{{now()}}" placeholder="">
                                    
                                     @error('submit_date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

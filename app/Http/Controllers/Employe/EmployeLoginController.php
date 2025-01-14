@@ -32,7 +32,7 @@ class EmployeLoginController extends Controller
     {
         // Auth::guard('customer')->logout();
         Auth::guard('employee')->logout();
-        return redirect()->route('employe.login');
+        return redirect()->route('.');
     }
 
     public function insert(Request $request) {

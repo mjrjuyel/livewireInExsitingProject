@@ -18,6 +18,6 @@ class isEmployeActive
         if(Auth::guard('employee')->user()->emp_status == 1){
             return $next($request);
         }
-        return redirect()->route('invalidAccess');
+        return redirect()->route('notActiveUser');
     }
 }

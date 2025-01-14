@@ -59,10 +59,10 @@
                                     <div class="form-group text-center mb-3">
                                         <button class="btn btn-success btn-block waves-effect waves-light w-100" type="submit"> Log In </button>
                                     </div>
-                                     <a href="{{route('employe.login')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
-                                        Are you an Employee??</a>
-
                                 </form>
+
+                                <a href="{{route('dashboard')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
+                                        Are you an Employee??</a>
 
                                 {{-- <div class="text-center mt-4">
                                     <h5 class="text-muted py-2"><b>Sign in with</b></h5>

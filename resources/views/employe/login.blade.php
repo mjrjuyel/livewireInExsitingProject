@@ -64,11 +64,10 @@
                                         <button class="btn btn-success btn-block waves-effect waves-light w-100"
                                             type="submit"> Log In </button>
                                     </div>
-
-                                    <a href="{{route('login')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
-                                        Are you an Admin?</a>
-
                                 </form>
+
+                                <a href="{{route('superadmin')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
+                                        Are you an Admin?</a>
 
                                 {{-- <div class="text-center mt-4">
                                     <h5 class="text-muted py-2"><b>Sign in with</b></h5>

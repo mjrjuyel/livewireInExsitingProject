@@ -101,7 +101,11 @@
                                                     @endif
                                                 @else
                                                     @if($pass->role_id != null)
-                                                    <input class="form-control" type="text" value="{{ $pass->role->role_name }}" disabled>
+                                                    <select class="form-control" type="text" value="{{ $pass->role->role_name }}">
+                                                      @foreach($role as $role)
+                                                       <option value="{{$role->id}}" @if(Auth::user()->role_id == $role->id ) Selected @endif>{{$role->role_name}}</option>
+                                                       @endforeach
+                                                    </select>
                                                     @else
                                                     <input class="form-control" type="text" value="Not Yet" disabled>
                                                     @endif
