@@ -60,35 +60,26 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-book header_icon"></i>Daily Report Submit Form
+                                <h3 class="card_header"><i class="fa-solid fa-book header_icon"></i>Daily Report Edit Form
                                 </h3>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('dashboard.dailyreport.submit')}}" method="post">
+                    <form action="{{route('dashboard.dailyreport.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-5 offset-2">
-
+                            <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
-                                    <select type="text" class="form-control" name="name" placeholder="Enter Daily Report">
-                                      <option value="">Select Name</option>
-                                       @foreach($employe as $employe)
-                                         <option value="{{$employe->id}}" @if($employe->id == Auth::guard('employee')->user()->id) Selected @endif>{{$employe->emp_name}}
-                                         </option>
-                                       @endforeach
-                                    </select>
-                                    @error('name')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
+                                    <input type="text" class="form-control" value="{{$edit->employe->emp_name}}" placeholder="Enter Daily Report" disabled>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Date of Work<span class="text-danger">* </span>:(<small id="emailHelp" class="form-text text-warning">You Only Can Submit Present and Previous 2 days If You Missed</small>)
+                                    <label class="form-label">Date of Work<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" name="submit_date" class="form-control" onfocus="disablePastDates()" value="{{now()}}" placeholder="">
+                                    <input type="text" id="humanfd-datepicker"  class="form-control" onfocus="disablePastDates()" value="{{$edit->submit_date}}" disabled>
                                    
                                     @error('submit_date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -99,7 +90,7 @@
                                     <label class="form-label">Details About Your Today's Activity<span class="text-danger">* </span>:
                                     </label>
 
-                                    <textarea type="text" style="resize:none;" rows="4" name="detail" class="form-control" value="" placeholder="What You Have Done Today?">{{old('detail')}}</textarea>
+                                    <textarea type="text" style="resize:none;" rows="4" name="detail" class="form-control" value="" placeholder="What You Have Done Today?">{{$edit->detail}}</textarea>
 
                                     @error('detail')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

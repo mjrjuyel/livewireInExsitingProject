@@ -1,6 +1,12 @@
 // soft delete modal 
+
+
 $(document).ready(function() {
-    
+    $('body').ready(function() {
+        $('#datatable').DataTable({
+            order: [[3, 'desc']]
+            });
+    });
      //Soft Delete
      $(document).on("click", "#softDel", function() {
         let deleteID = $(this).data('id');
@@ -19,8 +25,6 @@ $(document).ready(function() {
            $(".modal_body #modal_id").val( deleteID ); 
 });
 });
-
-
 
 !function(t) {
     "use strict";
@@ -102,8 +106,3 @@ function() {
     window.jQuery.FormPickers.init()
 }();
 
-$('body').ready(function() {
-    $('#datatable').DataTable({
-        "ordering": false
-    , });
-});

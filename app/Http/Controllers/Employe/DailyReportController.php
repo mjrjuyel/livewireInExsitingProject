@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DailyReportMail;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Employee;
 use App\Models\DailyReport;
+use App\Models\AdminEmail;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -57,6 +60,10 @@ class DailyReportController extends Controller
                         'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now(),
                     ]);
+
+                    $email = AdminEmail::where('id',1)->first();
+                                    // try {
+                    Mail::to($email->email)->send(new DailyReportMail($insert));
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
@@ -75,6 +82,31 @@ class DailyReportController extends Controller
         }else{
             // return "Else";
             Session::flash('error','Already You have Submitted on This day!');
+            return redirect()->back();
+        }
+        
+    }
+
+    public function edit($slug){
+        $edit = DailyReport::where('slug',$slug)->first();
+        return view('employe.dailyreport.edit',compact('edit'));
+    }
+
+    public function update(Request $request){
+        $id = $request->id;
+        // return $id;
+        $request->validate([
+            'detail'=>'required',
+        ]);  
+        
+        // return $request->all();
+        $insert= DailyReport::where('id',$id)->update([
+            'detail'=>$request['detail'],
+            'updated_at'=>Carbon::now(),
+        ]);
+        
+        if($insert){
+            Session::flash('success','Updated Daily Report Details');
             return redirect()->back();
         }
         
