@@ -61,9 +61,9 @@ class DailyReportController extends Controller
                         'created_at'=>Carbon::now(),
                     ]);
 
-                    $email = AdminEmail::where('id',1)->first();
-                                    // try {
-                    Mail::to($email->email)->send(new DailyReportMail($insert));
+                    // $email = AdminEmail::where('id',1)->first();
+                    //                 // try {
+                    // Mail::to($email->email)->send(new DailyReportMail($insert));
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
