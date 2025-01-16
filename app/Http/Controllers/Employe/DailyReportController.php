@@ -18,7 +18,7 @@ use Auth;
 class DailyReportController extends Controller
 {
     public function index(){
-        $alldata = DailyReport::with('employe')->where('submit_by',Auth::guard('employee')->user()->id)->where('status',1)->get();
+        $alldata = DailyReport::with('employe')->where('submit_by',Auth::guard('employee')->user()->id)->where('status',1)->latest('submit_date')->get();
         return view('employe.dailyreport.index',compact('alldata'));
     }
 
