@@ -172,7 +172,7 @@ class AdminEmployeController extends Controller
         $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
-        // return $whole_approved_leave;
+        // return $view;
         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear']));
     }
 

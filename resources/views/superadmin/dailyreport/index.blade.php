@@ -62,6 +62,7 @@
                                 <label class="form-label">Search by Name: </label>
                                 <select class="form-control" data-toggle="select2" name="id"  data-placeholder="Choose ...">
                                     @foreach($name as $name)
+                                    
                                     <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
                                     @endforeach
                                 </select> 
@@ -156,7 +157,6 @@
 </div>
 
 </div> <!-- container -->
-
 @endsection
 
 @section('js')

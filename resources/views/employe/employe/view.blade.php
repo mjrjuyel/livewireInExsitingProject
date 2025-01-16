@@ -211,11 +211,10 @@
                                     <h5 class="card-title">Bank Information</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Bank Name : {{optional($view->bankName)->bank_name}}</li>
-                                    <li class="list-group-item">Branch Name : {{optional($view->bankBranch)->emp_bank_branch_name}}</li>
+                                    <li class="list-group-item text-info">Bank Name : {{optional($view->bankName)->bank_name}}</li>
+                                    <li class="list-group-item">Branch Name : {{optional($view->bankBranch)->bank_branch_name}}</li>
                                     <li class="list-group-item">Account Name : {{$view->emp_bank_account_name}}</li>
-                                    <li class="list-group-item">Account Number : {{$view->emp_bank_account_name}}</li>
-                                    <li class="list-group-item">Branch Name : {{$view->emp_bank_branch_name}}</li>
+                                    <li class="list-group-item">Account Number : {{$view->emp_bank_account_number}}</li>
                                 </ul>
                             </div>
                         </div>

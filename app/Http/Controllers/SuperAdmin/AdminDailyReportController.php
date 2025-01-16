@@ -15,7 +15,7 @@ use Auth;
 class AdminDailyReportController extends Controller
 {
     public function index(){
-        $alldata = DailyReport::with('employe')->where('status',1)->latest('id')->get();
+        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('submit_date','DESC')->get();
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
         // return $name;
         return view('superadmin.dailyreport.index',compact(['alldata','name']));

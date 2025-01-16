@@ -2,11 +2,7 @@
 
 
 $(document).ready(function() {
-    $('body').ready(function() {
-        $('#datatable').DataTable({
-            order: [[3, 'desc']]
-            });
-    });
+    
      //Soft Delete
      $(document).on("click", "#softDel", function() {
         let deleteID = $(this).data('id');
