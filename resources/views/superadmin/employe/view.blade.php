@@ -282,7 +282,6 @@
                                     <h5 class="card-title">Joining Information</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Work Schedule : {{$view->emp_office_id_number}}</li>
                                     <li class="list-group-item">Joinig Date : {{$view->emp_join->format('d-M-Y')}}</li>
                                     <li class="list-group-item">Office Located In : {{optional($view->officeBranch)->branch_name}}</li>
                                     <li class="list-group-item">Office Id Card Number : {{$view->emp_office_id_number}}</li>
