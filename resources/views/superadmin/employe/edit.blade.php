@@ -240,7 +240,7 @@
                                         <div class="form-group clearfix">
                                             <label>Email : <span class="text-info">(Alternate Email)</span></label>
                                             <div>
-                                                <input class="form-control" value="{{$edit->email2 }}" name="email2" type="email1">
+                                                <input class="form-control" value="{{$edit->email2 ?? old('email2') }}" name="email2" type="email1">
                                             </div>
                                         </div>
                                     </div>
@@ -261,7 +261,7 @@
                                         <div class="form-group clearfix">
                                             <label>Phone Number<span>(optional)</span></label>
                                             <div>
-                                                <input name="phone2" value="{{$edit->emp_phone2 }}" type="number" class="form-control">
+                                                <input name="phone2" value="{{$edit->emp_phone2 ?? old('phone2') }}" type="number" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -300,7 +300,7 @@
                                         <div class="form-group">
                                             <label>Present Address</label>
                                             <div>
-                                                <input name="preAdd" type="text" value="{{$edit->emp_present }}" class="form-control">
+                                                <input name="preAdd" type="text" value="{{$edit->emp_present ?? old('preAdd') }}" class="form-control">
                                             </div>
                                             @error('preAdd')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -351,12 +351,12 @@
                                             <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
                                             <select type="text" class="form-control" name="empType">
                                                 <option value="">Select One</option>
-                                                <option value="Full Time" @if($edit->emp_type == 'Full Time') Selected @endif>Full Time </option>
-                                                <option value="Part Time" @if($edit->emp_type == 'Part Time') Selected @endif>Part Time</option>
-                                                <option value="Freelance" @if($edit->emp_type == 'Freelance') Selected @endif>Frelance</option>
-                                                <option value="Contract" @if($edit->emp_type == 'Contract') Selected @endif>Contract</option>
-                                                <option value="Internship" @if($edit->emp_type == 'Internship') Selected @endif>Internship</option>
-                                                <option value="Remote" @if($edit->emp_type == 'Remote') Selected @endif>Remote</option>
+                                                <option value="Full Time" @if($edit->emp_type == 'Full Time') Selected @elseif(old('empType') == 'Full Time') Selected @endif>Full Time </option>
+                                                <option value="Part Time" @if($edit->emp_type == 'Part Time') Selected @elseif(old('empType') == 'Part Time') Selected @endif>Part Time</option>
+                                                <option value="Freelance" @if($edit->emp_type == 'Freelance') Selected @elseif(old('empType') == 'Freelance') Selected @endif>Frelance</option>
+                                                <option value="Contract" @if($edit->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
+                                                <option value="Internship" @if($edit->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
+                                                <option value="Remote" @if($edit->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
                                             </select>
                                             @error('empType')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -492,7 +492,7 @@
                             <div class="form-group clearfix">
                                 <label for="">Last Academic Degree :- <span class="text-danger">*</span> :</label>
                                 <input class="required form-control" id="" value="{{$edit->emp_rec_degree }}" name="degre" type="text">
-                                @error('degree')
+                                @error('degre')
                                 <small class="form-text text-warning">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -536,7 +536,7 @@
                             <div class="form-group clearfix">
                                 <label>Bank Branch Name</label>
                                 <div>
-                                    <select class="form-control" name="bankName" type="text">
+                                    <select class="form-control" name="bankBranch" type="text">
                                         @foreach($bankBranch as $branch)
                                         <option value="{{ $branch->id }}" @if($edit->emp_bank_branch_id == $branch->id) Selected @endif>{{ $branch->bank_branch_name }}
                                         </option>
@@ -565,7 +565,7 @@
                             <div class="form-group clearfix">
                                 <label class="form-label">Account No <span class="text-danger">*</span> :</label>
                                 <div>
-                                    <input class="form-control" name="accountNumber" value="{{$edit->emp_bank_account_number }}" type="number">
+                                    <input class="form-control" name="accountNumber" value="{{$edit->emp_bank_account_number}}" type="number">
                                 </div>
                                 @error('accountNumber')
                                 <small class="form-text text-warning">{{ $message }}</small>
@@ -577,7 +577,7 @@
                             <div class="form-group clearfix">
                                 <label>IFSC/Sort Code</label>
                                 <div>
-                                    <input id="address2" name="sortCode" value="{{$edit->emp_bank_sort_code }}" type="number" class="form-control">
+                                    <input id="address2" name="sortCode" value="{{$edit->emp_bank_sort_code ?? old('sortCode') }}" type="number" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -586,7 +586,7 @@
                             <div class="form-group clearfix">
                                 <label>Swift Code</label>
                                 <div>
-                                    <input id="address2" name="swiftCode" value="{{$edit->emp_bank_swift_code }}" type="number" class="form-control">
+                                    <input id="address2" name="swiftCode" value="{{$edit->emp_bank_swift_code ?? old('swiftCode') }}" type="number" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -619,7 +619,7 @@
                             <div class="form-group clearfix">
                                 <label class="form-label">Access Card Number :</label>
                                 <div>
-                                    <input class="form-control" value="{{$edit->emp_office_card_number }}" name="accessCard" type="number">
+                                    <input class="form-control" value="{{$edit->emp_office_card_number ?? old('accessCard') }}" name="accessCard" type="number">
                                 </div>
                             </div>
                         </div>
@@ -628,7 +628,7 @@
                             <div class="form-group clearfix">
                                 <label>System/IT Requirement</label>
                                 <div>
-                                    <input class="form-control" value="{{$edit->emp_office_IT_requirement }}" name="system" type="text">
+                                    <input class="form-control" value="{{$edit->emp_office_IT_requirement ?? old('system') }}" name="system" type="text">
                                 </div>
                             </div>
                         </div>
@@ -637,7 +637,7 @@
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
                                 <label>Work Schedule </label>
-                                <input name="schedule" type="text" value="{{$edit->emp_office_work_schedule}}" class="form-control">
+                                <input name="schedule" type="text" value="{{$edit->emp_office_work_schedule ?? old('schedule')}}" class="form-control">
                             </div>
                         </div>
                     </div><!-- end row -->

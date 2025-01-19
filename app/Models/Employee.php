@@ -53,7 +53,7 @@ class Employee extends Authenticatable
     }
     
     public function officeBranch(){
-        return $this->belongsTo(OfficeBranch::class,'emp_office_branch','id');
+        return $this->belongsTo(OfficeBranch::class,'emp_office_branch_id','id');
     }
 
     public function bankName(){
