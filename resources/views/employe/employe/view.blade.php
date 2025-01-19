@@ -33,7 +33,7 @@
                                         <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>{{$view->emp_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('dashboard.employe.profileSettings',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                    <div class="col-md-2 offset-md-3"><a href="{{route('dashboard.employe.profileSettings',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
@@ -168,7 +168,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Gender : {{$view->gender}}</li>
-                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob}}</li>
+                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob->format('d-M-Y')}}</li>
                                     <li class="list-group-item">Marriage Status : {{$view->marriage}}</li>
                                     <li class="list-group-item">Personal Number : <a href="tel:{{$view->emp_phone}}">{{$view->emp_phone}}</a></li>
                                     @if($view->emp_phone2 != '')
@@ -192,13 +192,13 @@
 
                                     @if($view->emp_id_type == 'national_id')
                                     <li class="list-group-item">Identity Type : National Id</li>
-                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    <li class="list-group-item">Id Number : {{$view->emp_id_number}}</li>
                                     @elseif($view->emp_id_type == 'ssn')
                                     <li class="list-group-item">Identity Type : Social Security Number</li>
-                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    <li class="list-group-item">Id Number : {{$view->emp_id_number}}</li>
                                     @elseif($view->emp_id_type == 'driver_license')
                                     <li class="list-group-item">Identity Type : Driver License</li>
-                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    <li class="list-group-item">Id Number : {{$view->emp_id_number}}</li>
                                     @endif
 
                                 </ul>
@@ -226,7 +226,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_degree}}</li>
-                                    <li class="list-group-item">Passing Year Degree : {{$view->emp_rec_year}}</li>
+                                    <li class="list-group-item">Passing Year: {{$view->emp_rec_year}}</li>
                                 </ul>
                             </div>
                         </div>

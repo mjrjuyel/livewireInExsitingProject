@@ -28,7 +28,7 @@ use Exception;
 class LeaveFormController extends Controller
 {
     public function add(){
-        $leaveType = LeaveType::all();
+        $leaveType = LeaveType::latest('id')->get();
         return view('employe.leave.add',compact('leaveType'));
     }
 
@@ -194,7 +194,7 @@ class LeaveFormController extends Controller
                                         'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
                                         'emp_id'=>Auth::guard('employee')->user()->id,
                                         'slug'=>'leav-'.uniqId(),
-                                        'created_at'=>Carbon::now(),
+                                        'created_at'=>Carbon::now('UTC'),
                                     ]);
             
                                     // Send Mail to Admin
@@ -206,7 +206,6 @@ class LeaveFormController extends Controller
                                     // } catch (Exception $e) {
                                     //     return "Email failed to send. Error: " . $e->getMessage();
                                     // }
-
                                     auth()->user()->notify(new LeaveToAdminNotification($insert));
 
                                     if ($insert) {
@@ -247,7 +246,7 @@ class LeaveFormController extends Controller
         // return $userId;
         $employe = Employee::where('id',$userId)->first();
 
-        $leavehistory = Leave::where('emp_id',$employe->id)->orderBy('start_date')->get();
+        $leavehistory = Leave::where('emp_id',$employe->id)->orderBy('id','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.history',compact('leavehistory'));
     }

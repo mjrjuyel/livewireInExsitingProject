@@ -24,5 +24,8 @@ class TimeZoneServiceProvider extends ServiceProvider
         $timeZone = TimeZone::where('id',1)->first();
         date_default_timezone_set($timeZone->name);
         config(['app.timezone' => $timeZone->name]);
+
+        // 
+        // Carbon::setLocale($timeZone->name);
     }
 }

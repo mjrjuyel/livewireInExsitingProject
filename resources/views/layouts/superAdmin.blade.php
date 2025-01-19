@@ -119,7 +119,7 @@
                         </div>
                     </li>
 
-                    
+
 
                     <li class="side-nav-item">
                         <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
@@ -166,12 +166,11 @@
                                 @php
                                 $role = App\Models\UserRole::all();
                                 @endphp
-                                @if($role->count('id') <= 2) 
-                                <li class="side-nav-item">
+                                @if($role->count('id') <= 2) <li class="side-nav-item">
                                     <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Role</span>
                                     </a>
-                               </li>
+                    </li>
                     @endif
 
                 </ul>
@@ -207,33 +206,31 @@
                                 </ul>
                             </div>
                         </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarDesignation" aria-expanded="false" aria-controls="sidebarDesignation" class="side-nav-link">
+                                {{-- <span class="menu-icon"><i class="mdi mdi-material-design"></i></span> --}}
+                                <span class="menu-text">Designation</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarDesignation">
+                                <ul class="sub-menu">
+                                    <li class="side-nav-item">
+                                        <a href="{{route('superadmin.designation')}}" class="side-nav-link">
+                                            <span class="menu-text">All Desigantion</span>
+                                        </a>
+                                    </li>
+                                    <li class="side-nav-item">
+                                        <a href="{{route('superadmin.designation.add')}}" class="side-nav-link">
+                                            <span class="menu-text">Add Desigantion</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </li>
-
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDesignation" aria-expanded="false" aria-controls="sidebarDesignation" class="side-nav-link">
-                    <span class="menu-icon"><i class="mdi mdi-material-design"></i></span>
-                    <span class="menu-text">Designation</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarDesignation">
-                    <ul class="sub-menu">
-                        <li class="side-nav-item">
-                            <a href="{{route('superadmin.designation')}}" class="side-nav-link">
-                                <span class="menu-text">All Desigantion</span>
-                            </a>
-                        </li>
-                        <li class="side-nav-item">
-                            <a href="{{route('superadmin.designation.add')}}" class="side-nav-link">
-                                <span class="menu-text">Add Desigantion</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarBranchName" aria-expanded="false" aria-controls="sidebarBranchName" class="side-nav-link">

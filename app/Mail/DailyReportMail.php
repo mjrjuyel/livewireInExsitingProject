@@ -29,7 +29,7 @@ class DailyReportMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Daily Report Mail',
+            subject: 'Daily Report Mail : ' . $this->insert->employe->emp_name,
         );
     }
 
@@ -39,7 +39,7 @@ class DailyReportMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'employe.dailyreport.sendemail',
         );
     }
 

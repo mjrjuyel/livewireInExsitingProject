@@ -112,6 +112,7 @@
                                                     <option class="text-warning" value="1" @if($view->status == 1) Selected @endif> Pending</option>
                                                     <option class="text-primary" value="2" @if($view->status == 2) Selected @endif> Approved</option>
                                                     <option class="text-danger" value="3" @if($view->status == 3) Selected @endif> Cancle</option>
+                                                    <option class="text-info" value="4" @if($view->status == 4) Selected @endif> Feedback</option>
                                                 </select>
                                             </div>
 

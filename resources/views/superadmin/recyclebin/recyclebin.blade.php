@@ -41,6 +41,24 @@
             </div>
         </div>
 
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    @if($dailyReport <= 0)
+                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                        <h6 class="text-muted text-uppercase mt-0">Total Deleted Report</h6>
+                        <h3 class="my-3" data-plugin="counterup">0</h3>
+                    @else
+                    <a href="{{route('superadmin.recycle.dailyreport')}}">
+                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                        <h6 class="text-muted text-uppercase mt-0">Total Deleted Reports</h6>
+                        <h3 class="my-3" data-plugin="counterup">{{$dailyReport}}</h3>
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+
         {{-- <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">

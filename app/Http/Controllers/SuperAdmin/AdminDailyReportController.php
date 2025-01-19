@@ -41,15 +41,43 @@ class AdminDailyReportController extends Controller
 
     // soft Delete
     public function softDelete(Request $request){
-        $slug = $request['slug'];
-        $softdelete = DailyReport::where('status',1)->where('slug',$slug)->update([
+        $slug = $request['id'];
+        $softdelete = DailyReport::where('status',1)->where('id',$slug)->update([
             'status'=>0,
             'editor'=>Auth::user()->id,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
         if($softdelete){
             Session::flash('error','Moved Into Trash !');
             return redirect()->back();
+        }
+    }
+
+    public function restore(Request $request){
+        $id = $request['id'];
+
+        $store = DailyReport::where('id',$id)->update([
+            'status'=>1,
+            'editor'=>Auth::user()->id,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+
+        if($store){
+            Session::flash('success','Daily Report Restore!');
+            return redirect()->back();
+        }
+    }
+    
+    public function delete(Request $request){
+
+        $id = $request['id'];
+
+        $delete = DailyReport::where('id',$id)->first();
+        $delete->delete();
+        if($delete){
+
+        Session::flash('success','Daily Report Deleted!');
+        return redirect()->back();
         }
     }
 }

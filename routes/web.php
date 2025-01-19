@@ -107,6 +107,7 @@ Route::middleware(['auth','verified'])->group(function(){
          Route::middleware('is_superadmin')->group(function(){
                 Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
                 Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
+                Route::get('/superadmin/recycle/dailyreport',[RecyclebinController::class,'dailyreport'])->name('superadmin.recycle.dailyreport');
                 // Add Admin 
                 Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
          });
@@ -224,6 +225,8 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/dailyreport/view/{slug}',[AdminDailyReportController::class,'view'])->name('superadmin.dailyreport.view');
                 Route::post('/superadmin/dailyreport/update',[AdminDailyReportController::class,'update'])->name('superadmin.dailyreport.update');
                 Route::post('/superadmin/dailyreport/softdelete',[AdminDailyReportController::class,'softDelete'])->name('superadmin.dailyreport.softdelete');
+                Route::post('/superadmin/dailyreport/restore',[AdminDailyReportController::class,'restore'])->name('superadmin.dailyreport.restore');
+                Route::delete('/superadmin/dailyreport/delete',[AdminDailyReportController::class,'delete'])->name('superadmin.dailyreport.delete');
                 Route::get('/superadmin/dailyreport/searchname',[AdminDailyReportController::class,'searchName'])->name('superadmin.dailyreport.searchname');
                 
                 // Leave Setting status

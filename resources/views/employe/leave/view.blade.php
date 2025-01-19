@@ -190,12 +190,15 @@
                                 <tr>
                                     <td>Created At</td>
                                     <td>:</td>
-                                    <td>{{$view->created_at->format('d/M/y')}}</td>
+                                    <td>{{formatDate($view->created_at)}}</td>
                                 </tr>
                                 <tr>
                                     <td>Edited At</td>
                                     <td>:</td>
-                                    <td>{{optional($view->updated_at)->format('d-m-Y | h:i:s A')}}</td>
+                                    <td>@if($view->updated_at)
+                                    {{$view->updated_at}}
+                                    @endif
+                                    </td>
                                 </tr>
                             </table>
 

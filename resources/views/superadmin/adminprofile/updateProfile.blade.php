@@ -148,7 +148,7 @@
                                         <div class="col-5">
 
                                             <div class="row mb-3">
-                                                <div class="col-12">
+                                                <div class="col-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Image<span class="text-danger">*</span>:</label>
                                                         <input type="file" class="dropify" name="image">
@@ -157,7 +157,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     @if($pass->image != '')
-                                                    <img src="{{ asset('uploads/adminprofile/'.$pass->image) }}" class="img-fluid" style="width:100%; height:auto; object-fit:cover;">
+                                                    <img src="{{ asset('uploads/adminprofile/'.$pass->image) }}" class="img-fluid" style="width:100%; height:auto; object-fit:cover; border-radius:10px;">
                                                     @endif
                                                 </div>
                                             </div>

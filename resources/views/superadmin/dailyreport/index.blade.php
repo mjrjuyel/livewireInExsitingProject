@@ -111,37 +111,14 @@
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
-                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
-                                                        </i>Delete</a></li>
+                                                <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                        </i>Delete</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
 
-                                {{--Soft Delete Modal --}}
-                                <div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content bg-warning">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                            </div>
-                                            <form action="{{route('superadmin.dailyreport.softdelete')}}" method="post">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                                                    <input type="hidden" name="slug" value="{{$data->slug}}">
-                                                </div>
-                                                
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
-                                                </div>
-                                            </form>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div>
                                 @endforeach
 
 
@@ -157,6 +134,31 @@
 </div>
 
 </div> <!-- container -->
+
+{{-- delete modal --}}
+{{-- soft delete MOdal  --}}
+<div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('superadmin.dailyreport.softdelete')}}" method="post">
+                @csrf
+                <div class="modal-body modal_body">
+                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                    <input type="text" name="id" id="modal_id" value="">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 @endsection
 
 @section('js')

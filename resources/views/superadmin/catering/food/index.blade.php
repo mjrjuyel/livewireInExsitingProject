@@ -189,6 +189,13 @@
 
                         <div class="text-primary">Current Month : {{$parseMonth->format('F')}}</div>
                         <div class="text-primary">Current Year : {{$parseMonth->format('Y')}}</div>
+                        <div class="d-print-none">
+                        <div class="float-end">
+                             <h4>Print</h4>
+                            <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->

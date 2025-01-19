@@ -76,12 +76,12 @@
 
                                     <td>
                                       @foreach( $bankName->employe as $employe)
-                                          <button class="btn btn-info">{{$employe->emp_name}}</button>
+                                          <button class="btn btn-info mt-1">{{$employe->emp_name}}</button>
                                         @endforeach
                                     </td>
                                     <td>
                                         @foreach( $bankName->bankbranch as $branch)
-                                          <button class="btn btn-info">{{$branch->bank_branch_name}}</button>
+                                          <button class="btn btn-info mt-1">{{$branch->bank_branch_name}}</button>
                                         @endforeach
                                     </td>
 

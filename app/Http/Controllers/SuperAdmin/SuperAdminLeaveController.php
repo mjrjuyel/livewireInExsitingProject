@@ -96,7 +96,7 @@ class SuperAdminLeaveController extends Controller
                     'status'=>$request['status'],
                     'comments'=>$request['comment'],
                     'editor'=>Auth::user()->id,
-                    'updated_at'=>Carbon::now(),
+                    'updated_at'=>Carbon::now('UTC'),
                 ]);
 
                 if($update){
@@ -109,7 +109,7 @@ class SuperAdminLeaveController extends Controller
                     'status'=>$request['status'],
                     'comments'=>$request['comment'],
                     'editor'=>Auth::user()->id,
-                    'updated_at'=>Carbon::now(),
+                    'updated_at'=>Carbon::now('UTC'),
                 ]);
 
                 if($update){

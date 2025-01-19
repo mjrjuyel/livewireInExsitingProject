@@ -138,7 +138,7 @@ class AdminEmployeController extends Controller
             'emp_join'=>$request['join'],
             'password'=>Hash::make($request['pass']),
             'emp_creator'=>Auth::user()->id,
-            'created_at'=>Carbon::now(),
+            'created_at'=>Carbon::now('UTC'),
         ]);
 
         if($insert){
@@ -231,13 +231,6 @@ class AdminEmployeController extends Controller
                 ->symbols()],
                 'repass' => 'required | same:pass',
             ]);
-    
-            // if (!Hash::check($request->oldpass,auth('employee')->user()->password)) {
-            //     return back()->withErrors(['oldpass' => 'Incorrect current password.']);
-            // }
-            // auth('employee')->user()->update([
-            //     'password' => Hash::make($request->newpass),
-            // ]);
             Employee::where('id',$id)->update([
                 'password'=>Hash::make($request['pass']),
             ]);
@@ -328,7 +321,7 @@ class AdminEmployeController extends Controller
             'emp_join'=>$request['join'],
             'emp_resign'=>$request['resign'],
             'emp_editor'=>Auth::user()->id,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($update){
@@ -372,7 +365,7 @@ class AdminEmployeController extends Controller
             'name'=>$request['name'],
             'email'=>$request['email'],
             'slug'=>$slug,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
         
         // If Password Is changed
@@ -404,7 +397,7 @@ class AdminEmployeController extends Controller
         $softdel = Employee::where('id',$id)->update([
             'emp_status'=>0,
             'emp_editor'=>Auth::user()->id,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($softdel){
@@ -419,7 +412,7 @@ class AdminEmployeController extends Controller
         $softdel = Employee::where('id',$id)->update([
             'emp_status'=>1,
             'emp_editor'=>Auth::user()->id,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($softdel){

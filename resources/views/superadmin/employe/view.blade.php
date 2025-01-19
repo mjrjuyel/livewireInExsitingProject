@@ -251,12 +251,14 @@
                                 <tr>
                                     <td>Created At</td>
                                     <td>:</td>
-                                    <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
+                                    <td>{{formatDate($view->created_at)}}</td>
                                 </tr>
                                 <tr>
                                     <td>Edited At</td>
                                     <td>:</td>
-                                    <td>{{optional($view->updated_at)->format('d-M-Y | h:i:s A')}}</td>
+                                    <td>@if($view->updated_at)
+                                    {{formatDate($view->updated_at)}}
+                                    @endif</td>
                                 </tr>
                             </table>
                         </div>
@@ -301,7 +303,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Gender : {{$view->gender}}</li>
-                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob}}</li>
+                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob->format('d-M-Y')}}</li>
                                     <li class="list-group-item">Marriage Status : {{$view->marriage}}</li>
                                     <li class="list-group-item">Personal Number : <a href="tel:{{$view->emp_phone}}">{{$view->emp_phone}}</a></li>
                                     @if($view->emp_phone2 != '')
@@ -325,13 +327,13 @@
 
                                     @if($view->emp_id_type == 'national_id')
                                     <li class="list-group-item">Identity Type : National Id</li>
-                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    <li class="list-group-item">Id Number : {{$view->emp_id_number}}</li>
                                     @elseif($view->emp_id_type == 'ssn')
                                     <li class="list-group-item">Identity Type : Social Security Number</li>
-                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    <li class="list-group-item">Id Number : {{$view->emp_id_number}}</li>
                                     @elseif($view->emp_id_type == 'driver_license')
                                     <li class="list-group-item">Identity Type : Driver License</li>
-                                    <li class="list-group-item">Who : {{$view->emp_id_number}}</li>
+                                    <li class="list-group-item">Id Number : {{$view->emp_id_number}}</li>
                                     @endif
 
                                 </ul>
@@ -359,7 +361,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Last Academic Degree : {{$view->emp_rec_degree}}</li>
-                                    <li class="list-group-item">Passing Year Degree : {{$view->emp_rec_year}}</li>
+                                    <li class="list-group-item">Passing Year: {{$view->emp_rec_year}}</li>
                                 </ul>
                             </div>
                         </div>

@@ -36,7 +36,7 @@ class BankBranchController extends Controller
             'bank_branch_name'=>$request['name'],
             'bank_id'=>$request['bank_id'],
             'bank_branch_creator'=>Auth::user()->id,
-            'created_at'=>Carbon::now(),
+            'created_at'=>Carbon::now('UTC'),
         ]);
 
         if($insert){
@@ -66,7 +66,7 @@ class BankBranchController extends Controller
             'bank_id'=>$request['bank_id'],
             'bank_branch_name'=>$request['name'],
             'bank_branch_editor'=>Auth::user()->id,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($update){

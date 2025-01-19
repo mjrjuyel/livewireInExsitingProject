@@ -6,7 +6,7 @@ $(document).ready(function() {
      //Soft Delete
      $(document).on("click", "#softDel", function() {
         let deleteID = $(this).data('id');
-       
+    //    alert(deleteID);
         $(".modal_body #modal_id").val(deleteID);
     });
     //    Restore Id

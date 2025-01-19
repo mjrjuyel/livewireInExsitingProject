@@ -56,7 +56,7 @@
                                     <td>:</td>
                                     <td>
                                        @foreach( $view->employe as $employe)
-                                          <button class="btn btn-info">{{$employe->emp_name}}</button>
+                                          <button class="btn btn-info mt-1">{{$employe->emp_name}}</button>
                                         @endforeach
                                     </td>
                                 </tr>

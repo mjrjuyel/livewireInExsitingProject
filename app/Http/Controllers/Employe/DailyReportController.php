@@ -58,12 +58,12 @@ class DailyReportController extends Controller
                         'submit_date'=>$request['submit_date'],
                         'detail'=>$request['detail'],
                         'slug'=>'report-'.uniqId(),
-                        'created_at'=>Carbon::now(),
+                        'created_at'=>Carbon::now('UTC'),
                     ]);
 
-                    // $email = AdminEmail::where('id',1)->first();
-                    //                 // try {
-                    // Mail::to($email->email)->send(new DailyReportMail($insert));
+                    $email = AdminEmail::where('id',1)->first();
+                                    // try {
+                    Mail::to($email->email)->send(new DailyReportMail($insert));
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
@@ -102,7 +102,7 @@ class DailyReportController extends Controller
         // return $request->all();
         $insert= DailyReport::where('id',$id)->update([
             'detail'=>$request['detail'],
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
         
         if($insert){

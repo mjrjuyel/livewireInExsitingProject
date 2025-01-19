@@ -61,7 +61,7 @@
                                     <td>:</td>
                                     <td>
                                        @foreach( $view->employe as $employe)
-                                          <button class="btn btn-info">{{$employe->emp_name}}</button>
+                                          <button class="btn btn-info mt-1">{{$employe->emp_name}}</button>
                                         @endforeach
                                     </td>
                                 </tr>
@@ -78,12 +78,16 @@
                                 <tr>
                                     <td>Bank BranchCreated At</td>
                                     <td>:</td>
-                                    <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
+                                    <td>{{formatDate($view->created_at)}}</td>
                                 </tr>
                                 <tr>
                                     <td>Bank BranchEdited At</td>
                                     <td>:</td>
-                                    <td>{{optional($view->updated_at)->format('d-m-Y | h:i:s A')}}</td>
+                                    <td>
+                                        @if($view->updated_at)
+                                         {{formatDate($view->created_at)}}
+                                         @endif
+                                    </td>
                                 </tr>
                             </table>
 

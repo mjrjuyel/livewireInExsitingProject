@@ -83,7 +83,7 @@
 
                                     <td>
                                         @foreach($desig->employe as $employe)
-                                        <button type="button" class="btn btn-dark">
+                                        <button type="button" class="btn btn-dark mt-1">
                                             {{optional($employe)->emp_name}}
                                         </button>
                                         @endforeach

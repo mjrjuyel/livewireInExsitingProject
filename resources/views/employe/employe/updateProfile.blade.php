@@ -147,7 +147,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Email<span class="text-danger">*</span> :</label>
-                                    <input type="email" class="form-control" name="email" value="{{ $edit->email }}" placeholder="Enter email">
+                                    <input type="email" class="form-control" name="email" value="{{ $edit->email ?? old('email') }}" placeholder="Enter email">
                                     @error('email')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -183,9 +183,9 @@
                                         @enderror
                                     </div>
                                     <div class="col-6">
-                                        <div class="mb-3">
+                                        <div class="mb-5">
                                             @if ($edit->emp_image != '')
-                                            <img src="{{ asset('uploads/employe/profile/'.$edit->emp_image) }}" class="img-fluid" alt="" style="width:100px height:80px; object-fit:cover;">
+                                            <img src="{{ asset('uploads/employe/profile/'.$edit->emp_image) }}" class="img-fluid" alt="" style="width:80px height:80px; object-fit:cover; border-radius:10px;">
                                             @endif
                                         </div>
                                     </div>
@@ -210,7 +210,7 @@
                                         <div class="form-group clearfix">
                                             <label>Email : <span class="text-info">(Alternate Email)</span></label>
                                             <div>
-                                                <input class="form-control" value="{{$edit->email2 }}" name="email2" type="email1">
+                                                <input class="form-control" value="{{$edit->email2 ?? old('email2') }}" name="email2" type="email1">
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@
                                         <div class="form-group clearfix">
                                             <label>Phone Number<span>(optional)</span></label>
                                             <div>
-                                                <input name="phone2" value="{{$edit->emp_phone2 }}" type="number" class="form-control">
+                                                <input name="phone2" value="{{$edit->emp_phone2 ?? old('phone2') }}" type="number" class="form-control">
                                             </div>
                                         </div>
                                     </div>

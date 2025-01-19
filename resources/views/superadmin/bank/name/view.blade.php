@@ -30,20 +30,28 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i
-                                                class="mdi mdi-bank header_icon"></i>{{$view->bank_name}}
+                                        <h3 class="card_header"><i class="mdi mdi-bank header_icon"></i>{{$view->bank_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.bank_name')}}"
-                                            class="btn btn-bg btn-primary btn_header ">
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.bank_name')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-bank btn_icon"></i>All Bank Name </a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('superadmin.bank_name.edit',Crypt::encrypt($view->id))}}"
-                                            class="btn btn-bg btn-primary btn_header"><i
-                                                class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
+                                    <div class="col-md-2"><a href="{{route('superadmin.bank_name.edit',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header"><i class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>
+
+                            @php
+                            use Carbon\Carbon;
+                            // Get the UTC time as a string
+                           if($view->updated_at != ''){
+                             $createdAt = Carbon::createFromFormat('Y-m-d h:i:s', $view->updated_at, 'UTC');
+                            // Now convert it to the user's timezone
+                            $createdAtInUserTimezone = $createdAt->timezone(config('app.timezone'));
+                            // Output the formatted time
+                            echo $createdAtInUserTimezone->format('Y-m-d h:i:s A');
+                           }
+                            @endphp
 
                             <table class="table border view_table">
                                 <tr>
@@ -56,7 +64,7 @@
                                     <td>Branches </td>
                                     <td>:</td>
                                     <td>@foreach( $view->bankbranch as $branch)
-                                          <button class="btn btn-info">{{$branch->bank_branch_name}}</button>
+                                        <button class="btn btn-info mt-1">{{$branch->bank_branch_name}}</button>
                                         @endforeach</td>
                                 </tr>
 
@@ -64,8 +72,8 @@
                                     <td>Under The Branche Have</td>
                                     <td>:</td>
                                     <td>
-                                       @foreach( $view->employe as $employe)
-                                          <button class="btn btn-info">{{$employe->emp_name}}</button>
+                                        @foreach( $view->employe as $employe)
+                                        <button class="btn btn-info mt-1">{{$employe->emp_name}}</button>
                                         @endforeach
                                     </td>
                                 </tr>
@@ -82,12 +90,15 @@
                                 <tr>
                                     <td>Bank Name Created At</td>
                                     <td>:</td>
-                                    <td>{{$view->created_at->format('d-M-Y | h:i:s A')}}</td>
+                                    <td>{{ formatDate($view->created_at) }}</td>
                                 </tr>
                                 <tr>
                                     <td>Bank Name Edited At</td>
                                     <td>:</td>
-                                    <td>{{optional($view->updated_at)->format('d-m-Y | h:i:s A')}}</td>
+                                    <td>@if($view->updated_at)
+                                     {{ formatDate($view->updated_at)}}
+                                     @endif
+                                    </td>
                                 </tr>
                             </table>
 

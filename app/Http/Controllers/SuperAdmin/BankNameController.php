@@ -32,7 +32,7 @@ class BankNameController extends Controller
         $insert=BankName::create([
             'bank_name'=>$request['name'],
             'bank_creator'=>Auth::user()->id,
-            'created_at'=>Carbon::now(),
+            'created_at'=>Carbon::now('UTC'),
         ]);
 
         if($insert){
@@ -59,7 +59,7 @@ class BankNameController extends Controller
         $update = BankName::where('id',$id)->update([
             'bank_name'=>$request['name'],
             'bank_editor'=>Auth::user()->id,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($update){

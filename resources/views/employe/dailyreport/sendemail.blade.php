@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Daily Report of {{$insert['submit_id']->employe->emp_name}}</title>
+    <title>Daily Report of {{$insert['employe']->emp_name}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,8 +93,10 @@
         </div>
         <div class="email-body">
             <p><strong>Employee: {{$insert['employe']->emp_name}}</strong></p>
-            <p><strong>Employee: {{$insert['submit_date']->format('d-M-Y')}}</strong></p>
-            <p><strong>Employee: {{$insert['detail']}}</strong></p>
+
+            <p><strong>Submit Date: {{formatDate($insert['submit_date'])}}</strong></p>
+
+            <p><strong>Report Detail: {{$insert['detail']}}</strong></p>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} All rights reserved.
