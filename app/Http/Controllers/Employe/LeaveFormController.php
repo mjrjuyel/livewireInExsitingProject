@@ -199,9 +199,12 @@ class LeaveFormController extends Controller
             
                                     // Send Mail to Admin
                                     // Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
-                                    $email = AdminEmail::where('id',1)->first();
+                                    $getEmail = AdminEmail::where('id',1)->first();
+                                    $explode = explode(',',$getEmail->email);
                                     // try {
-                                    Mail::to($email->email)->send(new LeaveMailToAdmin($insert));
+                                    foreach($explode as $email){
+                                        Mail::to($email)->send(new LeaveMailToAdmin($insert));
+                                    }
                                         // return "Email sent successfully!";
                                     // } catch (Exception $e) {
                                     //     return "Email failed to send. Error: " . $e->getMessage();
