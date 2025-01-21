@@ -8,6 +8,8 @@ use App\Models\Leave;  // Use your report model
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DailyReportSummaryMail;
 use App\Models\AdminEmail;
+use App\Models\CateringFood;
+use App\Models\CateringPayment;
 
 class SendDailyReportSummary extends Command
 {
@@ -26,7 +28,10 @@ class SendDailyReportSummary extends Command
 
         $totalLeaves = Leave::whereDate('created_at', $date)->count();
         $totalLeaveEmploye = Leave::whereDate('created_at', $date)->distinct('emp_id')->count();
-        
+
+        $cateringFoood = CateringFood::whereDate('created_at',$date)->first();
+        $cateringPayment = CateringPayment::whereDate('created_at',$date)->first();  
+
         $adminEmail = AdminEmail::first();  // Replace with dynamic config or database value
         $email = explode(',',$adminEmail->email);
         $summaryData = [
@@ -36,6 +41,11 @@ class SendDailyReportSummary extends Command
 
             'totalLeaves' => $totalLeaves,
             'totalLeaveEmploye' => $totalLeaveEmploye,
+            // catring Food 
+            'total_order' => $cateringFoood && $cateringFoood->quantity ? $cateringFoood->quantity : 'No Order Today',
+            'total_cost' => $cateringFoood && $cateringFoood->total_cost ? $cateringFoood->total_cost : 'Zero Cost',
+
+            'today_payment' => $cateringPayment && $cateringPayment->quantity ? $cateringPayment->quantity : 'No Payment Today',
         ];
 
         // Send email

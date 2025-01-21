@@ -79,7 +79,8 @@
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Submit By</th>
-                                    <th class="text-center">Submit Date</th>
+                                    <th class="text-center">Worked Date</th>
+                                    <th class="text-center">Submitted Date</th>
                                     <th class="text-center">Text</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -95,6 +96,10 @@
 
                                     <td>
                                         {{ $data->submit_date->format('d-M-Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ $data->created_at->format('d-M-Y') }}
                                     </td>
 
 

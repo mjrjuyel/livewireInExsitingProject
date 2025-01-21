@@ -28,7 +28,7 @@ class DailyReportSummaryMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Daily Report Summary Mail',
+            subject: 'Daily Report Summary Mail From ' . config('app.name','Laravel'),
         );
     }
 

@@ -121,26 +121,18 @@
                         $date = now()->format('Y-m-d');
                         $totalReports = App\Models\DailyReport::whereDate('created_at', $date)->count();
                         $admin = App\Models\AdminEmail::first();
-
-                        echo $admin;
-                        
                     @endphp
-                    {{$totalReports}}
-                    <form action="" method="post" enctype="">
+                    
+                    <form action="{{route('superadmin.activeDailyReportMail')}}" method="post" enctype="">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 text-end">
                                 <div class="row mb-3">
-                                    <h6>Basic</h6>
                                     <p class="sub-header">
                                         Yes or No?
                                     </p>
                                     <div class="switchery-demo">
-                                       @if($setting->email_report != '')
-                                       <input type="checkbox" value="1" data-id="{{$setting->email_report}}" id="active_feature" data-plugin="switchery" data-color="#3db9dc" checked/>
-                                       @else
-                                       <input type="checkbox" value="1" data-id="{{$setting->email_report}}" id="active_feature" data-plugin="switchery" data-color="#3db9dc"  />
-                                       @endif
+                                       <input type="checkbox" name="dailyMail" value="1" data-plugin="switchery" data-color="#3db9dc" @if($setting->email_report == 1) Checked @endif/>
                                     </div>
                                 </div>
                             </div>
@@ -164,22 +156,32 @@
 <!--end Footer -->
 <script>
      $('body').on("change", "#active_feature", function () {
-       var Id = $(this).data('id');
-       alert(Id);
+       var Id = $(this).val();
+      $.ajax({
+        url: "{{url('/superadmin/activeDailyReportMail/')}}"+ "/" + Id,
+        type: "get",
+            success: function (response) {
+                console.log("Work");
+                {{-- Swal.fire({
+                    icon: 'success',
+                    title: 'Updated!',
+                    text: 'Cart updated successfully!',
+                    showConfirmButton: true,
+                    timer: 1500 // Automatically close after 1.5 seconds
+                }); --}}
+                location.reload();
+            }
+       })
     });
 </script>
 @endsection
 
 @section('js')
 
-<script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
 @endsection

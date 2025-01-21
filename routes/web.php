@@ -98,10 +98,7 @@ Route::post('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'
 // Super Admin Dashboard
 
 Route::middleware(['auth','verified'])->group(function(){
-
-
         Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
-
 
         // Only SuperAdmin Can access These Route ******************
          Route::middleware('is_superadmin')->group(function(){
@@ -244,6 +241,8 @@ Route::middleware(['auth','verified'])->group(function(){
                 //Email  Controller
                 Route::get('/superadmin/email',[AdminEmailController::class,'index'])->name('superadmin.email');
                 Route::post('/superadmin/email/update',[AdminEmailController::class,'update'])->name('superadmin.email.update');
+
+                Route::post('/superadmin/activeDailyReportMail',[AdminEmailController::class,'dailyMailActive'])->name('superadmin.activeDailyReportMail');
                 
     });
 

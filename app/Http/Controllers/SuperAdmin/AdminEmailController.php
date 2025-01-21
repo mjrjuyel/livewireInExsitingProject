@@ -35,4 +35,24 @@ class AdminEmailController extends Controller
             return redirect()->back();
         }
     }
+
+    public function dailyMailActive(Request $request){
+       
+            $update = AdminEmail::where('id',1)->update([
+                'email_report'=>$request->dailyMail,
+                'editor'=>Auth::user()->id,
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+            $active = AdminEmail::first();
+            if($active->email_report != ''){
+                Session::flash('success','Daily Reports Email Receive On Admin Gmail Activated');
+                return redirect()->back();
+            }else{
+                Session::flash('success','Daily Reports Email Receive On Admin Gmail Deactivated');
+                return redirect()->back();
+            }
+
+            
+        }
+        
 }
