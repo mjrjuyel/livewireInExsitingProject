@@ -101,11 +101,20 @@
                                             @foreach($leaveType as $type)
                                             <option value="{{$type->id}}">{{$type->type_title}}</option>
                                             @endforeach
+                                            <option value="0" id="other_reason">Other</option>
                                         </select>
                                         @error('leave_type')
                                         <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                         @enderror
                                     </div>
+
+                                    
+                                    <div class="mb-3 leave_type" style="display:none;">
+                                        <label class="form-label text-danger">Write Short Type<span class="text-danger"> : -<span>Leave Type Other Still On The Process(Dont Select)</span></span>:
+                                        </label>
+                                        <input type="text" disabled name="others" class="form-control" placeholder="Personal Reason">
+                                    </div>
+
                                     <div class="mb-3">
                                         <label class="form-label">Start From<span class="text-danger">* </span>:
                                         </label>
@@ -151,6 +160,19 @@
 </div> <!-- container -->
 
 <!--end Footer -->
+<script>
+  $(document).ready(function(){
+    
+    $('.leave_type').hide();
+    $('body').on('change', 'select[name="leave_type"]', function() {
+        if ($(this).val() === "0") {
+            $('.leave_type').show();
+        } else {
+            $('.leave_type').hide(); 
+        }
+    });
+  });
+</script>
 @endsection
 @section('js')
 <script src="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.js"></script>

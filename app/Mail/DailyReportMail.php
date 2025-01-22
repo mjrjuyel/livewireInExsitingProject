@@ -21,6 +21,7 @@ class DailyReportMail extends Mailable
     public function __construct($insert)
     {
         $this->insert = $insert;
+        
     }
 
     /**
