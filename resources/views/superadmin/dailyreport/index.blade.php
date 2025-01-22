@@ -99,7 +99,7 @@
                                     </td>
 
                                     <td>
-                                        {{ $data->created_at->format('d-M-Y | h:i:s A') }}
+                                        {{ formatDate($data->created_at) }}
                                     </td>
 
 
