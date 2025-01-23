@@ -21,7 +21,7 @@ class SuperAdminLeaveController extends Controller
 {
     //  All Role 
     public function index(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->latest('id')->get();
+        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->orderBy('created_at','DESC')->get();
         // return $alldata;
         return view('superadmin.leave.index',compact('alldata'));
     }

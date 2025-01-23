@@ -2,27 +2,53 @@
 @section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
-swal({
-    title: "Success!",
-    text: "{{ Session::get('success') }}",
-    icon: "success",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Success!"
+        , text: "{{ Session::get('success') }}"
+        , icon: "success"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 @if(Session::has('error'))
 <script type="text/javascript">
-swal({
-    title: "Opps!",
-    text: "{{ Session::get('error') }}",
-    icon: "error",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Opps!"
+        , text: "{{ Session::get('error') }}"
+        , icon: "error"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        @if(session('toast'))
+        toastr.options = {
+            "closeButton": true
+            , "debug": false
+            , "newestOnTop": false
+            , "progressBar": false
+            , "positionClass": "toast-bottom-left"
+            , "preventDuplicates": false
+            , "onclick": null
+            , "showDuration": "300"
+            , "hideDuration": "1000"
+            , "timeOut": "5000"
+            , "extendedTimeOut": "1000"
+            , "showEasing": "swing"
+            , "hideEasing": "linear"
+            , "showMethod": "fadeIn"
+            , "hideMethod": "fadeOut"
+        }
+        toastr["{{ session('toast.type') }}"]("{{ session('toast.message') }}");
+        @endif
+    });
 
+</script>
 <div class="page-container">
     <div class="page-title-box">
 
@@ -56,8 +82,7 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.bank_name')}}"
-                                    class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-2 text-end"><a href="{{route('superadmin.bank_name')}}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Bank Name</a>
                             </div>
                         </div>
@@ -70,8 +95,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Bank Name Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="name" value="{{old('name')}}"
-                                        placeholder="Enter Bank Name">
+                                    <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Enter Bank Name">
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror

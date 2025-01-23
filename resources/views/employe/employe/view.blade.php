@@ -164,6 +164,18 @@
                         <div class="col-4">
                             <div class="card">
                                 <div class="card-body">
+                                    <h5 class="card-title">Evaluation</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Evalution Start Date : {{$view->eva_start_date}}</li>
+                                    <li class="list-group-item">Evaluation End Date: {{$view->eva_end_date}}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
                                     <h5 class="card-title">Contact Information</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">

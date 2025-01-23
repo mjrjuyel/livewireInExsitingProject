@@ -106,6 +106,10 @@
                                         <button type="button" class="btn btn-warning ">
                                             Suspend
                                         </button>
+                                        @elseif($employe->emp_status == 3)
+                                        <button type="button" class="btn btn-danger ">
+                                            Resigned
+                                        </button>
                                         @elseif($employe->emp_status == 0)
                                         <button type="button" class="btn btn-danger">
                                             Recycle Bin

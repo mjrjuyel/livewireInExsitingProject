@@ -210,8 +210,8 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label>Confirm  Password <span class="text-danger">*</span> : </label>
-                                            <input type="password" name="repass"  class="form-control">
+                                            <label>Confirm Password <span class="text-danger">*</span> : </label>
+                                            <input type="password" name="repass" class="form-control">
                                             @error('repass')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -395,15 +395,38 @@
 
                                     <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Resign Date :</label>
-                                            <input type="date" class="form-control" name="resign" value="{{ $edit->emp_join }}" placeholder="Resign Date">
-                                            @error('join')
-                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                            @enderror
+                                            <label class="form-label">Resign Date : {{optional($edit->emp_resign)->format('d-M-Y')}}</label>
+                                            <input name="resign" type="date" class="form-control" value="{{$edit->emp_resign}}">
+                                            
                                         </div>
                                     </div>
                                 </div><!-- end row -->
 
+                            </section>
+
+                            <h3 class="text-info mt-5">Joinig Evaluation</h3>
+                            <hr class="text-info">
+                            <section>
+                                <div class="row">
+                                    <div class="col-sm-4 offset-sm-2">
+                                        <div class="form-group clearfix">
+                                            <label>Evaluation Start Date : (optional)</label>
+                                            <input name="eva_start_date" type="date" class="form-control" value="{{$edit->eva_start_date}}">
+                                            @error('eva_start_date')
+                                            <small class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group clearfix">
+                                            <label>Evaluation End Date <span class="text-danger">*</span> :</label>
+                                            <input name="eva_end_date" type="date" class="form-control" value="{{$edit->eva_end_date}}">
+                                            @error('eva_end_date')
+                                            <small class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div><!-- end row -->
                             </section>
 
                             <h3 class="text-info mt-5">Identy Verification :-</h3>

@@ -36,7 +36,11 @@ class BankNameController extends Controller
         ]);
 
         if($insert){
-            Session::flash('success','New Bank Insert This Application');
+             // Pass a success notification
+                session()->flash('toast', [
+                    'type' => 'info', // Options: success, error, info, warning
+                    'message' => 'New Bank Add'
+                ]);
             return redirect()->back();
         }
     }

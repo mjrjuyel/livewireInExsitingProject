@@ -15,9 +15,9 @@ use Auth;
 class AdminDailyReportController extends Controller
 {
     public function index(){
-        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('submit_date','DESC')->get();
+        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->get();
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
-        // return $name;
+        // return $alldata;
         return view('superadmin.dailyreport.index',compact(['alldata','name']));
     }
 
@@ -32,7 +32,7 @@ class AdminDailyReportController extends Controller
     public function searchName(Request $request){
         $id = $request->id;
         $recentName = Employee::where('id',$id)->first();
-        $alldata = DailyReport::where('submit_by',$id)->where('status',1)->get();
+        $alldata = DailyReport::where('submit_by',$id)->where('status',1)->orderBy('created_at','DESC')->get();
 
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
         // return $recentName;

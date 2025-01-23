@@ -162,14 +162,14 @@
                                                             <legend class="col-form-label col-sm-6 pt-0">Maritial Status <span class="text-danger">*</span> :</legend>
                                                             <div class="col-sm-6">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" id="marriage1" name="marriage" {{old('marriage') == 'Married' ? 'Checked' : ''}}  value="Married">
+                                                                    <input class="form-check-input" type="radio" id="marriage1" name="marriage" {{old('marriage') == 'Married' ? 'Checked' : ''}} value="Married">
                                                                     <label for="marriage1" class="form-check-label">
                                                                         Married
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" id="marriage2" type="radio" name="marriage" value="Single" {{old('marriage') == 'Single' ? 'Checked' : ''}} >
-                                                                    <label for="marriage2" class="form-check-label" >
+                                                                    <input class="form-check-input" id="marriage2" type="radio" name="marriage" value="Single" {{old('marriage') == 'Single' ? 'Checked' : ''}}>
+                                                                    <label for="marriage2" class="form-check-label">
                                                                         Single
                                                                     </label>
                                                                 </div>
@@ -196,7 +196,7 @@
 
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
-                                                            <label >Confirm Password <span class="text-danger">*</span> :</label>
+                                                            <label>Confirm Password <span class="text-danger">*</span> :</label>
                                                             <input name="repass" type="password" class="form-control">
                                                             @error('repass')
                                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -340,7 +340,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                     
+
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
                                                             <label class="form-label">Designation <span class="text-danger">*</span> :</label>
@@ -357,11 +357,11 @@
                                                             <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
                                                             <select type="text" class="form-control" name="empType">
                                                                 <option value="">Select One</option>
-                                                                <option value="Full Time"  {{old('empType') == 'Full Time' ? 'Selected' : '' }}>Full Time </option>
-                                                                <option value="Part Time"  {{old('empType') == 'Part Time' ? 'Selected' : '' }}>Part Time</option>
-                                                                <option value="Freelance"  {{old('empType') == 'Freelance' ? 'Selected' : '' }}>Freelance</option>
-                                                                <option value="Contract"  {{old('empType') == 'Contract' ? 'Selected' : '' }}>Contract</option>
-                                                                <option value="Internship"  {{old('empType') == 'Internship' ? 'Selected' : '' }}>Internship</option>
+                                                                <option value="Full Time" {{old('empType') == 'Full Time' ? 'Selected' : '' }}>Full Time </option>
+                                                                <option value="Part Time" {{old('empType') == 'Part Time' ? 'Selected' : '' }}>Part Time</option>
+                                                                <option value="Freelance" {{old('empType') == 'Freelance' ? 'Selected' : '' }}>Freelance</option>
+                                                                <option value="Contract" {{old('empType') == 'Contract' ? 'Selected' : '' }}>Contract</option>
+                                                                <option value="Internship" {{old('empType') == 'Internship' ? 'Selected' : '' }}>Internship</option>
                                                                 <option value="Remote" {{old('empType') == 'Remote' ? 'Selected' : '' }}>Remote</option>
                                                             </select>
                                                             @error('empType')
@@ -399,6 +399,28 @@
 
                                             </section>
 
+                                            <h3 class="text-info mt-5">Joinig Evaluation</h3>
+                                            <hr class="text-info">
+                                            <section>
+                                                <div class="row">
+                                                    <div class="col-sm-4 offset-sm-2">
+                                                        <div class="form-group clearfix">
+                                                            <label>Evaluation Start Date : (optional)</label>
+                                                            <input name="eva_start_date" type="date" class="form-control" value="{{old('eva_start_date')}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group clearfix">
+                                                            <label>Evaluation End Date <span class="text-danger">*</span> :</label>
+                                                            <input name="eva_end_date" type="date" class="form-control" value="{{old('eva_end_date')}}">
+                                                            @error('eva_end_date')
+                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end row -->
+                                            </section>
+
                                             <h3 class="text-info mt-5">Identy Verification :-</h3>
                                             <hr class="text-info">
                                             <section>
@@ -413,7 +435,7 @@
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" id="gridRadios2" name="id_type" value="ssn" onclick="showInput('ssn_input')" {{old('id_type') == 'ssn' ? 'Checked' : ''}}>
-                                                            <label class="form-check-label" for="gridRadios2" >
+                                                            <label class="form-check-label" for="gridRadios2">
                                                                 Social Security Number (SSN) (or local equivalent)
                                                             </label>
                                                         </div>
@@ -503,7 +525,7 @@
                                                 <label for="userName2">Bank Name <span class="text-danger">*</span> :</label>
                                                 <div>
                                                     <select class="required form-control" name="bankName" type="text" id="bankName">
-                                                    <option value="">Select a Bank</option>
+                                                        <option value="">Select a Bank</option>
                                                         @foreach($bankName as $bank)
                                                         <option value="{{$bank->id}}" {{old('bankName') == $bank->id ? 'Selected' : '' }}>{{$bank->bank_name}}</option>
                                                         @endforeach
@@ -520,7 +542,7 @@
                                                 <label for="">Branch Name</label>
                                                 <div>
                                                     <select class="form-control" name="bankBranch" type="text">
-                                                        
+
                                                     </select>
                                                     @error('bankBranch')
                                                     <small class="form-text text-warning">{{ $message }}</small>
@@ -626,10 +648,10 @@
                                                     <select class="required form-control" name="OffBranch" type="text">
                                                         <option value="">Select A Branch </option>
                                                         @foreach($officeBranch as $office)
-                                                        <option value="{{$office->id}}" {{old('OffBranch') == $office->id ? 'Selected' : '' }} >{{$office->branch_name}} </option>
+                                                        <option value="{{$office->id}}" {{old('OffBranch') == $office->id ? 'Selected' : '' }}>{{$office->branch_name}} </option>
                                                         @endforeach
                                                     </select>
-                                                    
+
                                                     @error('OffBranch')
                                                     <small class="form-text text-warning">{{ $message }}</small>
                                                     @enderror
@@ -643,7 +665,7 @@
                                                     <input class="form-control" value="{{old('accessCard')}}" name="accessCard" type="number">
                                                 </div>
                                                 @error('accessCard')
-                                                    <small class="form-text text-warning">{{ $message }}</small>
+                                                <small class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
                                             </div>
                                         </div>
@@ -652,7 +674,7 @@
                                             <div class="form-group clearfix">
                                                 <label>System/IT Requirement</label>
                                                 <div>
-                                                    <input class="form-control" value="{{old('system')}}" name="system" type="text" >
+                                                    <input class="form-control" value="{{old('system')}}" name="system" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -726,33 +748,32 @@
 </div> <!-- container -->
 <!--end Footer -->
 <script>
-
-    $('body').ready(function(){
-        $('#department').on('change',function(){
+    $('body').ready(function() {
+        $('#department').on('change', function() {
             var id = $(this).val();
-            
+
             $.ajax({
-                url:"{{url('/get_designation/')}}/"+id,
-                type:"get",
-                success:function(data){
-                $('select[name="desig"]').empty();
-                $.each(data,function(key,data){
-                    $('select[name="desig"]').append('<option value="'+data.id+'">'+data.title+'</option>');
-                })
+                url: "{{url('/get_designation/')}}/" + id
+                , type: "get"
+                , success: function(data) {
+                    $('select[name="desig"]').empty();
+                    $.each(data, function(key, data) {
+                        $('select[name="desig"]').append('<option value="' + data.id + '">' + data.title + '</option>');
+                    })
                 }
             })
         });
 
-        $('#bankName').on('change',function(){
+        $('#bankName').on('change', function() {
             var id = $(this).val();
             $.ajax({
-                url:"{{url('/get_bankBranch/')}}/"+id,
-                type:"get",
-                success:function(data){
-                $('select[name="bankBranch"]').empty();
-                $.each(data,function(key,data){
-                    $('select[name="bankBranch"]').append('<option value="'+data.id+'">'+data.bank_branch_name+'</option>');
-                })
+                url: "{{url('/get_bankBranch/')}}/" + id
+                , type: "get"
+                , success: function(data) {
+                    $('select[name="bankBranch"]').empty();
+                    $.each(data, function(key, data) {
+                        $('select[name="bankBranch"]').append('<option value="' + data.id + '">' + data.bank_branch_name + '</option>');
+                    })
                 }
             })
         });
@@ -781,8 +802,6 @@
             alert('Please fill out the selected field.');
         }
     });
-
-    
 
 </script>
 

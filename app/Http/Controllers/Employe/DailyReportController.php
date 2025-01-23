@@ -69,8 +69,8 @@ class DailyReportController extends Controller
                         
                         $explode = explode(',',$email->email);
                                     // try {
-                        foreach($explode as $email){
-                            Mail::to($email)->send(new DailyReportMail($insert));
+                        foreach($explode as $emai){
+                            Mail::to($emai)->send(new DailyReportMail($insert));
                         }
                     }
         

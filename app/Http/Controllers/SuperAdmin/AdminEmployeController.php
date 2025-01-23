@@ -55,6 +55,7 @@ class AdminEmployeController extends Controller
             'desig'=>'required',
             'empType'=>'required',
             'join'=>'required',
+            'eva_end_date'=>'required',
             'reporting'=>'required',
             'id_type'=>'required',
             'id_number'=>'unique:employees,emp_id_number',
@@ -136,6 +137,8 @@ class AdminEmployeController extends Controller
 
             'emp_slug'=>'emp-'.uniqId(),
             'emp_join'=>$request['join'],
+            'eva_start_date'=>$request->eva_start_date != null ? $report->eva_start_date : $request->join,
+            'eva_end_date'=>$request->eva_end_date,
             'password'=>Hash::make($request['pass']),
             'emp_creator'=>Auth::user()->id,
             'created_at'=>Carbon::now('UTC'),
@@ -187,7 +190,7 @@ class AdminEmployeController extends Controller
         $department = Department::all();
         $edit = Employee::where('emp_slug',$slug)->first();
     
-        // return $bankBranch;
+        // return $edit;
         return view('superadmin.employe.edit',compact(['edit','designation','report','officeBranch','bankName','bankBranch','department']));
     }
 
@@ -213,6 +216,8 @@ class AdminEmployeController extends Controller
             'desig'=>'required',
             'empType'=>'required',
             'join'=>'required',
+            'eva_start_date'=>'required',
+            'eva_end_date'=>'required',
             'reporting'=>'required',
             'id_type'=>'required',
             'id_number'=>'unique:employees,emp_id_number,'.$id,
@@ -276,6 +281,7 @@ class AdminEmployeController extends Controller
                 'emp_signature'=>$image_signa,
             ]);
         }
+
         
         $update = Employee::where('id',$id)->update([
             'emp_name'=>$request['name'],
@@ -319,12 +325,24 @@ class AdminEmployeController extends Controller
 
             'emp_slug'=>$slug,
             'emp_join'=>$request['join'],
+
+            'eva_start_date'=>$request->eva_start_date,
+            'eva_end_date'=>$request->eva_end_date,
+
             'emp_resign'=>$request['resign'],
             'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($update){
+            if(!empty($request->resign)){
+                
+                    Employee::where('id',$id)->update([
+                        'emp_status'=>3
+                    ]);
+                Session::flash('success','Employee Have Resigned !');
+                return redirect()->back();
+            }
             Session::flash('success','Update Employe Details ');
             return redirect()->back();
         }

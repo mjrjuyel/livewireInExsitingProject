@@ -196,7 +196,13 @@ swal({
 </div>
 
 </div> <!-- container -->
-
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            ordering: false // Disables ordering for all columns
+        });
+    });
+</script>
 @endsection
 @section('js')
 <script src="{{ asset('contents/admin') }}/assets/libs/datatables.net/js/dataTables.min.js"></script>

@@ -77,7 +77,7 @@
                         </div>
                      </form>
                     <div class="mt-5">
-                        <table class="table table-centered text-center" id="">
+                        <table class="table table-centered text-center" id="dataTable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Submit By</th>
@@ -101,7 +101,7 @@
                                     </td>
 
                                     <td>
-                                        {{ $data->created_at->format('d-M-Y | h:i:s A') }}
+                                        {{ formatDate($data->created_at) }}
                                     </td>
 
 
@@ -165,6 +165,13 @@
 
 </div> <!-- container -->
 
+<script>
+$(document).ready(function () {
+    $('#dataTable').DataTable({
+        ordering: false // Disables ordering for all columns
+    });
+});
+</script>
 @endsection
 
 @section('js')

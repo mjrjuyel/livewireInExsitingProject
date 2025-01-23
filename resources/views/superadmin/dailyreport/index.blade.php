@@ -164,6 +164,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<script>
+$(document).ready(function () {
+    $('#datatable').DataTable({
+        ordering: false // Disables ordering for all columns
+    });
+});
+</script>
 @endsection
 
 @section('js')

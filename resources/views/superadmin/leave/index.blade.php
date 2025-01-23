@@ -59,6 +59,7 @@ swal({
                                     <th class="text-center">Total Paid</th>
                                     <th class="text-center">Total UnPaid</th>
                                     <th class="text-center">Start To End</th>
+                                    <th class="text-center">Created_at</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -115,6 +116,9 @@ swal({
 
                                         <td>
                                             {{ $data->start_date->format('d-M-Y') }} To {{ $data->end_date->format('d-M-Y') }}
+                                        </td>
+                                        <td>
+                                            {{ formatDate($data->created_at) }}
                                         </td>
                                     
                                     <td>
@@ -176,7 +180,13 @@ swal({
 </div>
 
 </div> <!-- container -->
-
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            ordering: false // Disables ordering for all columns
+        });
+    });
+</script>
 @endsection
 @section('js')
 <script src="{{ asset('contents/admin') }}/assets/libs/datatables.net/js/dataTables.min.js"></script>
