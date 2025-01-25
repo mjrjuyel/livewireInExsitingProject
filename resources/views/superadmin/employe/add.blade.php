@@ -405,17 +405,15 @@
                                                 <div class="row">
                                                     <div class="col-sm-4 offset-sm-2">
                                                         <div class="form-group clearfix">
-                                                            <label>Evaluation Start Date : (optional)</label>
+                                                            <label>Evaluation Start Date : </label>
                                                             <input name="eva_start_date" type="date" class="form-control" value="{{old('eva_start_date')}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label>Evaluation End Date <span class="text-danger">*</span> :</label>
+                                                            <label>Evaluation End Date : </label>
                                                             <input name="eva_end_date" type="date" class="form-control" value="{{old('eva_end_date')}}">
-                                                            @error('eva_end_date')
-                                                            <small class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
+                                                            
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->

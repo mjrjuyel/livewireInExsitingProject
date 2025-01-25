@@ -70,7 +70,11 @@
                                 @foreach ($leavehistory as $leavehistory)
                                 <tr>
                                     <td>
-                                        {{ $leavehistory->leavetype->type_title }}
+                                        @if($leavehistory->leave_type_id != 0)
+                                        {{$leavehistory->leavetype->type_title}}
+                                        @else
+                                        Other Reason
+                                        @endif
                                     </td>
 
                                     @if($leavehistory->total_unpaid + $leavehistory->total_paid <= 1) 

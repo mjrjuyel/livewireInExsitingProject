@@ -396,7 +396,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label class="form-label">Resign Date : {{optional($edit->emp_resign)->format('d-M-Y')}}</label>
-                                            <input name="resign" type="date" class="form-control" value="{{$edit->emp_resign}}">
+                                            <input name="resign" type="date" class="form-control" value="{{\Carbon\Carbon::parse($edit->emp_resign)->format('Y-m-d')}}">
                                             
                                         </div>
                                     </div>
@@ -410,7 +410,7 @@
                                 <div class="row">
                                     <div class="col-sm-4 offset-sm-2">
                                         <div class="form-group clearfix">
-                                            <label>Evaluation Start Date : (optional)</label>
+                                            <label>Evaluation Start Date <span class="text-danger">*</span> ::</label>
                                             <input name="eva_start_date" type="date" class="form-control" value="{{$edit->eva_start_date}}">
                                             @error('eva_start_date')
                                             <small class="form-text text-warning">{{ $message }}</small>

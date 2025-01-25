@@ -73,7 +73,11 @@ swal({
                                     </td>
 
                                     <td>
-                                        {{ $data->leavetype->type_title }}
+                                        @if($data->leave_type_id != 0)
+                                        {{$data->leavetype->type_title}}
+                                        @else
+                                        Other Reason
+                                        @endif
                                     </td>
 
                                     <td>

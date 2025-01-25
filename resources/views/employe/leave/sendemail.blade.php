@@ -93,7 +93,7 @@
         </div>
         <div class="email-body">
             <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
-            <p><strong>Leave: {{$leave['leavetype']->type_title}}</strong></p>
+            <p><strong>Leave Type: @if($leave['leave_type_id'] != 0) {{$leave['leavetype']->type_title}}@else Other Reason @endif</strong></p>
             <p><strong>Reason: {{$leave['reason']}}</strong> </p>
             <p><strong>Start Date: {{$leave['start_date']->format('d-M-Y')}}</strong></p>
             <p><strong>End Date:</strong> {{ $leave['end_date']->format('d-M-Y') }}</p>

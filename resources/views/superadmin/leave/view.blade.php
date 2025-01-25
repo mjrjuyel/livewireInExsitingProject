@@ -78,10 +78,10 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                                 </label>
-                                                <input type="text" class="form-control" name="name" value="{{ $view->leavetype->type_title }}" disabled>
-                                                @error('name')
-                                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                @enderror
+                                                 @if($view->leave_type_id != 0) {{$view->leavetype->type_title}}
+                                                 @else
+                                                  Other Reason : {{$view->other_type}} 
+                                                  @endif
                                             </div>
 
                                             <div class="mb-3">

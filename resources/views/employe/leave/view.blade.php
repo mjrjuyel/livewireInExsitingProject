@@ -109,7 +109,11 @@
                                     <td>Type</td>
                                     <td>:</td>
                                     <td class="text-danger">
+                                        @if($view->leave_type_id != 0)
                                         {{$view->leavetype->type_title}}
+                                        @else
+                                        Other Reason
+                                        @endif
                                     </td>
                                 </tr>
 

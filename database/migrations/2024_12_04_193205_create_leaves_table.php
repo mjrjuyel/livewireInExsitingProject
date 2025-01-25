@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('leave_type_id')->nullable;
+            $table->string('other_type',50)->nullable;
             $table->text('reason')->nullable();
             $table->integer('status')->default('1');
             $table->string('slug')->nullable();

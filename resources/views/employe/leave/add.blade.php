@@ -110,9 +110,9 @@
 
                                     
                                     <div class="mb-3 leave_type" style="display:none;">
-                                        <label class="form-label text-danger">Write Short Type<span class="text-danger"> : -<span>Leave Type Other Still On The Process(Dont Select)</span></span>:
+                                        <label class="form-label text-danger">Write Short Type<span class="text-danger"> :</span>:
                                         </label>
-                                        <input type="text" disabled name="others" class="form-control" placeholder="Personal Reason">
+                                        <input type="text" name="others" class="form-control" placeholder="Personal Reason">
                                     </div>
 
                                     <div class="mb-3">

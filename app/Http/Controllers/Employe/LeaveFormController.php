@@ -184,6 +184,7 @@ class LeaveFormController extends Controller
 
                                     $insert = Leave::create([
                                         'leave_type_id'=>$request['leave_type'],
+                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : 'NO Alter Reason',
                                         'start_date'=>Carbon::parse($leavePermonth['start_date']),
                                         'end_date'=>$leavePermonth['end_date'],
                                         'reason'=>$request['reason'],
@@ -198,17 +199,13 @@ class LeaveFormController extends Controller
                                     ]);
             
                                     // Send Mail to Admin
-                                    // Mail::to('eteamify@gmail.com')->send(new LeaveMailToAdmin($insert));
                                     $getEmail = AdminEmail::where('id',1)->first();
                                     $explode = explode(',',$getEmail->email);
                                     // try {
                                     foreach($explode as $email){
                                         Mail::to($email)->send(new LeaveMailToAdmin($insert));
                                     }
-                                        // return "Email sent successfully!";
-                                    // } catch (Exception $e) {
-                                    //     return "Email failed to send. Error: " . $e->getMessage();
-                                    // }
+                                    // notification
                                     auth()->user()->notify(new LeaveToAdminNotification($insert));
 
                                     if ($insert) {

@@ -18,6 +18,7 @@ use App\Models\BankName;
 use App\Models\BankBranch;
 use App\Models\Department;
 use Carbon\Carbon;
+use DateTime;
 use Session;
 use Auth;
 
@@ -55,7 +56,6 @@ class AdminEmployeController extends Controller
             'desig'=>'required',
             'empType'=>'required',
             'join'=>'required',
-            'eva_end_date'=>'required',
             'reporting'=>'required',
             'id_type'=>'required',
             'id_number'=>'unique:employees,emp_id_number',
@@ -88,6 +88,13 @@ class AdminEmployeController extends Controller
             $image = $manager->read($imageTake);
             // $image->scale(width: 300);
             $image->save('uploads/employe/profile/'.$image_signa);
+        }
+        if(empty($request->eva_end_date)){
+            // return $request->join;
+            $endDate = new DateTime($request->join);
+            $endDate->modify('+1 year');
+
+            // return $endDate->format('Y-m-d');
         }
         
         $insert = Employee::create([
@@ -138,7 +145,7 @@ class AdminEmployeController extends Controller
             'emp_slug'=>'emp-'.uniqId(),
             'emp_join'=>$request['join'],
             'eva_start_date'=>$request->eva_start_date != null ? $report->eva_start_date : $request->join,
-            'eva_end_date'=>$request->eva_end_date,
+            'eva_end_date'=>$request->eva_end_date != null ? $request->eva_end_date : $endDate ,
             'password'=>Hash::make($request['pass']),
             'emp_creator'=>Auth::user()->id,
             'created_at'=>Carbon::now('UTC'),
@@ -200,34 +207,34 @@ class AdminEmployeController extends Controller
         $slug = $request['slug'];
         
 
-        $request->validate([
-            'name'=>'required',
-            'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
-            'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
-            'phone'=>'required',
-            'gender'=>'required',
-            'marriage'=>'required',
-            'dob'=>'required',
-            'emerPhone'=>'required',
-            'emerRelation'=>'required',
-            'add'=>'required',
-            // 'sameAdd'=>'required',
-            'preAdd'=>'required',
-            'desig'=>'required',
-            'empType'=>'required',
-            'join'=>'required',
-            'eva_start_date'=>'required',
-            'eva_end_date'=>'required',
-            'reporting'=>'required',
-            'id_type'=>'required',
-            'id_number'=>'unique:employees,emp_id_number,'.$id,
-            'degre'=>'required',
-            'degreYear'=>'required',
-            'bankName'=>'required',
-            'accountNumber'=>'required | unique:employees,emp_bank_account_number,'.$id,
-            'accountName'=>'required',
-            'OffBranch'=>'required',
-        ]);
+        // $request->validate([
+        //     'name'=>'required',
+        //     'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
+        //     'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
+        //     'phone'=>'required',
+        //     'gender'=>'required',
+        //     'marriage'=>'required',
+        //     'dob'=>'required',
+        //     'emerPhone'=>'required',
+        //     'emerRelation'=>'required',
+        //     'add'=>'required',
+        //     // 'sameAdd'=>'required',
+        //     'preAdd'=>'required',
+        //     'desig'=>'required',
+        //     'empType'=>'required',
+        //     'join'=>'required',
+        //     'eva_start_date'=>'required',
+        //     'eva_end_date'=>'required',
+        //     'reporting'=>'required',
+        //     'id_type'=>'required',
+        //     'id_number'=>'unique:employees,emp_id_number,'.$id,
+        //     'degre'=>'required',
+        //     'degreYear'=>'required',
+        //     'bankName'=>'required',
+        //     'accountNumber'=>'required | unique:employees,emp_bank_account_number,'.$id,
+        //     'accountName'=>'required',
+        //     'OffBranch'=>'required',
+        // ]);
 
         if($request->pass != ''){
             $request->validate([
@@ -343,6 +350,13 @@ class AdminEmployeController extends Controller
                 Session::flash('success','Employee Have Resigned !');
                 return redirect()->back();
             }
+            elseif(empty($request->resign)){
+                Employee::where('id',$id)->update([
+                    'emp_status'=>1
+                ]);
+            Session::flash('success','Update Employe Info');
+            return redirect()->back();
+        }
             Session::flash('success','Update Employe Details ');
             return redirect()->back();
         }
