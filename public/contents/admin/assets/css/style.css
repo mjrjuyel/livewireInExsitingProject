@@ -103,3 +103,14 @@ a{
 .hiddenInput{
     display: none;
 }
+
+/* cehck editor */
+.ck-editor__editable {
+    min-height: 300px; /* Set the height */
+    font-size: 16px;   /* Set font size */
+    line-height: 1.5;  /* Adjust line spacing */
+    padding: 15px;     /* Add padding */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}

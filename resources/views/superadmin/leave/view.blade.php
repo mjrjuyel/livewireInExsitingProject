@@ -101,9 +101,10 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Reason</label>
-                                                <textarea class="form-control" rows="6" style="resize:none" type="text" disabled>{{ $view->reason }}</textarea>
+                                                
+                                                <div >{!! $view->reason !!}</div>
                                             </div>
+
                                             <hr>
                                             <div class="mb-3">
                                                 <label class="form-label">Status</label>
@@ -215,5 +216,12 @@
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
+<!-- CKEditor CDN -->
+     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    <script>
+       ClassicEditor.create(document.querySelector('#editor')).catch(error => {
+                console.error(error);
+            });
+    </script>
 
 @endsection

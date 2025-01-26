@@ -96,7 +96,7 @@
 
             <p><strong>Submit Date: {{formatDate($insert['submit_date'])}}</strong></p>
 
-            <p><strong>Report Detail: {{$insert['detail']}}</strong></p>
+            <p><strong>Report Detail: {!! $insert['detail'] !!}</strong></p>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} All rights reserved.

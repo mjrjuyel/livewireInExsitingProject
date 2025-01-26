@@ -5,6 +5,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+
 @endsection
 
 @section('content')
@@ -68,8 +69,7 @@
                     <form action="{{route('dashboard.dailyreport.submit')}}" method="post">
                         @csrf
                         <div class="row mt-3">
-                            <div class="col-5 offset-2">
-
+                            <div class="col-10 offset-1">
                                 <div class="mb-3">
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
@@ -99,7 +99,7 @@
                                     <label class="form-label">Details About Your Today's Activity<span class="text-danger">* </span>:
                                     </label>
 
-                                    <textarea type="text" style="resize:none;" rows="4" name="detail" class="form-control" value="" placeholder="What You Have Done Today?">{{old('detail')}}</textarea>
+                                    <textarea type="text" id="editor" rows="10" name="detail" class="form-control" value="" placeholder="What You Have Done Today?">{{old('detail')}}</textarea>
 
                                     @error('detail')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -122,6 +122,7 @@
 </div> <!-- container -->
 
 <script>
+
 function disablePastDates() {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -139,5 +140,13 @@ function disablePastDates() {
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
+
+<!-- CKEditor CDN -->
+     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    <script>
+       ClassicEditor.create(document.querySelector('#editor')).catch(error => {
+                console.error(error);
+            });
+    </script>
 
 @endsection

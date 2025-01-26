@@ -90,8 +90,7 @@
                                     <label class="form-label">Details About Your Today's Activity<span class="text-danger">* </span>:
                                     </label>
 
-                                    <textarea type="text" style="resize:none;" rows="4" name="detail" class="form-control" value="" placeholder="What You Have Done Today?">{{$edit->detail}}</textarea>
-
+                                    <textarea type="text" style="resize:none;" id="editor" rows="4" name="detail" class="form-control" value="" placeholder="What You Have Done Today?">{{$edit->detail}}</textarea>
                                     @error('detail')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -130,5 +129,13 @@ function disablePastDates() {
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
+
+{{-- chechk editpor --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    <script>
+       ClassicEditor.create(document.querySelector('#editor')).catch(error => {
+                console.error(error);
+            });
+    </script>
 
 @endsection

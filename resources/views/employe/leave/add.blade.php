@@ -137,7 +137,7 @@
                                         <label class="form-label">Short Reason<span class="text-danger">* </span>:
                                         </label>
 
-                                        <textarea type="text" style="resize:none;" rows="4" name="reason" class="form-control" placeholder="Write Some Reason">{{old('reason')}}</textarea>
+                                        <textarea type="text" style="resize:none;" rows="4" id="editor" name="reason" class="form-control" placeholder="Write Some Reason">{{old('reason')}}</textarea>
 
                                         @error('reason')
                                         <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -179,6 +179,15 @@
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
+
+<!-- CKEditor CDN -->
+     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    <script>
+       ClassicEditor.create(document.querySelector('#editor')).catch(error => {
+                console.error(error);
+            });
+    </script>
+
 <script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
 
 @endsection

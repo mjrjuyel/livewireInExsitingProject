@@ -96,7 +96,7 @@
                                     <td>Work Details</td>
                                     <td>:</td>
                                     <td class="text-danger">
-                                        {{$view->detail}}
+                                        {!! $view->detail !!}
                                     </td>
                                 </tr>
 

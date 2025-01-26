@@ -121,7 +121,7 @@
                                     <td>Reason</td>
                                     <td>:</td>
                                     <td>
-                                        {{$view->reason}}
+                                        {!! $view->reason !!}
                                     </td>
                                 </tr>
                                 <tr>
