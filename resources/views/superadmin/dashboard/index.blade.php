@@ -21,6 +21,7 @@
         </div>
     </div>
 
+    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
     <div class="row">
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
@@ -134,6 +135,10 @@
             </div>
         </div>
     </div> <!-- end row -->
+    @endif
+    @if(Auth::user()->role_id == 3)
+    You Only Can Do Job in Catering Section
+    @endif
 
 </div> <!-- container -->
 

@@ -93,17 +93,17 @@
                                                 <label class="form-label">Role</label>
                                                 @if(Auth::user()->role_id == 1)
                                                     @if($pass->role_id != null)
-                                                    <select class="form-control" type="text" value="{{ $pass->role->role_name }}">
-                                                      @foreach($role as $role)
-                                                       <option value="{{$role->id}}" @if(Auth::user()->role_id == $role->id ) Selected @endif>{{$role->role_name}}</option>
+                                                    <select class="form-control" type="text" name="role">
+                                                      @foreach($role as $roles)
+                                                       <option value="{{$roles->id}}" @if(Auth::user()->role_id == $roles->id ) Selected @endif>{{$roles->role_name}}</option>
                                                        @endforeach
                                                     </select>
                                                     @endif
                                                 @else
                                                     @if($pass->role_id != null)
-                                                    <select class="form-control" type="text" value="{{ $pass->role->role_name }}">
-                                                      @foreach($role as $role)
-                                                       <option value="{{$role->id}}" @if(Auth::user()->role_id == $role->id ) Selected @endif>{{$role->role_name}}</option>
+                                                    <select class="form-control" type="text" name="role">
+                                                      @foreach($role as $roles)
+                                                       <option value="{{$roles->id}}" @if(Auth::user()->role_id == $roles->id ) Selected @endif>{{$roles->role_name}}</option>
                                                        @endforeach
                                                     </select>
                                                     @else

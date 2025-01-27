@@ -54,128 +54,145 @@
                         </a>
                     </li>
 
+
+                    {{-- --}}
+                    @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
-                            <span class="menu-text"> Admin</span>
+                            <span class="menu-text">Admin And Role</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
-                                @if(Auth::user()->role_id == 1)
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.admin.add')}}" class="side-nav-link">
-                                        <span class="menu-text">Add Admin</span>
-                                    </a>
-                                </li>
-                                @endif
-
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.admin')}}" class="side-nav-link">
-                                        <span class="menu-text">All Admin</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarLeave" aria-expanded="false" aria-controls="sidebarLeave" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
-                            <span class="menu-text"> Leave </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarLeave">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.leave')}}" class="side-nav-link">
-                                        <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
-                                        <span class="menu-text"> Leave Application </span>
-                                    </a>
-                                </li>
-
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarLeaveType" aria-expanded="false" aria-controls="sidebarLeaveType" class="side-nav-link">
-                                        <span class="menu-text">Leave Type</span>
+                                    <a data-bs-toggle="collapse" href="#sidebarAdminAdd" aria-expanded="false" aria-controls="sidebarAdminAdd" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
+                                        <span class="menu-text"> Admin</span>
                                         <span class="menu-arrow"></span>
                                     </a>
-                                    <div class="collapse" id="sidebarLeaveType">
+                                    <div class="collapse" id="sidebarAdminAdd">
                                         <ul class="sub-menu">
+                                            @if(Auth::user()->role_id == 1)
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
-                                                    <span class="menu-text">All</span>
+                                                <a href="{{route('superadmin.admin.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Admin</span>
                                                 </a>
                                             </li>
+                                            @endif
 
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.leavetype.add')}}" class="side-nav-link">
-                                                    <span class="menu-text">Add New</span>
+                                                <a href="{{route('superadmin.admin')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Admin</span>
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
-                    </li>
 
-
-
-                    <li class="side-nav-item">
-                        <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
-                            <span class="menu-text"> Daily Report </span>
-                        </a>
-                    </li>
-
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarEmployee" aria-expanded="false" aria-controls="sidebarEmployee" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
-                            <span class="menu-text"> Employees</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarEmployee">
-                            <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
-                                        <span class="menu-text">Add Employee</span>
+                                    <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false" aria-controls="sidebarRole" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
+                                        <span class="menu-text">Role</span>
+                                        <span class="menu-arrow"></span>
                                     </a>
-                                </li>
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.employe')}}" class="side-nav-link">
-                                        <span class="menu-text">All Employee</span>
-                                    </a>
+                                    <div class="collapse" id="sidebarRole">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.role')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Role</span>
+                                                </a>
+                                            </li>
+
+                                            @php
+                                            $role = App\Models\UserRole::all();
+                                            @endphp
+
+                                            @if($role->count('id') <= 2) <li class="side-nav-item">
+                                                <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add Role</span>
+                                                </a>
+                                            </li>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                  </li>
+            {{-- --}}
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarLeave" aria-expanded="false" aria-controls="sidebarLeave" class="side-nav-link">
+                    <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
+                    <span class="menu-text"> Leave </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarLeave">
+                    <ul class="sub-menu">
+                        <li class="side-nav-item">
+                            <a href="{{route('superadmin.leave')}}" class="side-nav-link">
+                                <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
+                                <span class="menu-text"> Leave Application </span>
+                            </a>
+                        </li>
 
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarRole" aria-expanded="false" aria-controls="sidebarRole" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
-                            <span class="menu-text">Role</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarRole">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.role')}}" class="side-nav-link">
-                                        <span class="menu-text">All Role</span>
-                                    </a>
-                                </li>
-                                @php
-                                $role = App\Models\UserRole::all();
-                                @endphp
-                                @if($role->count('id') <= 2) <li class="side-nav-item">
-                                    <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
-                                        <span class="menu-text">Add Role</span>
-                                    </a>
-                    </li>
-                    @endif
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarLeaveType" aria-expanded="false" aria-controls="sidebarLeaveType" class="side-nav-link">
+                                <span class="menu-text">Leave Type</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarLeaveType">
+                                <ul class="sub-menu">
+                                    <li class="side-nav-item">
+                                        <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
+                                            <span class="menu-text">All</span>
+                                        </a>
+                                    </li>
 
-                </ul>
-            </div>
+                                    <li class="side-nav-item">
+                                        <a href="{{route('superadmin.leavetype.add')}}" class="side-nav-link">
+                                            <span class="menu-text">Add New</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
+
+
+            <li class="side-nav-item">
+                <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
+                    <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
+                    <span class="menu-text"> Daily Report </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarEmployee" aria-expanded="false" aria-controls="sidebarEmployee" class="side-nav-link">
+                    <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
+                    <span class="menu-text"> Employees</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarEmployee">
+                    <ul class="sub-menu">
+                        <li class="side-nav-item">
+                            <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
+                                <span class="menu-text">Add Employee</span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{route('superadmin.employe')}}" class="side-nav-link">
+                                <span class="menu-text">All Employee</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarDepartment" aria-expanded="false" aria-controls="sidebarDepartment" class="side-nav-link">
@@ -308,6 +325,7 @@
                     </ul>
                 </div>
             </li>
+            @endif
 
 
             <li class="side-nav-item">
@@ -357,6 +375,7 @@
                 </div>
             </li>
 
+            @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarBasicSetting" aria-expanded="false" aria-controls="sidebarBasicSetting" class="side-nav-link">
                     <span class="menu-icon"><i class="mdi mdi-octagram-edit-outline"></i></span>
@@ -398,6 +417,7 @@
                     <span class="menu-text text-warning"> Recyclebin </span>
                 </a>
             </li>
+            @endif
             <hr>
 
             <li class="side-nav-title">Logout</li>

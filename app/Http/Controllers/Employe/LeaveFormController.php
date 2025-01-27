@@ -151,7 +151,7 @@ class LeaveFormController extends Controller
                     // Define weekly offs  5 = Friday)
 
                     $weeklyOffs = explode(',',$definedLeave->weekoffday);
-                    return $weeklyOffs;
+                    // return $weeklyOffs;
 
                     // speacial off Day with Govt Day
                     $specialOffDates = explode(',',$definedLeave->specialoffday);
@@ -208,7 +208,7 @@ class LeaveFormController extends Controller
                                         Mail::to($email)->send(new LeaveMailToAdmin($insert));
                                     }
                                     // notification
-                                    auth()->user()->notify(new LeaveToAdminNotification($insert));
+                                    // auth()->user()->notify(new LeaveToAdminNotification($insert));
 
                                     if ($insert) {
                                         if ($unPaidLeaves > 0) {

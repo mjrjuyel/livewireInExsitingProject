@@ -60,7 +60,7 @@ class AdminProfileController extends Controller
             'slug'=>'user-'.uniqId(),
             'role_id'=>$request['role'],
             'image' => $image_name ?? null,
-            'password'=>$request['pass'],
+            'password'=>Hash::make($request['pass']),
             'created_at'=>Carbon::now(),
         ]);
 
@@ -84,7 +84,7 @@ class AdminProfileController extends Controller
                 'emp_join'=>Carbon::now()->format('Y-m-d'),
                 'emp_slug'=>'user-'.uniqId(),
                 'emp_creator'=>Auth::user()->id,
-                'password'=>$request['pass'],
+                'password'=>Hash::make($request['pass']),
                 'created_at'=>Carbon::now(),
             ]);
         }
@@ -145,6 +145,7 @@ class AdminProfileController extends Controller
         $update = User::where('id',$id)->update([
             'name'=>$request['name'],
             'email'=>$request['email'],
+            'role_id'=>$request['role'],
             'slug'=>$slug,
             'updated_at'=>Carbon::now(),
         ]);
