@@ -178,9 +178,9 @@
                             <tfoot>
                                  <tr >
                                      <td></td>
-                                     <td class="text-bold text-dark text-end">Total Quantity :</td>
+                                     <td class="text-bold text-dark text-end">Total Meal Quantity :</td>
                                      <td class="text-bold text-info">{{$allFood->sum('quantity')}}</td>
-                                     <td class="text-bold text-dark text-end">Total :</td>
+                                     <td class="text-bold text-dark text-end">Total Meal Cost:</td>
                                      <td class="text-bold text-info">{{$allFood->sum('total_cost')}}</td>
                                      <td></td>
                                  </tr>

@@ -149,7 +149,9 @@ class LeaveFormController extends Controller
                     $endDate = $request['end'];
 
                     // Define weekly offs  5 = Friday)
-                    $weeklyOffs = [$definedLeave->weekoffday];
+
+                    $weeklyOffs = explode(',',$definedLeave->weekoffday);
+                    return $weeklyOffs;
 
                     // speacial off Day with Govt Day
                     $specialOffDates = explode(',',$definedLeave->specialoffday);

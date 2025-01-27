@@ -81,7 +81,7 @@ swal({
                                     </td>
 
                                     <td>
-                                        {{ $data->reason }}
+                                        {!! Str::words($data->reason,20) !!}
                                     </td>
 
                                     @if($data->total_unpaid + $data->total_paid <= 1) 

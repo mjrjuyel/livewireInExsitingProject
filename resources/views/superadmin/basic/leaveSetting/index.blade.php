@@ -6,6 +6,9 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets/libs/multiselect/css/multi-select.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets/libs/select2/css/select2.min.css" rel="stylesheet" />
+
 @endsection
 
 @section('superAdminContent')
@@ -109,14 +112,17 @@
                                             <label class="form-label">Weekend Off Day<span class="text-danger">*
                                                 </span>:
                                             </label>
-                                            <select type="text" class="form-control" name="weekoff">
-                                                <option value="1" @if($setting->weekoffday == 1) Selected @endif>Monday</option>
-                                                <option value="2" @if($setting->weekoffday == 2) Selected @endif>Tuesday</option>
-                                                <option value="3" @if($setting->weekoffday == 3) Selected @endif>Wednesday</option>
-                                                <option value="4" @if($setting->weekoffday == 4) Selected @endif>Thursday</option>
-                                                <option value="5" @if($setting->weekoffday == 5) Selected @endif>Friday</option>
-                                                <option value="6" @if($setting->weekoffday == 6) Selected @endif>Satuarday</option>
-                                                <option value="7" @if($setting->weekoffday == 7) Selected @endif>Sunday</option>
+                                            <select class="form-control select2-multiple" name="weekoff[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                                                <optgroup label="Weekly Off Day">
+                                                    <option value="1" {{ (is_array($setting->weekoffday) && in_array(1, $setting->weekoffday)) || $setting->weekoffday == 1 ? 'selected' : '' }}>Monday</option>
+                                                    <option value="2" {{ (is_array($setting->weekoffday) && in_array(2, $setting->weekoffday)) || $setting->weekoffday == 2 ? 'selected' : '' }}>Tuesday</option>
+                                                    <option value="3" {{ (is_array($setting->weekoffday) && in_array(3, $setting->weekoffday)) || $setting->weekoffday == 3 ? 'selected' : '' }}>Wednesday</option>
+                                                    <option value="4" {{ (is_array($setting->weekoffday) && in_array(4, $setting->weekoffday)) || $setting->weekoffday == 4 ? 'selected' : '' }}>Thursday</option>
+                                                    <option value="5" {{ (is_array($setting->weekoffday) && in_array(5, $setting->weekoffday)) || $setting->weekoffday == 5 ? 'selected' : '' }}>Friday</option>
+                                                    <option value="6" {{ (is_array($setting->weekoffday) && in_array(6, $setting->weekoffday)) || $setting->weekoffday == 6 ? 'selected' : '' }}>Saturday</option>
+                                                    <option value="7" {{ (is_array($setting->weekoffday) && in_array(7, $setting->weekoffday)) || $setting->weekoffday == 7 ? 'selected' : '' }}>Sunday</option>
+                                                </optgroup>
+
                                             </select>
                                             @error('weekoff')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -157,31 +163,31 @@
     <div class="row">
         <div class="col-12">
             <div class="text-center">
-              <h4 class="text-info">Speacial Off Day List</h4>
-              <hr>
-             </div>
+                <h4 class="text-info">Speacial Off Day List</h4>
+                <hr>
+            </div>
             <div class="row">
                 @foreach($groupByMonth as $month => $dates)
                 <div class="col-md-3 col-xl-3">
-                                @php
-                                     $convertMonth = new DateTime($month);
-                                @endphp
+                    @php
+                    $convertMonth = new DateTime($month);
+                    @endphp
                     <div class="card tilebox-one">
                         <div class="card-body">
                             <i class="mdi mdi-calendar-range float-end m-0 h2 text-muted"></i>
                             <h6 class="text-info text-uppercase">{{$convertMonth->format('F')}}</h6>
                             <span>Dates</span>
                             <ul class="list-group">
-                                
+
                                 @foreach($dates as $date)
                                 @php
-                                     $convert = new DateTime($date);
+                                $convert = new DateTime($date);
                                 @endphp
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     {{$convert->format('Y-m-d')}}
                                     <span class="badge badge-primary text-info badge-pill">{{$convert->format('D')}}</span>
                                 </li>
-                                
+
                                 @endforeach
                             </ul>
                         </div>
@@ -203,5 +209,8 @@
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
 
 @endsection

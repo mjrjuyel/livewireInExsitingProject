@@ -168,6 +168,14 @@
 </div>
 
 </div> <!-- container -->
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            ordering: false // Disables ordering for all columns
+        });
+    });
+</script>
 @endsection
 
 @section('js')

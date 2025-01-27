@@ -166,9 +166,15 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Evaluation</h5>
                                 </div>
+                                @php
+                                    if($view->eva_end_date == null){
+                                        $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+                                        $end_date->modify('+1 year');
+                                    }
+                                @endphp
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Evalution Start Date : {{$view->eva_start_date}}</li>
-                                    <li class="list-group-item">Evaluation End Date: {{$view->eva_end_date}}</li>
+                                    <li class="list-group-item">Evalution Start Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Evaluation End Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                                 </ul>
                             </div>
                         </div>

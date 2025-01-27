@@ -23,8 +23,7 @@ class DailyReportController extends Controller
     }
 
     public function add(){
-        $employe = Employee::where('emp_status',1)->latest('id')->get();
-        return view('employe.dailyreport.add',compact('employe'));
+        return view('employe.dailyreport.add');
     }
 
     public function submit(Request $request){

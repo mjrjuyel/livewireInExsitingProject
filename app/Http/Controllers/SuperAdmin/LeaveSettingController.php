@@ -14,25 +14,19 @@ class LeaveSettingController extends Controller
     public function index(){
         $setting = EmployeLeaveSetting::where('id',1)->first();
         // return $setting;
-        
         $explode = explode(',',$setting->specialoffday);
-
         usort($explode,function($a,$b){
             return strtotime($a) - strtotime($b);
         });
-
         $groupByMonth = [];
         foreach($explode as $dates){
             $month = date('F',strtotime($dates));
             $groupByMonth[$month][]=$dates;
         }
-       
-        
         return view('superadmin.basic.leaveSetting.index',compact(['setting','groupByMonth']));
     }
 
     public function update(Request $request){
-
         // return $request->all();
         $request->validate([
             'year'=>'required',

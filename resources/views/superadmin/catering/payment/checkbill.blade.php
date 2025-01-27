@@ -129,11 +129,7 @@
                     <div class="d-print-none">
                         <div class="float-end">
                             <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
-                            @if($totalDue <= 0)
-                                <a href="#" class="btn btn-primary waves-effect waves-light">All Due Paid</a>
-                            @else
                                 <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary waves-effect waves-light">Pay Bill</a>
-                            @endif
                         </div>
                         <div class="clearfix"></div>
                     </div>

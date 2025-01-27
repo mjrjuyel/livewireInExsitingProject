@@ -39,9 +39,7 @@ class CateringFoodController extends Controller
         
         // If input date is over form present date
         if($presentDay >= $submitDay){
-             $previousDay = strtotime('-10 days',$presentDay);
 
-             if($previousDay <= $submitDay){
                 $parseDate = Carbon::parse($request['date']);
 
                 // return $parseDate->day;
@@ -60,12 +58,9 @@ class CateringFoodController extends Controller
                 'created_at'=>Carbon::now(),
             ]);
             if($insert){
-                Session::flash('success','Item Added in Current Month');
+                Session::flash('success','Item Added in Catering Food History');
                 return redirect()->back();
             }
-             }
-             Session::flash('error','Date is Too Old For Insert');
-             return redirect()->back();
         }
         Session::flash('error','Date is over from Present date');
         return redirect()->back();

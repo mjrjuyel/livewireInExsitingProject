@@ -52,39 +52,39 @@ class CateringPaymentController extends Controller
     
     // If input date is over form present date
     if($presentDay >= $submitDay){
-         $previousDay = strtotime('-10 days',$presentDay);
+            $previousDay = strtotime('-10 days',$presentDay);
 
-         if($previousDay <= $submitDay){
-            $parseDate = Carbon::parse($request['date']);
+            // if($previousDay <= $submitDay){
+                // $parseDate = Carbon::parse($request['date']);
 
-            // return $parseDate->day;
-            $checkSameDate = CateringPayment::whereDate('payment_date',$parseDate)->exists();
-            if($checkSameDate){
-                Session::flash('error','Date is Already Exist');
-                return redirect()->back();
-            }
+                // // return $parseDate->day;
+                // $checkSameDate = CateringPayment::whereDate('payment_date',$parseDate)->exists();
+                // if($checkSameDate){
+                //     Session::flash('error','Date is Already Exist');
+                //     return redirect()->back();
+                // }
 
-            $checkTotalCost = CateringFood::sum('total_cost');
-            $checkTotalPayment = CateringPayment::sum('payment');
+                $checkTotalCost = CateringFood::sum('total_cost');
+                $checkTotalPayment = CateringPayment::sum('payment');
 
-            $insert= CateringPayment::create([
-            'payment_date'=>$request['date'],
-            'payment'=>$request['amount'],
-            'p_creator'=>Auth::user()->id,
-            'created_at'=>Carbon::now(),
-            ]);
+                $insert= CateringPayment::create([
+                'payment_date'=>$request['date'],
+                'payment'=>$request['amount'],
+                'p_creator'=>Auth::user()->id,
+                'created_at'=>Carbon::now(),
+                ]);
 
-            if($insert){
-                Session::flash('success','New Payment in Current Month');
-                return redirect()->back();
-            }
-            
-            Session::flash('error','Date is Too Old For Insert');
-            return redirect()->back();
+                if($insert){
+                    Session::flash('success','New Payment in Current Month');
+                    return redirect()->back();
+                }
+                
+                // Session::flash('error','Date is Too Old For Insert');
+                // return redirect()->back();
+            // }
         }
-    }
-    Session::flash('error','Date is over from Present date');
-    return redirect()->back();
+        Session::flash('error','Date is Bigger from Present date');
+        return redirect()->back();
    
    }
 

@@ -85,6 +85,12 @@
                                             </div>
 
                                             <div class="mb-3">
+                                                <label class="form-label">Submitted Date<span class="text-danger">* </span>:
+                                                </label>
+                                                {{$view->created_at->format('d-M-Y')}}
+                                            </div>
+
+                                            <div class="mb-3">
                                                 <label class="form-label">leave Start Date<span class="text-danger">*</span> :</label>
                                                 <input type="text" class="form-control" name="start" value="{{ $view->start_date->format('d-M-Y') }}" placeholder="{{ $view->start_date->format('d-M-Y') }}" disabled>
                                                 @error('email')

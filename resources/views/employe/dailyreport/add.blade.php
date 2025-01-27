@@ -71,14 +71,13 @@
                         <div class="row mt-3">
                             <div class="col-10 offset-1">
                                 <div class="mb-3">
+                                @php
+                                    $employe = Auth::guard('employee')->user();
+                                @endphp
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
                                     <select type="text" class="form-control" name="name" placeholder="Enter Daily Report">
-                                      <option value="">Select Name</option>
-                                       @foreach($employe as $employe)
-                                         <option value="{{$employe->id}}" @if($employe->id == Auth::guard('employee')->user()->id) Selected @endif>{{$employe->emp_name}}
-                                         </option>
-                                       @endforeach
+                                         <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
                                     </select>
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
