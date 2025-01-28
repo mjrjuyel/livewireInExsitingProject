@@ -182,8 +182,32 @@ class AdminEmployeController extends Controller
         $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
-        // return $view;
-        return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear']));
+         //Eva date Calculation
+         if($view->eva_end_date == null){
+            $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+            $end_date->modify('+1 year');
+
+            $start_date = new DateTime($view->emp_join->format('Y-m-d'));
+
+            $formatted_start_date = $start_date->format('Y-m-d');
+            $formatted_end_date = $end_date->format('Y-m-d');
+        
+            // Leave calculation (Paid/Unpaid)
+            $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
+                ->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
+                ->orWhereBetween('end_date', [$formatted_start_date, $formatted_end_date])
+                ->get();
+            }else{
+                
+                $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
+                ->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
+                ->orWhereBetween('end_date', [$view->eva_start_date, $view->eva_end_date])
+                ->get();
+            }
+
+        
+        // return $Evaleaves->sum('total_unpaid');
+        return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves']));
     }
 
     // Edit Admin
@@ -207,34 +231,34 @@ class AdminEmployeController extends Controller
         $slug = $request['slug'];
         
 
-        // $request->validate([
-        //     'name'=>'required',
-        //     'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
-        //     'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
-        //     'phone'=>'required',
-        //     'gender'=>'required',
-        //     'marriage'=>'required',
-        //     'dob'=>'required',
-        //     'emerPhone'=>'required',
-        //     'emerRelation'=>'required',
-        //     'add'=>'required',
-        //     // 'sameAdd'=>'required',
-        //     'preAdd'=>'required',
-        //     'desig'=>'required',
-        //     'empType'=>'required',
-        //     'join'=>'required',
-        //     'eva_start_date'=>'required',
-        //     'eva_end_date'=>'required',
-        //     'reporting'=>'required',
-        //     'id_type'=>'required',
-        //     'id_number'=>'unique:employees,emp_id_number,'.$id,
-        //     'degre'=>'required',
-        //     'degreYear'=>'required',
-        //     'bankName'=>'required',
-        //     'accountNumber'=>'required | unique:employees,emp_bank_account_number,'.$id,
-        //     'accountName'=>'required',
-        //     'OffBranch'=>'required',
-        // ]);
+        $request->validate([
+            'name'=>'required',
+            'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
+            'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
+            'phone'=>'required',
+            'gender'=>'required',
+            'marriage'=>'required',
+            'dob'=>'required',
+            'emerPhone'=>'required',
+            'emerRelation'=>'required',
+            'add'=>'required',
+            // 'sameAdd'=>'required',
+            'preAdd'=>'required',
+            'desig'=>'required',
+            'empType'=>'required',
+            'join'=>'required',
+            'eva_start_date'=>'required',
+            'eva_end_date'=>'required',
+            'reporting'=>'required',
+            'id_type'=>'required',
+            'id_number'=>'unique:employees,emp_id_number,'.$id,
+            'degre'=>'required',
+            'degreYear'=>'required',
+            'bankName'=>'required',
+            'accountNumber'=>'required | unique:employees,emp_bank_account_number,'.$id,
+            'accountName'=>'required',
+            'OffBranch'=>'required',
+        ]);
 
         if($request->pass != ''){
             $request->validate([
@@ -336,7 +360,7 @@ class AdminEmployeController extends Controller
             'eva_start_date'=>$request->eva_start_date,
             'eva_end_date'=>$request->eva_end_date,
 
-            'emp_resign'=>$request['resign'],
+            'emp_resign'=>$request->resign,
             'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);

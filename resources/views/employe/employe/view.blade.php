@@ -149,7 +149,7 @@
                                     <h5 class="card-title">Joining Information</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Joinig Date : {{$view->emp_join->format('d-M-Y')}}</li>
+                                    <li class="list-group-item">Joinig Date : @if($view->emp_join != ''){{ $view->emp_join->format('d-M-Y')}} @endif</li>
                                     <li class="list-group-item">Office Located In : {{optional($view->officeBranch)->branch_name}}</li>
                                     <li class="list-group-item">Office Id Card Number : {{$view->emp_office_id_number}}</li>
                                     <li class="list-group-item">Work Schedule : {{$view->emp_office_work_schedule}}</li>
@@ -173,8 +173,8 @@
                                     }
                                 @endphp
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Evalution Start Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
-                                    <li class="list-group-item">Evaluation End Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Last Evalution Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Next Evaluation Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                                 </ul>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Gender : {{$view->gender}}</li>
-                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob->format('d-M-Y')}}</li>
+                                    <li class="list-group-item">Date Of Birth : @if($view->emp_dob != ''){{ $view->emp_dob->format('d-M-Y')}} @endif</li>
                                     <li class="list-group-item">Marriage Status : {{$view->marriage}}</li>
                                     <li class="list-group-item">Personal Number : <a href="tel:{{$view->emp_phone}}">{{$view->emp_phone}}</a></li>
                                     @if($view->emp_phone2 != '')

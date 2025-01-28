@@ -34,6 +34,29 @@ class DashboardController extends Controller
 
         $totalReportSubmit = DailyReport::where('submit_by',Auth::guard('employee')->user()->id)->count('id');
 
-        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit']));
+        //Eva date Calculation
+        if($view->eva_end_date == null){
+            $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+            $end_date->modify('+1 year');
+
+            $start_date = new DateTime($view->emp_join->format('Y-m-d'));
+
+            $formatted_start_date = $start_date->format('Y-m-d');
+            $formatted_end_date = $end_date->format('Y-m-d');
+        
+            // Leave calculation (Paid/Unpaid)
+            $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
+                ->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
+                ->orWhereBetween('end_date', [$formatted_start_date, $formatted_end_date])
+                ->get();
+            }else{
+                
+                $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
+                ->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
+                ->orWhereBetween('end_date', [$view->eva_start_date, $view->eva_end_date])
+                ->get();
+            }
+
+        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves']));
     }
 }

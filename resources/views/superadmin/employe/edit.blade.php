@@ -120,7 +120,7 @@
                                         <div class="row mb-3">
                                             <div class="col-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Profile Pic<span class="text-danger">*</span>:</label>
+                                                    <label class="form-label">Profile Pic:</label>
                                                     <input type="file" class="dropify" name="pic">
                                                     <small id="emailHelp" class="form-text text-muted"></small>
                                                 </div>
@@ -200,7 +200,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label>New Password <span class="text-danger">*</span> : <small class="txet-info">(min:5, 1 later, 1 number and 1 symbol must need)</small></label>
+                                            <label>New Password : <small class="txet-info">(min:5, 1 later, 1 number and 1 symbol must need)</small></label>
                                             <input type="password" name="pass" class="form-control">
                                             @error('pass')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -210,7 +210,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <label>Confirm Password <span class="text-danger">*</span> : </label>
+                                            <label>Confirm Password : </label>
                                             <input type="password" name="repass" class="form-control">
                                             @error('repass')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -357,6 +357,7 @@
                                                 <option value="Contract" @if($edit->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
                                                 <option value="Internship" @if($edit->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
                                                 <option value="Remote" @if($edit->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
+                                                <option value="Hybrid" @if($edit->emp_type == 'Hybrid') Selected @elseif(old('empType') == 'Hybrid') Selected @endif>Hybrid</option>
                                             </select>
                                             @error('empType')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -393,13 +394,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    {{-- <div class="col-sm-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Resign Date : {{optional($edit->emp_resign)->format('d-M-Y')}}</label>
-                                            <input name="resign" type="date" class="form-control" value="{{\Carbon\Carbon::parse($edit->emp_resign)->format('Y-m-d')}}">
+                                            <label class="form-label">Resign Date :</label>
+                                            <input name="resign" type="date" class="form-control" value="">
                                             
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div><!-- end row -->
 
                             </section>
@@ -410,7 +411,7 @@
                                 <div class="row">
                                     <div class="col-sm-4 offset-sm-2">
                                         <div class="form-group clearfix">
-                                            <label>Evaluation Start Date <span class="text-danger">*</span> ::</label>
+                                            <label>Last Evaluation Date <span class="text-danger">*</span> ::</label>
                                             <input name="eva_start_date" type="date" class="form-control" value="{{$edit->eva_start_date}}">
                                             @error('eva_start_date')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -419,7 +420,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
-                                            <label>Evaluation End Date <span class="text-danger">*</span> :</label>
+                                            <label>Next Evaluation Date <span class="text-danger">*</span> :</label>
                                             <input name="eva_end_date" type="date" class="form-control" value="{{$edit->eva_end_date}}">
                                             @error('eva_end_date')
                                             <small class="form-text text-warning">{{ $message }}</small>

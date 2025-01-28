@@ -104,7 +104,7 @@
 
 
                                     <td>
-                                        {!! Str::words($data->detail,15) !!}}
+                                        {!! Str::words($data->detail,15) !!}
                                     </td>
 
                                     <td>

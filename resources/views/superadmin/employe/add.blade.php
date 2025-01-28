@@ -363,6 +363,7 @@
                                                                 <option value="Contract" {{old('empType') == 'Contract' ? 'Selected' : '' }}>Contract</option>
                                                                 <option value="Internship" {{old('empType') == 'Internship' ? 'Selected' : '' }}>Internship</option>
                                                                 <option value="Remote" {{old('empType') == 'Remote' ? 'Selected' : '' }}>Remote</option>
+                                                                <option value="Hybrid" {{old('empType') == 'Hybrid' ? 'Selected' : '' }}>Hybrid</option>
                                                             </select>
                                                             @error('empType')
                                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -399,19 +400,19 @@
 
                                             </section>
 
-                                            <h3 class="text-info mt-5">Joinig Evaluation</h3>
+                                            <h3 class="text-info mt-5">Evaluation Date</h3>
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
                                                     <div class="col-sm-4 offset-sm-2">
                                                         <div class="form-group clearfix">
-                                                            <label>Evaluation Start Date : </label>
+                                                            <label>Last Evaluation Date : </label>
                                                             <input name="eva_start_date" type="date" class="form-control" value="{{old('eva_start_date')}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group clearfix">
-                                                            <label>Evaluation End Date : </label>
+                                                            <label>Next Evaluation Date : </label>
                                                             <input name="eva_end_date" type="date" class="form-control" value="{{old('eva_end_date')}}">
                                                             
                                                         </div>

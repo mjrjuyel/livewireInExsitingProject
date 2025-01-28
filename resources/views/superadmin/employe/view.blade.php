@@ -42,15 +42,41 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                        <h6 class="text-muted text-uppercase mt-0">Career Total Leave<span class="text-danger text-italic"> : {{$view->emp_join->format('Y-m-d')}} to {{date('Y-m-d')}}</span></h6>
-                        <h3 class="my-3">
-                                @if($whole_approved_leave <= 1 )
-                                <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Days</h3>
-                                @else
-                                <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Day</h3>
-                                @endif
-                        </h3>
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">His Life Time Leave<span class="text-danger text-italic"> :@if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} to {{date('d-M-Y')}} @endif </span></h6>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Days</h3>
+                </div>
+            </div>
+        </div>
+        @php
+
+            if($view->eva_end_date == null){
+                $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+                $end_date->modify('+1 year');
+                }
+
+            if($view->eva_start_date){
+                $start_date = new DateTime($view->eva_start_date);
+                }
+            
+            $totalEvaLeavePaid  = $Evaleaves->sum('total_paid');
+            $totalEvaLeaveUnPaid  = $Evaleaves->sum('total_unpaid');
+
+            $totalEvaLeave = $totalEvaLeavePaid + $totalEvaLeaveUnPaid;
+        @endphp
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Evaluation Time<span class="text-danger text-italic">:
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Last Evalution Date :
+                                    @if($view->eva_start_date != ''){{$start_date->format('d-M-Y')}} @else @if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} @endif @endif</li>
+                                <li class="list-group-item">Next Evaluation Date:
+                                    @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                            </ul>
+                    </h6>
                 </div>
             </div>
         </div>
@@ -58,9 +84,15 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                        <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
-                        <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Between Evaluation Period Total Leave Spent:</h6>
+                    <h3 class="my-3">
+                    @if($totalEvaLeave < 1 ) 
+                        <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Day</h3>
+                    @else
+                    <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Days</h3>
+                    @endif
+                    </h3>
                 </div>
             </div>
         </div>
@@ -68,10 +100,56 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                   
-                        <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                        <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
-                        <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Paid Leave Between Evaluation:</h6>
+                    @if($totalEvaLeavePaid != null)
+                    @if($totalEvaLeavePaid >= 2)
+                    <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeavePaid}}</span> Days</h3>
+                    @else
+                    <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeavePaid}}</span> Day</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Not Yet</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total UnPaid Leave Between Evaluation:</h6>
+                    @if($totalEvaLeaveUnPaid != null)
+                    @if($totalEvaLeaveUnPaid >= 2)
+                    <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeaveUnPaid}} </span> Days +</h3>
+                    @else
+                    <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeaveUnPaid}} </span> Day +</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Not Yet</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
 
                 </div>
             </div>
@@ -83,13 +161,13 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
-                      @if($paidRemainingMonth == 1)
-                      <h3 class="my-3"><span data-plugin="counterup">2</span> Days</h3>
-                      @elseif($paidRemainingMonth == 2)
-                      <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
-                      @elseif($paidRemainingMonth >= 3)
-                      <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
-                      @endif
+                    @if($paidRemainingMonth == 1)
+                    <h3 class="my-3"><span data-plugin="counterup">2</span> Days</h3>
+                    @elseif($paidRemainingMonth == 2)
+                    <h3 class="my-3"><span data-plugin="counterup">1</span> Day</h3>
+                    @elseif($paidRemainingMonth >= 3)
+                    <h3 class="my-3"><span class="text-danger">Limit Reached</span></h3>
+                    @endif
                     @else
                     <h3 class="my-3"><span data-plugin="counterup">3</span> Days</h3>
                     @endif
@@ -257,8 +335,8 @@
                                     <td>Edited At</td>
                                     <td>:</td>
                                     <td>@if($view->updated_at)
-                                    {{formatDate($view->updated_at)}}
-                                    @endif</td>
+                                        {{formatDate($view->updated_at)}}
+                                        @endif</td>
                                 </tr>
                             </table>
                         </div>
@@ -270,7 +348,7 @@
                                     <h5 class="card-title">Employee Details</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                 <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
+                                    <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
                                     <li class="list-group-item">Department : {{optional($view->department)->depart_name}}</li>
                                     <li class="list-group-item">Designation : {{optional($view->emp_desig)->title}}</li>
                                     <li class="list-group-item">Employee Job Type : {{$view->emp_type}}</li>
@@ -284,12 +362,12 @@
                                     <h5 class="card-title">Joining Information</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Joinig Date : {{$view->emp_join->format('d-M-Y')}}</li>
+                                    <li class="list-group-item">Joinig Date : {{ $view->emp_join != null && $view->emp_join != ' ' ? $view->emp_join->format('d-M-Y') : 'yes'}}</li>
                                     <li class="list-group-item">Office Located In : {{optional($view->officeBranch)->branch_name}}</li>
                                     <li class="list-group-item">Office Id Card Number : {{$view->emp_office_id_number}}</li>
                                     <li class="list-group-item">Work Schedule : {{$view->emp_office_work_schedule}}</li>
                                     @if($view->emp_resign){
-                                        <li class="list-group-item">Work Schedule : {{$view->emp_resign->format('d-M-Y')}}</li>
+                                    <li class="list-group-item">Work Schedule : {{$view->emp_resign->format('d-M-Y')}}</li>
                                     }
                                     @endif
                                 </ul>
@@ -302,14 +380,14 @@
                                     <h5 class="card-title">Evaluation</h5>
                                 </div>
                                 @php
-                                    if($view->eva_end_date == null){
-                                        $end_date = new DateTime($view->emp_join->format('Y-m-d'));
-                                        $end_date->modify('+1 year');
-                                    }
+                                if($view->eva_end_date == null){
+                                $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+                                $end_date->modify('+1 year');
+                                }
                                 @endphp
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Evalution Start Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
-                                    <li class="list-group-item">Evaluation End Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Last Evaluation Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Next Evaluation Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                                 </ul>
                             </div>
                         </div>
@@ -321,7 +399,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Gender : {{$view->gender}}</li>
-                                    <li class="list-group-item">Date Of Birth : {{$view->emp_dob->format('d-M-Y')}}</li>
+                                    <li class="list-group-item">Date Of Birth : @if($view->emp_dob != ''){{ $view->emp_dob->format('d-M-Y')}} @endif</li>
                                     <li class="list-group-item">Marriage Status : {{$view->marriage}}</li>
                                     <li class="list-group-item">Personal Number : <a href="tel:{{$view->emp_phone}}">{{$view->emp_phone}}</a></li>
                                     @if($view->emp_phone2 != '')
