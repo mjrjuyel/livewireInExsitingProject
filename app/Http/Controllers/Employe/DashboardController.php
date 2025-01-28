@@ -46,15 +46,21 @@ class DashboardController extends Controller
             $formatted_end_date = $end_date->format('Y-m-d');
         
             // Leave calculation (Paid/Unpaid)
+            // Leave calculation (Paid/Unpaid)
             $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
-                ->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
-                ->orWhereBetween('end_date', [$formatted_start_date, $formatted_end_date])
-                ->get();
-            }else{
+            ->where(function ($query) use ($formatted_start_date, $formatted_end_date) {
+                $query->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
+                      ->whereBetween('end_date', [$formatted_start_date, $formatted_end_date]);
+            })->get();
+            }
+            else{
                 
-                $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
-                ->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
-                ->orWhereBetween('end_date', [$view->eva_start_date, $view->eva_end_date])
+                $Evaleaves = Leave::where('emp_id', $view->id)
+                ->where('status', 2)
+                ->where(function ($query) use ($view) {
+                    $query->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
+                          ->whereBetween('end_date', [$view->eva_start_date, $view->eva_end_date]);
+                })
                 ->get();
             }
 
