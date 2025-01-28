@@ -93,7 +93,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Cost Per Quantity<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="number"  class="form-control" name="perCost" value="{{$edit->quantity}}"
+                                    <input type="number"  class="form-control" name="perCost" value="{{$edit->per_cost}}"
                                         placeholder="Each Meal Price">
                                     @error('perCost')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

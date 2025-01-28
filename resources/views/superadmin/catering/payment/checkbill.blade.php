@@ -55,38 +55,27 @@
                                 <table class="table table-nowrap text-center">
                                     <thead>
                                         <tr>
-                                            <th>Date</th>
-                                            <th>Total Quantity</th>
-                                            <th>Cost Each Meal</th>
-                                            <th>Total Cost</th>
+                                            <th>Payment Date</th>
+                                            <th>Payment Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($runningMonth as $allFood)
+                                        @foreach($runningPaymentAll as $payment)
                                         <tr>
                                             <td>
-                                                {{ $allFood->order_date->format('d-M-Y') }}
+                                                {{ $payment->payment_date->format('d-M-Y') }}
                                             </td>
                                             <td>
-                                                {{ $allFood->quantity }}
+                                                {{ $payment->payment }}
                                             </td>
-                                            <td>
-                                                {{ $allFood->per_cost }}
-                                            </td>
-
-                                            <td>
-                                                {{ $allFood->total_cost }}
-                                            </td>
+                                           
                                         </tr>
                                         @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td class="text-bold text-dark text-end">Total Meal This Month :</td>
-                                            <td class="text-bold text-info">{{$runningMonth->sum('quantity')}}</td>
-                                            <td class="text-bold text-dark text-end">Total :</td>
-                                            <td class="text-bold text-info">{{$runningMonth->sum('total_cost')}}</td>
-                                            <td></td>
+                                            <td class="text-bold text-dark text-end">Total Payment In {{date('F')}}:</td>
+                                            <td class="text-bold text-info">{{$runningPaymentAll->sum('payment')}}.00</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -107,21 +96,35 @@
                                 <h5 class="small"><b>Current Month History ( {{date('M-Y')}})</b></h5>
 
                                 <small class="text-info">
+                                    <p><b>Current Month Total Meal Quantity:  </b>{{($runningMonth->sum('quantity'))}}</p>
                                     <p><b>Current Month Total Cost:  </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
                                     <p><b>Current Month Total Payment </b> :  {{number_format($runningPayment,'2','.','')}}</p>
                                 </small>
                             </div>
                         </div>
+                        @php
+                            $previousDue = $preTotalCost-$preTotalPayment;
+                            // pre extra paymnent
+                            $preExtraBalance = $preTotalPayment - $preTotalCost;
+
+                            $AllTotalDue = ($previousDue > 0 ? $previousDue : 0) + $runningMonth->sum('total_cost');
+                            $alltotalPayment = ($preExtraBalance > 0 ? $preExtraBalance : 0) + $runningPayment;
+                            $AfterPaymentDue = $AllTotalDue - $alltotalPayment; 
+                                                   
+                        @endphp
                         <div class="col-sm-6">
                             <div class="text-end mt-4">
-                                <p><b>Current Month Total:  </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
-
-                                <p class="text-danger">Previous Dues <span class="text-info">( Pre Month Due : {{number_format($preTotalCost-$preTotalPayment,'2','.','')}} - Running Month Payment {{$runningPayment}} )</span> :  {{number_format($preDue,'2','.','')}}</p>
-
-
-                                <p class="text-info">SubTotal : {{number_format($subtotal,'2','.','')}}</p>
+                                <p><b>Current ( {{date('M-Y')}}) Month Total Meal Cost:  </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
+                                <p class="text-danger">Past Months Previous Dues <span class="text-info">: @if($previousDue > 0){{number_format($previousDue,'2','.','')}} @else 0.00 @endif </p>
                                 <hr>
-                                <h3>Total Due : {{number_format($totalDue,'2','.','')}}</h3>
+                                <p class="text-success"><b>Current ( {{date('M-Y')}}) Month Total Payment : <span class="text-info">@if($runningPayment > 0){{number_format($runningPayment,'2','.','')}} @else 0.00 @endif </p>
+
+                                <p class="text-success"><b>Past Months Extra Balance : <span class="text-info">@if($preExtraBalance > 0){{number_format($preExtraBalance,'2','.','')}} @else 0.00 @endif </p>
+
+                                <hr>
+                                <h3 class="text-danger">Total Due : @if($AfterPaymentDue > 0){{number_format($AfterPaymentDue,'2','.','')}} @else 0.00 @endif</h3>
+                                <hr>
+                                <h3 class="text-success">Extra Balance : @if($AfterPaymentDue < 0){{ $AfterPaymentDue * -1 }}.00 @else 0.00 @endif</h3>
                             </div>
                         </div>
                     </div>

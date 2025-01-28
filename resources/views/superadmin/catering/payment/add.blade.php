@@ -89,8 +89,13 @@ swal({
                             </div>
                             <div class="col-3">
                                 <div class="mb-3">
-                                    <label class="form-label">Your Current Due<span class="text-danger"> {{number_format($totalDue,'2','.','')}} </span>:
+                                    @if($totalDue > 0)
+                                    <label class="form-label">Your Current Due<span class="text-danger">  {{number_format($totalDue,'2','.','')}} </span>:
                                     </label>
+                                    @else
+                                     <label class="form-label">Already Your Paid Amount Is Extra Than Due : <span class="text-danger">  {{number_format($totalDue,'2','.','') * -1 }} </span>
+                                    </label>
+                                    @endif
                                     <label class="form-label">Payment<span class="text-danger">* </span>:
                                     </label>
                                     <input type="number" class="form-control" name="amount" value="{{old('totalLunch')}}"

@@ -25,11 +25,13 @@ class CateringPaymentController extends Controller
     $runningMonth = CateringFood::whereMonth('order_date',date('m'))->whereYear('order_date',date('Y'))->orderBy('order_date','ASC')->get();
     $runningPayment = CateringPayment::whereMonth('payment_date',date('m'))->whereYear('payment_date',date('Y'))->sum('payment');
 
+    $runningPaymentAll = CateringPayment::whereMonth('payment_date',date('m'))->whereYear('payment_date',date('Y'))->orderBy('payment_date','ASC')->get();
+
     // $prePayment = CateringPayment::where('month',date('Y-m',strtotime(' - 1 month')))->latest('id')->first();
     $preTotalCost = CateringFood::whereMonth('order_date','!=',now()->month)->sum('total_cost');
     $preTotalPayment = CateringPayment::whereMonth('payment_date','!=',now()->month)->sum('payment');
     // return $runningPayment;
-    return view('superadmin.catering.payment.checkbill',compact(['runningMonth','runningPayment','parseDate','preTotalCost','preTotalPayment']));
+    return view('superadmin.catering.payment.checkbill',compact(['runningMonth','runningPayment','parseDate','preTotalCost','preTotalPayment','runningPaymentAll']));
    }
 
    // Payment Insert
@@ -161,34 +163,46 @@ class CateringPaymentController extends Controller
    }
 
 //    delete
-    public function delete($id){
-        $userId = Crypt::decrypt($id);
-        $delete = CateringPayment::where('id',$userId)->first();
-        $delete->delete();
-        if($delete){
+    public function delete(Request $request){
+
+        $userId = CateringPayment::findOrFail($request->id);
+        $userId->delete();
+        if($userId){
         //     $admin = User::all();
         // // Update the auto-incrementing column values
         //     foreach ($admin as $index => $row) {
         //         $row->id = $index + 1;
         //         $row->save();
         //     }
-        Session::flash('error','One Extra Payment Delete!');
+        Session::flash('success','One Extra Payment Delete!');
         return redirect()->back();
         }
     }
 
-    public function searchMonth(){
-        $search_date = new DateTime(now());
-        $allPayment = CateringPayment::whereYear('payment_date',now()->year)->latest('payment_date')->get();
+    public function searchMonth($month){
+        $search_date = new DateTime($month);
+
+        $parse_search = Carbon::parse($search_date);
+        $allPayment =CateringPayment::whereMonth('payment_date',$parse_search->month)->whereYear('payment_date',$parse_search->year)->latest('payment_date')->get();
         $totalPayment =  $allPayment->sum('payment');
         // return $allPayment->sum('payment');
         return view('superadmin.catering.payment.indexMonth',compact(['allPayment','totalPayment','search_date']));
        }
-    public function searchYear(){
-        $search_date = new DateTime(now());
-        $allPayment = CateringPayment::whereYear('payment_date',now()->year)->latest('payment_date')->get();
+    public function searchYear($year){
+        $search_date = new DateTime($year);
+
+        $parseMonth = new DateTime($search_date->format('d-m-Y'));
+
+        $preYear = new DateTime($search_date->format('Y'));
+        $preYear->modify('-1 year');
+        $nextYear = new DateTime($search_date->format('Y'));
+        $nextYear->modify('+1 year');
+
+        return "preyear " . $preYear->format('y') . "Present ". $search_date->format('y') . " "
+        $parse_search = Carbon::parse($search_date);
+        $allPayment = CateringPayment::whereYear('payment_date',$parse_search->year)->latest('payment_date')->get();
         $totalPayment =  $allPayment->sum('payment');
-        // return $allPayment->sum('payment');
+        // return $search_date->format('Y-m-d');
         return view('superadmin.catering.payment.indexMonth',compact(['allPayment','totalPayment','search_date']));
        }
 

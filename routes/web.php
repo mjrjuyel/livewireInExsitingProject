@@ -255,7 +255,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('superadmin.cateringfood.view');
                 Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
                 Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
-                Route::delete('/superadmin/cateringfood/delete/{id}',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
+                Route::delete('/superadmin/cateringfood/delete',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
                 
                 // Catering Payment
                 Route::get('/superadmin/cateringpayment',[CateringPaymentController::class,'index'])->name('superadmin.cateringpayment');
@@ -265,14 +265,14 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/cateringpayment/view/{id}',[CateringPaymentController::class,'view'])->name('superadmin.cateringpayment.view');
                 Route::get('/superadmin/cateringpayment/edit/{id}',[CateringPaymentController::class,'edit'])->name('superadmin.cateringpayment.edit');
                 Route::post('/superadmin/cateringpayment/update',[CateringPaymentController::class,'update'])->name('superadmin.cateringpayment.update');
-                Route::delete('/superadmin/cateringpayment/delete/{id}',[CateringPaymentController::class,'delete'])->name('superadmin.cateringpayment.delete');
+                Route::delete('/superadmin/cateringpayment/delete',[CateringPaymentController::class,'delete'])->name('superadmin.cateringpayment.delete');
 
                 // Search by month
                 Route::get('/superadmin/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
                 Route::get('/superadmin/cateringfood/year/{month}',[CateringFoodController::class,'searchYear']);
                 // Search by month Payment
-                Route::get('/superadmin/cateringpayment/{month}',[CateringFoodController::class,'searchMonth']);
-                Route::get('/superadmin/cateringpayment/year/{month}',[CateringFoodController::class,'searchYear']);
+                Route::get('/superadmin/cateringpayment/{month}',[CateringPaymentController::class,'searchMonth']);
+                Route::get('/superadmin/cateringpayment/year/{year}',[CateringPaymentController::class,'searchYear']);
             });
 
     // Not As A Super Admin // 404 for not authrized
