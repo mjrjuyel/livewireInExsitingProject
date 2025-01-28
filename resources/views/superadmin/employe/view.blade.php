@@ -61,7 +61,7 @@
             
             $totalEvaLeavePaid  = $Evaleaves->sum('total_paid');
             $totalEvaLeaveUnPaid  = $Evaleaves->sum('total_unpaid');
-
+            
             $totalEvaLeave = $totalEvaLeavePaid + $totalEvaLeaveUnPaid;
         @endphp
         <div class="col-md-6 col-xl-3">
@@ -366,9 +366,8 @@
                                     <li class="list-group-item">Office Located In : {{optional($view->officeBranch)->branch_name}}</li>
                                     <li class="list-group-item">Office Id Card Number : {{$view->emp_office_id_number}}</li>
                                     <li class="list-group-item">Work Schedule : {{$view->emp_office_work_schedule}}</li>
-                                    @if($view->emp_resign){
+                                    @if($view->emp_resign)
                                     <li class="list-group-item">Work Schedule : {{$view->emp_resign->format('d-M-Y')}}</li>
-                                    }
                                     @endif
                                 </ul>
                             </div>

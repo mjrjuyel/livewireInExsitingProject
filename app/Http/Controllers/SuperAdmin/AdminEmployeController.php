@@ -183,7 +183,8 @@ class AdminEmployeController extends Controller
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
          //Eva date Calculation
-         if($view->eva_end_date == null){
+         if($view->eva_end_date == null || $view->eva_end_date == ' '){
+            // return 'No Eva Date';
             $end_date = new DateTime($view->emp_join->format('Y-m-d'));
             $end_date->modify('+1 year');
 
@@ -194,19 +195,24 @@ class AdminEmployeController extends Controller
         
             // Leave calculation (Paid/Unpaid)
             $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
-                ->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
-                ->orWhereBetween('end_date', [$formatted_start_date, $formatted_end_date])
-                ->get();
-            }else{
+            ->where(function ($query) use ($formatted_start_date, $formatted_end_date) {
+                $query->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
+                      ->whereBetween('end_date', [$formatted_start_date, $formatted_end_date]);
+            })->get();
+            }
+            else{
                 
-                $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
-                ->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
-                ->orWhereBetween('end_date', [$view->eva_start_date, $view->eva_end_date])
+                $Evaleaves = Leave::where('emp_id', $view->id)
+                ->where('status', 2)
+                ->where(function ($query) use ($view) {
+                    $query->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
+                          ->whereBetween('end_date', [$view->eva_start_date, $view->eva_end_date]);
+                })
                 ->get();
             }
 
         
-        // return $Evaleaves->sum('total_unpaid');
+        // return $Evaleaves->sum('total_paid');
         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves']));
     }
 

@@ -198,7 +198,8 @@ class CateringPaymentController extends Controller
         $nextYear = new DateTime($search_date->format('Y'));
         $nextYear->modify('+1 year');
 
-        return "preyear " . $preYear->format('y') . "Present ". $search_date->format('y') . " "
+        return "preyear " . $preYear->format('y') . "Present ". $search_date->format('y') . " ";
+        
         $parse_search = Carbon::parse($search_date);
         $allPayment = CateringPayment::whereYear('payment_date',$parse_search->year)->latest('payment_date')->get();
         $totalPayment =  $allPayment->sum('payment');
