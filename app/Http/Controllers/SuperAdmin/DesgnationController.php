@@ -77,17 +77,18 @@ class DesgnationController extends Controller
         return view('superadmin.designation.view',compact('view'));
     }
 
-    public function delete($id){
-        $delete = Designation::where('id',$id)->first();
+    public function delete(Request $request){
+
+        $delete = Designation::findOrFail($request->id);
         $delete->delete();
         if($delete){
-        //     $superadmin = User::all();
+        //     $admin = User::all();
         // // Update the auto-incrementing column values
-        //     foreach ($superadmin as $index => $row) {
+        //     foreach ($admin as $index => $row) {
         //         $row->id = $index + 1;
         //         $row->save();
         //     }
-        Session::flash('success','Role Delete!');
+        Session::flash('error','One Designation Information Delete From The Application');
         return redirect()->back();
         }
     }

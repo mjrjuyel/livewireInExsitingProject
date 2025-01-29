@@ -76,7 +76,7 @@ class DepartmentController extends Controller
 
     public function delete(Request $request){
 
-        $delete = Department::findOrFail($reques->id);
+        $delete = Department::findOrFail($request->id);
         $delete->delete();
         if($delete){
         //     $admin = User::all();

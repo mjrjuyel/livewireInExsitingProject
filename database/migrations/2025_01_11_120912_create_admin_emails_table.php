@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('admin_emails', function (Blueprint $table) {
             $table->id();
             $table->string('email');
+            $table->integer('email_report')->default(1)->nullable();
+            $table->integer('email_leave')->default(1)->nullable();
+            $table->integer('email_summary')->default(1)->nullable();
             $table->integer('creator')->nullable();
             $table->integer('editor')->nullable();
             $table->timestamps();

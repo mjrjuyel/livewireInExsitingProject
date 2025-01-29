@@ -199,13 +199,17 @@ class LeaveFormController extends Controller
                                         'slug'=>'leav-'.uniqId(),
                                         'created_at'=>Carbon::now('UTC'),
                                     ]);
-            
-                                    // Send Mail to Admin
-                                    $getEmail = AdminEmail::where('id',1)->first();
-                                    $explode = explode(',',$getEmail->email);
-                                    // try {
-                                    foreach($explode as $email){
-                                        Mail::to($email)->send(new LeaveMailToAdmin($insert));
+
+                                    $adminEmail = AdminEmail::first();
+
+                                    if($adminEmail->email_leave == 1){
+                                        
+                                        $getEmail = AdminEmail::where('id',1)->first();
+                                        $explode = explode(',',$getEmail->email);
+                                        // try {
+                                        foreach($explode as $email){
+                                            Mail::to($email)->send(new LeaveMailToAdmin($insert));
+                                        }
                                     }
                                     // notification
                                     // auth()->user()->notify(new LeaveToAdminNotification($insert));

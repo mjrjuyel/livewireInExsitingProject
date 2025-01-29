@@ -95,13 +95,11 @@
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.department.view',Crypt::encrypt($department->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.department.edit',Crypt::encrypt($department->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
-                                                <li>
-                                                    <form action="{{ route('superadmin.department.delete',Crypt::encrypt($department->id)) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
-                                                    </form>
-                                                </li>
+                                                @if(Auth::user()->role_id == 1)
+                                                   <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$department->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                        </i>Delete</a>
+                                                   </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>
@@ -128,11 +126,11 @@
     <div class="modal-dialog ">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete an Amin Dashboard User? </h5>
+                <h5 class="modal-title" id="myModalLabel">Delete Office Depart Info? </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('dashboard.admin.delete')}}" method="post">
-            @method('delete')
+            <form action="{{route('superadmin.department.delete')}}" method="post">
+               @method('delete')
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>

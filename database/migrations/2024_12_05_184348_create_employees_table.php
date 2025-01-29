@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('emp_address',100)->nullable();
             $table->string('emp_present',100)->nullable();
             $table->string('emp_emer_contact',20)->nullable();
+            $table->string('emp_emer_name',50)->nullable();
             $table->string('emp_emer_relation',100)->nullable();
             $table->date('emp_dob',100)->nullable();
             $table->string('gender',20)->nullable();

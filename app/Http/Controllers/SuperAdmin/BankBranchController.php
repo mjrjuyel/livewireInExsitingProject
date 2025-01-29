@@ -29,7 +29,7 @@ class BankBranchController extends Controller
     public function insert(Request $request){
         $request->validate([
             'bank_id'=>'required',
-            'name'=>'required | unique:bank_branches,bank_branch_name,',
+            'name'=>'required',
         ]);
 
         $insert=BankBranch::create([
@@ -81,9 +81,9 @@ class BankBranchController extends Controller
         return view('superadmin.bank.branch.view',compact('view'));
     }
 
-    public function delete($id){
-        $userId = Crypt::decrypt($id);
-        $delete = BankBranch::where('id',$userId)->first();
+    public function delete(Request $request){
+
+        $delete = BankBranch::findOrFail($request->id);
         $delete->delete();
         if($delete){
         //     $admin = User::all();
@@ -92,7 +92,7 @@ class BankBranchController extends Controller
         //         $row->id = $index + 1;
         //         $row->save();
         //     }
-        Session::flash('error','One Bank Information Delete From The Application');
+        Session::flash('success','Delete A Bank Branch Name');
         return redirect()->back();
         }
     }

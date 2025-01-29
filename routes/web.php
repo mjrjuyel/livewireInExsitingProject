@@ -150,7 +150,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/designation/view/{id}',[DesgnationController::class,'view'])->name('superadmin.designation.view');
                 Route::get('/superadmin/designation/edit/{id}',[DesgnationController::class,'edit'])->name('superadmin.designation.edit');
                 Route::post('/superadmin/designation/update',[DesgnationController::class,'update'])->name('superadmin.designation.update');
-                Route::delete('/superadmin/designation/delete/{id}',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
+                Route::delete('/superadmin/designation/delete',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
 
                 // Role Management 
                 Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
@@ -168,7 +168,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/office_branch/edit/{id}',[OfficeBranchController::class,'edit'])->name('superadmin.office_branch.edit');
                 Route::post('/superadmin/office_branch/update',[OfficeBranchController::class,'update'])->name('superadmin.office_branch.update');
                 Route::get('/superadmin/office_branch/view/{id}',[OfficeBranchController::class,'view'])->name('superadmin.office_branch.view');
-                Route::delete('/superadmin/office_branch/delete/{id}',[OfficeBranchController::class,'delete'])->name('superadmin.office_branch.delete');
+                Route::delete('/superadmin/office_branch/delete',[OfficeBranchController::class,'delete'])->name('superadmin.office_branch.delete');
             
                 // Bank Detail
                 Route::get('/superadmin/bank_name',[BankNameController::class,'index'])->name('superadmin.bank_name');
@@ -177,7 +177,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/bank_name/edit/{id}',[BankNameController::class,'edit'])->name('superadmin.bank_name.edit');
                 Route::post('/superadmin/bank_name/update',[BankNameController::class,'update'])->name('superadmin.bank_name.update');
                 Route::get('/superadmin/bank_name/view/{id}',[BankNameController::class,'view'])->name('superadmin.bank_name.view');
-                Route::delete('/superadmin/bank_name/delete/{id}',[BankNameController::class,'delete'])->name('superadmin.bank_name.delete');
+                Route::delete('/superadmin/bank_name/delete',[BankNameController::class,'delete'])->name('superadmin.bank_name.delete');
                 
                 // Bank Branch
                 Route::get('/superadmin/bank_branch',[BankBranchController::class,'index'])->name('superadmin.bank_branch');
@@ -186,7 +186,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/bank_branch/edit/{id}',[BankBranchController::class,'edit'])->name('superadmin.bank_branch.edit');
                 Route::post('/superadmin/bank_branch/update',[BankBranchController::class,'update'])->name('superadmin.bank_branch.update');
                 Route::get('/superadmin/bank_branch/view/{id}',[BankBranchController::class,'view'])->name('superadmin.bank_branch.view');
-                Route::delete('/superadmin/bank_branch/delete/{id}',[BankBranchController::class,'delete'])->name('superadmin.bank_branch.delete');
+                Route::delete('/superadmin/bank_branch/delete',[BankBranchController::class,'delete'])->name('superadmin.bank_branch.delete');
             
                 // Department
                 Route::get('/superadmin/department',[DepartmentController::class,'index'])->name('superadmin.department');
@@ -195,7 +195,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/department/edit/{id}',[DepartmentController::class,'edit'])->name('superadmin.department.edit');
                 Route::post('/superadmin/department/update',[DepartmentController::class,'update'])->name('superadmin.department.update');
                 Route::get('/superadmin/department/view/{id}',[DepartmentController::class,'view'])->name('superadmin.department.view');
-                Route::delete('/superadmin/department/delete/{id}',[DepartmentController::class,'delete'])->name('superadmin.department.delete');
+                Route::delete('/superadmin/department/delete',[DepartmentController::class,'delete'])->name('superadmin.department.delete');
 
                 // Leave Management 
                 Route::get('/superadmin/leavetype',[LeaveTypeController::class,'index'])->name('superadmin.leavetype');
@@ -246,7 +246,9 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/email',[AdminEmailController::class,'index'])->name('superadmin.email');
                 Route::post('/superadmin/email/update',[AdminEmailController::class,'update'])->name('superadmin.email.update');
 
-                Route::post('/superadmin/activeDailyReportMail',[AdminEmailController::class,'dailyMailActive'])->name('superadmin.activeDailyReportMail');
+                Route::post('/superadmin/activeDailyReportMail',[AdminEmailController::class,'dailyReportMailActive'])->name('superadmin.activeDailyReportMail');
+                Route::post('/superadmin/activeDailyLeaveMail',[AdminEmailController::class,'dailyLeaveMailActive'])->name('superadmin.activeDailyLeaveMail');
+                Route::post('/superadmin/activeDailySummaryMail',[AdminEmailController::class,'dailySummaryMailActive'])->name('superadmin.activeDailySummaryMail');
                 
     });
 

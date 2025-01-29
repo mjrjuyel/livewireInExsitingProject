@@ -10,6 +10,6 @@ Artisan::command('inspire', function () {
 
 
 // Daily Summary Report
-Schedule::command('app:send-daily-report-summary')->dailyAt('23:00');
+Schedule::command('app:send-daily-report-summary')->dailyAt('23:55');
 
 

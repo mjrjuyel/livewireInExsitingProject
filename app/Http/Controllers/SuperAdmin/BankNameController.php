@@ -78,9 +78,9 @@ class BankNameController extends Controller
         return view('superadmin.bank.name.view',compact('view'));
     }
 
-    public function delete($id){
-        $userId = Crypt::decrypt($id);
-        $delete = BankName::where('id',$userId)->first();
+    public function delete(Request $request){
+
+        $delete = BankName::findOrFail($request->id);
         $delete->delete();
         if($delete){
         //     $admin = User::all();
@@ -89,7 +89,7 @@ class BankNameController extends Controller
         //         $row->id = $index + 1;
         //         $row->save();
         //     }
-        Session::flash('error','One Bank Information Delete From The Application');
+        Session::flash('error','Delete A Bank Name');
         return redirect()->back();
         }
     }

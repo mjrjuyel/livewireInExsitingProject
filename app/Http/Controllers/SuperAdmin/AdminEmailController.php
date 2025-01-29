@@ -36,7 +36,7 @@ class AdminEmailController extends Controller
         }
     }
 
-    public function dailyMailActive(Request $request){
+    public function dailyReportMailActive(Request $request){
        
             $update = AdminEmail::where('id',1)->update([
                 'email_report'=>$request->dailyMail,
@@ -45,13 +45,48 @@ class AdminEmailController extends Controller
             ]);
             $active = AdminEmail::first();
             if($active->email_report != ''){
-                Session::flash('success','Daily Reports Email Receive On Admin Gmail Activated');
+                Session::flash('success','Employee Reports Data Receive On Admin Gmail Activated');
                 return redirect()->back();
             }else{
-                Session::flash('success','Daily Reports Email Receive On Admin Gmail Deactivated');
+                Session::flash('success','Employee Reports Data Receive On Admin Gmail Deactivated');
                 return redirect()->back();
             }
+            
+        }
 
+    public function dailyLeaveMailActive(Request $request){
+       
+            $update = AdminEmail::where('id',1)->update([
+                'email_leave'=>$request->dailyMail,
+                'editor'=>Auth::user()->id,
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+            $active = AdminEmail::first();
+            if($active->email_report != ''){
+                Session::flash('success','Leave Request Email Receive On Admin Gmail Activated');
+                return redirect()->back();
+            }else{
+                Session::flash('success','Leave Request Email Receive On Admin Gmail Deactivated');
+                return redirect()->back();
+            }
+            
+        }
+        
+    public function dailySummaryMailActive(Request $request){
+       
+            $update = AdminEmail::where('id',1)->update([
+                'email_summary'=>$request->dailyMail,
+                'editor'=>Auth::user()->id,
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+            $active = AdminEmail::first();
+            if($active->email_report != ''){
+                Session::flash('success','Daily Summary To  Admin Gmail Activated');
+                return redirect()->back();
+            }else{
+                Session::flash('success','Daily Summary To Admin Gmail Activated');
+                return redirect()->back();
+            }
             
         }
         

@@ -74,9 +74,9 @@ class OfficeBranchController extends Controller
         return view('superadmin.office_branch.view',compact('view'));
     }
 
-    public function delete($id){
-        $userId = Crypt::decrypt($id);
-        $delete = OfficeBranch::where('id',$userId)->first();
+    public function delete(Request $request){
+
+        $delete = OfficeBranch::findOrFail($request->id);
         $delete->delete();
         if($delete){
         //     $admin = User::all();
