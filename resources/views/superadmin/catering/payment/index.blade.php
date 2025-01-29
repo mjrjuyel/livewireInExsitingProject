@@ -49,9 +49,9 @@
     use Carbon\Carbon;
         $parseMonth = new DateTime($search_date->format('d-m-Y'));
 
-        $preYear = new DateTime($search_date->format('Y'));
+        $preYear = new DateTime($search_date->format('d-m-Y'));
         $preYear->modify('-1 year');
-        $nextYear = new DateTime($search_date->format('Y'));
+        $nextYear = new DateTime($search_date->format('d-m-Y'));
         $nextYear->modify('+1 year');
 
     @endphp

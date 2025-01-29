@@ -366,10 +366,7 @@
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="{{route('superadmin.cateringpayment')}}" class="side-nav-link">
-                                <span class="menu-icon"><i class="mdi mdi-history"></i></span>
-                                <span class="menu-text"> Payment History </span>
-                            </a>
+                            
                         </li>
                     </ul>
                 </div>

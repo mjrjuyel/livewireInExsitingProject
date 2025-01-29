@@ -48,14 +48,15 @@
     @php
     use Carbon\Carbon;
     $parseMonth = new DateTime($search_date->format('d-m-Y'));
-    echo $parseMonth->format('d-M-Y');
-    $preYear = new DateTime($search_date->format('Y'));
-    $preYear->modify('-1 year');
 
-    $nextYear = new DateTime($search_date->format('Y'));
+    $preYear = new DateTime($search_date->format('d-m-Y'));
+    $preYear->modify('-1 year');
+    $nextYear = new DateTime($search_date->format('d-m-Y'));
     $nextYear->modify('+1 year');
 
+    
     @endphp
+    
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -63,7 +64,6 @@
                     <div class="row mb-2">
                         <div class="col-2">
                             <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
-
                         </div>
                         <div class="col-8">
                             <div class="row text-center">

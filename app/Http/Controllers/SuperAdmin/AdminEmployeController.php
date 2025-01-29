@@ -48,6 +48,7 @@ class AdminEmployeController extends Controller
             'marriage'=>'required',
             'dob'=>'required',
             'emerPhone'=>'required',
+            'emerName'=>'required',
             'emerRelation'=>'required',
             'add'=>'required',
             'sameAdd'=>'required',
@@ -109,6 +110,7 @@ class AdminEmployeController extends Controller
             'gender'=>$request['gender'],
             'marriage'=>$request['marriage'],
             'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_name'=>$request['emerName'],
             'emp_emer_relation'=>$request['emerRelation'],
             'emp_report_manager'=>$request['reporting'],
             'emp_depart_id'=>$request['department'],
@@ -159,7 +161,7 @@ class AdminEmployeController extends Controller
     
     // Fethch All Employer Data
     public function index(){
-        $employe = Employee::with(['emp_role','emp_desig'])->latest('id')->get();
+        $employe = Employee::with(['emp_role','emp_desig'])->where('emp_status','!=',0)->latest('id')->get();
         // return $employe;
         return view('superadmin.employe.index',compact('employe'));
     }
@@ -246,6 +248,7 @@ class AdminEmployeController extends Controller
             'marriage'=>'required',
             'dob'=>'required',
             'emerPhone'=>'required',
+            'emerName'=>'required',
             'emerRelation'=>'required',
             'add'=>'required',
             // 'sameAdd'=>'required',
@@ -332,6 +335,7 @@ class AdminEmployeController extends Controller
             'gender'=>$request['gender'],
             'marriage'=>$request['marriage'],
             'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_name'=>$request['emerName'],
             'emp_emer_relation'=>$request['emerRelation'],
             'emp_report_manager'=>$request['reporting'],
             'emp_depart_id'=>$request['department'],
@@ -373,7 +377,6 @@ class AdminEmployeController extends Controller
 
         if($update){
             if(!empty($request->resign)){
-                
                     Employee::where('id',$id)->update([
                         'emp_status'=>3
                     ]);

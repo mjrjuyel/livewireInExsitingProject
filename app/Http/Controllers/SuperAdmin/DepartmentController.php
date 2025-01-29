@@ -74,9 +74,9 @@ class DepartmentController extends Controller
         return view('superadmin.department.view',compact('view'));
     }
 
-    public function delete($id){
-        $userId = Crypt::decrypt($id);
-        $delete = Department::where('id',$userId)->first();
+    public function delete(Request $request){
+
+        $delete = Department::findOrFail($reques->id);
         $delete->delete();
         if($delete){
         //     $admin = User::all();

@@ -204,6 +204,9 @@
 
                                     <li class="list-group-item">Emergency Contact Number : <a href="tel:{{$view->emp_emer_contact}}">{{$view->emp_emer_contact}}</a></li>
 
+                                    @if($view->emp_emer_name != '')
+                                    <li class="list-group-item">Who : {{$view->emp_emer_name}}</li>
+                                    @endif
                                     @if($view->emp_emer_relation != '')
                                     <li class="list-group-item">Who : {{$view->emp_emer_relation}}</li>
                                     @endif

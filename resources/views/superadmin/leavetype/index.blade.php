@@ -80,13 +80,11 @@
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.leavetype.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.leavetype.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                @if(Auth::user()->role_id == 1)
                                                 <li>
-                                                    <form action="{{ route('superadmin.leavetype.delete',$role->id) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
-                                                    </form>
+                                                    <a href="#" id="delete" data-id="{{$role->id}}" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert"></i>Delete</a>
                                                 </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>
@@ -107,5 +105,30 @@
 </div>
 
 </div> <!-- container -->
+
+{{-- soft delete MOdal  --}}
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete an Employee Leave Request Data </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('superadmin.leavetype.delete')}}" method="post">
+            @method('delete')
+                @csrf
+                <div class="modal-body modal_body">
+                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                    <input type="hidden" name="id" id="modal_id" value="">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 @endsection

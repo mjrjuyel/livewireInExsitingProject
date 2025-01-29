@@ -101,14 +101,14 @@
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
                                                 </li>
+
+                                                @php
+                                                    $role = App\Models\UserRole::all();
+                                                @endphp
                                                 @if(Auth::user()->role_id == 1)
-                                                <li>
-                                                    <form action="{{ route('dashboard.admin.delete',Crypt::encrypt($admin->id)) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="dropdown-item  text-danger" type="sumbit"><i class="mdi mdi-delete"></i>Delete</button>
-                                                    </form>
-                                                </li>
+                                                   <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$admin->id}}"      data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                        </i>Delete</a>
+                                                   </li>
                                                 @endif
                                             </ul>
                                         </div>
@@ -132,15 +132,16 @@
 </div> <!-- container -->
 
 {{-- delete modal --}}
+
 {{-- soft delete MOdal  --}}
 <div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                <h5 class="modal-title" id="myModalLabel">Delete an Amin Dashboard User?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.employe.softdelete')}}" method="post">
+            <form action="{{route('superadmin.view.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
@@ -156,6 +157,39 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+
+{{-- soft delete MOdal  --}}
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete an Amin Dashboard User? </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('dashboard.admin.delete')}}" method="post">
+            @method('delete')
+                @csrf
+                <div class="modal-body modal_body">
+                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                    <input type="hidden" name="id" id="modal_id" value="">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+$(document).ready(function () {
+    $('#datatable').DataTable({
+        ordering: false // Disables ordering for all columns
+    });
+});
+</script>
 @endsection
 
 @section('js')

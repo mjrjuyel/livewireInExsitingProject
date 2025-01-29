@@ -21,7 +21,7 @@ class AdminProfileController extends Controller
 {
 
     public function index(){
-        $alladmin = User::where('status',1)->orderBy('role_id')->get();
+        $alladmin = User::where('status',1)->orderBy('id','ASC')->get();
         // return $alladmin;
         return view('superadmin.adminprofile.index',compact('alladmin'));
     }
@@ -169,13 +169,41 @@ class AdminProfileController extends Controller
         return redirect()->back();
     }
 
+     // soft Delete
+     public function softDelete(Request $request){
+        $slug = $request['id'];
+        
+        $softdelete = User::where('status',1)->where('id',$slug)->update([
+            'status'=>0,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+        if($softdelete){
+            Session::flash('error','Moved Into Trash !');
+            return redirect()->back();
+        }
+    }
+
+    public function restore(Request $request){
+
+        $id = $request['id'];
+
+        $store = User::where('id',$id)->update([
+            'status'=>1,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+
+        if($store){
+            Session::flash('success','Daily Report Restore!');
+            return redirect()->back();
+        }
+    }
     // Delete
-    public function delete($id){
-        $userId = Crypt::decrypt($id);
-        $delete = User::where('id',$userId)->first();
+    public function delete(Request $request){
+
+        $delete = User::findOrFail($request->id);
         $delete->delete();
         if($delete){
-        Session::flash('success','Admin Delete Successfully!');
+        Session::flash('success','SuperAdmin Dashboard User Delete Successfully!');
         return redirect()->back();
         }
     }

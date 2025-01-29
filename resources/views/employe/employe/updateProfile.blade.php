@@ -246,6 +246,16 @@
 
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
+                                            <label>Emergency Contact Name <span class="text-danger">*</span> :</label>
+                                            <input name="emerName" type="number" value="{{$edit->emp_emer_name }}" class="required form-control">
+                                            @error('emerName')
+                                            <small class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group clearfix">
                                             <label>Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
 
                                             <input name="emerRelation" type="text" value="{{$edit->emp_emer_relation }}" class="required form-control">

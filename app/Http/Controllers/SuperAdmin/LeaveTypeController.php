@@ -69,8 +69,8 @@ class LeaveTypeController extends Controller
         return view('superadmin.leavetype.view',compact('view'));
     }
 
-    public function delete($id){
-        $delete = LeaveType::where('id',$id)->first();
+    public function delete(Request $request){
+        $delete = LeaveType::findOrFail($request->id);
         $delete->delete();
         if($delete){
         //     $admin = User::all();

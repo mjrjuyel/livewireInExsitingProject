@@ -128,17 +128,41 @@ class SuperAdminLeaveController extends Controller
         
     }
 
-    public function delete($slug){
-        $delete = Leave::where('slug',$slug)->first();
+     // soft Delete
+     public function softDelete(Request $request){
+        $slug = $request['id'];
+        
+        $softdelete = Leave::where('status','!=',0)->where('id',$slug)->update([
+            'status'=>0,
+            'editor'=>Auth::user()->id,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+        if($softdelete){
+            Session::flash('error','Moved Into Trash !');
+            return redirect()->back();
+        }
+    }
+
+    public function restore(Request $request){
+
+        $id = $request['id'];
+
+        $store = Leave::where('id',$id)->update([
+            'status'=>1,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+
+        if($store){
+            Session::flash('success','Restore Employee Leave Data');
+            return redirect()->back();
+        }
+    }
+    // Delete
+    public function delete(Request $request){
+        $delete = Leave::findOrFail($request->id);
         $delete->delete();
         if($delete){
-            $leave = Leave::all();
-        // Update the auto-incrementing column values
-            foreach ($leave as $index => $row) {
-                $row->id = $index + 1;
-                $row->save();
-            }
-        Session::flash('success','Leave Application Delete');
+        Session::flash('success','Request Employee Leave Data Delete');
         return redirect()->back();
         }
     }

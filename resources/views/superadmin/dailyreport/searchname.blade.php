@@ -56,26 +56,26 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{route('superadmin.dailyreport.searchname')}}" method="">
-                       @csrf
+                        @csrf
                         <div class="row">
                             <div class="col-2">
                                 <label class="form-label">Search by Name: </label>
-                                <select class="form-control" data-toggle="select2" name="id"  data-placeholder="Choose ...">
+                                <select class="form-control" data-toggle="select2" name="id" data-placeholder="Choose ...">
                                     @foreach($name as $name)
-                                       <option value="{{$name->submit_by}}" @if($name->submit_by == $recentName->id) Selected @endif>{{$name->employe->emp_name}}</option>
+                                    <option value="{{$name->submit_by}}" @if($name->submit_by == $recentName->id) Selected @endif>{{$name->employe->emp_name}}</option>
                                     @endforeach
-                                </select> 
+                                </select>
                             </div>
                             @if($alldata->count() != null)
-                            <div class="col-4" style="margin-top: 20px;"> 
+                            <div class="col-4" style="margin-top: 20px;">
                                 <button class="btn btn-danger" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
                             </div>
                             @endif
                             <div class="col-5 text-end " style="margin-top: 24px;">
-                               <a href="{{route('superadmin.dailyreport')}}" class="btn btn-primary">All Report</a>
+                                <a href="{{route('superadmin.dailyreport')}}" class="btn btn-primary">All Report</a>
                             </div>
                         </div>
-                     </form>
+                    </form>
                     <div class="mt-5">
                         <table class="table table-centered text-center" id="dataTable">
                             <thead class="table-light">
@@ -118,37 +118,13 @@
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
-                                                <li><a href="#" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
-                                                        </i>Delete</a></li>
+                                                <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                        </i>Delete</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
-
-                                {{--Soft Delete Modal --}}
-                                <div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog ">
-                                        <div class="modal-content bg-warning">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                            </div>
-                                            <form action="{{route('superadmin.dailyreport.softdelete')}}" method="post">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                                                    <input type="hidden" name="slug" value="{{$data->slug}}">
-                                                </div>
-                                                
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
-                                                </div>
-                                            </form>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div>
                                 @endforeach
 
 
@@ -165,12 +141,38 @@
 
 </div> <!-- container -->
 
+{{-- soft delete MOdal  --}}
+<div id="softDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('superadmin.dailyreport.softdelete')}}" method="post">
+                @csrf
+                <div class="modal-body modal_body">
+                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                    <input type="text" name="id" id="modal_id" value="">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
 <script>
-$(document).ready(function () {
-    $('#dataTable').DataTable({
-        ordering: false // Disables ordering for all columns
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            ordering: false // Disables ordering for all columns
+        });
     });
-});
+
 </script>
 @endsection
 
@@ -189,13 +191,13 @@ $(document).ready(function () {
 <script src="{{ asset('contents/admin') }}/assets/js/pages/table-datatable.js"></script>
 
 <script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
-    <script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
 @endsection

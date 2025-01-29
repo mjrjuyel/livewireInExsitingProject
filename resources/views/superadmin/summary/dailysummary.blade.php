@@ -68,41 +68,41 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Daily Summary of {{config('app.name','Laravel')}}</h1>
+            <h1>Daily Summary of {{config('app.name','Laravel')}} </h1>
             <p>Date: <span class="highlight">{{ now()->format('d-M-Y') }}(Today)</span></p>
         </div>
 
         <div class="content">
             <div class="content-item">
-                <span class="label">Total Reports Submitted</span>
+                <span class="label">Total Report Submitted</span>
                 <span class="value highlight">{{ $data['totalReports'] }}</span>
             </div>
             <div class="content-item">
-                <span class="label">Total Employee Who Submitted Reports </span>
+                <span class="label">Total Employee Who Submitted Reports (Employee Count)</span>
                 <span class="value highlight">{{ $data['totalEmployees'] }}</span>
             </div>
             <div class="content-item">
-                <span class="label">Total Leave Requests Submitted</span>
+                <span class="label">Total Leave Request Submitted Today</span>
                 <span class="value highlight">{{ $data['totalLeaves'] }}</span>
             </div>
             <div class="content-item">
-                <span class="label">Total Employees Who Sent Leave Requests</span>
+                <span class="label">How Many Employee Sent Leave Request Today ?</span>
                 <span class="value highlight">{{ $data['totalLeaveEmploye'] }}</span>
             </div>
         </div>
 
         <div class="content">
             <div class="content-item">
-                <span class="label">Total Today Meal : </span>
+                <span class="label">Today's Total Meal Quantity : </span>
                 <span class="value highlight">{{ $data['total_order'] }}</span>
             </div>
             <div class="content-item">
-                <span class="label">Total Cost Of Today Meal</span>
+                <span class="label">Total Cost Of Meal</span>
                 <span class="value highlight">{{ $data['total_cost'] }}</span>
             </div>
             <div class="content-item">
                 <span class="label">Any Payment in Catering?</span>
-                <span class="value highlight">{{ $data['today_payment'] }}.00</span>
+                <span class="value highlight">{{ $data['today_payment'] }}</span>
             </div>
         </div>
 

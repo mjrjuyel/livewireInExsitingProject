@@ -29,7 +29,13 @@
                         <div class="float-sm-start">
                             <h4 class="text-uppercase mt-0">{{ config('app.name', 'Laravel') }} Catering Expense </h4>
                         </div>
-                        <div class="float-sm-end mt-4 mt-sm-0">
+                        <div class="row float-end">
+                           <div class="col-md-12">
+                             <a href="{{route('superadmin.cateringpayment')}}" class="btn btn-primary" style="display:inline-flex; gap:4px;">
+                                <span class="menu-icon" style="fonst-size:14px"><i class="mdi mdi-history"></i></span>
+                                <span class="menu-text"> Payment History </span>
+                             </a>
+                           </div>
                         </div>
                     </div>
                     <hr>
@@ -38,7 +44,7 @@
                             <div class="float-sm-start mt-4">
                                 <address>
                                     <strong>Current Payment Details.</strong><br>
-                                     Food Catering Service
+                                    Food Catering Service
                                     <abbr title="Phone">P:</abbr> (123) 456-7890
                                 </address>
                             </div>
@@ -68,7 +74,7 @@
                                             <td>
                                                 {{ $payment->payment }}
                                             </td>
-                                           
+
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -82,39 +88,39 @@
                             </div>
                         </div>
                     </div>
-                        @php
-                            
-                            $preDue = ($preTotalCost-$preTotalPayment) - $runningPayment;
+                    @php
 
-                            $subtotal = $runningMonth->sum('total_cost') + $preDue;
+                    $preDue = ($preTotalCost-$preTotalPayment) - $runningPayment;
 
-                            $totalDue = $runningMonth->sum('total_cost') + $preDue;
-                        @endphp
+                    $subtotal = $runningMonth->sum('total_cost') + $preDue;
+
+                    $totalDue = $runningMonth->sum('total_cost') + $preDue;
+                    @endphp
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="clearfix mt-5">
                                 <h5 class="small"><b>Current Month History ( {{date('M-Y')}})</b></h5>
 
                                 <small class="text-info">
-                                    <p><b>Current Month Total Meal Quantity:  </b>{{($runningMonth->sum('quantity'))}}</p>
-                                    <p><b>Current Month Total Cost:  </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
-                                    <p><b>Current Month Total Payment </b> :  {{number_format($runningPayment,'2','.','')}}</p>
+                                    <p><b>Current Month Total Meal Quantity: </b>{{($runningMonth->sum('quantity'))}}</p>
+                                    <p><b>Current Month Total Cost: </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
+                                    <p><b>Current Month Total Payment </b> : {{number_format($runningPayment,'2','.','')}}</p>
                                 </small>
                             </div>
                         </div>
                         @php
-                            $previousDue = $preTotalCost-$preTotalPayment;
-                            // pre extra paymnent
-                            $preExtraBalance = $preTotalPayment - $preTotalCost;
+                        $previousDue = $preTotalCost-$preTotalPayment;
+                        // pre extra paymnent
+                        $preExtraBalance = $preTotalPayment - $preTotalCost;
 
-                            $AllTotalDue = ($previousDue > 0 ? $previousDue : 0) + $runningMonth->sum('total_cost');
-                            $alltotalPayment = ($preExtraBalance > 0 ? $preExtraBalance : 0) + $runningPayment;
-                            $AfterPaymentDue = $AllTotalDue - $alltotalPayment; 
-                                                   
+                        $AllTotalDue = ($previousDue > 0 ? $previousDue : 0) + $runningMonth->sum('total_cost');
+                        $alltotalPayment = ($preExtraBalance > 0 ? $preExtraBalance : 0) + $runningPayment;
+                        $AfterPaymentDue = $AllTotalDue - $alltotalPayment;
+
                         @endphp
                         <div class="col-sm-6">
                             <div class="text-end mt-4">
-                                <p><b>Current ( {{date('M-Y')}}) Month Total Meal Cost:  </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
+                                <p><b>Current ( {{date('M-Y')}}) Month Total Meal Cost: </b>{{number_format($runningMonth->sum('total_cost'),'2','.','')}}</p>
                                 <p class="text-danger">Past Months Previous Dues <span class="text-info">: @if($previousDue > 0){{number_format($previousDue,'2','.','')}} @else 0.00 @endif </p>
                                 <hr>
                                 <p class="text-success"><b>Current ( {{date('M-Y')}}) Month Total Payment : <span class="text-info">@if($runningPayment > 0){{number_format($runningPayment,'2','.','')}} @else 0.00 @endif </p>
@@ -132,7 +138,7 @@
                     <div class="d-print-none">
                         <div class="float-end">
                             <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
-                                <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary waves-effect waves-light">Pay Bill</a>
+                            <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary waves-effect waves-light">Pay Bill</a>
                         </div>
                         <div class="clearfix"></div>
                     </div>

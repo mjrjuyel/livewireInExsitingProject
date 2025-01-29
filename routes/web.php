@@ -118,7 +118,9 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
                 Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
                 Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
-                Route::delete('/dashboard/admin/delete/{slug}',[AdminProfileController::class,'delete'])->name('dashboard.admin.delete');
+                Route::post('superadmin/view/softdelete',[AdminProfileController::class,'softDelete'])->name('superadmin.view.softdelete');
+                Route::post('superadmin/view/restore',[AdminProfileController::class,'restore'])->name('superadmin.view.restore');
+                Route::delete('/dashboard/admin/delete',[AdminProfileController::class,'delete'])->name('dashboard.admin.delete');
                 // Admin Edit Access 
                 // Route::get('/dashboard/admin/edit/{slug}',[AdminController::class,'edit'])->name('dashboard.admin.edit');
                 // Route::delete('/dashboard/admin/delete/{slug}',[AdminController::class,'delete'])->name('dashboard.admin.view');
@@ -202,7 +204,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/leavetype/edit/{id}',[LeaveTypeController::class,'edit'])->name('superadmin.leavetype.edit');
                 Route::post('/superadmin/leavetype/update',[LeaveTypeController::class,'update'])->name('superadmin.leavetype.update');
                 Route::get('/superadmin/leavetype/view/{id}',[LeaveTypeController::class,'view'])->name('superadmin.leavetype.view');
-                Route::delete('/superadmin/leavetype/delete/{id}',[LeaveTypeController::class,'delete'])->name('superadmin.leavetype.delete');
+                Route::delete('/superadmin/leavetype/delete/',[LeaveTypeController::class,'delete'])->name('superadmin.leavetype.delete');
                 
                 // Leave Application status
                 Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
@@ -213,7 +215,9 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/leave/cancled',[SuperAdminLeaveController::class,'cancled'])->name('superadmin.leave.cancled');
                 Route::get('/superadmin/leave/view/{slug}',[SuperAdminLeaveController::class,'view'])->name('superadmin.leave.view');
                 Route::post('/superadmin/leave/update',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.update');
-                Route::delete('/superadmin/leave/delete/{slug}',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.view');
+                Route::post('/superadmin/leave/softdelete',[SuperAdminLeaveController::class,'softDelete'])->name('superadmin.leave.softdelete');
+                Route::post('/superadmin/leave/restore',[SuperAdminLeaveController::class,'restore'])->name('superadmin.leave.restore');
+                Route::delete('/superadmin/leave/delete/',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.delete');
                 
                 // remove notifuication
                 Route::delete('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'removeNotification']);
