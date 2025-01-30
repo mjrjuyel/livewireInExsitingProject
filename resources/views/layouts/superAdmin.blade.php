@@ -404,6 +404,12 @@
                             </a>
                         </li>
 
+                        <li class="side-nav-item">
+                            <a href="{{route('superadmin.email')}}" class="side-nav-link">
+                                <span class="menu-text">Currency</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </li>
