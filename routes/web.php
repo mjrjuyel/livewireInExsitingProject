@@ -22,7 +22,7 @@ use App\Http\Controllers\SuperAdmin\BasicController;
 use App\Http\Controllers\SuperAdmin\DesgnationController; // super Admin can add more designation.
 use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; // Super Admin Manage Employee Leave request.
 use App\Http\Controllers\SuperAdmin\AdminDailyReportController; /// Super admin can view detail who send dailyreport.
-use App\Http\Controllers\SuperAdmin\AdminRoleController; /// Role Create,View,edit,delete.
+
 use App\Http\Controllers\SuperAdmin\LeaveSettingController; // Leave Settings .
 use App\Http\Controllers\SuperAdmin\TimeZoneController; // TimeZone Settings .
 use App\Http\Controllers\SuperAdmin\LeaveTypeController; // Leave Type Add, create, edit .
@@ -35,6 +35,9 @@ use App\Http\Controllers\SuperAdmin\CateringPaymentController; // Catring Food P
 use App\Http\Controllers\SuperAdmin\AdminEmailController; // Dynamic Email Controller.
 
 use App\Http\Controllers\SuperAdmin\RecyclebinController; // only Admin Can Access This
+
+use App\Http\Controllers\SuperAdmin\AdminRoleController; /// Role Create,View,edit,delete.
+use App\Http\Controllers\SuperAdmin\PermissionController; /// Role Create,View,edit,delete.
 
 
 Route::get('/', function () {
@@ -152,15 +155,6 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/designation/update',[DesgnationController::class,'update'])->name('superadmin.designation.update');
                 Route::delete('/superadmin/designation/delete',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
 
-                // Role Management 
-                Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
-                Route::get('/superadmin/role/add',[AdminRoleController::class,'add'])->name('superadmin.role.add');
-                Route::post('/superadmin/role/insert',[AdminRoleController::class,'insert'])->name('superadmin.role.insert');
-                Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
-                Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
-                Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
-                // Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
-
                 // Office Branch 
                 Route::get('/superadmin/office_branch',[OfficeBranchController::class,'index'])->name('superadmin.office_branch');
                 Route::get('/superadmin/office_branch/add',[OfficeBranchController::class,'add'])->name('superadmin.office_branch.add');
@@ -207,6 +201,10 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::delete('/superadmin/leavetype/delete/',[LeaveTypeController::class,'delete'])->name('superadmin.leavetype.delete');
                 
                 // Leave Application status
+                Route::get('/superadmin/leave/add',[SuperAdminLeaveController::class,'add'])->name('superadmin.leave.add');
+                Route::post('/superadmin/leave/insert',[SuperAdminLeaveController::class,'insert'])->name('superadmin.leave.insert');
+                Route::get('/superadmin/leave/edit/{id}',[SuperAdminLeaveController::class,'edit'])->name('superadmin.leave.edit');
+                Route::post('/superadmin/leave/updateleave',[SuperAdminLeaveController::class,'updateleave'])->name('superadmin.leave.updateleave');
                 Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
                 Route::get('/superadmin/leavemonth/{slug}',[SuperAdminLeaveController::class,'indexMonth'])->name('superadmin.leaveMonth');
                 Route::get('/superadmin/leaveYear/{slug}',[SuperAdminLeaveController::class,'indexYear'])->name('superadmin.leaveYear');
@@ -249,6 +247,25 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/activeDailyReportMail',[AdminEmailController::class,'dailyReportMailActive'])->name('superadmin.activeDailyReportMail');
                 Route::post('/superadmin/activeDailyLeaveMail',[AdminEmailController::class,'dailyLeaveMailActive'])->name('superadmin.activeDailyLeaveMail');
                 Route::post('/superadmin/activeDailySummaryMail',[AdminEmailController::class,'dailySummaryMailActive'])->name('superadmin.activeDailySummaryMail');
+
+                // Role Permission Management
+                // Permission Management
+                Route::get('/superadmin/permission',[PermissionController::class,'index'])->name('superadmin.permission');
+                Route::get('/superadmin/permission/add',[PermissionController::class,'add'])->name('superadmin.permission.add');
+                Route::post('/superadmin/permission/insert',[PermissionController::class,'insert'])->name('superadmin.permission.insert');
+                Route::get('/superadmin/permission/edit/{id}',[PermissionController::class,'edit'])->name('superadmin.permission.edit');
+                Route::post('/superadmin/permission/update',[PermissionController::class,'update'])->name('superadmin.permission.update');
+                Route::get('/superadmin/permission/view/{id}',[PermissionController::class,'view'])->name('superadmin.permission.view');
+                Route::delete('/superadmin/permission/delete',[PermissionController::class,'delete'])->name('superadmin.permission.delete');
+ 
+                // Role Management 
+                Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
+                Route::get('/superadmin/role/add',[AdminRoleController::class,'add'])->name('superadmin.role.add');
+                Route::post('/superadmin/role/insert',[AdminRoleController::class,'insert'])->name('superadmin.role.insert');
+                Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
+                Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
+                Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
+                // Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
                 
     });
 

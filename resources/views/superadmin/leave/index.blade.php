@@ -157,6 +157,10 @@ swal({
                                                         href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i
                                                             class="mdi mdi-view-agenda"></i>View</a></li>
                                                 </li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i
+                                                            class="mdi mdi-view-agenda"></i>Edit</a></li>
+                                                </li>
                                                 
                                                 @if(Auth::user()->role_id == 1)
                                                    <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">

@@ -1,4 +1,10 @@
 @extends('layouts.superAdmin')
+@section('css')
+<link href="{{ asset('contents/admin') }}/assets//libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets//libs/mohithg-switchery/switchery.min.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets//libs/multiselect/css/multi-select.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets//libs/select2/css/select2.min.css" rel="stylesheet" />
+@endsection
 @section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
@@ -69,7 +75,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Role Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="name" value="{{$edit->role_name}}"
+                                    <input type="text" class="form-control" name="name" value="{{$edit->name}}"
                                         placeholder="Enter Role">
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -79,6 +85,36 @@ swal({
 
                             </div>
                         </div>
+                        <div class="row mt-3">
+                            <div class="col-md-8 offset-md-2">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Permissions</h5>
+                                    </div>
+                                    <div class="card-body pt-2">
+                                        <div class="row g-3">
+                                        @foreach($permissions as $permission)
+                                            <div class="col-lg-2">
+                                                <p class="sub-header">
+                                                   {{$permission->name}} 
+                                                </p>
+                                                <div class="switchery-demo">
+                                                    <input type="checkbox" name="permission[]" value="{{$permission->name}}" {{ in_array($permission->id,$rolePermission) ? 'Checked' : ''}} data-plugin="switchery" data-color="#ff7aa3" />
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-5 offset-md-5">
+                            <button type="submit" class="btn btn-primary">Update
+                            </button>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <!-- end card-body-->
@@ -91,4 +127,16 @@ swal({
 </div> <!-- container -->
 
 <!--end Footer -->
+@endsection
+@section('js')
+<script src="{{ asset('contents/admin') }}/assets//libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/mohithg-switchery/switchery.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/select2/js/select2.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/jquery-mockjax/jquery.mockjax.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+<script src="{{ asset('contents/admin') }}/assets//js/pages/form-advanced.js"></script>
 @endsection
