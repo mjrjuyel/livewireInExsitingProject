@@ -18,7 +18,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: 106.0.62.88
-        username: eteamify_dev@eteamify.supreoxmail.com
+        username: team@team.supreox.com
         password: ${{ secrets.DEV_FTP_PASS }}
         
 
