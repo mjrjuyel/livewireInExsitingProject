@@ -117,6 +117,29 @@
                                         </ul>
                                     </div>
                                 </li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarPermission" aria-expanded="false" aria-controls="sidebarPermission" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-account-check"></i></span>
+                                        <span class="menu-text">Permission</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarPermission">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{route('superadmin.permission')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Permission</span>
+                                                </a>
+                                            </li>
+
+                                           <li class="side-nav-item">
+                                                <a href="{{route('superadmin.permission.add')}}" class="side-nav-link">
+                                                    <span class="menu-text">Add New Permission</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                   </li>
@@ -134,6 +157,22 @@
                                 <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
                                 <span class="menu-text"> Leave Application </span>
                             </a>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarManualLeave" aria-expanded="false" aria-controls="sidebarManualLeave" class="side-nav-link">
+                                <span class="menu-text">Manual Leave Insert</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarManualLeave">
+                                <ul class="sub-menu">
+                                    <li class="side-nav-item">
+                                        <a href="{{route('superadmin.leave.add')}}" class="side-nav-link">
+                                            <span class="menu-text">Add New</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
 
                         <li class="side-nav-item">
@@ -401,6 +440,12 @@
                         <li class="side-nav-item">
                             <a href="{{route('superadmin.email')}}" class="side-nav-link">
                                 <span class="menu-text">Email</span>
+                            </a>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a href="{{route('superadmin.email')}}" class="side-nav-link">
+                                <span class="menu-text">Currency</span>
                             </a>
                         </li>
 

@@ -73,13 +73,16 @@
                                             Approved
                                         </button>
                                         @elseif($view->status == 3)
-                                        <button type="button" class="btn btn-primary">
+                                        <button type="button" class="btn btn-danger">
                                             Cancled
                                         </button>
                                         @elseif($view->status == 4)
                                         <button type="button" class="btn btn-primary">
                                             FeedBack Message
                                         </button>
+                                        @if($view->status == 4)
+                                        <a class="btn btn-primary" href="{{ url('dashboard/leave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
+                                        @endif
                                         @endif
                                     </td>
                                 </tr>
@@ -92,11 +95,11 @@
                                         <span class=" btn-warning ">
                                             {{$view->comments}}
                                         </span>
-                                     
+                                        
                                     </td>
                                 </tr>
                                 @endif
-                                
+
                                 <tr>
                                     <td>Submit By</td>
                                     <td>:</td>
@@ -135,61 +138,58 @@
                                     <td>:</td>
 
                                     @php
-                                        $total_leave = $view->total_paid + $view->total_unpaid;
+                                    $total_leave = $view->total_paid + $view->total_unpaid;
                                     @endphp
 
-                                     @if($total_leave <= 1) 
-                                    <td class="text-danger">
+                                    @if($total_leave <= 1) <td class="text-danger">
                                         {{ $total_leave }}Day
-                                    </td>
-                                    @else 
-                                    <td class="text-danger">
-                                        {{ $total_leave }}Days
-                                    </td>
-                                    @endif
+                                        </td>
+                                        @else
+                                        <td class="text-danger">
+                                            {{ $total_leave }}Days
+                                        </td>
+                                        @endif
                                 </tr>
 
-                                  
 
-                                 @if($view->total_paid != '')
-                                 <tr>
+
+                                @if($view->total_paid != '')
+                                <tr>
                                     <td>Total Paid</td>
                                     <td>:</td>
-                                    @if($view->total_paid <= 1) 
-                                    <td class="">
+                                    @if($view->total_paid <= 1) <td class="">
                                         @if($view->total_paid !== null)
                                         {{ $view->total_paid}}Day
                                         @else
                                         0 Day
                                         @endif
-                                    </td>
-                                    @else 
-                                    <td class="">
-                                        {{ $view->total_paid }}Days
-                                    </td>
-                                    @endif
-                                 </tr>
-                                 @endif
+                                        </td>
+                                        @else
+                                        <td class="">
+                                            {{ $view->total_paid }}Days
+                                        </td>
+                                        @endif
+                                </tr>
+                                @endif
 
-                                 @if($view->total_unpaid != '')
-                                 <tr>
+                                @if($view->total_unpaid != '')
+                                <tr>
                                     <td>Total Unpaid</td>
                                     <td>:</td>
-                                    @if($view->total_unpaid <= 1) 
-                                    <td class="text-danger">
+                                    @if($view->total_unpaid <= 1) <td class="text-danger">
                                         @if($view->total_unpaid !== null)
                                         {{ $view->total_unpaid}}Day
                                         @else
                                         0 Day
                                         @endif
-                                    </td>
-                                    @else 
-                                    <td class="text-danger">
-                                        {{ $view->total_unpaid }}Days
-                                    </td>
-                                    @endif
-                                 </tr>
-                                 @endif
+                                        </td>
+                                        @else
+                                        <td class="text-danger">
+                                            {{ $view->total_unpaid }}Days
+                                        </td>
+                                        @endif
+                                </tr>
+                                @endif
 
                                 <tr>
                                     <td>Created At</td>
@@ -200,8 +200,8 @@
                                     <td>Edited At</td>
                                     <td>:</td>
                                     <td>@if($view->updated_at)
-                                    {{$view->updated_at}}
-                                    @endif
+                                        {{$view->updated_at}}
+                                        @endif
                                     </td>
                                 </tr>
                             </table>

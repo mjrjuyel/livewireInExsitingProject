@@ -39,7 +39,7 @@ swal({
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Role</li>
+                    <li class="breadcrumb-item active">Permission</li>
                 </ol>
             </div>
         </div>
@@ -52,26 +52,26 @@ swal({
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Role
+                                <h3 class="card_header"><i class="fa-solid fa-shirt header_icon"></i>Permission
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.role')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('superadmin.permission')}}"
                                     class="btn btn-bg btn-primary btn_header ">
-                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Role</a>
+                                    <i class="fa-brands fa-servicestack btn_icon"></i>All Permission</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.role.insert')}}" method="post">
+                    <form action="{{route('superadmin.permission.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
 
                                 <div class="mb-3">
-                                    <label class="form-label">Role Name<span class="text-danger">* </span>:
+                                    <label class="form-label">Permission Name<span class="text-danger">* </span>:
                                     </label>
                                     <input type="text" class="form-control" name="name" value="{{old('name')}}"
-                                        placeholder="Enter Role">
+                                        placeholder="Enter Permission">
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror

@@ -2,24 +2,26 @@
 @section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
-swal({
-    title: "Success!",
-    text: "{{ Session::get('success') }}",
-    icon: "success",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Success!"
+        , text: "{{ Session::get('success') }}"
+        , icon: "success"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 @if(Session::has('error'))
 <script type="text/javascript">
-swal({
-    title: "Opps!",
-    text: "{{ Session::get('error') }}",
-    icon: "error",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Opps!"
+        , text: "{{ Session::get('error') }}"
+        , icon: "error"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 
@@ -48,6 +50,12 @@ swal({
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-5">
+                            <a href="{{route('superadmin.leave.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                                New Manual Leave</a>
+                        </div>
+                    </div>
                     <div class="">
                         <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
@@ -68,7 +76,7 @@ swal({
                                 @foreach($alldata as $data)
                                 <tr>
 
-                                   <td>
+                                    <td>
                                         {{ $data->employe->emp_name }}
                                     </td>
 
@@ -84,88 +92,83 @@ swal({
                                         {!! Str::words($data->reason,20) !!}
                                     </td>
 
-                                    @if($data->total_unpaid + $data->total_paid <= 1) 
-                                    <td class="text-danger">
+                                    @if($data->total_unpaid + $data->total_paid <= 1) <td class="text-danger">
                                         {{ $data->total_unpaid + $data->total_paid }}Day
-                                    </td>
-                                    @else 
-                                    <td class="text-danger">
-                                        {{ $data->total_unpaid + $data->total_paid }}Days
-                                    </td>
-                                    @endif
-
-                                   @if($data->total_paid <= 1) 
-                                    <td>
-                                        {{ $data->total_paid }}Day
-                                    </td>
-                                    @else 
-                                    <td>
-                                        {{ $data->total_paid }}Days
-                                    </td>
-                                    @endif
-
-                                    @if($data->total_unpaid <= 1) 
-                                    <td class="text-danger">
-                                        @if($data->total_unpaid == 1)
-                                        {{ $data->total_unpaid }}Day
+                                        </td>
                                         @else
-                                        0 Day
-                                        @endif
-                                    </td>
-                                    @else 
-                                    <td class="text-danger">
-                                        {{ $data->total_unpaid }}Days
-                                    </td>
-                                    @endif
-
-                                        <td>
-                                            {{ $data->start_date->format('d-M-Y') }} To {{ $data->end_date->format('d-M-Y') }}
+                                        <td class="text-danger">
+                                            {{ $data->total_unpaid + $data->total_paid }}Days
                                         </td>
-                                        <td>
-                                            {{ formatDate($data->created_at) }}
-                                        </td>
-                                    
-                                    <td>
-                                        @if($data->status == 1)
-                                        <button type="button" class="btn btn-warning ">
-                                            Pending
-                                        </button>
-                                        @elseif($data->status == 2)
-                                        <button type="button" class="btn btn-primary " >
-                                            Approved
-                                        </button>
-                                        @elseif($data->status == 3)
-                                        <button type="button" class="btn btn-primary " >
-                                            Cancled
-                                        </button>
-                                        @elseif($data->status == 4)
-                                        <button type="button" class="btn btn-primary " >
-                                           Feedback
-                                        </button>
                                         @endif
-                                    </td>
 
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button"
-                                                class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item"
-                                                        href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i
-                                                            class="mdi mdi-view-agenda"></i>View</a></li>
-                                                </li>
-                                                
-                                                @if(Auth::user()->role_id == 1)
-                                                   <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
-                                                        </i>Delete</a>
-                                                   </li>
+                                        @if($data->total_paid <= 1) <td>
+                                            {{ $data->total_paid }}Day
+                                            </td>
+                                            @else
+                                            <td>
+                                                {{ $data->total_paid }}Days
+                                            </td>
+                                            @endif
+
+                                            @if($data->total_unpaid <= 1) <td class="text-danger">
+                                                @if($data->total_unpaid == 1)
+                                                {{ $data->total_unpaid }}Day
+                                                @else
+                                                0 Day
                                                 @endif
-                                            </ul>
-                                        </div>
-                                    </td>
+                                                </td>
+                                                @else
+                                                <td class="text-danger">
+                                                    {{ $data->total_unpaid }}Days
+                                                </td>
+                                                @endif
+
+                                                <td>
+                                                    {{ $data->start_date->format('d-M-Y') }} To {{ $data->end_date->format('d-M-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ formatDate($data->created_at) }}
+                                                </td>
+
+                                                <td>
+                                                    @if($data->status == 1)
+                                                    <button type="button" class="btn btn-warning ">
+                                                        Pending
+                                                    </button>
+                                                    @elseif($data->status == 2)
+                                                    <button type="button" class="btn btn-primary ">
+                                                        Approved
+                                                    </button>
+                                                    @elseif($data->status == 3)
+                                                    <button type="button" class="btn btn-primary ">
+                                                        Cancled
+                                                    </button>
+                                                    @elseif($data->status == 4)
+                                                    <button type="button" class="btn btn-primary ">
+                                                        Feedback
+                                                    </button>
+                                                    @endif
+                                                </td>
+
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                            </li>
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a></li>
+                                                            </li>
+
+                                                            @if(Auth::user()->role_id == 1)
+                                                            <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                                    </i>Delete</a>
+                                                            </li>
+                                                            @endif
+                                                        </ul>
+                                                    </div>
+                                                </td>
 
                                 </tr>
                                 @endforeach
@@ -217,7 +220,7 @@ swal({
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <form action="{{route('superadmin.leave.delete')}}" method="post">
-            @method('delete')
+                @method('delete')
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
@@ -234,11 +237,12 @@ swal({
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#datatable').DataTable({
             ordering: false // Disables ordering for all columns
         });
     });
+
 </script>
 @endsection
 @section('js')
@@ -256,13 +260,13 @@ swal({
 <script src="{{ asset('contents/admin') }}/assets/js/pages/table-datatable.js"></script>
 
 <script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
-    <script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
 @endsection

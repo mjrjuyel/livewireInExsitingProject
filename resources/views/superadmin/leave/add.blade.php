@@ -1,4 +1,4 @@
-@extends('layouts.employe')
+@extends('layouts.superAdmin')
 @section('css')
 <link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
 <link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
@@ -6,7 +6,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
-@section('content')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -32,30 +32,6 @@
 </script>
 @endif
 
-@if(Session::has('unpaid'))
-<script type="text/javascript">
-    swal({
-            title: "Are you sure?"
-            , text: "You will not be able to recover this imaginary file!"
-            , type: "warning"
-            , showCancelButton: true
-            , confirmButtonColor: "#DD6B55"
-            , confirmButtonText: "Yes, delete it!"
-            , cancelButtonText: "No, cancel plx!"
-            , closeOnConfirm: false
-            , closeOnCancel: false
-        }
-        , function(isConfirm) {
-            if (isConfirm) {
-                swal("Deleted!", "Your imaginary file has been deleted.", "success");
-            } else {
-                swal("Cancelled", "Your imaginary file is safe :)", "error");
-            }
-        });
-
-</script>
-@endif
-
 <div class="page-container">
     <div class="page-title-box">
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
@@ -68,6 +44,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
 
                     <li class="breadcrumb-item active">Leave</li>
                 </ol>
@@ -82,19 +59,33 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Leave Application Form
+                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Manual Leave Application Form
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Leave Data</a>
+                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> All Leave Data</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('dashboard.leave.insert')}}" method="post">
+                    <form action="{{route('superadmin.leave.insert')}}" method="post">
                     
                             @csrf
                             <div class="row mt-3">
                                 <div class="col-6 offset-2">
+                                    <div class="mb-3">
+                                   
+                                        <label class="form-label">Employee Name<span class="text-danger">* </span>:
+                                        </label>
+                                        <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
+                                            <option value="">Select A Type</option>
+                                            @foreach($employees as $employe)
+                                            <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('employe')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                     <div class="mb-3">
                                    
                                         <label class="form-label">Leave Type<span class="text-danger">* </span>:

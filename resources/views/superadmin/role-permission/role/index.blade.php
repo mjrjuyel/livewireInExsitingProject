@@ -52,43 +52,30 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                        @if($role->count('id') <= 2)
                             <a href="{{route('superadmin.role.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
-                                Role</a>
-                        @endif        
+                                Role
+                            </a>      
                         </div>
-
-                        <div class="col-sm-6">
-                            <ul>
-                             <li><span class="text-info">Only Super Admin Can Access Whole Feture Of This Application</span></li>
-                             <li><span class="text-warning">HR only can Create,View,Edit and Others Things</span></li>
-                             <li><span class="text-warning">Assistant only can Access Catering feature</span></li>
-                             <li><span class="text-dark">Only 3 Role Type Can Add</span></li>
-                            </ul>
-                        </div>
-
                     </div>
 
                     <div class="">
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="text-center">Role Type</th>
+                                    <th class="text-center">Role Name</th>
                                     <th class="text-center text-danger">Role As A SuperAdmin Dashboard</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($role as $role)
+                                @foreach($roles as $role)
                                 <tr>
                                     <td>
-                                        {{ $role->role_name }}
+                                        {{ $role->name }}
                                     </td>
 
                                     <td class="text-danger">
-                                        @foreach($role->admin as $admin)
-                                         <span class="btn btn-dark"> {{optional($admin)->name}}</span>
-                                        @endforeach
+                                        ----
                                     </td>
 
                                     <td>
@@ -97,10 +84,13 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.view',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
 
-                                                @if($role->id != 1)
-                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                @if(Auth::user()->role_id == 1)
+                                                   <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$role->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                        </i>Delete</a>
+                                                   </li>
                                                 @endif
                                               
                                             </ul>
@@ -124,4 +114,35 @@
 
 </div> <!-- container -->
 
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete a Permission Role </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('superadmin.permission.delete')}}" method="post">
+            @method('delete')
+                @csrf
+                <div class="modal-body modal_body">
+                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
+                    <input type="hidden" name="id" id="modal_id" value="">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            ordering: false // Disables ordering for all columns
+        });
+    });
+</script>
 @endsection

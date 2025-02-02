@@ -4,7 +4,12 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\UserRole;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+
 use Carbon\Carbon;
 use Session;
 
@@ -14,36 +19,47 @@ class AdminRoleController extends Controller
     
     //  All Role 
     public function index(){
-        $role = UserRole::with(['admin','employe'])->get();
+        $roles = Role::all();
+        
         // return $role;
-        return view('superadmin.role.index',compact('role'));
+        return view('superadmin.role-permission.role.index',compact('roles'));
     }
     // role Add
     public function add(){
-        return view('superadmin.role.add');
+        $permissions = Permission::all();
+        // return $permissions;
+        return view('superadmin.role-permission.role.add',compact('permissions'));
     }
     
     public function insert(Request $request){
         
         $request->validate([
-            'name'=>'required | unique:user_roles,role_name',
+            'name'=>'required | unique:roles,name',
         ]);
 
-        $insert=UserRole::create([
-            'role_name'=>$request['name'],
+        $insert=Role::create([
+            'name'=>$request['name'],
             'created_at'=>Carbon::now(),
         ]);
 
+        $insert->syncPermissions($request->permission);
+
         if($insert){
-            Session::flash('success','New Role inserted!');
+            Session::flash('success','New Role Add And Assigned with Permission');
             return redirect()->back();
         }
     }
 
     // Role  Update
     public function edit($id){
-        $edit = UserRole::where('id',$id)->first();
-        return view('superadmin.role.edit',compact('edit'));
+        $ID = Crypt::decrypt($id);
+        $edit = Role::where('id',$ID)->first();
+
+        $permissions = Permission::all();
+        $rolePermission = DB::table('role_has_permissions')->where('role_id',$ID)->pluck('permission_id')->all();
+
+        // return $per;
+        return view('superadmin.role-permission.role.edit',compact(['edit','permissions','rolePermission']));
     }
 
     public function update(Request $request){
@@ -51,22 +67,37 @@ class AdminRoleController extends Controller
         $id = $request['id'];
 
         $request->validate([
-            'name'=>'required | unique:user_roles,role_name,'.$id,
+            'name'=>'required | unique:roles,name,'.$id,
         ]);
-
-        $update = UserRole::where('id',$id)->update([
-            'role_name'=>$request['name'],
+        return $request->all();
+        $update = Role::where('id',$id)->update([
+            'name'=>$request['name'],
             'updated_at'=>Carbon::now(),
         ]);
 
+        $update->syncPermissions($request->permission);
+
         if($update){
-            Session::flash('success','Role Name Updated!');
+            Session::flash('success','Update Role And Assigned with Permission');
             return redirect()->back();
         }
     }
 
     public function view($id){
-        $view = UserRole::with(['employe','admin'])->where('id',$id)->first();
-        return view('superadmin.role.view',compact('view'));
+        $ID = Crypt::decrypt($id);
+        $view = Role::where('id',$ID)->first();
+        return view('superadmin.role-permission.role.view',compact('view'));
+    }
+
+    public function delete(Request $request){
+        $id = $request->id;
+
+        $delete = Role::findOrFail($id);
+        $delete->delete();
+
+        if($delete){
+            Session::flash('success','Role Have Deleted');
+            return redirect()->back();
+        }
     }
 }
