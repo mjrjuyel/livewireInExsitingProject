@@ -57,7 +57,7 @@ swal({
                                     <th class="text-center">Leave Reason</th>
                                     <th class="text-center">Total Leave Request</th>
                                     <th class="text-center">Total Paid</th>
-                                    <th class="text-center">Total UnPaid</th>
+                                    <th class="text-center">Total Un-Paid</th>
                                     <th class="text-center">Start To End</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
@@ -128,11 +128,11 @@ swal({
                                         </button>
                                         @elseif($data->status == 2)
                                         <button type="button" class="btn btn-primary " >
-                                            Approved
+                                            Approve
                                         </button>
                                         @else
                                         <button type="button" class="btn btn-warning">
-                                            Cancle
+                                            Reject
                                         </button>
                                         @endif
                                     </td>
@@ -146,7 +146,7 @@ swal({
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item"
-                                                        href="{{ url('superadmin/leave/view/'.$data->slug) }}"><i
+                                                        href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i
                                                             class="mdi mdi-view-agenda"></i>View</a></li>
                                                 @if(Auth::user()->role_id == 1)
                                                    <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">

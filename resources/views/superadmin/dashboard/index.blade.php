@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <a href="{{route('superadmin.employe')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Total Active Employe</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Active Employees</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$activeEmploye}}</h3>
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <a href="{{route('superadmin.leaveMonth',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
                     
                     </a>
@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <a href="{{route('superadmin.leaveYear',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
                     
                     </a>
@@ -79,7 +79,7 @@
                 <div class="card-body">
                     <a href="{{route('superadmin.leave.pending')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In Pending <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request Pending In  <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInPending}}</h3>
                     </a>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="card-body">
                     <a href="{{route('superadmin.leave.approved')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request Approved in <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request Approved in <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInApproved}}</h3>
                     </a>
                 </div>
@@ -103,7 +103,7 @@
                 <div class="card-body">
                     <a href="{{route('superadmin.leave.cancled')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request Cancled in <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request Cancelled in <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInCancled}}</h3>
                     </a>
                 </div>

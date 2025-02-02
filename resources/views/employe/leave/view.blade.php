@@ -70,15 +70,15 @@
                                         </button>
                                         @elseif($view->status == 2)
                                         <button type="button" class="btn btn-primary">
-                                            Approved
+                                            Approve
                                         </button>
                                         @elseif($view->status == 3)
                                         <button type="button" class="btn btn-danger">
-                                            Cancled
+                                            Reject
                                         </button>
                                         @elseif($view->status == 4)
                                         <button type="button" class="btn btn-primary">
-                                            FeedBack Message
+                                            FeedBack
                                         </button>
                                         @if($view->status == 4)
                                         <a class="btn btn-primary" href="{{ url('dashboard/leave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
@@ -174,7 +174,7 @@
 
                                 @if($view->total_unpaid != '')
                                 <tr>
-                                    <td>Total Unpaid</td>
+                                    <td>Total Un-Paid</td>
                                     <td>:</td>
                                     @if($view->total_unpaid <= 1) <td class="text-danger">
                                         @if($view->total_unpaid !== null)
@@ -200,7 +200,7 @@
                                     <td>Edited At</td>
                                     <td>:</td>
                                     <td>@if($view->updated_at)
-                                        {{$view->updated_at}}
+                                        {{formatDate($view->updated_at)}}
                                         @endif
                                     </td>
                                 </tr>

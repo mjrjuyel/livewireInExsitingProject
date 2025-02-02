@@ -141,7 +141,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Request Paid Leave<span class="text-danger">* </span>:
+                                                <label class="form-label">Request Paid Leave <span class="text-danger">* </span>:
                                                 </label>
                                                  @if($view->total_paid <= 1) 
                                                      @if($view->total_paid == 1) 
@@ -159,7 +159,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Request UnPaid Leave<span class="text-danger">* </span>:
+                                                <label class="form-label">Request Un-Paid Leave <span class="text-danger">* </span>:
                                                 </label>
                                                  @if($view->total_unpaid <= 1) 
                                                     @if($view->total_unpaid == 1) 
@@ -197,11 +197,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-4 offset-4">
-                                                @if($view->status == 2)
-                                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary">Back To Leave</a>
-                                                @elseif($view->status != 2)
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                @endif
+                                                <button type="submit" class="btn btn-primary">Update</button>
                                             </div>
                                         </div>
                                     </div>

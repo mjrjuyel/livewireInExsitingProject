@@ -107,6 +107,9 @@
                                         <label class="form-label text-danger">Write Short Type<span class="text-danger"> :</span>:
                                         </label>
                                         <input type="text" name="others" class="form-control" value="{{$edit->other_reason}}" placeholder="Personal Reason">
+                                        @error('others')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">

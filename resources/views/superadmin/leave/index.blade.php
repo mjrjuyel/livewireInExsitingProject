@@ -65,7 +65,7 @@
                                     <th class="text-center">Leave Reason</th>
                                     <th class="text-center">Total Leave Request</th>
                                     <th class="text-center">Total Paid</th>
-                                    <th class="text-center">Total UnPaid</th>
+                                    <th class="text-center">Total Un-Paid</th>
                                     <th class="text-center">Start To End</th>
                                     <th class="text-center">Created_at</th>
                                     <th class="text-center">Status</th>
@@ -137,11 +137,11 @@
                                                     </button>
                                                     @elseif($data->status == 2)
                                                     <button type="button" class="btn btn-primary ">
-                                                        Approved
+                                                        Approve
                                                     </button>
                                                     @elseif($data->status == 3)
                                                     <button type="button" class="btn btn-primary ">
-                                                        Cancled
+                                                        Reject
                                                     </button>
                                                     @elseif($data->status == 4)
                                                     <button type="button" class="btn btn-primary ">

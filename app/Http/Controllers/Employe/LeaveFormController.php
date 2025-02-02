@@ -187,7 +187,7 @@ class LeaveFormController extends Controller
 
                                     $insert = Leave::create([
                                         'leave_type_id'=>$request['leave_type'],
-                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : 'NO Alter Reason',
+                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
                                         'start_date'=>Carbon::parse($leavePermonth['start_date']),
                                         'end_date'=>$leavePermonth['end_date'],
                                         'reason'=>$request['reason'],

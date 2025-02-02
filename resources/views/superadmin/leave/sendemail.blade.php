@@ -99,19 +99,19 @@
               @if($data['total_paid'] != 0)
                 @if($data['total_paid'] <= 1) 
                     @if($data['total_paid'] !== null)
-                    <p><strong>Total Paid: </strong> {{ $data['total_paid']}} Day</p> 
+                    <p><strong>Total Paid Leave : </strong> {{ $data['total_paid']}} Day</p> 
                     @endif
                     @else
-                    <p><strong>Total Paid: </strong> {{ $data['total_paid'] }} Days</p> 
+                    <p><strong>Total Paid Leave : </strong> {{ $data['total_paid'] }} Days</p> 
                 @endif
             @endif
             @if($data['total_unpaid'] != 0)
                 @if($data['total_unpaid'] <= 1) 
                     @if($data['total_unpaid'] !== null)
-                    <p><strong>Total Paid: </strong> {{ $data['total_unpaid']}} Day</p> 
+                    <p><strong>Total Un-Paid Leave : </strong> {{ $data['total_unpaid']}} Day</p> 
                     @endif
                     @else
-                    <p><strong>Total Paid: </strong> {{ $data['total_unpaid'] }} Days</p> 
+                    <p><strong>Total Un-Paid Leave : </strong> {{ $data['total_unpaid'] }} Days</p> 
                 @endif
 
             @endif

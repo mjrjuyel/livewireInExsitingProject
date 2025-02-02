@@ -40,6 +40,7 @@ class SuperAdminLeaveController extends Controller
                         'leave_type'=>'required',
                         'start'=>'required',
                         'reason'=>'required',
+                        'others'=>'max:30',
                         'end'=>'required',
                     ]);
 
@@ -70,7 +71,7 @@ class SuperAdminLeaveController extends Controller
 
                         if ($overlappingLeaves) {
                             Session::flash('error', 'Your leave request overlaps with a previously submitted leave.');
-                            return redirect()->route('dashboard.leave.add');
+                            return redirect()->back();
                         }
                     
                     // Check Date And Count Total Day between 2 dates
@@ -194,6 +195,7 @@ class SuperAdminLeaveController extends Controller
                                         'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
                                         'emp_id'=>$request->employe,
                                         'status'=>2,
+                                        'add_from'=>'Admin',
                                         'slug'=>'leav-'.uniqId(),
                                         'created_at'=>Carbon::parse($leavePermonth['start_date']),
                                     ]);
@@ -249,6 +251,7 @@ class SuperAdminLeaveController extends Controller
                         'leave_type'=>'required',
                         'start'=>'required',
                         'reason'=>'required',
+                        'others'=>'max:30',
                         'end'=>'required',
                     ]);
 
@@ -407,6 +410,7 @@ class SuperAdminLeaveController extends Controller
                                         'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
                                         'emp_id'=>$request->employe,
                                         'status'=>2,
+                                        'add_from'=>'Admin',
                                         'slug'=>'leav-'.uniqId(),
                                         'updated_at'=>Carbon::parse($leavePermonth['start_date']),
                                     ]);

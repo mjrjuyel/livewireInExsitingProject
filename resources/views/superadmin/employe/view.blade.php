@@ -85,7 +85,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Between Evaluation Period Total Leave Spent:</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Taken Between Evaluation Periods :</h6>
                     <h3 class="my-3">
                     @if($totalEvaLeave < 1 ) 
                         <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Day</h3>
@@ -128,6 +128,27 @@
                     @endif
                     @else
                     <h3 class="my-3 text-danger">Not Yet</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    @php
+                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeave;
+                    @endphp
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Paid Leave Remaining Between Evaluation Periods</span></h6>
+                    @if($remainEvaluation >= 1 )
+                        @if($remainEvaluation >= 2)
+                        <h3 class="my-3"><span data-plugin="counterup">{{$remainEvaluation}}</span> Days</h3>
+                        @else
+                        <h3 class="my-3"><span data-plugin="counterup">{{$remainEvaluation}}</span> Day</h3>
+                        @endif
+                    @else
+                        <h3 class="my-3 text-danger">Zero</h3>
                     @endif
                 </div>
             </div>
