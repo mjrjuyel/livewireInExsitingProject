@@ -151,6 +151,13 @@
                                                         href="{{ url('dashboard/leave/view/'.Crypt::encrypt($leavehistory->id)) }}"><i
                                                             class="mdi mdi-view-agenda"></i>View</a>
                                                 </li>
+
+                                                @if($leavehistory->status == 4)
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ url('dashboard/leave/edit/'.Crypt::encrypt($leavehistory->id)) }}"><i
+                                                                class="mdi mdi-view-agenda"></i>Edit</a>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>

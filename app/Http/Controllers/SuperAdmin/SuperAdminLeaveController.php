@@ -266,17 +266,21 @@ class SuperAdminLeaveController extends Controller
                 if($start_time <= $end_time ){
 
                     // **NEW CONDITION: Check for overlapping leaves**
-                        $overlappingLeaves = Leave::where('id','!=',$id)->where('emp_id', $request->employe)
+                            $overlappingLeaves = Leave::where('id', '!=', $id)
+                            ->where('emp_id', $request->employe)
                             ->where(function ($query) use ($request) {
-                                $query->whereBetween('start_date', [$request['start'], $request['end']])
-                                    ->orWhereBetween('end_date', [$request['start'], $request['end']])
-                                    ->orWhere(function ($query) use ($request) {
-                                        $query->where('start_date', '<=', $request['start'])
-                                                ->where('end_date', '>=', $request['end']);
-                                    });
+                                $query->where(function ($q) use ($request) {
+                                    $q->whereBetween('start_date', [$request['start'], $request['end']])
+                                      ->orWhereBetween('end_date', [$request['start'], $request['end']]);
+                                })
+                                ->orWhere(function ($q) use ($request) {
+                                    $q->where('start_date', '<=', $request['start'])
+                                      ->where('end_date', '>=', $request['end']);
+                                });
                             })
                             ->exists();
 
+                            // dd($id, $request->employe, $request->start, $request->end);
                         if ($overlappingLeaves) {
                             Session::flash('error', 'Your leave request overlaps with a previously submitted leave.');
                             return redirect()->back();

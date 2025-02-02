@@ -167,12 +167,6 @@
                             <div class="collapse" id="sidebarManualLeave">
                                 <ul class="sub-menu">
                                     <li class="side-nav-item">
-                                        <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
-                                            <span class="menu-text">All</span>
-                                        </a>
-                                    </li>
-
-                                    <li class="side-nav-item">
                                         <a href="{{route('superadmin.leave.add')}}" class="side-nav-link">
                                             <span class="menu-text">Add New</span>
                                         </a>

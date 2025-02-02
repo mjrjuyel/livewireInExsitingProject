@@ -62,6 +62,9 @@
                                 <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Manual Leave Application Form
                                 </h3>
                             </div>
+                            <div class="col-md-4 text-end">
+                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Leave Data</a>
+                            </div>
                         </div>
                     </div>
                     <form action="{{route('superadmin.leave.updateleave')}}" method="post">
@@ -70,7 +73,7 @@
                             <div class="row mt-3">
                                 <div class="col-6 offset-2">
                                     <div class="mb-3">
-                                   
+                                   <input type="hidden" name="id" value="{{$edit->id}}">
                                         <label class="form-label">Employee Name<span class="text-danger">* </span>:
                                         </label>
                                         <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
