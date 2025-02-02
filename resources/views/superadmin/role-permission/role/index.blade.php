@@ -64,6 +64,7 @@
                                 <tr>
                                     <th class="text-center">Role Name</th>
                                     <th class="text-center text-danger">Role As A SuperAdmin Dashboard</th>
+                                    <th class="text-center text-danger">Permissions</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -74,9 +75,19 @@
                                         {{ $role->name }}
                                     </td>
 
+                                    
                                     <td class="text-danger">
-                                        ----
+                                        @foreach($role->users as $user)
+                                        <span class="badge bg-secondary">{{$user->name}}</span>
+                                        @endforeach
                                     </td>
+
+                                    <td class="text-danger">
+                                        @foreach($role->permissions as $permission)
+                                        <span class="badge bg-secondary">{{$permission->name}}</span>
+                                        @endforeach
+                                    </td>
+
 
                                     <td>
                                         <div class="btn-group" role="group">

@@ -76,7 +76,9 @@
                                         {{ $admin->name }}
                                     </td>
                                     <td>
-                                        <button class="btn bg-primary">{{optional($admin->role)->role_name}}</button>
+                                        @foreach($admin->roles as $role)
+                                          <button class="btn bg-primary">{{$role->name}}</button>
+                                        @endforeach
                                     </td>
 
                                     <td>

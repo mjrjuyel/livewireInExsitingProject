@@ -11,6 +11,8 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\UserRole;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Designation;
 use Carbon\Carbon;
@@ -21,14 +23,15 @@ class AdminProfileController extends Controller
 {
 
     public function index(){
-        $alladmin = User::where('status',1)->orderBy('id','ASC')->get();
+        $alladmin = User::with('roles')->where('status',1)->orderBy('id','ASC')->get();
+        
         // return $alladmin;
         return view('superadmin.adminprofile.index',compact('alladmin'));
     }
 
     public function add(){
-        $role = UserRole::all();
-        return view('superadmin.adminprofile.add',compact('role'));
+        $roles = Role::all();
+        return view('superadmin.adminprofile.add',compact('roles'));
     }
 
     public function insert(Request $request){
@@ -58,11 +61,12 @@ class AdminProfileController extends Controller
             'username'=>$request['user'],
             'email'=>$request['email'],
             'slug'=>'user-'.uniqId(),
-            'role_id'=>$request['role'],
             'image' => $image_name ?? null,
             'password'=>Hash::make($request['pass']),
             'created_at'=>Carbon::now(),
         ]);
+
+        $insert->syncRoles($request->role);
 
         $exsitEmploye = Employee::where('email',$insert->email)->exists();
 
@@ -103,10 +107,11 @@ class AdminProfileController extends Controller
     public function profileAdmin($slug){
         // return $slug;
         $userId = Crypt::decrypt($slug);
-        $pass = User::where('id',$userId)->first();
-        $role= UserRole::all();
-        // return $pass;
-        return view('superadmin.adminprofile.updateProfile',compact(['pass','role']));
+        $user = User::where('id',$userId)->first();
+        $roles = Role::all();
+        $ModelRoles= DB::table('model_has_roles')->where('model_id',$userId)->pluck('role_id')->all();
+        // return $roles;
+        return view('superadmin.adminprofile.updateProfile',compact(['user','roles','ModelRoles']));
     }
 
     public function updateAdmin(Request $request)
@@ -145,10 +150,13 @@ class AdminProfileController extends Controller
         $update = User::where('id',$id)->update([
             'name'=>$request['name'],
             'email'=>$request['email'],
-            'role_id'=>$request['role'],
             'slug'=>$slug,
             'updated_at'=>Carbon::now(),
         ]);
+
+        $user = User::findOrFail($id);
+
+        $user->syncRoles($request->role);
         
         // If Password Is changed
         if($request->oldpass){

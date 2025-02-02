@@ -19,9 +19,8 @@ class AdminRoleController extends Controller
     
     //  All Role 
     public function index(){
-        $roles = Role::all();
-        
-        // return $role;
+        $roles = Role::with('permissions')->get();
+        // return $roles;
         return view('superadmin.role-permission.role.index',compact('roles'));
     }
     // role Add
@@ -46,7 +45,7 @@ class AdminRoleController extends Controller
 
         if($insert){
             Session::flash('success','New Role Add And Assigned with Permission');
-            return redirect()->back();
+            return redirect()->route('superadmin.role');
         }
     }
 
@@ -69,13 +68,14 @@ class AdminRoleController extends Controller
         $request->validate([
             'name'=>'required | unique:roles,name,'.$id,
         ]);
-        return $request->all();
+        // return $request->all();
         $update = Role::where('id',$id)->update([
             'name'=>$request['name'],
             'updated_at'=>Carbon::now(),
         ]);
 
-        $update->syncPermissions($request->permission);
+        $user = Role::where('id',$id)->first();
+        $user->syncPermissions($request->permission);
 
         if($update){
             Session::flash('success','Update Role And Assigned with Permission');

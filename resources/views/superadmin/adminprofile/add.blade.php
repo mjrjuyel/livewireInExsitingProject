@@ -98,9 +98,10 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Role</label>
-                                                    <select class="form-control" type="text" value="{{ old('role->role_name') }}" name="role">
-                                                      @foreach($role as $role)
-                                                       <option value="{{$role->id}}" @if(Auth::user()->role_id == $role->id ) Selected @endif>{{$role->role_name}}</option>
+                                                    <select class="form-control" type="text"  name="role">
+                                                    <option > Select Role</option>
+                                                      @foreach($roles as $role)
+                                                       <option value="{{$role->name}}">{{$role->name}}</option>
                                                        @endforeach
                                                     </select>
                                             </div>

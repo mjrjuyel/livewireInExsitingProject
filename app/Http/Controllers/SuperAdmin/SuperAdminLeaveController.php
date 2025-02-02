@@ -200,20 +200,6 @@ class SuperAdminLeaveController extends Controller
                                         'created_at'=>Carbon::parse($leavePermonth['start_date']),
                                     ]);
 
-                                    // $adminEmail = AdminEmail::first();
-
-                                    // if($adminEmail->email_leave == 1){
-                                        
-                                    //     $getEmail = AdminEmail::where('id',1)->first();
-                                    //     $explode = explode(',',$getEmail->email);
-                                    //     // try {
-                                    //     foreach($explode as $email){
-                                    //         Mail::to($email)->send(new LeaveMailToAdmin($insert));
-                                    //     }
-                                    // }
-                                    // notification
-                                    // auth()->user()->notify(new LeaveToAdminNotification($insert));
-
                                     if ($insert) {
                                         if ($unPaidLeaves > 0) {
                                             Session::flash('success', 'Monthly leave limit reached! Extra days counted as unpaid.');
@@ -382,13 +368,13 @@ class SuperAdminLeaveController extends Controller
                             $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
 
                             // check total Paid of in a month
-                            $checkMonth = Leave::where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkMonth = Leave::where('id','!=',$id)->where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
-                            $previousLeave = Leave::where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
+                            $previousLeave = Leave::where('id','!=',$id)->where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
                             // return $previousLeave !== null ? "this have value " : "Its A  null property";
 
                             // check total paid off in an annual year
-                            $checkYear = Leave::where('emp_id',$request->employe)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkYear = Leave::where('id','!=',$id)->where('emp_id',$request->employe)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
                             $remainingMonthlyPaidLeave = max(0, $definedLeave->month_limit - $checkMonth);
 

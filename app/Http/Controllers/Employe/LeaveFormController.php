@@ -198,6 +198,7 @@ class LeaveFormController extends Controller
                                         'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
                                         'emp_id'=>Auth::guard('employee')->user()->id,
                                         'slug'=>'leav-'.uniqId(),
+                                        'add_from'=>'Employee',
                                         'created_at'=>Carbon::now('UTC'),
                                     ]);
 
@@ -414,6 +415,7 @@ class LeaveFormController extends Controller
                                         'emp_id'=>Auth::guard('employee')->user()->id,
                                         'slug'=>'leav-'.uniqId(),
                                         'status'=>1,
+                                        'add_from'=>'Employee',
                                         'created_at'=>Carbon::now('UTC'),
                                     ]);
 
@@ -470,7 +472,7 @@ class LeaveFormController extends Controller
         // return $userId;
         $employe = Employee::where('id',$userId)->first();
 
-        $leavehistory = Leave::where('emp_id',$employe->id)->orderBy('id','DESC')->get();
+        $leavehistory = Leave::where('emp_id',$employe->id)->orderBy('created_at','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.history',compact('leavehistory'));
     }
@@ -480,7 +482,7 @@ class LeaveFormController extends Controller
         $date = new DateTime($slug);
         $parseDate = Carbon::parse($date);
         // return $parseDate;
-        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->month)->orderBy('start_date')->get();
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->month)->orderBy('created_at','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.historyMonth',compact(['leavehistory','parseDate']));
     }
@@ -490,7 +492,7 @@ class LeaveFormController extends Controller
         $date = new DateTime($slug);
         $parseDate = Carbon::parse($date);
         // return $parseDate;/
-        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereYear('start_date',$parseDate->year)->orderBy('start_date')->get();
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereYear('start_date',$parseDate->year)->orderBy('created_at','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.historyYear',compact(['leavehistory','parseDate']));
     }
