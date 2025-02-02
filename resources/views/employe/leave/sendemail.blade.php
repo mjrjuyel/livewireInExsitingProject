@@ -100,20 +100,20 @@
             @if($leave['total_paid'] != 0)
                 @if($leave['total_paid'] <= 1) 
                     @if($leave['total_paid'] !== null)
-                    <p><strong>Total Paid:</strong> {{ $leave['total_paid']}} Day</p>
+                    <p><strong>Total Paid leave :</strong> {{ $leave['total_paid']}} Day</p>
                     @endif
                     @else
-                    <p><strong>Total Paid:</strong>{{ $leave['total_paid'] }} Days</p> 
+                    <p><strong>Total Paid Leave :</strong>{{ $leave['total_paid'] }} Days</p> 
                 @endif
             @endif
 
             @if($leave['total_unpaid'] != 0)
                 @if($leave['total_unpaid'] <= 1) 
                     @if($leave['total_unpaid'] !== null)
-                    <p><strong>Total Paid: </strong>{{ $leave['total_unpaid']}} Day</p> 
+                    <p><strong>Total Unpaid Leave : </strong>{{ $leave['total_unpaid']}} Day</p> 
                     @endif
                     @else
-                    <p><strong>Total Paid: </strong>{{ $leave['total_unpaid']}} Days</p>
+                    <p><strong>Total Unpaid Leave: </strong>{{ $leave['total_unpaid']}} Days</p>
                 @endif
             @endif
             @if($leave['status']==1)

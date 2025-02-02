@@ -39,6 +39,7 @@ class LeaveFormController extends Controller
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
+                        'others'=>'max:30',
                         'reason'=>'required',
                         'end'=>'required',
                     ]);
@@ -253,6 +254,7 @@ class LeaveFormController extends Controller
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
+                        'others'=>'max:30',
                         'reason'=>'required',
                         'end'=>'required',
                     ]);
@@ -400,7 +402,7 @@ class LeaveFormController extends Controller
 
                                     $update = Leave::where('id',$request->id)->update([
                                         'leave_type_id'=>$request['leave_type'],
-                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : 'NO Alter Reason',
+                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
                                         'start_date'=>Carbon::parse($leavePermonth['start_date']),
                                         'end_date'=>$leavePermonth['end_date'],
                                         'reason'=>$request['reason'],

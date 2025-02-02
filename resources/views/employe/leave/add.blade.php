@@ -115,7 +115,10 @@
                                     <div class="mb-3 leave_type" style="display:none;">
                                         <label class="form-label text-danger">Write Short Type<span class="text-danger"> :</span>:
                                         </label>
-                                        <input type="text" name="others" class="form-control" placeholder="Personal Reason">
+                                        <input type="text" name="others" class="form-control" placeholder="Personal Reason" value="{{old('others')}}">
+                                        @error('others')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
