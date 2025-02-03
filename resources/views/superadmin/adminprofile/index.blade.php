@@ -52,10 +52,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
+                        @can('Add Admin')
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.admin.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Admin</a>
                         </div>
+                        @endcan
                     </div>
                     <div class="">
                         <table class="table table-centered text-center" id="datatable">
@@ -97,21 +99,21 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                @can('View Admin')
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/view/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-eye-circle-outline">
-                                                        </i>View</a></li>
+                                                        </i>View</a>
                                                 </li>
+                                                @endcan
+                                                @can('Edit Admin')
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
-                                                        </i>Edit</a></li>
+                                                        </i>Edit</a>
                                                 </li>
-
-                                                @php
-                                                    $role = App\Models\UserRole::all();
-                                                @endphp
-                                                @if(Auth::user()->role_id == 1)
-                                                   <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$admin->id}}"      data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                @endcan
+                                                @can('Delete Admin')
+                                                <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$admin->id}}"      data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
-                                                   </li>
-                                                @endif
+                                                </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </td>

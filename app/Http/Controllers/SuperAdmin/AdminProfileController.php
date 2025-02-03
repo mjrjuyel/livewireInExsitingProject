@@ -22,6 +22,14 @@ use Auth;
 class AdminProfileController extends Controller
 {
 
+    public function __construct(){
+        $this->middleware('permission:All Admin')->only('index');
+        $this->middleware('permission:Add Admin')->only('add','insert');
+        $this->middleware('permission:Edit Admin')->only('profileAdmin');
+        $this->middleware('permission:View Admin')->only('view');
+        $this->middleware('permission:Delete Admin')->only('delete','softDelete');
+    }
+
     public function index(){
         $alladmin = User::with('roles')->where('status',1)->orderBy('id','ASC')->get();
         

@@ -15,7 +15,13 @@ use Session;
 
 class AdminRoleController extends Controller
 {
-
+    public function __construct(){
+        $this->middleware('permission:All Role')->only('index');
+        $this->middleware('permission:Add Role')->only('add','insert');
+        $this->middleware('permission:Edit Role')->only('edit','update');
+        $this->middleware('permission:View Role')->only('view');
+        $this->middleware('permission:Delete Role')->only('delete');
+    }
     
     //  All Role 
     public function index(){

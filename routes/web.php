@@ -120,7 +120,6 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
                 Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
                 Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
-                Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
                 Route::post('superadmin/view/softdelete',[AdminProfileController::class,'softDelete'])->name('superadmin.view.softdelete');
                 Route::post('superadmin/view/restore',[AdminProfileController::class,'restore'])->name('superadmin.view.restore');
                 Route::delete('/dashboard/admin/delete',[AdminProfileController::class,'delete'])->name('dashboard.admin.delete');

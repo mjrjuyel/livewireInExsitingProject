@@ -12,6 +12,14 @@ use Auth;
 
 class PermissionController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:All Permission')->only('index');
+        $this->middleware('permission:Add Permission')->only('add','insert');
+        $this->middleware('permission:Edit Permission')->only('edit','update');
+        $this->middleware('permission:View Permission')->only('view');
+        $this->middleware('permission:Delete Permission')->only('delete');
+    }
+
     public function index(){
         $permissions = Permission::with('roles')->get();
         // return $permissions;

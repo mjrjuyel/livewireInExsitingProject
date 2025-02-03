@@ -52,9 +52,11 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
+                            @can('Add Role')
                             <a href="{{route('superadmin.role.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Role
-                            </a>      
+                            </a>  
+                            @endcan    
                         </div>
                     </div>
 
@@ -95,15 +97,18 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.role.view',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                @can('View Role')
+                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.view',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                @endcan
+                                                @can('Edit Role')
                                                  <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
-
-                                                @if(Auth::user()->role_id == 1)
-                                                   <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$role->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                @endcan
+                                                @can('Delete Role')
+                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$role->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                    </li>
-                                                @endif
-                                              
+                                                @endcan
+                                               
                                             </ul>
                                         </div>
                                     </td>
