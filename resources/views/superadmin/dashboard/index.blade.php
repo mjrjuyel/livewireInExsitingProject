@@ -6,7 +6,7 @@
 
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="font-18 mb-0">Dashboard SuperAdmin</h4>
+                <h4 class="font-18 mb-0">Admin Dashboard </h4>
             </div>
 
             <div class="text-end">
@@ -22,6 +22,7 @@
     </div>
 
     <div class="row">
+        @can('Employee')
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
@@ -33,7 +34,9 @@
                 </div>
             </div>
         </div>
+        @endcan
 
+        @can('All Role')
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
@@ -46,6 +49,7 @@
                 </div>
             </div>
         </div>
+        @endcan
 
         @can('Leave')
         <div class="col-md-6 col-xl-3">
