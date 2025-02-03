@@ -81,8 +81,6 @@ swal({
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
                             </div>
                         </div>
                         <div class="row mt-3">
