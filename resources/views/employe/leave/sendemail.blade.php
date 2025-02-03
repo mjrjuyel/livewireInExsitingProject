@@ -100,10 +100,10 @@
             @if($leave['total_paid'] != 0)
                 @if($leave['total_paid'] <= 1) 
                     @if($leave['total_paid'] !== null)
-                    <p><strong>Total Paid leave :</strong> {{ $leave['total_paid']}} Day</p>
+                    <p><strong>Total Paid leave : </strong> {{ $leave['total_paid']}} Day</p>
                     @endif
                     @else
-                    <p><strong>Total Paid Leave :</strong>{{ $leave['total_paid'] }} Days</p> 
+                    <p><strong>Total Paid Leave : </strong>{{ $leave['total_paid'] }} Days</p> 
                 @endif
             @endif
 
