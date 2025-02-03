@@ -134,7 +134,7 @@
                                                 </a>
                                             </li>
 
-                                            @can('Add Permission')
+                                            @can('Add')
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.permission.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add New Permission</span>
