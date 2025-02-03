@@ -14,6 +14,13 @@ use DateInterval;
 
 class CateringFoodController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('permission:Add Meal')->only('add','insert');
+        $this->middleware('permission:Edit Meal')->only('edit','update');
+        $this->middleware('permission:View Meal')->only('view','index');
+        $this->middleware('permission:Delete Meal')->only('delete');
+    }
        
     //  All Role 
     public function index(){

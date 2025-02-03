@@ -31,17 +31,19 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <h3 class="card_header"><i
-                                                class="mdi mdi-noodles header_icon"></i>{{$view->order_date->format('D-m-Y')}}
+                                                class="mdi mdi-noodles header_icon"></i>@if($view->order_date != '') {{$view->order_date->format('D-m-Y')}} @endif
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.cateringfood')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.cateringpayment')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-noodles btn_icon"></i>All Food Payment</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('superadmin.cateringfood.edit',Crypt::encrypt($view->id))}}"
+                                    @can('Edit Payment')
+                                    <div class="col-md-2"><a href="{{route('superadmin.cateringpayment.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>
+                                    @endcan
                                 </div>
                             </div>
 

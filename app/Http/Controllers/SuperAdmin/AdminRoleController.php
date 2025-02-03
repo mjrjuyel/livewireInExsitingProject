@@ -86,6 +86,7 @@ class AdminRoleController extends Controller
     public function view($id){
         $ID = Crypt::decrypt($id);
         $view = Role::where('id',$ID)->first();
+        // return $view;
         return view('superadmin.role-permission.role.view',compact('view'));
     }
 
@@ -94,7 +95,6 @@ class AdminRoleController extends Controller
 
         $delete = Role::findOrFail($id);
         $delete->delete();
-
         if($delete){
             Session::flash('success','Role Have Deleted');
             return redirect()->back();

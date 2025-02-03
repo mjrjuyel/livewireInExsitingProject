@@ -53,9 +53,23 @@
                                     <td>{{ $view->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Permission BelongsTo SuperAdmin Dashboard</td>
+                                    <td>Permission BelongsTo User</td>
                                     <td>:</td>
-                                    
+                                    <td>
+                                     @foreach($view->users as $user)
+                                         <span class="badge bg-secondary">{{$user->name}}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Permission BelongsTo Role</td>
+                                    <td>:</td>
+                                    <td>
+                                     @foreach($view->roles as $role)
+                                         <span class="badge bg-secondary">{{$role->name}}</span>
+                                        @endforeach
+                                    </td>
                                 </tr>
 
                                 <tr>

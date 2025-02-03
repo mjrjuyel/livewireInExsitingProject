@@ -107,16 +107,13 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
 
         // Only SuperAdmin Can access These Route ******************
-         Route::middleware('is_superadmin')->group(function(){
+        
                 Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
                 Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
                 Route::get('/superadmin/recycle/dailyreport',[RecyclebinController::class,'dailyreport'])->name('superadmin.recycle.dailyreport');
                 // Add Admin 
                 Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
-         });
-        
-        // Super Admin and Hr Dashboard Dashbaord *******************
-        Route::middleware('isAdminAndHr')->group(function(){
+         
                 // Admin Profile Controller 
                 Route::get('superadmin/admin',[AdminProfileController::class,'index'])->name('superadmin.admin');
                 Route::post('superadmin/admin/insert',[AdminProfileController::class,'insert'])->name('superadmin.admin.insert');
@@ -268,12 +265,9 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
                 Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
                 Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
-                // Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
+                Route::delete('/superadmin/role/delete',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
                 
-    });
-
-    // Admin And Assistant Access Route *********
-    Route::middleware('is_adminAndAssistant')->group(function(){
+   
                 // Catering Food
                 Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
                 Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
@@ -299,12 +293,11 @@ Route::middleware(['auth','verified'])->group(function(){
                 // Search by month Payment
                 Route::get('/superadmin/cateringpayment/{month}',[CateringPaymentController::class,'searchMonth']);
                 Route::get('/superadmin/cateringpayment/year/{year}',[CateringPaymentController::class,'searchYear']);
-            });
 
-    // Not As A Super Admin // 404 for not authrized
-    Route::get('invalidAccess',function(){ 
-        return view('layouts.errorpage.notValidRole');
-        })->name('invalidAccess');
+                // Not As A Super Admin // 404 for not authrized
+                Route::get('invalidAccess',function(){ 
+                    return view('layouts.errorpage.notValidRole');
+                    })->name('invalidAccess');
 });
 
 

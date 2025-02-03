@@ -66,10 +66,12 @@ swal({
                                 </h3>
                             </div>
 
+                            @can('View Payment')
                             <div class="col-md-4 text-end"><a href="{{route('superadmin.cateringpayment')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-cash-clock btn_icon"></i>Previous Payment</a>
                             </div>
+                            @endcan
                         </div>
                     </div>
                     <form action="{{route('superadmin.cateringpayment.insert')}}" method="post">

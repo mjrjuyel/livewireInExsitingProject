@@ -62,9 +62,11 @@
                                 <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Manual Leave Application Form
                                 </h3>
                             </div>
+                            @can('Leave Application List')
                             <div class="col-md-4 text-end">
                                 <a href="{{route('superadmin.leave')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> All Leave Data</a>
                             </div>
+                            @endcan
                         </div>
                     </div>
                     <form action="{{route('superadmin.leave.insert')}}" method="post">

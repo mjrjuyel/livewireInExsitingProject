@@ -12,8 +12,15 @@ use Auth;
 
 class BankNameController extends Controller
 {
-       
-    //  All Role 
+
+    public function __construct(){
+        $this->middleware('permission:Add Bank Detail')->only('add','insert');
+        $this->middleware('permission:Edit Bank Detail')->only('edit','update');
+        $this->middleware('permission:View Bank Detail')->only('view');
+        $this->middleware('permission:Delete Bank Detail')->only('delete');
+    }
+
+
     public function index(){
         $bankName = BankName::all();
         // return $role;

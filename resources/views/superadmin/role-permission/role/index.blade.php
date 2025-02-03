@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="">
-                        <table class="table table-centered text-center" id="">
+                        <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Role Name</th>
@@ -129,10 +129,10 @@
     <div class="modal-dialog ">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete a Permission Role </h5>
+                <h5 class="modal-title" id="myModalLabel">Delete a Role </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.permission.delete')}}" method="post">
+            <form action="{{route('superadmin.role.delete')}}" method="post">
             @method('delete')
                 @csrf
                 <div class="modal-body modal_body">
@@ -156,4 +156,27 @@
         });
     });
 </script>
+@endsection
+
+@section('js')
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net/js/dataTables.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive/js/dataTables.responsive.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
+</script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-keytable/js/dataTables.keyTable.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-select/js/dataTables.select.min.js"></script>
+
+<!-- Datatables init -->
+<script src="{{ asset('contents/admin') }}/assets//js/pages/table-datatable.js"></script>
 @endsection

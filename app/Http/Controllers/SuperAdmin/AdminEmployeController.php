@@ -24,6 +24,15 @@ use Auth;
 
 class AdminEmployeController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:Add Employee')->only('add','insert');
+        $this->middleware('permission:Edit Employee')->only('edit','update');
+        $this->middleware('permission:View Employee')->only('view');
+        $this->middleware('permission:Soft Delete Employee')->only('softdele');
+        $this->middleware('permission:Restore Employee')->only('softdele');
+        $this->middleware('permission:Delete Employee')->only('delete');
+        $this->middleware('permission:Login Employee Profile')->only('login');
+    }
     // Add Employe 
     public function add(){
         $role = UserRole::all();

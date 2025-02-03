@@ -51,10 +51,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
+                        @can('Leave Manually Add')
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.leave.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Manual Leave</a>
                         </div>
+                        @endcan
                     </div>
                     <div class="">
                         <table class="table table-centered text-center" id="datatable">
@@ -156,16 +158,21 @@
                                                             Action
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                           @can('View Leave')
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                             </li>
-                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a></li>
+                                                           @endcan
+                                                            @if($data->add_from == "Admin" && $data->status == 2)
+                                                            @can('Edit Leave')
+                                                                <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                             </li>
-
-                                                            @if(Auth::user()->role_id == 1)
-                                                            <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
-                                                                    </i>Delete</a>
-                                                            </li>
+                                                            @endcan
                                                             @endif
+                                                            @can('Delete Leave')
+                                                                <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                                    </i>Delete</a>
+                                                                </li>
+                                                            @endcan
                                                         </ul>
                                                     </div>
                                                 </td>

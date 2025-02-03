@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="">
-                        <table class="table table-centered text-center" id="">
+                        <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Permission Name</th>
@@ -73,8 +73,11 @@
                                         {{ $permission->name }}
                                     </td>
 
+                                   
                                     <td class="text-danger">
-                                        
+                                        @foreach($permission->roles as $role)
+                                         <span class="badge bg-secondary">{{$role->name}}</span>
+                                        @endforeach
                                     </td>
 
                                     <td>
@@ -101,8 +104,11 @@
 
                             </tbody>
                             <tfoot>
+                            
                             </tfoot>
                         </table>
+
+                        
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
@@ -144,4 +150,27 @@
         });
     });
 </script>
+@endsection
+
+@section('js')
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net/js/dataTables.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive/js/dataTables.responsive.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
+</script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-keytable/js/dataTables.keyTable.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-select/js/dataTables.select.min.js"></script>
+
+<!-- Datatables init -->
+<script src="{{ asset('contents/admin') }}/assets//js/pages/table-datatable.js"></script>
 @endsection

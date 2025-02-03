@@ -12,7 +12,14 @@ use Session;
 class DesgnationController extends Controller
 {
 
-    //  All Role 
+   
+    public function __construct(){
+        $this->middleware('permission:Add Designation')->only('add','insert');
+        $this->middleware('permission:Edit Designation')->only('edit','update');
+        $this->middleware('permission:View Designation')->only('view');
+        $this->middleware('permission:Delete Designation')->only('delete');
+    }
+
     public function index(){
         $desig = Designation::with(['employe','department'])->get();
         

@@ -51,6 +51,7 @@ class EmployeController extends Controller
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
             'add' => 'required',
             'emerPhone' => 'required',
+            'emerName' => 'required',
             'emerRelation' => 'required',
             'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
         ]);
@@ -105,6 +106,7 @@ class EmployeController extends Controller
             'emp_address'=>$request['add'],
             'emp_present'=>$request['preAdd'],
             'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_name'=>$request['emerName'],
             'emp_emer_relation'=>$request['emerRelation'],
             'emp_slug'=>$slug,
             'emp_desig_id'=>$request['desig'],

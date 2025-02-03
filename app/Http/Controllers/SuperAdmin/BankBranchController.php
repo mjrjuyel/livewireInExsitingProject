@@ -14,6 +14,13 @@ use Auth;
 class BankBranchController extends Controller
 {
        
+    public function __construct(){
+        $this->middleware('permission:Add Bank Branch')->only('add','insert');
+        $this->middleware('permission:Edit Bank Branch')->only('edit','update');
+        $this->middleware('permission:View Bank Branch')->only('view');
+        $this->middleware('permission:Delete Bank Branch')->only('delete');
+    }
+
     //  All Role 
     public function index(){
         $bankBranch = BankBranch::with('bankName')->get();
