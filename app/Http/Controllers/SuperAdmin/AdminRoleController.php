@@ -38,6 +38,7 @@ class AdminRoleController extends Controller
     
     public function insert(Request $request){
         
+        // return $request->all();
         $request->validate([
             'name'=>'required | unique:roles,name',
         ]);
@@ -73,6 +74,7 @@ class AdminRoleController extends Controller
 
         $request->validate([
             'name'=>'required | unique:roles,name,'.$id,
+            'permission'=>'required',
         ]);
         // return $request->all();
         $update = Role::where('id',$id)->update([
