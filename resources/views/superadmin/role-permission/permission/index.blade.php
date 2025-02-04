@@ -51,10 +51,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
+                        @can('Add Permission')
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.permission.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Permission</a>     
                         </div>
+                        @endcan
                     </div>
 
                     <div class="">
