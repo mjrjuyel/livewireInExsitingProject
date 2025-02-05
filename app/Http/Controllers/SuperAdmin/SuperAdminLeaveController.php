@@ -172,53 +172,77 @@ class SuperAdminLeaveController extends Controller
 
                     foreach($leaveSummary as $leavePermonth){
 
-                            $start_date = Carbon::parse($leavePermonth['start_date']); // Parsing day in Month, year;
-                            $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
+                                $start_date = Carbon::parse($leavePermonth['start_date']); // Parsing day in Month, year;
+                                $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
 
-                            // check total Paid of in a month
-                            $checkMonth = Leave::where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
-                            
-                            $previousLeave = Leave::where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
-                            // return $previousLeave !== null ? "this have value " : "Its A  null property";
+                                // check total Paid of in a month
+                                $checkMonth = Leave::where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                                
+                                $previousLeave = Leave::where('emp_id',$request->employe)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
+                                // return $previousLeave !== null ? "this have value " : "Its A  null property";
 
-                            // check total paid off in an annual year
-                            $checkYear = Leave::where('emp_id',$request->employe)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
-                            
-                            $remainingMonthlyPaidLeave = max(0, $definedLeave->month_limit - $checkMonth);
+                                // check total paid off in an annual year
+                                $checkYear = Leave::where('emp_id',$request->employe)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                                
+                                $remainingMonthlyPaidLeave = max(0, $definedLeave->month_limit - $checkMonth);
 
-                            // return $remainingMonthlyPaidLeave;
-                            $paidLeaves = min($remainingMonthlyPaidLeave,$leavePermonth['totalDays']);
-                            // return $paidLeaves;
-                            $unPaidLeaves = $leavePermonth['totalDays'] - $paidLeaves;
+                                // return $remainingMonthlyPaidLeave;
+                                $paidLeaves = min($remainingMonthlyPaidLeave,$leavePermonth['totalDays']);
+                                // return $paidLeaves;
+                                $unPaidLeaves = $leavePermonth['totalDays'] - $paidLeaves;
 
-                                    $insert = Leave::create([
-                                        'leave_type_id'=>$request['leave_type'],
-                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : null ,
-                                        'start_date'=>Carbon::parse($leavePermonth['start_date']),
-                                        'end_date'=>$leavePermonth['end_date'],
-                                        'reason'=>$request['reason'],
-                                        'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
-                                        // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
-                                        'total_paid'=>$paidLeaves,
-                                        'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
-                                        'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
-                                        'emp_id'=>$request->employe,
-                                        'status'=>2,
-                                        'add_from'=>'Admin',
-                                        'slug'=>'leav-'.uniqId(),
-                                        'created_at'=>Carbon::parse($leavePermonth['start_date']),
-                                    ]);
+                                    // if unpaid request
+                                    if($request->unpaid){
+                                            $insert = Leave::create([
+                                                'leave_type_id'=>$request['leave_type'],
+                                                'other_type'=>$request['leave_type'] == 0 ? $request->others : null ,
+                                                'start_date'=>Carbon::parse($leavePermonth['start_date']),
+                                                'end_date'=>$leavePermonth['end_date'],
+                                                'reason'=>$request['reason'],
+                                                'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
+                                                'total_paid'=>0,
+                                                'total_unpaid'=> $paidLeaves + $unPaidLeaves,
+                                                'unpaid_request'=>$request->unpaid,
+                                                'emp_id'=>$request->employe,
+                                                'status'=>2,
+                                                'add_from'=>'Admin',
+                                                'slug'=>'leav-'.uniqId(),
+                                                'created_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
+                                            ]);
 
-                                    if ($insert) {
-                                        if ($unPaidLeaves > 0) {
-                                            Session::flash('success', 'Monthly leave limit reached! Extra days counted as unpaid.');
-                                        } else {
-                                            Session::flash('success', 'Application Sent to SuperAdmin');
+                                            if ($insert) {
+                                                    Session::flash('success', 'You have successfully created an employee Un-Paid leave information');
+                                                    return redirect()->back();
+                                                }
+                                     }else{
+                                        $insert = Leave::create([
+                                            'leave_type_id'=>$request['leave_type'],
+                                            'other_type'=>$request['leave_type'] == 0 ? $request->others : null ,
+                                            'start_date'=>Carbon::parse($leavePermonth['start_date']),
+                                            'end_date'=>$leavePermonth['end_date'],
+                                            'reason'=>$request['reason'],
+                                            'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
+                                            'total_paid'=>$paidLeaves,
+                                            'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
+                                            'unpaid_request'=>$request->unpaid,
+                                            'emp_id'=>$request->employe,
+                                            'status'=>2,
+                                            'add_from'=>'Admin',
+                                            'slug'=>'leav-'.uniqId(),
+                                            'created_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
+                                        ]);
+
+                                        if ($insert) {
+                                            if ($unPaidLeaves > 0) {
+                                                Session::flash('success', 'You have successfully created an employee  and un-paid leave information.');
+                                            } else {
+                                                Session::flash('success', 'You have successfully created an employee paid leave information');
+                                            }
+
                                         }
-                                        
-                                }
+                                     }
                             
-                    }
+                    } 
                     return redirect()->back();
                 }
             Session::flash('error','Date Is not Correct!');
@@ -392,46 +416,55 @@ class SuperAdminLeaveController extends Controller
                             // return $paidLeaves;
                             $unPaidLeaves = $leavePermonth['totalDays'] - $paidLeaves;
 
-                                    $insert = Leave::where('id',$id)->update([
-                                        'leave_type_id'=>$request['leave_type'],
-                                        'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
-                                        'start_date'=>Carbon::parse($leavePermonth['start_date']),
-                                        'end_date'=>$leavePermonth['end_date'],
-                                        'reason'=>$request['reason'],
-                                        'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
-                                        // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
-                                        'total_paid'=>$paidLeaves,
-                                        'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
-                                        'unpaid_request'=>$unPaidLeaves > 0 ? 1 : 0,
-                                        'emp_id'=>$request->employe,
-                                        'status'=>2,
-                                        'add_from'=>'Admin',
-                                        'slug'=>'leav-'.uniqId(),
-                                        'updated_at'=>Carbon::parse($leavePermonth['start_date']),
-                                    ]);
+                            if($request->unpaid){
+                                $update = Leave::where('id',$id)->update([
+                                    'leave_type_id'=>$request['leave_type'],
+                                    'other_type'=>$request['leave_type'] == 0 ? $request->others : null ,
+                                    'start_date'=>Carbon::parse($leavePermonth['start_date']),
+                                    'end_date'=>$leavePermonth['end_date'],
+                                    'reason'=>$request['reason'],
+                                    'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
+                                    'total_paid'=>0,
+                                    'total_unpaid'=> $paidLeaves + $unPaidLeaves,
+                                    'unpaid_request'=>$request->unpaid,
+                                    'emp_id'=>$request->employe,
+                                    'status'=>2,
+                                    'add_from'=>'Admin',
+                                    'slug'=>'leav-'.uniqId(),
+                                    'updated_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
+                                ]);
 
-                                    // $adminEmail = AdminEmail::first();
+                                if ($update) {
+                                        Session::flash('success', 'You have successfully Updated an employee Un-Paid leave information');
+                                        return redirect()->back();
+                                    }
+                         }else{
+                            $update = Leave::where('id',$id)->update([
+                                'leave_type_id'=>$request['leave_type'],
+                                'other_type'=>$request['leave_type'] == 0 ? $request->others : null ,
+                                'start_date'=>Carbon::parse($leavePermonth['start_date']),
+                                'end_date'=>$leavePermonth['end_date'],
+                                'reason'=>$request['reason'],
+                                'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
+                                'total_paid'=>$paidLeaves,
+                                'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
+                                'unpaid_request'=>$request->unpaid,
+                                'emp_id'=>$request->employe,
+                                'status'=>2,
+                                'add_from'=>'Admin',
+                                'slug'=>'leav-'.uniqId(),
+                                'updated_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
+                            ]);
 
-                                    // if($adminEmail->email_leave == 1){
-                                        
-                                    //     $getEmail = AdminEmail::where('id',1)->first();
-                                    //     $explode = explode(',',$getEmail->email);
-                                    //     // try {
-                                    //     foreach($explode as $email){
-                                    //         Mail::to($email)->send(new LeaveMailToAdmin($insert));
-                                    //     }
-                                    // }
-                                    // notification
-                                    // auth()->user()->notify(new LeaveToAdminNotification($insert));
-
-                                    if ($insert) {
-                                        if ($unPaidLeaves > 0) {
-                                            Session::flash('success', 'Leave Information update and Monthly leave limit reached! Extra days counted as unpaid.');
-                                        } else {
-                                            Session::flash('success', 'Leave Information Update By Admin Dashboard User');
-                                        }
-                                        
+                            if ($update) {
+                                if ($unPaidLeaves > 0) {
+                                    Session::flash('success', 'You have successfully Updated an employee Paid and un-paid leave information.');
+                                } else {
+                                    Session::flash('success', 'You have successfully Updated an employee paid leave information');
                                 }
+
+                            }
+                         }
                             
                     }
                     return redirect()->back();
@@ -513,6 +546,13 @@ class SuperAdminLeaveController extends Controller
                 'updated_at'=>Carbon::now(),
             ]);
 
+            if($request->unpaidLeave){
+                $update = Leave::where('id',$id)->update([
+                    'total_unpaid'=>$request->unpaidDay,
+                    'total_paid'=>$request->total_leave - $request->unpaidDay,
+                ]);
+            }
+
             if($request->status == 2){
                 $update = Leave::where('slug',$slug)->update([
                     'status'=>$request['status'],
@@ -538,6 +578,7 @@ class SuperAdminLeaveController extends Controller
                     Session::flash('success','Request Leave Cancle!');
                 }
             }
+
 
             $alldata = Leave::where('id',$id)->first();
             

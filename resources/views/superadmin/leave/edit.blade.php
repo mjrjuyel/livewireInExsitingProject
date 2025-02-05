@@ -36,7 +36,7 @@
     <div class="page-title-box">
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
-                <h4 class="font-18 mb-0">Dashboard</h4> 
+                <h4 class="font-18 mb-0">Dashboard</h4>
             </div>
 
             <div class="text-end">
@@ -68,83 +68,91 @@
                         </div>
                     </div>
                     <form action="{{route('superadmin.leave.updateleave')}}" method="post">
-                    
-                            @csrf
-                            <div class="row mt-3">
-                                <div class="col-6 offset-2">
-                                    <div class="mb-3">
-                                   <input type="hidden" name="id" value="{{$edit->id}}">
-                                        <label class="form-label">Employee Name<span class="text-danger">* </span>:
-                                        </label>
-                                        <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
-                                            <option value="">Select A Type</option>
-                                            @foreach($employees as $employe)
-                                            <option value="{{$employe->id}}" {{ $employe->id == $edit->emp_id ? 'Selected' : ' '}}>{{$employe->emp_name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('employe')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                   
-                                        <label class="form-label">Leave Type<span class="text-danger">* </span>:
-                                        </label>
-                                        <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">
-                                            <option value="">Select A Type</option>
-                                            @foreach($leaveType as $type)
-                                            <option value="{{$type->id}}" {{ $type->id == $edit->leave_type_id ? 'Selected' : ' '}}>{{$type->type_title}}</option>
-                                            @endforeach
-                                            <option value="0" id="other_reason">Other</option>
-                                        </select>
-                                        @error('leave_type')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
-                                    </div>
 
-                                    
-                                    <div class="mb-3 leave_type" style="display:block;">
-                                        <label class="form-label text-danger">Write Short Type<span class="text-danger"> :</span>:
-                                        </label>
-                                        <input type="text" name="others" class="form-control" value="{{$edit->other_reason}}" placeholder="Personal Reason">
-                                        @error('others')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
-                                    </div>
+                        @csrf
+                        <div class="row mt-3">
+                            <div class="col-6 offset-2">
+                                <div class="mb-3">
+                                    <input type="hidden" name="id" value="{{$edit->id}}">
+                                    <label class="form-label">Employee Name<span class="text-danger">* </span>:
+                                    </label>
+                                    <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
+                                        <option value="">Select A Type</option>
+                                        @foreach($employees as $employe)
+                                        <option value="{{$employe->id}}" {{ $employe->id == $edit->emp_id ? 'Selected' : ' '}}>{{$employe->emp_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('employe')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Start From<span class="text-danger">* </span>:
-                                        </label>
-                                        <input type="text" id="humanfd-datepicker" name="start" value="{{$edit->start_date->format('Y-m-d')}}" class="form-control" placeholder="">
-                                        @error('start')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">To End<span class="text-danger">* </span>:
-                                        </label>
-                                        {{-- data-provide="datepicker" --}}
-                                        <input type="text" id="humanfd-datepicke" name="end" value="{{$edit->end_date->format('Y-m-d')}}" class="form-control" placeholder="">
-                                        @error('end')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
-                                    </div>
+                                    <label class="form-label">Leave Type<span class="text-danger">* </span>:
+                                    </label>
+                                    <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">
+                                        <option value="">Select A Type</option>
+                                        @foreach($leaveType as $type)
+                                        <option value="{{$type->id}}" {{ $type->id == $edit->leave_type_id ? 'Selected' : ' '}}>{{$type->type_title}}</option>
+                                        @endforeach
+                                        <option value="0" id="other_reason">Other</option>
+                                    </select>
+                                    @error('leave_type')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Short Reason<span class="text-danger">* </span>:
-                                        </label>
 
-                                        <textarea type="text" style="resize:none;" rows="4" id="editor" name="reason" class="form-control" placeholder="Write Some Reason">{{$edit->reason}}</textarea>
+                                <div class="mb-3 leave_type" style="display:block;">
+                                    <label class="form-label text-danger">Write Short Type<span class="text-danger"> :</span>:
+                                    </label>
+                                    <input type="text" name="others" class="form-control" value="{{$edit->other_reason}}" placeholder="Personal Reason">
+                                    @error('others')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
 
-                                        @error('reason')
-                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                        @enderror
-                                    </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Start From<span class="text-danger">* </span>:
+                                    </label>
+                                    <input type="text" id="humanfd-datepicker" name="start" value="{{$edit->start_date->format('Y-m-d')}}" class="form-control" placeholder="">
+                                    @error('start')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">To End<span class="text-danger">* </span>:
+                                    </label>
+                                    {{-- data-provide="datepicker" --}}
+                                    <input type="text" id="humanfd-datepicke" name="end" value="{{$edit->end_date->format('Y-m-d')}}" class="form-control" placeholder="">
+                                    @error('end')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
 
-                                    <button type="submit" class="btn btn-primary">Re Submit</button>
+                                <div class="mb-3">
+                                    <label class="form-label">Short Reason<span class="text-danger">* </span>:
+                                    </label>
+
+                                    <textarea type="text" style="resize:none;" rows="4" id="editor" name="reason" class="form-control" placeholder="Write Some Reason">{{$edit->reason}}</textarea>
+
+                                    @error('reason')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+
+                                    <input type="checkbox" name="unpaid" value="1" {{$edit->unpaid_request == 1 ? 'Checked' : ''}}>
+                                    <label class="form-label">Is This Totally Unpaid Leave?
+                                    </label>
 
                                 </div>
+
+                                <button type="submit" class="btn btn-primary">Re Submit</button>
+
                             </div>
+                        </div>
                     </form>
                 </div>
                 <!-- end card-body-->
@@ -158,31 +166,31 @@
 
 <!--end Footer -->
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let dateInput = document.getElementById("humanfd-datepicker");
+        let existingDate = dateInput.value; // Laravel-passed value
 
-document.addEventListener("DOMContentLoaded", function () {
-    let dateInput = document.getElementById("humanfd-datepicker");
-    let existingDate = dateInput.value; // Laravel-passed value
-
-    console.log(existingDate);
-    flatpickr("#humanfd-datepicker", {
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-        defaultDate: existingDate ? existingDate : null
+        console.log(existingDate);
+        flatpickr("#humanfd-datepicker", {
+            altInput: true
+            , altFormat: "F j, Y"
+            , dateFormat: "Y-m-d"
+            , defaultDate: existingDate ? existingDate : null
+        });
     });
-});
 
-  $(document).ready(function(){
-    
-    $('.leave_type').hide();
-    $('body').on('change', 'select[name="leave_type"]', function() {
-        if ($(this).val() === "0") {
-            $('.leave_type').show();
-        } else {
-            $('.leave_type').hide(); 
-        }
+    $(document).ready(function() {
+
+        $('.leave_type').hide();
+        $('body').on('change', 'select[name="leave_type"]', function() {
+            if ($(this).val() === "0") {
+                $('.leave_type').show();
+            } else {
+                $('.leave_type').hide();
+            }
+        });
     });
-  });
+
 </script>
 @endsection
 @section('js')
@@ -192,12 +200,13 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
 
 <!-- CKEditor CDN -->
-     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
-    <script>
-       ClassicEditor.create(document.querySelector('#editor')).catch(error => {
-                console.error(error);
-            });
-    </script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create(document.querySelector('#editor')).catch(error => {
+        console.error(error);
+    });
+
+</script>
 
 <script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
 
