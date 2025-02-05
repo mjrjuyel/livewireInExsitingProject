@@ -292,7 +292,7 @@ class LeaveFormController extends Controller
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
-                        'others'=>'max:30',
+                        'others'=>'max:50',
                         'reason'=>'required',
                         'end'=>'required',
                     ]);

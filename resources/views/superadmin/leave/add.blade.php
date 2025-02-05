@@ -146,7 +146,7 @@
                                 <div class="mb-3">
 
                                     <input type="checkbox" name="unpaid" value="1">
-                                    <label class="form-label">Is This Totally Unpaid Leave? :
+                                    <label class="form-label">Is This Totally Un-Paid Leave? :
                                     </label>
 
                                 </div>

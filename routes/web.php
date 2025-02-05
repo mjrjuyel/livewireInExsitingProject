@@ -233,7 +233,8 @@ Route::middleware(['auth','verified'])->group(function(){
 
                 //SuperAdmin Basic Controller
                 Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
-                Route::post('/superadmin/basic/update',[BasicController::class,'update'])->name('superadmin.basic.update');
+                Route::post('/superadmin/basic/update',[BasicController::class,'updateBasic'])->name('superadmin.basic.update');
+                Route::post('/superadmin/basic/currency',[BasicController::class,'updateCurrency'])->name('superadmin.basic.currency');
 
                 //TimeZone Basic Controller
                 Route::get('/superadmin/timezone',[TimeZoneController::class,'index'])->name('superadmin.timezone');

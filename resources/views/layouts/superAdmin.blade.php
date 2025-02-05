@@ -437,7 +437,7 @@
                                 @can('Check Balance')
                                  <li class="side-nav-item">
                                     <a href="{{route('superadmin.cateringpayment.checkbill')}}" class="side-nav-link">
-                                        <span class="menu-icon"><i class="mdi mdi-currency-bdt"></i></span>
+                                        <span class="menu-icon">{{currencyChange()}}</span>
                                         <span class="menu-text"> Check Balance </span>
                                     </a>
                                 </li>
@@ -462,7 +462,7 @@
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.basic')}}" class="side-nav-link">
-                                        <span class="menu-text">Website</span>
+                                        <span class="menu-text">Global Settings</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">

@@ -144,7 +144,7 @@
                                 <div class="mb-3">
 
                                     <input type="checkbox" name="unpaid" value="1" {{$edit->unpaid_request == 1 ? 'Checked' : ''}}>
-                                    <label class="form-label">Is This Totally Unpaid Leave?
+                                    <label class="form-label">Is This Totally Un-Paid Leave?
                                     </label>
 
                                 </div>

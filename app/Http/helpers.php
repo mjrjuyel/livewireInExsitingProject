@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Currency;
 
 if (! function_exists('formatDate')) {
     /**
@@ -14,5 +15,19 @@ if (! function_exists('formatDate')) {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date, 'UTC')
                      ->timezone(config('app.timezone'))
                      ->format('d-M-Y | h:i:s A');
+    }
+}
+
+if ( ! function_exists('currencyCahnge')) {
+    /**
+     * Format a given date.
+     *
+     * @param string $date
+     * @return string
+     */
+    function currencyChange()
+    {
+        $currency = Currency::first();
+        return $currency->currency_icon;
     }
 }

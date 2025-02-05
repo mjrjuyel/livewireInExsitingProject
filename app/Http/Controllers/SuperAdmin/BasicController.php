@@ -8,6 +8,7 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Basic;
+use App\Models\Currency;
 use Auth;
 use Carbon\Carbon;
 use Session;
@@ -15,13 +16,13 @@ use Session;
 class BasicController extends Controller
 {
     public function index(){
+        $currency = Currency::first();
         $basic = Basic::where('id',1)->first();
-        return view('superadmin.basic.index',compact('basic'));
+        // return $currency;
+        return view('superadmin.basic.index',compact(['basic','currency']));
     }
 
-    public function update(Request $request){
-
-    
+    public function updateBasic(Request $request){
         //if file exsit file.
         $old= Basic::find(1);
         $path = public_path('uploads/basic/');
@@ -94,5 +95,25 @@ class BasicController extends Controller
             Session::flash('success','Basic Website Setting Updated|');
             return redirect()->back();
         }
+    }
+
+    // Currency Symbol Converter
+    public function updateCurrency(Request $request){
+       
+        // return $request->all();
+        $request->validate([
+            'name'=>'required',
+        ]);
+
+        $update = Currency::where('id',1)->update([
+            'currency_icon'=>$request['name'],
+            'editor'=>Auth::user()->id,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+
+            if($update){
+                Session::flash('success','Currency Change For Website');
+                return redirect()->back();
+            }
     }
 }

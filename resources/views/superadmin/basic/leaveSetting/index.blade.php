@@ -163,7 +163,7 @@
     <div class="row">
         <div class="col-12">
             <div class="text-center">
-                <h4 class="text-info">Speacial Off Day List</h4>
+                <h4 class="text-info">Special Off Day List</h4>
                 <hr>
             </div>
             <div class="row">
