@@ -76,33 +76,41 @@ class AdminProfileController extends Controller
 
         $insert->syncRoles($request->role);
 
-        $exsitEmploye = Employee::where('email',$insert->email)->exists();
+        if($request->addEmployee){
+            $exsitEmploye = Employee::where('email',$insert->email)->exists();
 
-        if($exsitEmploye){
-            Session::flash('success','Only Add In Admin List');
-            return redirect()->back();
+            if($exsitEmploye){
+                Session::flash('success','Already Have an Account with This Email . Only Add In Admin List');
+                return redirect()->back();
+            }
+            else{
+                if($insert->image){
+                    $imageTake = $request->file('pic');
+                    $employe_name = 'user-'.uniqId().$insert->image;
+                    // $image->scale(width: 300);
+                    $image->save('uploads/employe/profile/'.$employe_name);
+                }
+                    $employe = Employee::create([
+                    'emp_name'=>$insert->name,
+                    'email'=>$insert->email,
+                    'emp_image'=>$employe_name ?? null,
+                    'emp_join'=>Carbon::now()->format('Y-m-d'),
+                    'emp_slug'=>'user-'.uniqId(),
+                    'emp_creator'=>Auth::user()->id,
+                    'password'=>Hash::make($request['pass']),
+                    'created_at'=>Carbon::now(),
+                ]);
+
+                Session::flash('success','New Admin and Employee Added Successfully');
+                return redirect()->back();
+            }
+
         }
-        else{
-            if($insert->image){
-                $imageTake = $request->file('pic');
-                $employe_name = 'user-'.uniqId().$insert->image;
-                // $image->scale(width: 300);
-                $image->save('uploads/employe/profile/'.$employe_name);
-               }
-                $employe = Employee::create([
-                'emp_name'=>$insert->name,
-                'email'=>$insert->email,
-                'emp_image'=>$employe_name ?? null,
-                'emp_join'=>Carbon::now()->format('Y-m-d'),
-                'emp_slug'=>'user-'.uniqId(),
-                'emp_creator'=>Auth::user()->id,
-                'password'=>Hash::make($request['pass']),
-                'created_at'=>Carbon::now(),
-            ]);
-        }
-        
-        Session::flash('success','New Admin and Employee Added Successfully');
+
+        Session::flash('success','Only Add In Admin List');
         return redirect()->back();
+        
+        
     }
 
     public function viewProfile($id){

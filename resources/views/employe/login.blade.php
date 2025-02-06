@@ -65,10 +65,6 @@
                                             type="submit"> Log In </button>
                                     </div>
                                 </form>
-
-                                <a href="{{route('superadmin')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
-                                        Are you an Admin?</a>
-
                                 {{-- <div class="text-center mt-4">
                                     <h5 class="text-muted py-2"><b>Sign in with</b></h5>
 

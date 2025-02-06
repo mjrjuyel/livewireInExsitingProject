@@ -374,7 +374,7 @@
                                 </li>
                                 @endcan
                                 @can('Bank Branch')
-                                    <li class="side-nav-item">
+                                <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#sidebarBankBranch" aria-expanded="false" aria-controls="sidebarBankBranch" class="side-nav-link">
                                         <span class="menu-text">Bank Branches</span>
                                         <span class="menu-arrow"></span>
@@ -435,7 +435,7 @@
                                 </li>
 
                                 @can('Check Balance')
-                                 <li class="side-nav-item">
+                                <li class="side-nav-item">
                                     <a href="{{route('superadmin.cateringpayment.checkbill')}}" class="side-nav-link">
                                         <span class="menu-icon">{{currencyChange()}}</span>
                                         <span class="menu-text"> Check Balance </span>
@@ -481,13 +481,7 @@
                                         <span class="menu-text">Email</span>
                                     </a>
                                 </li>
-
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.email')}}" class="side-nav-link">
-                                        <span class="menu-text">Currency</span>
-                                    </a>
-                                </li>
-
+                                
                             </ul>
                         </div>
                     </li>
@@ -501,6 +495,20 @@
                         </a>
                     </li>
                     @endcan
+
+                    <hr>
+                    @php
+                    $employe = App\Models\Employee::where('email',Auth::user()->email)->first();
+                    @endphp
+                    @if($employe)
+                    <li class="side-nav-item">
+                        <form action="{{ url('/superadmin/asEmploye/'.Crypt::encrypt($employe->id)) }}" method="post">
+                            @csrf
+                            @method('post')
+                            <button class="btn side-nav-link menu-text text-primary" type="sumbit"><i class=" menu-icon text-primary mdi mdi-account-switch-outline"></i>Switch As Employee</button>
+                        </form>
+                    </li>
+                    @endif
 
                     <hr>
 

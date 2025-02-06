@@ -65,7 +65,7 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Admin Pic</th>
+                                    <th class="text-center">Employee Pic</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Reporting Manager</th>

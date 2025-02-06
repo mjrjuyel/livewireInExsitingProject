@@ -129,10 +129,17 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="d-inline-flex mb-3">
+                                                        <input type="checkbox" class="me-2" name="addEmployee"><span class="text-primary">Create an Employee Also?</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col-5">
-
                                             <div class="row mb-3">
                                                 <div class="col-12">
                                                     <div class="mb-3">
@@ -146,8 +153,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            
                                         </div>
 
                                     </div>

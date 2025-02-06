@@ -61,7 +61,7 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="text-center">Leave Type Type</th>
+                                    <th class="text-center">Leave Type</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>

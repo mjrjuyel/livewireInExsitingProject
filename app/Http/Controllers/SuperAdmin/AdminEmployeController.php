@@ -8,6 +8,7 @@ use Illuminate\Validation\Rules;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\Leave;
 use App\Models\Employee;
 use App\Models\EmployeLeaveSetting;
@@ -247,7 +248,6 @@ class AdminEmployeController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
         
-
         $request->validate([
             'name'=>'required',
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
@@ -512,6 +512,14 @@ class AdminEmployeController extends Controller
     public function login($id)
     {
         $employe = Employee::findOrFail(($id));
+        auth('employee')->login($employe, true);
+        return redirect()->route('dashboard');
+    }
+
+    public function employeLogin($id)
+    {
+        $userId = Crypt::decrypt($id);
+        $employe = Employee::findOrFail(($userId));
         auth('employee')->login($employe, true);
         return redirect()->route('dashboard');
     }

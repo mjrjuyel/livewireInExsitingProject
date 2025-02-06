@@ -64,32 +64,27 @@ Route::middleware('isEmploye')->group(function(){
          // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
          Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
          Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-         
-        // Role ManageMent
-         Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
-         Route::get('/dashboard/role/add',[RoleController::class,'add'])->name('dashboard.role.add');
-         Route::post('/dashboard/role/insert',[RoleController::class,'insert'])->name('dashboard.role.insert');
-         Route::get('/dashboard/role/view/{id}',[RoleController::class,'view'])->name('dashboard.role.view');
-         Route::delete('/dashboard/role/delete/{id}',[RoleController::class,'delete'])->name('dashboard.role.view');
-     
+      
          // Leave Application status by General User
          Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
          Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
          Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
-
          Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
          Route::post('/dashboard/leave/update',[LeaveFormController::class,'update'])->name('dashboard.leave.update');
          Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
          Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
          Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
- 
-         // Employe Daily Reports Submit
+         //  Switch Into User
+         Route::post('/dashboard/asAdmin/{id}',[EmployeController::class,'loginAdmin'])->name('dashboard.asAdmin');
+
+        // Employe Daily Reports Submit
          Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
          Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
          Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
          Route::get('/dashboard/dailyreport/edit/{slug}',[DailyReportController::class,'edit'])->name('dashboard.dailyreport.edit');
          Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
          Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
+
        });
 
        Route::get('/notActiveUser',function(){ 
@@ -137,13 +132,12 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/employe/restore',[AdminEmployeController::class,'restore'])->name('superadmin.employe.restore');
                 Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
                 Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
-
+                // log in as a employee
+                Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
+                Route::post('/superadmin/asEmploye/{id}',[AdminEmployeController::class,'employeLogin'])->name('superadmin.asEmploye');
                 // get data from select
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
-
-                // log in as a employee
-                Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
 
                 // Designation Controller
                 Route::get('/superadmin/designation',[DesgnationController::class,'index'])->name('superadmin.designation');

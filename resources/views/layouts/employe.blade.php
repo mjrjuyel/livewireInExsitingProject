@@ -149,6 +149,21 @@
                         </div>
                     </li>
 
+                    <hr>
+                    @php
+                    $user = App\Models\User::where('email',Auth::guard('employee')->user()->email)->first();
+                    @endphp
+                    @if($user)
+                    <li class="side-nav-item">
+                        <form action="{{ url('/dashboard/asAdmin/'.Crypt::encrypt($user->id)) }}" method="post">
+                            @csrf
+                            @method('post')
+                            <button class="btn side-nav-link menu-text text-primary" type="sumbit"><i class=" menu-icon text-primary mdi mdi-account-switch-outline"></i>Switch As Admin</button>
+                        </form>
+                    </li>
+                    @endif
+
+                    <hr>
                     <li class="side-nav-title">Logout</li>
 
                     <li class="side-nav-item">
