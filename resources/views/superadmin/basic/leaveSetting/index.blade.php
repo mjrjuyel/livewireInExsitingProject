@@ -112,15 +112,15 @@
                                             <label class="form-label">Weekend Off Day<span class="text-danger">*
                                                 </span>:
                                             </label>
-                                            <select class="form-control select2-multiple" name="weekoff[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                                            <select class="form-control " name="weekoff" data-placeholder="Choose ...">
                                                 <optgroup label="Weekly Off Day">
-                                                    <option value="1" {{ (is_array($setting->weekoffday) && in_array(1, $setting->weekoffday)) || $setting->weekoffday == 1 ? 'selected' : '' }}>Monday</option>
-                                                    <option value="2" {{ (is_array($setting->weekoffday) && in_array(2, $setting->weekoffday)) || $setting->weekoffday == 2 ? 'selected' : '' }}>Tuesday</option>
-                                                    <option value="3" {{ (is_array($setting->weekoffday) && in_array(3, $setting->weekoffday)) || $setting->weekoffday == 3 ? 'selected' : '' }}>Wednesday</option>
-                                                    <option value="4" {{ (is_array($setting->weekoffday) && in_array(4, $setting->weekoffday)) || $setting->weekoffday == 4 ? 'selected' : '' }}>Thursday</option>
-                                                    <option value="5" {{ (is_array($setting->weekoffday) && in_array(5, $setting->weekoffday)) || $setting->weekoffday == 5 ? 'selected' : '' }}>Friday</option>
-                                                    <option value="6" {{ (is_array($setting->weekoffday) && in_array(6, $setting->weekoffday)) || $setting->weekoffday == 6 ? 'selected' : '' }}>Saturday</option>
-                                                    <option value="7" {{ (is_array($setting->weekoffday) && in_array(7, $setting->weekoffday)) || $setting->weekoffday == 7 ? 'selected' : '' }}>Sunday</option>
+                                                    <option value="1" {{ $setting->weekoffday == 1 ? 'selected' : '' }}>Monday</option>
+                                                    <option value="2" {{ $setting->weekoffday == 2 ? 'selected' : '' }}>Tuesday</option>
+                                                    <option value="3" {{ $setting->weekoffday == 3 ? 'selected' : '' }}>Wednesday</option>
+                                                    <option value="4" {{ $setting->weekoffday == 4 ? 'selected' : '' }}>Thursday</option>
+                                                    <option value="5" {{ $setting->weekoffday == 5 ? 'selected' : '' }}>Friday</option>
+                                                    <option value="6" {{ $setting->weekoffday == 6 ? 'selected' : '' }}>Saturday</option>
+                                                    <option value="7" {{ $setting->weekoffday == 7 ? 'selected' : '' }}>Sunday</option>
                                                 </optgroup>
 
                                             </select>
@@ -163,7 +163,7 @@
     <div class="row">
         <div class="col-12">
             <div class="text-center">
-                <h4 class="text-info">Speacial Off Day List</h4>
+                <h4 class="text-info">Special Off Day List</h4>
                 <hr>
             </div>
             <div class="row">

@@ -8,24 +8,26 @@
 @section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
-swal({
-    title: "Success!",
-    text: "{{ Session::get('success') }}",
-    icon: "success",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Success!"
+        , text: "{{ Session::get('success') }}"
+        , icon: "success"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 @if(Session::has('error'))
 <script type="text/javascript">
-swal({
-    title: "Opps!",
-    text: "{{ Session::get('error') }}",
-    icon: "error",
-    button: "OK",
-    timer: 5000,
-});
+    swal({
+        title: "Opps!"
+        , text: "{{ Session::get('error') }}"
+        , icon: "error"
+        , button: "OK"
+        , timer: 5000
+    , });
+
 </script>
 @endif
 
@@ -61,8 +63,7 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('superadmin.role')}}"
-                                    class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.role')}}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Role</a>
                             </div>
                         </div>
@@ -71,18 +72,15 @@ swal({
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
-                            <input type="hidden" name="id" value="{{$edit->id}}">
+                                <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
                                     <label class="form-label">Role Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="name" value="{{$edit->name}}"
-                                        placeholder="Enter Role">
+                                    <input type="text" class="form-control" name="name" value="{{$edit->name}}" placeholder="Enter Role">
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -92,17 +90,28 @@ swal({
                                         <h5 class="card-title">Permissions</h5>
                                     </div>
                                     <div class="card-body pt-2">
-                                        <div class="row g-3">
-                                        @foreach($permissions as $permission)
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <p class="sub-header"><strong>Mark All</strong></p>
+                                                <div class="switchery-demo">
+                                                    <input type="checkbox" id="checkAll" class="switchery-checkbox" data-color="#ff7aa3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-5">
+                                            @foreach($permissions as $permission)
                                             <div class="col-lg-2">
                                                 <p class="sub-header">
-                                                   {{$permission->name}} 
+                                                    {{$permission->name}}
                                                 </p>
                                                 <div class="switchery-demo">
-                                                    <input type="checkbox" name="permission[]" value="{{$permission->name}}" {{ in_array($permission->id,$rolePermission) ? 'Checked' : ''}} data-plugin="switchery" data-color="#ff7aa3" />
+                                                    <input type="checkbox" name="permission[]" value="{{$permission->name}}" {{ in_array($permission->id,$rolePermission) ? 'Checked' : ''}} class="checkbox switchery-checkbox" value="{{$permission->name}}" data-color="#ff7aa3" />
                                                 </div>
                                             </div>
                                             @endforeach
+                                            @error('permission')
+                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -110,8 +119,8 @@ swal({
                             </div>
 
                             <div class="col-md-5 offset-md-5">
-                            <button type="submit" class="btn btn-primary">Update
-                            </button>
+                                <button type="submit" class="btn btn-primary">Update
+                                </button>
                             </div>
                         </div>
 
@@ -127,6 +136,55 @@ swal({
 </div> <!-- container -->
 
 <!--end Footer -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let checkAllBox = document.getElementById("checkAll");
+        let checkboxes = document.querySelectorAll(".checkbox");
+
+        // REMOVE old Switchery instances if they exist
+        document.querySelectorAll(".switchery").forEach(el => el.remove());
+
+        // Initialize Switchery
+        let switcheryInstances = [];
+        document.querySelectorAll(".switchery-checkbox").forEach(el => {
+            let switchery = new Switchery(el, {
+                color: "#ff7aa3"
+            });
+            switcheryInstances.push(switchery);
+        });
+
+        // Function to update all checkboxes
+        function toggleCheckboxes(checked) {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = checked;
+                let switchery = switcheryInstances.find(sw => sw.element === checkbox);
+                if (switchery) {
+                    switchery.setPosition();
+                }
+            });
+        }
+
+        // "Mark All" Checkbox Change Event
+        checkAllBox.addEventListener("change", function() {
+            toggleCheckboxes(this.checked);
+        });
+
+        // Individual Checkboxes Change Event
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", function() {
+                let allChecked = document.querySelectorAll(".checkbox:checked").length === checkboxes.length;
+                checkAllBox.checked = allChecked;
+                let switchery = switcheryInstances.find(sw => sw.element === checkAllBox);
+                if (switchery) {
+                    switchery.setPosition();
+                }
+            });
+        });
+    });
+
+</script>
+
 @endsection
 @section('js')
 <script src="{{ asset('contents/admin') }}/assets//libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>

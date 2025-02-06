@@ -78,10 +78,10 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                                 </label>
-                                                 @if($view->leave_type_id != 0) {{$view->leavetype->type_title}}
-                                                 @else
-                                                  Other Reason : {{$view->other_type}} 
-                                                  @endif
+                                                @if($view->leave_type_id != 0) {{$view->leavetype->type_title}}
+                                                @else
+                                                Other Reason : {{$view->other_type}}
+                                                @endif
                                             </div>
 
                                             <div class="mb-3">
@@ -107,8 +107,8 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                
-                                                <div >{!! $view->reason !!}</div>
+                                                <div class="text-dark">Leave Description:</div>
+                                                <div class="mt-2">{!! $view->reason !!}</div>
                                             </div>
 
                                             <hr>
@@ -129,51 +129,48 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Request Leave For<span class="text-danger">* </span>:
                                                 </label>
-                                                @if($view->total_unpaid + $view->total_paid <= 1) 
-                                                    <span class="text-danger">
+                                                @if($view->total_unpaid + $view->total_paid <= 1) <span class="text-danger">
                                                     {{ $view->total_unpaid + $view->total_paid }} Day
                                                     </span>
                                                     @else
                                                     <span class="text-danger">
                                                         {{ $view->total_unpaid + $view->total_paid }} Days
                                                     </span>
-                                                @endif
+                                                    @endif
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Request Paid Leave<span class="text-danger">* </span>:
+                                                <label class="form-label">Request Paid Leave <span class="text-danger">* </span>:
                                                 </label>
-                                                 @if($view->total_paid <= 1) 
-                                                     @if($view->total_paid == 1) 
+                                                @if($view->total_paid <= 1) @if($view->total_paid == 1)
                                                     <span class="text-danger">
-                                                    {{ $view->total_paid  }} Day
+                                                        {{ $view->total_paid  }} Day
                                                     </span>
                                                     @else
                                                     0 Day
                                                     @endif
-                                                @else
+                                                    @else
                                                     <span class="text-danger">
                                                         {{ $view->total_paid }} Days
                                                     </span>
-                                                @endif
+                                                    @endif
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Request UnPaid Leave<span class="text-danger">* </span>:
+                                                <label class="form-label">Request Un-Paid Leave <span class="text-danger">* </span>:
                                                 </label>
-                                                 @if($view->total_unpaid <= 1) 
-                                                    @if($view->total_unpaid == 1) 
+                                                @if($view->total_unpaid <= 1) @if($view->total_unpaid == 1)
                                                     <span class="text-danger">
-                                                    {{ $view->total_unpaid  }} Day
+                                                        {{ $view->total_unpaid  }} Day
                                                     </span>
                                                     @else
                                                     0 Day
                                                     @endif
-                                                @else
+                                                    @else
                                                     <span class="text-danger">
                                                         {{ $view->total_unpaid }} Days
                                                     </span>
-                                                @endif
+                                                    @endif
                                             </div>
 
                                             {{-- <div class="mb-3">
@@ -182,40 +179,59 @@
                                                 <input type="text" id="humanfd-datepicker" name="end" class="form-control" value="" placeholder="If Reduce Date" placeholder="">
                                                 @error('end')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                @enderror
-                                            </div> --}}
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Feedback</label>
-                                                @if($view->comments != '')
-                                                <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment">{{ $view->comments }}</textarea>
-                                                @else
-                                                <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment" placeholder="Some Feedback"></textarea>
-                                                @endif
-                                            </div>
-
+                                            @enderror
+                                        </div> --}}
+                                        <div class="mb-3">
+                                            <label class="text-dark">Application sent From:</label>
+                                            <span class="mt-2">{{ $view->add_from }} Dashboard</span>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-4 offset-4">
-                                                @if($view->status == 2)
-                                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary">Back To Leave</a>
-                                                @elseif($view->status != 2)
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                @endif
-                                            </div>
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Feedback</label>
+                                            @if($view->comments != '')
+                                            <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment">{{ $view->comments }}</textarea>
+                                            @else
+                                            <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment" placeholder="Some Feedback"></textarea>
+                                            @endif
+                                        </div>
+
+                                        <hr>
+                                        <h4 class="text-info">Click Here to Customize leave Days From Applicant Total Days</h4>
+                                        <label class="form-label text-danger">
+                                            <input type="checkbox" name="unpaidLeave" value="1" id="unpaidLeaveCheckbox">Want To Customize Un-Paid leave
+                                        </label>
+
+                                        <div id="unpaidLeaveFields" style="display: none;">
+                                            <label for="unpaidDays">Un-Paid Leave Days:</label>
+                                            <input class="form-control" type="number" id="unpaidDays" name="unpaidDay" min="0" max="{{$view->total_leave_this_month}}">
+
+                                            <input type="hidden" name="total_leave" value="{{$view->total_leave_this_month}}">
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 offset-4">
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
-                                </form>
                             </div>
+                            </form>
                         </div>
                     </div>
-                </div> <!-- end card-body-->
-            </div> <!-- end card-->
-        </div> <!-- end col -->
-    </div>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
 </div>
 
 </div> <!-- container -->
+<script>
+  document.getElementById('unpaidLeaveCheckbox').addEventListener('change', function() {
+    document.getElementById('unpaidLeaveFields').style.display = this.checked ? 'block' : 'none';
+  });
+</script>
 @endsection
 @section('js')
 <script src="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.js"></script>
@@ -223,11 +239,12 @@
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
 <!-- CKEditor CDN -->
-     <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
-    <script>
-       ClassicEditor.create(document.querySelector('#editor')).catch(error => {
-                console.error(error);
-            });
-    </script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor.create(document.querySelector('#editor')).catch(error => {
+        console.error(error);
+    });
+
+</script>
 
 @endsection

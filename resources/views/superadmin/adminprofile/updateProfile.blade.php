@@ -69,13 +69,13 @@
                                     @csrf
                                     <div class="row mt-3">
                                         <div class="col-5 offset-1">
-                                            <input type="hidden" value="{{ $pass->id }}" name="id">
-                                            <input type="hidden" value="{{ $pass->slug }}" name="slug">
+                                            <input type="hidden" value="{{ $user->id }}" name="id">
+                                            <input type="hidden" value="{{ $user->slug }}" name="slug">
 
                                             <div class="mb-3">
                                                 <label class="form-label">Name<span class="text-danger">* </span>:
                                                 </label>
-                                                <input type="text" class="form-control" name="name" value="{{ $pass->name }}" placeholder="Enter email">
+                                                <input type="text" class="form-control" name="name" value="{{ $user->name }}" placeholder="Enter email">
                                                 @error('name')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
@@ -83,7 +83,7 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Email<span class="text-danger">*</span> :</label>
-                                                <input type="email" class="form-control" name="email" value="{{ $pass->email }}" placeholder="Enter email">
+                                                <input type="email" class="form-control" name="email" value="{{ $user->email }}" placeholder="Enter email">
                                                 @error('email')
                                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                                 @enderror
@@ -91,31 +91,27 @@
 
                                             <div class="mb-3">
                                                 <label class="form-label">Role</label>
-                                                @if(Auth::user()->role_id == 1)
-                                                    @if($pass->role_id != null)
+                                                {{-- @if($user->roles->name == "Super Admin")
                                                     <select class="form-control" type="text" name="role">
-                                                      @foreach($role as $roles)
-                                                       <option value="{{$roles->id}}" @if(Auth::user()->role_id == $roles->id ) Selected @endif>{{$roles->role_name}}</option>
+                                                      @foreach($roles as $role)
+                                                       <option value="{{$role->name}}" {{in_array($role->id,$ModelRoles) ? 'Selected' : ''}}>{{$role->name}}</option>
                                                        @endforeach
                                                     </select>
-                                                    @endif
-                                                @else
-                                                    @if($pass->role_id != null)
+                                                @else --}}
                                                     <select class="form-control" type="text" name="role">
-                                                      @foreach($role as $roles)
-                                                       <option value="{{$roles->id}}" @if(Auth::user()->role_id == $roles->id ) Selected @endif>{{$roles->role_name}}</option>
+                                                    <option value="">Select One</option>
+                                                      @foreach($roles as $role)
+                                                       
+                                                       <option value="{{$role->name}}" {{in_array($role->id,$ModelRoles) ? 'Selected' : ''}}>{{$role->name}}</option>
                                                        @endforeach
                                                     </select>
-                                                    @else
-                                                    <input class="form-control" type="text" value="Not Yet" disabled>
-                                                    @endif
-                                                @endif
+                                                {{-- @endif --}}
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Designation</label>
-                                                @if($pass->designation_id != null)
-                                                <input class="form-control" type="text" value="{{ $pass->designation->title }}" disabled>
+                                                @if($user->designation_id != null)
+                                                <input class="form-control" type="text" value="{{ $user->designation->title }}" disabled>
                                                 @else
                                                 <input class="form-control" type="text" value="Not Yet" disabled>
                                                 @endif
@@ -156,8 +152,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
-                                                    @if($pass->image != '')
-                                                    <img src="{{ asset('uploads/adminprofile/'.$pass->image) }}" class="img-fluid" style="width:100%; height:auto; object-fit:cover; border-radius:10px;">
+                                                    @if($user->image != '')
+                                                    <img src="{{ asset('uploads/adminprofile/'.$user->image) }}" class="img-fluid" style="width:100%; height:auto; object-fit:cover; border-radius:10px;">
                                                     @endif
                                                 </div>
                                             </div>

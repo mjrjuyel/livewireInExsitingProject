@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Employe;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\UserRole;
 use App\Models\Designation;
 use Carbon\Carbon;
@@ -45,12 +47,18 @@ class EmployeController extends Controller
 
         $id = $request['id'];
         $slug = $request['slug'];
-        // return $request->all();
+
+        $employe = Employee::findOrFail($id);
+        // get associated Admin Info.
+        $admin = User::where('email',$employe->email)->first();
+
+        // return $admin;
         $request->validate([
             'name'=>'required',
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
             'add' => 'required',
             'emerPhone' => 'required',
+            'emerName' => 'required',
             'emerRelation' => 'required',
             'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
         ]);
@@ -68,15 +76,20 @@ class EmployeController extends Controller
                auth('employee')->user()->update([
                    'password' => Hash::make($request->newpass),
                ]);
+               // admin password change
+               if($admin){
+                User::where('id',$admin->$id)->update([
+                    'password'=> Hash::make($request->newpass),
+                ]);
+               }
            }
        }
 
         $date = strtotime($request['join']);
 
+        // image Change
         $old= Employee::find($id);
-        
         $path = public_path('uploads/employe/profile/');
-
         if($request->hasFile('pic')){
 
             if($old->emp_image !='' && $old->emp_image != null){
@@ -95,6 +108,28 @@ class EmployeController extends Controller
                 'emp_image'=>$image_name,
             ]);
         }
+
+        // admin image change
+        if($admin){
+                $path = public_path('uploads/adminprofile/');
+                if($request->hasFile('pic')){
+                    if($admin->image !='' && $admin->image != null){
+                        $admin_pic = $path.$admin->image;
+                        unlink($admin_pic);
+                    }
+
+                    $imageTake = $request->file('pic');
+                    $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+                    $manager = new ImageManager(new Driver());
+                    $image = $manager->read($imageTake);
+                    // $image->scale(width: 300);
+                    $image->save('uploads/adminprofile/'.$image_name);
+
+                    User::where('id',$admin->id)->update([
+                        'image'=>$image_name,
+                    ]);
+                }
+        }
         
         $insert = Employee::where('id',$id)->update([
             'emp_name'=>$request['name'],
@@ -105,16 +140,38 @@ class EmployeController extends Controller
             'emp_address'=>$request['add'],
             'emp_present'=>$request['preAdd'],
             'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_name'=>$request['emerName'],
             'emp_emer_relation'=>$request['emerRelation'],
             'emp_slug'=>$slug,
             'emp_desig_id'=>$request['desig'],
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
+
+        // Admin Data Change
+        if($admin){
+            
+            $update = User::where('id',$admin->id)->update([
+                'name'=>$request['name'],
+                'email'=>$request['email'],
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+
+            // return $data = User::findOrFail($admin->id);
+        }
 
         if($insert){
             Session::flash('success','Update Profile SuccessFully ');
             return redirect()->route('dashboard.employe.profileSettings',$slug);
         }
+    }
+
+    // login into   aDMIN Dashboard
+
+    public function loginAdmin($id){
+        $userId = Crypt::decrypt($id);
+        $user = User::findOrFail(($userId));
+        auth()->login($user, true);
+        return redirect()->route('superadmin');
     }
 
 }

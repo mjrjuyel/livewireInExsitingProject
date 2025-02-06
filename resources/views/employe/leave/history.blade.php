@@ -60,7 +60,7 @@
                                     <th class="text-center">Total Leave Request</th>
                                     <th class="text-center">Total Paid</th>
                                     
-                                    <th class="text-center">Total UnPaid</th>
+                                    <th class="text-center">Total Un-Paid</th>
                                     <th class="text-center">Leave Status</th>
                                     <th class="text-center">Start to End Date</th>
                                     <th class="text-center">Action</th>
@@ -122,15 +122,15 @@
                                             </button>
                                             @elseif($leavehistory->status == 2)
                                             <button type="button" class="btn btn-primary " >
-                                                Approved
+                                                Approve
                                             </button>
                                             @elseif($leavehistory->status == 3)
                                             <button type="button" class="btn btn-primary " >
-                                                Cancled
+                                                Reject
                                             </button>
                                             @elseif($leavehistory->status == 4)
                                             <button type="button" class="btn btn-primary " >
-                                            Only Feedback
+                                                Feedback
                                             </button>
                                         @endif
                                     </td>
@@ -152,7 +152,7 @@
                                                             class="mdi mdi-view-agenda"></i>View</a>
                                                 </li>
 
-                                                @if($leavehistory->status == 4)
+                                                @if($leavehistory->status == 4 || $leavehistory->status == 1)
                                                     <li><a class="dropdown-item"
                                                             href="{{ url('dashboard/leave/edit/'.Crypt::encrypt($leavehistory->id)) }}"><i
                                                                 class="mdi mdi-view-agenda"></i>Edit</a>

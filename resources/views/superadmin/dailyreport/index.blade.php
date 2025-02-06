@@ -113,12 +113,17 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                @can('View Daily-Report')
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
-                                                <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                @endcan
+                                                @can('Soft Delete Daily-Report')
+                                                <li>
+                                                <a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </td>
@@ -153,7 +158,7 @@
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                    <input type="text" name="id" id="modal_id" value="">
+                    <input type="hidden" name="id" id="modal_id" value="">
                 </div>
 
                 <div class="modal-footer">

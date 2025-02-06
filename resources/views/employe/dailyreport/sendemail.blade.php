@@ -94,7 +94,8 @@
         <div class="email-body">
             <p><strong>Employee: {{$insert['employe']->emp_name}}</strong></p>
 
-            <p><strong>Submit Date: {{formatDate($insert['submit_date'])}}</strong></p>
+            <p><strong>Submit Date: {{$insert['submit_date']->format('d-M-Y ')}}</strong></p>
+            <p><strong>Created At: {{formatDate($insert['created_at'])}}</strong></p>
 
             <p><strong>Report Detail: {!! $insert['detail'] !!}</strong></p>
         </div>

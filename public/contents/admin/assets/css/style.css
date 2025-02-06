@@ -114,3 +114,10 @@ a{
     border: 1px solid #ccc;
     background-color: #f9f9f9;
 }
+
+/* appearence for Dropdown button */
+/* dropify  */
+.dropify-wrapper .dropify-message p{
+    line-height: 1.1;
+}
+/* dropify  */

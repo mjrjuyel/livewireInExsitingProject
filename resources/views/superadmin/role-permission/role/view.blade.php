@@ -31,7 +31,7 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <h3 class="card_header"><i
-                                                class="mdi mdi-shield-crown header_icon"></i>{{$view->role_name}}
+                                                class="mdi mdi-shield-crown header_icon"></i>{{$view->name}}
                                         </h3>
                                     </div>
                                     <div class="col-md-3 text-end"><a href="{{route('superadmin.role')}}"
@@ -49,24 +49,24 @@
                                 <tr>
                                     <td>Role Name</td>
                                     <td>:</td>
-                                    <td>{{ $view->role_name }}</td>
+                                    <td>{{ $view->name }}</td>
                                 </tr>
                                 <tr>
                                     <td>Role BelongsTo SuperAdmin Dashboard</td>
                                     <td>:</td>
                                     <td>
-                                        @foreach($view->admin as $admin)
-                                            <button class="btn bg-dark text-white">{{optional($admin)->name}}</button>
+                                        @foreach($view->users as $user)
+                                            <button class="btn bg-dark text-white">{{$user->name}}</button>
                                         @endforeach
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Role Belong To Staff Dashboard</td>
+                                    <td>Role Has Permissions</td>
                                     <td>:</td>
                                     <td>
-                                        @foreach($view->employe as $employe)
+                                        @foreach($view->permissions as $permission)
                                         <button class="btn btn-info">
-                                            {{optional($employe)->emp_name}}
+                                            {{$permission->name}}
                                         </button>
                                         @endforeach
                                     </td>

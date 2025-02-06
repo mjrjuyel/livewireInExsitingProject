@@ -14,6 +14,15 @@ use Auth;
 
 class AdminDailyReportController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:Add Daily-Report')->only('add','insert');
+        $this->middleware('permission:Edit Daily-Report')->only('edit','update');
+        $this->middleware('permission:View Daily-Report')->only('view');
+        $this->middleware('permission:Soft Delete Daily-Report')->only('softDelete');
+        $this->middleware('permission:Restore Daily-Report')->only('restore');
+        $this->middleware('permission:Delete Daily-Report')->only('delete');
+    }
+
     public function index(){
         $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->get();
         $name = DailyReport::with('employe')->distinct()->get('submit_by');

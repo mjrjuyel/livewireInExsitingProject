@@ -113,9 +113,12 @@
 
                                     
                                     <div class="mb-3 leave_type" style="display:none;">
-                                        <label class="form-label text-danger">Write Short Type<span class="text-danger"> :</span>:
+                                        <label class="form-label text-danger">Write Short Type<span class="text-danger">: (max-lenght: 50)</span>: 
                                         </label>
-                                        <input type="text" name="others" class="form-control" placeholder="Personal Reason">
+                                        <input type="text" name="others" class="form-control" placeholder="Personal Reason" maxlength="50" value="{{old('others')}}" id="placement">
+                                        @error('others')
+                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
@@ -145,6 +148,14 @@
                                         @error('reason')
                                         <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                         @enderror
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                    <input type="checkbox" name="unpaid" value="1">
+                                    <label class="form-label">Is This Totally Un-Paid Leave? :
+                                    </label>
+
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -182,7 +193,8 @@
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
-
+<script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 <!-- CKEditor CDN -->
      <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
     <script>

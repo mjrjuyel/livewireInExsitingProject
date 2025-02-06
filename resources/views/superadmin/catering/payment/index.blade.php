@@ -61,8 +61,9 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-2">
-                            <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
-
+                        @can('Add Payment')
+                         <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
+                        @endcan
                         </div>
                         <div class="col-8">
                             <div class="row text-center">
@@ -149,11 +150,17 @@
                                                     Action
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                    <li><a class="dropdown-item" href="{{ route('superadmin.cateringpayment.view',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('superadmin.cateringpayment.edit',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                    @can('View Payment')
+                                                        <li><a class="dropdown-item" href="{{ route('superadmin.cateringpayment.view',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                    @endcan
+                                                    @can('Edit Payment')
+                                                     <li><a class="dropdown-item" href="{{ route('superadmin.cateringpayment.edit',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                    @endcan
+                                                    @can('Delete Payment')
                                                     <li>
                                                     <a href="#" id="delete" data-id="{{$allPayment->id}}" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert"></i>Delete</a>
                                                    </li>
+                                                    @endcan
                                                 </ul>
                                             </div>
                                         </td>

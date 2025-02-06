@@ -17,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_adminAndAssistant' => \App\Http\Middleware\is_adminAndAssistant::class,
             'isAdminAndHr' => \App\Http\Middleware\isAdminAndHr::class,
             'isEmployeActive' => \App\Http\Middleware\isEmployeActive::class,
+
+            // $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+    
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

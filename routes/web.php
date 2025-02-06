@@ -64,32 +64,27 @@ Route::middleware('isEmploye')->group(function(){
          // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
          Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
          Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-         
-        // Role ManageMent
-         Route::get('/dashboard/role',[RoleController::class,'index'])->name('dashboard.role');
-         Route::get('/dashboard/role/add',[RoleController::class,'add'])->name('dashboard.role.add');
-         Route::post('/dashboard/role/insert',[RoleController::class,'insert'])->name('dashboard.role.insert');
-         Route::get('/dashboard/role/view/{id}',[RoleController::class,'view'])->name('dashboard.role.view');
-         Route::delete('/dashboard/role/delete/{id}',[RoleController::class,'delete'])->name('dashboard.role.view');
-     
+      
          // Leave Application status by General User
          Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
          Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
          Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
-
          Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
          Route::post('/dashboard/leave/update',[LeaveFormController::class,'update'])->name('dashboard.leave.update');
          Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
          Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
          Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
- 
-         // Employe Daily Reports Submit
+         //  Switch Into User
+         Route::post('/dashboard/asAdmin/{id}',[EmployeController::class,'loginAdmin'])->name('dashboard.asAdmin');
+
+        // Employe Daily Reports Submit
          Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
          Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
          Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
          Route::get('/dashboard/dailyreport/edit/{slug}',[DailyReportController::class,'edit'])->name('dashboard.dailyreport.edit');
          Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
          Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
+
        });
 
        Route::get('/notActiveUser',function(){ 
@@ -107,23 +102,19 @@ Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
 
         // Only SuperAdmin Can access These Route ******************
-         Route::middleware('is_superadmin')->group(function(){
+        
                 Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
                 Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
                 Route::get('/superadmin/recycle/dailyreport',[RecyclebinController::class,'dailyreport'])->name('superadmin.recycle.dailyreport');
                 // Add Admin 
                 Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
-         });
-        
-        // Super Admin and Hr Dashboard Dashbaord *******************
-        Route::middleware('isAdminAndHr')->group(function(){
+         
                 // Admin Profile Controller 
                 Route::get('superadmin/admin',[AdminProfileController::class,'index'])->name('superadmin.admin');
                 Route::post('superadmin/admin/insert',[AdminProfileController::class,'insert'])->name('superadmin.admin.insert');
                 Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
                 Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
                 Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
-                Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
                 Route::post('superadmin/view/softdelete',[AdminProfileController::class,'softDelete'])->name('superadmin.view.softdelete');
                 Route::post('superadmin/view/restore',[AdminProfileController::class,'restore'])->name('superadmin.view.restore');
                 Route::delete('/dashboard/admin/delete',[AdminProfileController::class,'delete'])->name('dashboard.admin.delete');
@@ -141,13 +132,12 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/employe/restore',[AdminEmployeController::class,'restore'])->name('superadmin.employe.restore');
                 Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
                 Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
-
+                // log in as a employee
+                Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
+                Route::post('/superadmin/asEmploye/{id}',[AdminEmployeController::class,'employeLogin'])->name('superadmin.asEmploye');
                 // get data from select
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
-
-                // log in as a employee
-                Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
 
                 // Designation Controller
                 Route::get('/superadmin/designation',[DesgnationController::class,'index'])->name('superadmin.designation');
@@ -237,7 +227,8 @@ Route::middleware(['auth','verified'])->group(function(){
 
                 //SuperAdmin Basic Controller
                 Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
-                Route::post('/superadmin/basic/update',[BasicController::class,'update'])->name('superadmin.basic.update');
+                Route::post('/superadmin/basic/update',[BasicController::class,'updateBasic'])->name('superadmin.basic.update');
+                Route::post('/superadmin/basic/currency',[BasicController::class,'updateCurrency'])->name('superadmin.basic.currency');
 
                 //TimeZone Basic Controller
                 Route::get('/superadmin/timezone',[TimeZoneController::class,'index'])->name('superadmin.timezone');
@@ -268,12 +259,9 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
                 Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
                 Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
-                // Route::delete('/superadmin/role/delete/{id}',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
+                Route::delete('/superadmin/role/delete',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
                 
-    });
-
-    // Admin And Assistant Access Route *********
-    Route::middleware('is_adminAndAssistant')->group(function(){
+   
                 // Catering Food
                 Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
                 Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
@@ -299,12 +287,11 @@ Route::middleware(['auth','verified'])->group(function(){
                 // Search by month Payment
                 Route::get('/superadmin/cateringpayment/{month}',[CateringPaymentController::class,'searchMonth']);
                 Route::get('/superadmin/cateringpayment/year/{year}',[CateringPaymentController::class,'searchYear']);
-            });
 
-    // Not As A Super Admin // 404 for not authrized
-    Route::get('invalidAccess',function(){ 
-        return view('layouts.errorpage.notValidRole');
-        })->name('invalidAccess');
+                // Not As A Super Admin // 404 for not authrized
+                Route::get('invalidAccess',function(){ 
+                    return view('layouts.errorpage.notValidRole');
+                    })->name('invalidAccess');
 });
 
 

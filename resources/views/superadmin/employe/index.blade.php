@@ -52,10 +52,12 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
+                        @can('Add Employee')
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
                         </div>
+                        @endcan
                     </div>
                     <div class="">
                         <table class="table table-centered text-center" id="datatable">
@@ -63,15 +65,15 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Admin Pic</th>
+                                    <th class="text-center">Employee Pic</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Reporting Manager</th>
 
                                     <th class="text-center">Status</th>
-                                    @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                                    @can('Login Employee Profile')
                                     <th class="text-center">Dashboard login</th>
-                                    @endif
+                                    @endcan
 
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -117,7 +119,7 @@
                                         @endif
                                     </td>
 
-
+                                    @can('Login Employee Profile')
                                     <td>
                                         <form action="{{ url('/superadmin/employe/login/'.$employe->id) }}" method="post">
                                             @csrf
@@ -125,6 +127,7 @@
                                             <button class="btn btn-primary " type="sumbit"><i class="uil-trash-alt"></i>Login</button>
                                         </form>
                                     </td>
+                                    @endcan
 
 
                                     <td>
@@ -133,15 +136,20 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                @can('View Employee')
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                </i>View</a>
+                                                @endcan
+                                                </li>
+                                                @can('Edit Employee')
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.$employe->emp_slug) }}"><i class="mdi mdi-octagram-edit-outline">
-                                                        </i>Edit</a></li>
-                                                </li>
+                                                @endcan
+                                                @can('Delete Employee')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$employe->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a></li>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </td>

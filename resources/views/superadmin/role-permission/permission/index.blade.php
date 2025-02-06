@@ -51,14 +51,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
+                        @can('Add Permissions')
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.permission.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Permission</a>     
                         </div>
+                        @endcan
                     </div>
 
                     <div class="">
-                        <table class="table table-centered text-center" id="">
+                        <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Permission Name</th>
@@ -73,8 +75,11 @@
                                         {{ $permission->name }}
                                     </td>
 
+                                   
                                     <td class="text-danger">
-                                        
+                                        @foreach($permission->roles as $role)
+                                         <span class="badge bg-secondary">{{$role->name}}</span>
+                                        @endforeach
                                     </td>
 
                                     <td>
@@ -84,13 +89,15 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.permission.view',Crypt::encrypt($permission->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                 @can('Proecessing')
                                                  <li><a class="dropdown-item" href="{{ route('superadmin.permission.edit',Crypt::encrypt($permission->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                  </li>
-                                                 @if(Auth::user()->role_id == 1)
+                                                 
                                                    <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$permission->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                    </li>
-                                                @endif
+                                                 @endcan
+                                               
                                             </ul>
                                         </div>
                                     </td>
@@ -101,8 +108,11 @@
 
                             </tbody>
                             <tfoot>
+                            
                             </tfoot>
                         </table>
+
+                        
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
@@ -144,4 +154,27 @@
         });
     });
 </script>
+@endsection
+
+@section('js')
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net/js/dataTables.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive/js/dataTables.responsive.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
+</script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-keytable/js/dataTables.keyTable.min.js">
+</script>
+<script src="{{ asset('contents/admin') }}/assets//libs/datatables.net-select/js/dataTables.select.min.js"></script>
+
+<!-- Datatables init -->
+<script src="{{ asset('contents/admin') }}/assets//js/pages/table-datatable.js"></script>
 @endsection

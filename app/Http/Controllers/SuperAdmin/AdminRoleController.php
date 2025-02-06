@@ -15,13 +15,18 @@ use Session;
 
 class AdminRoleController extends Controller
 {
-
+    public function __construct(){
+        $this->middleware('permission:All Role')->only('index');
+        $this->middleware('permission:Add Role')->only('add','insert');
+        $this->middleware('permission:Edit Role')->only('edit','update');
+        $this->middleware('permission:View Role')->only('view');
+        $this->middleware('permission:Delete Role')->only('delete');
+    }
     
     //  All Role 
     public function index(){
-        $roles = Role::all();
-        
-        // return $role;
+        $roles = Role::with('permissions')->get();
+        // return $roles;
         return view('superadmin.role-permission.role.index',compact('roles'));
     }
     // role Add
@@ -33,6 +38,7 @@ class AdminRoleController extends Controller
     
     public function insert(Request $request){
         
+        // return $request->all();
         $request->validate([
             'name'=>'required | unique:roles,name',
         ]);
@@ -46,7 +52,7 @@ class AdminRoleController extends Controller
 
         if($insert){
             Session::flash('success','New Role Add And Assigned with Permission');
-            return redirect()->back();
+            return redirect()->route('superadmin.role');
         }
     }
 
@@ -68,14 +74,16 @@ class AdminRoleController extends Controller
 
         $request->validate([
             'name'=>'required | unique:roles,name,'.$id,
+            'permission'=>'required',
         ]);
-        return $request->all();
+        // return $request->all();
         $update = Role::where('id',$id)->update([
             'name'=>$request['name'],
             'updated_at'=>Carbon::now(),
         ]);
 
-        $update->syncPermissions($request->permission);
+        $user = Role::where('id',$id)->first();
+        $user->syncPermissions($request->permission);
 
         if($update){
             Session::flash('success','Update Role And Assigned with Permission');
@@ -86,6 +94,7 @@ class AdminRoleController extends Controller
     public function view($id){
         $ID = Crypt::decrypt($id);
         $view = Role::where('id',$ID)->first();
+        // return $view;
         return view('superadmin.role-permission.role.view',compact('view'));
     }
 
@@ -94,7 +103,6 @@ class AdminRoleController extends Controller
 
         $delete = Role::findOrFail($id);
         $delete->delete();
-
         if($delete){
             Session::flash('success','Role Have Deleted');
             return redirect()->back();

@@ -13,13 +13,19 @@ use Auth;
 class OfficeBranchController extends Controller
 {
        
-    //  All Role 
+    public function __construct(){
+        $this->middleware('permission:Add Office Branch')->only('add','insert');
+        $this->middleware('permission:Edit Office Branch')->only('edit','update');
+        $this->middleware('permission:View Office Branch')->only('view');
+        $this->middleware('permission:Delete Office Branch')->only('delete');
+    }
+
     public function index(){
         $officeBranch = OfficeBranch::all();
-        // return $role;
+        
         return view('superadmin.office_branch.index',compact('officeBranch'));
     }
-    // role Add
+    
     public function add(){
         return view('superadmin.office_branch.add');
     }

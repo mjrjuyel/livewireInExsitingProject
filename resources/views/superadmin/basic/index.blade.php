@@ -68,7 +68,7 @@
                         @csrf
                         <div class="row mt-3">
                             <div class="col-8 offset-2">
-                              <input type="hidden" name="id" value="{{$basic->id}}">
+                                <input type="hidden" name="id" value="{{$basic->id}}">
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <div class="">
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6 mt-5">
-                                         @if($basic->Mlogo != '')
+                                        @if($basic->Mlogo != '')
                                         <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class="img-fluid" alt="" style="width:50%; height:auto; object-fit:cover;">
                                         @endif
                                     </div>
@@ -101,7 +101,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6 mt-5">
-                                         @if($basic->Flogo != '')
+                                        @if($basic->Flogo != '')
                                         <img src="{{asset('uploads/basic/'.$basic->Flogo)}}" class="img-fluid" alt="" style="width:50%; height:auto; object-fit:cover;">
                                         @endif
                                     </div>
@@ -147,6 +147,62 @@
                     </form>
                 </div>
                 <!-- end card-body-->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-12 bg-dark">
+                                        <h3 class="card_header"><i class="mdi mdi-currency-usd header_icon"></i>Catering Currency
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-2">
+                                <h6 class="">Single Select</h6>
+                                <form action="{{route('superadmin.basic.currency')}}" method="post">
+                                    @method('post')
+                                    @csrf
+                                    <select class="form-control" name="name" data-toggle="select2">
+                                        <option>Choose One</option>
+                                        <option value="৳" {{$currency->currency_icon == "৳" ? 'Selected':''}}>৳</option>
+                                        <option value="$" {{$currency->currency_icon == "$" ? 'Selected':''}}>$</option>
+                                        <option value="£" {{$currency->currency_icon == "£" ? 'Selected':''}}>£</option>
+                                        <option value="₹" {{$currency->currency_icon == "₹" ? 'Selected':''}}>₹</option>
+                                    </select>
+                                    @error('name')
+                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+
+                                    <button type="submit" class="btn btn-primary mt-3 text-right">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title"> Auto Complete</h5>
+                            </div>
+                            <div class="card-body pt-2">
+                                <form>
+                                    <div class="form-group mb-4">
+                                        <label class="control-label ">Ajax Lookup</label>
+                                        <input type="text" name="country" id="autocomplete-ajax" class="form-control" style=" z-index: 2;" />
+                                        <input type="text" name="country" id="autocomplete-ajax-x" disabled="disabled" class="form-control" style="color: #CCC; position: absolute; background: transparent; z-index: 1;display: none;" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label ">Local Lookup and Grouping</label>
+                                        <input type="text" name="country" id="autocomplete" class="form-control" />
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div> <!-- end card-->
         </div> <!-- end col -->
     </div>

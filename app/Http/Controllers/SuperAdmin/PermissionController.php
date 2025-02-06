@@ -12,8 +12,17 @@ use Auth;
 
 class PermissionController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:All Permission')->only('index');
+        $this->middleware('permission:Add Permission')->only('add','insert');
+        $this->middleware('permission:Edit Permission')->only('edit','update');
+        $this->middleware('permission:View Permission')->only('view');
+        $this->middleware('permission:Delete Permission')->only('delete');
+    }
+
     public function index(){
-        $permissions = Permission::all();
+        $permissions = Permission::with('roles')->get();
+        // return $permissions;
         return view('superadmin.role-permission.permission.index',compact('permissions'));
     }
 
@@ -34,7 +43,7 @@ class PermissionController extends Controller
 
         if($insert){
             Session::flash('success','Successfully Add New Permission');
-            return redirect()->route('superadmin.permission');
+            return redirect()->back();
         }
     }
 
@@ -72,6 +81,11 @@ class PermissionController extends Controller
         $delete->delete();
 
         if($delete){
+            // $all = Permission::all();
+            // foreach($all as $index => $value){
+            //     $value->id = $index + 1;
+            //     $value->save();
+            // }
             Session::flash('success','Permission Have Deleted');
             return redirect()->back();
         }

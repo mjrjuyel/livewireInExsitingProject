@@ -13,6 +13,13 @@ use Auth;
 class DepartmentController extends Controller
 {
        
+    public function __construct(){
+        $this->middleware('permission:Add Department')->only('add','insert');
+        $this->middleware('permission:Edit Department')->only('edit','update');
+        $this->middleware('permission:View Department')->only('view');
+        $this->middleware('permission:Delete Department')->only('delete');
+    }
+
     //  All Role 
     public function index(){
         $department = Department::with('designation','employe')->get();

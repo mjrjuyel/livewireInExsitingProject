@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             BasicSeeder::class,
             TimeZoneSeeder::class,
             AdminEmailSeeder::class,
+            RolePermissionSeeder::class,
+            CurrencySeeder::class,
         ]);
 
             // User::factory(10)->create();

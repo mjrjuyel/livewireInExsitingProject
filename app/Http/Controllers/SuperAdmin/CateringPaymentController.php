@@ -16,6 +16,13 @@ use Auth;
 class CateringPaymentController extends Controller
 {
 
+    public function __construct(){
+        $this->middleware('permission:Check Balance')->only('checkBill');
+        $this->middleware('permission:Add Payment')->only('add','insert');
+        $this->middleware('permission:Edit Payment')->only('edit','update');
+        $this->middleware('permission:View Payment')->only('view','index');
+        $this->middleware('permission:Delete Payment')->only('delete');
+    }
     // check Invoice for payment
    public function checkBill(){
     $search_date = new DateTime(now());

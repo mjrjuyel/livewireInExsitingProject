@@ -25,6 +25,7 @@ return new class extends Migration
             // unpaid
             $table->integer('unpaid_request')->nullable();
             $table->integer('total_unpaid')->nullable();
+            $table->string('add_from',50)->nullable();
             // Foreign key constraint
             $table->integer('emp_id')->nullable();
             $table->string('comments')->nullable();
