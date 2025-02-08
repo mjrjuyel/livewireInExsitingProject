@@ -50,19 +50,18 @@
         </div>
         @php
 
-            if($view->eva_end_date == null){
-                $end_date = new DateTime($view->emp_join->format('Y-m-d'));
-                $end_date->modify('+1 year');
-                }
+        if($view->eva_end_date == null){
+        $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+        $end_date->modify('+1 year');
+        }
 
-            if($view->eva_start_date){
-                $start_date = new DateTime($view->eva_start_date);
-                }
-            
-            $totalEvaLeavePaid  = $Evaleaves->sum('total_paid');
-            $totalEvaLeaveUnPaid  = $Evaleaves->sum('total_unpaid');
-            
-            $totalEvaLeave = $totalEvaLeavePaid + $totalEvaLeaveUnPaid;
+        if($view->eva_start_date){
+        $start_date = new DateTime($view->eva_start_date);
+        }
+        $totalEvaLeavePaid = $Evaleaves->sum('total_paid');
+        $totalEvaLeaveUnPaid = $Evaleaves->sum('total_unpaid');
+
+        $totalEvaLeave = $totalEvaLeavePaid + $totalEvaLeaveUnPaid;
         @endphp
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
@@ -87,8 +86,7 @@
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Taken Between Evaluation Periods :</h6>
                     <h3 class="my-3">
-                    @if($totalEvaLeave < 1 ) 
-                        <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Day</h3>
+                        @if($totalEvaLeave < 1 ) <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Day</h3>
                     @else
                     <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Days</h3>
                     @endif
@@ -142,13 +140,13 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Paid Leave Remaining Between Evaluation Periods</span></h6>
                     @if($remainEvaluation >= 1 )
-                        @if($remainEvaluation >= 2)
-                        <h3 class="my-3"><span data-plugin="counterup">{{$remainEvaluation}}</span> Days</h3>
-                        @else
-                        <h3 class="my-3"><span data-plugin="counterup">{{$remainEvaluation}}</span> Day</h3>
-                        @endif
+                    @if($remainEvaluation >= 2)
+                    <h3 class="my-3"><span data-plugin="counterup">{{$remainEvaluation}}</span> Days</h3>
                     @else
-                        <h3 class="my-3 text-danger">Zero</h3>
+                    <h3 class="my-3"><span data-plugin="counterup">{{$remainEvaluation}}</span> Day</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Zero</h3>
                     @endif
                 </div>
             </div>
@@ -266,14 +264,18 @@
 
                             <div class="card-header bg-dark">
                                 <div class="row">
-                                    <div class="col-md-7">
+                                    <div class="col-md-4">
                                         <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>{{$view->emp_name}}
                                         </h3>
                                     </div>
+                                    
                                     <div class="col-md-3 text-end"><a href="{{route('superadmin.employe')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Employe</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('superadmin.employe.edit',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                    <div class="col-md-3 text-center"><a href="{{route('admin.promotion',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header ">
+                                            <i class="fa-brands fa-servicestack btn_icon"></i>Promotion History</a>
+                                    </div>
+                                    <div class="col-md-2 text-center"><a href="{{route('superadmin.employe.view',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
@@ -330,7 +332,9 @@
                                     <td>Designation</td>
                                     <td>:</td>
                                     <td>
-                                        Work As A <button class="btn bg-primary">{{optional($view->emp_desig)->title}}</button>
+                                        <span class="text-info"> {{ $activeDesig != '' ? $activeDesig->designation->title : 'Not Yet'}}</span>
+                                        <button class="btn btn-primary">
+                                        <a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#promotion"><i class="mdi mdi-stairs-up"></i>Promotion</a></button>
                                     </td>
                                 </tr>
 
@@ -370,9 +374,11 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
-                                    <li class="list-group-item">Department : {{optional($view->department)->depart_name}}</li>
-                                    <li class="list-group-item">Designation : {{optional($view->emp_desig)->title}}</li>
-                                    <li class="list-group-item">Employee Job Type : {{$view->emp_type}}</li>
+                                    <li class="list-group-item">Department : {{$activeDesig != '' ? $activeDesig->department->depart_name : 'Not Yet'}}</li>
+                                    <li class="list-group-item">Designation : {{$activeDesig != '' ? $activeDesig->designation->title : 'Not Yet'}}</li>
+                                    <li class="list-group-item">Employee Job Type : {{$activeDesig != '' ? $activeDesig->emp_type : 'Not Yet'}}</li>
+                                    <li class="list-group-item">Employee Salary : {{$activeDesig != '' ? $activeDesig->salary : 'Not Yet'}}</li>
+                                    <li class="list-group-item text-info">Employee Promotion Date : {{$activeDesig != '' ? $activeDesig->pro_date->format('d-M-Y') : 'Not Yet'}}</li>
                                 </ul>
                             </div>
                         </div>
@@ -494,4 +500,156 @@
 </div>
 
 </div> <!-- container -->
+
+{{-- Promotion  --}}
+<div id="promotion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-warning">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Upgrade {{$view->emp_name}} Designation ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('admin.promotion.insert')}}" method="post">
+                @csrf
+                <div class="modal-body modal_body">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="form-group clearfix">
+                                <label>Name<span class="text-danger">*</span> :</label>
+                                <select type="text" class="form-control" name="employe">
+                                    <option value="{{ $view->id }}">{{ $view->emp_name }}</option>
+                                </select>
+                                @error('employe')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Department</label>
+                                <select type="text" class="form-control" id="department" name="department">
+                                    <option value="">Select One</option>
+                                    @foreach($departs as $depart)
+                                    <option value="{{ $depart->id }}" {{$view->emp_depart_id == $depart->id || old('department') == $depart->id ? 'Selected' : '' }}>{{ $depart->depart_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('department')
+                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Designation <span class="text-danger">*</span> :</label>
+                                <select type="text" class="form-control" name="desig">
+                                    @foreach($designs as $designation)
+                                    <option value="{{$designation->id}}" {{ $view->emp_desig_id == $designation->id || old('desig') == $designation->id ? 'Selected' : ''}}>{{$designation->title}}</option>
+                                    @endforeach
+                                </select>
+                                @error('desig')
+                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
+                                <select type="text" class="form-control" name="empType">
+                                    <option value="">Select One</option>
+                                    <option value="Full Time" @if($view->emp_type == 'Full Time') Selected @elseif(old('empType') == 'Full Time') Selected @endif>Full Time </option>
+                                    <option value="Part Time" @if($view->emp_type == 'Part Time') Selected @elseif(old('empType') == 'Part Time') Selected @endif>Part Time</option>
+                                    <option value="Freelance" @if($view->emp_type == 'Freelance') Selected @elseif(old('empType') == 'Freelance') Selected @endif>Frelance</option>
+                                    <option value="Contract" @if($view->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
+                                    <option value="Internship" @if($view->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
+                                    <option value="Remote" @if($view->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
+                                    <option value="Hybrid" @if($view->emp_type == 'Hybrid') Selected @elseif(old('empType') == 'Hybrid') Selected @endif>Hybrid</option>
+                                </select>
+                                @error('empType')
+                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="form-group clearfix">
+                                <label for="salary">Salary<span class="text-danger">*</span> :</label>
+                                <input class="required form-control" id="salary" value="{{old('salary')}}" name="salary" type="number">
+                                @error('salary')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <fieldset class="row">
+                                <legend class="col-sm-6 pt-0">Status*:</legend>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="gender1" {{ old('status') == 'Promoted' ? 'checked' : '' }} value="Promoted">
+                                        <label class="form-check-label" for="gender1">
+                                            Promoted
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="gender2" value="Demoted" {{ old('status') == 'Demoted' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="gender2">
+                                            Demoted
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="gender3" value="Unchanged"  Checked>
+                                        <label class="form-check-label" for="gender3">
+                                            Unchanged
+                                        </label>
+                                    </div>
+                                    @error('status')
+                                    <small class="form-text text-warning">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div><!-- end row -->
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+    $('body').ready(function() {
+        $('#department').on('change', function() {
+            var id = $(this).val();
+
+            $.ajax({
+                url: "{{url('/get_designation/')}}/" + id
+                , type: "get"
+                , success: function(data) {
+                    $('select[name="desig"]').empty();
+                    $.each(data, function(key, data) {
+                        $('select[name="desig"]').append('<option value="' + data.id + '">' + data.title + '</option>');
+                    })
+                }
+            })
+        });
+    });
+
+</script>
 @endsection

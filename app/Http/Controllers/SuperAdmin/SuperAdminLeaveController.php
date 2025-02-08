@@ -205,7 +205,7 @@ class SuperAdminLeaveController extends Controller
                                                 'unpaid_request'=>$request->unpaid,
                                                 'emp_id'=>$request->employe,
                                                 'status'=>2,
-                                                'add_from'=>'Admin',
+                                                'add_from'=>Auth::user()->name,
                                                 'slug'=>'leav-'.uniqId(),
                                                 'created_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
                                             ]);
@@ -227,7 +227,7 @@ class SuperAdminLeaveController extends Controller
                                             'unpaid_request'=>$request->unpaid,
                                             'emp_id'=>$request->employe,
                                             'status'=>2,
-                                            'add_from'=>'Admin',
+                                            'add_from'=>Auth::user()->name,
                                             'slug'=>'leav-'.uniqId(),
                                             'created_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
                                         ]);

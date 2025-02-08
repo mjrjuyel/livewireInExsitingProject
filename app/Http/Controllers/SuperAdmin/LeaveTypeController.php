@@ -10,8 +10,13 @@ use Session;
 
 class LeaveTypeController extends Controller
 {
-
-    
+    public function __construct(){
+        $this->middleware('permission:Leave Type')->only('index');
+        $this->middleware('permission:Leave Type Add')->only('edit','update');
+        $this->middleware('permission:Leave Type Edit')->only('edit','update');
+        $this->middleware('permission:Leave Type View')->only('view','index');
+        $this->middleware('permission:Leave Type Delete')->only('delete');
+    }
     //  All Role 
     public function index(){
         $role = LeaveType::all();

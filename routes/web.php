@@ -10,34 +10,35 @@ use App\Http\Controllers\Employe\DashboardController;
 use App\Http\Controllers\Employe\RoleController;
 use App\Http\Controllers\Employe\LeaveFormController;
 use App\Http\Controllers\Employe\DailyReportController;
-use App\Http\Controllers\Employe\EmployeController; // Default Admin Model Work With User Model , Here we can fetch Data from User Model.
+use App\Http\Controllers\Employe\EmployeController; 
 
 use App\Http\Controllers\Employe\EmployeLoginController;
 
 // Super Admin Dashboard
-use App\Http\Controllers\SuperAdmin\AdminProfileController; //Admin Profile Controller 
-use App\Http\Controllers\SuperAdmin\SuperAdminController; // Dashboard
-use App\Http\Controllers\SuperAdmin\AdminEmployeController; // Employe Management as a SuperAdmin // super Admin can Add Edit And Delete Employe.
+use App\Http\Controllers\SuperAdmin\AdminProfileController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController; 
+use App\Http\Controllers\SuperAdmin\AdminEmployeController; 
+use App\Http\Controllers\SuperAdmin\EmployeePromotionController; 
 use App\Http\Controllers\SuperAdmin\BasicController;
-use App\Http\Controllers\SuperAdmin\DesgnationController; // super Admin can add more designation.
-use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; // Super Admin Manage Employee Leave request.
-use App\Http\Controllers\SuperAdmin\AdminDailyReportController; /// Super admin can view detail who send dailyreport.
+use App\Http\Controllers\SuperAdmin\DesgnationController; 
+use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; 
+use App\Http\Controllers\SuperAdmin\AdminDailyReportController; 
 
-use App\Http\Controllers\SuperAdmin\LeaveSettingController; // Leave Settings .
-use App\Http\Controllers\SuperAdmin\TimeZoneController; // TimeZone Settings .
-use App\Http\Controllers\SuperAdmin\LeaveTypeController; // Leave Type Add, create, edit .
-use App\Http\Controllers\SuperAdmin\OfficeBranchController; // Office branches Type Add, create, edit .
-use App\Http\Controllers\SuperAdmin\BankNameController; // bank anme Type Add, create, edit .
-use App\Http\Controllers\SuperAdmin\BankBranchController; // Bank Branches Type Add, create, edit .
-use App\Http\Controllers\SuperAdmin\DepartmentController; // Bank Branches Type Add, create, edit .
-use App\Http\Controllers\SuperAdmin\CateringFoodController; // Catring Food Type Add, create, edit .
-use App\Http\Controllers\SuperAdmin\CateringPaymentController; // Catring Food Payment Add, create, edit .
-use App\Http\Controllers\SuperAdmin\AdminEmailController; // Dynamic Email Controller.
+use App\Http\Controllers\SuperAdmin\LeaveSettingController; 
+use App\Http\Controllers\SuperAdmin\TimeZoneController; 
+use App\Http\Controllers\SuperAdmin\LeaveTypeController; 
+use App\Http\Controllers\SuperAdmin\OfficeBranchController; 
+use App\Http\Controllers\SuperAdmin\BankNameController; 
+use App\Http\Controllers\SuperAdmin\BankBranchController; 
+use App\Http\Controllers\SuperAdmin\DepartmentController; 
+use App\Http\Controllers\SuperAdmin\CateringFoodController; 
+use App\Http\Controllers\SuperAdmin\CateringPaymentController; 
+use App\Http\Controllers\SuperAdmin\AdminEmailController; 
 
-use App\Http\Controllers\SuperAdmin\RecyclebinController; // only Admin Can Access This
+use App\Http\Controllers\SuperAdmin\RecyclebinController; 
 
-use App\Http\Controllers\SuperAdmin\AdminRoleController; /// Role Create,View,edit,delete.
-use App\Http\Controllers\SuperAdmin\PermissionController; /// Role Create,View,edit,delete.
+use App\Http\Controllers\SuperAdmin\AdminRoleController; 
+use App\Http\Controllers\SuperAdmin\PermissionController; 
 
 
 Route::get('/', function () {
@@ -139,6 +140,17 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
 
+                // Employee Promotion
+                Route::get('/admin/promotion/{id}',[EmployeePromotionController::class,'index'])->name('admin.promotion');
+                Route::get('/admin/promotion/add',[EmployeePromotionController::class,'add'])->name('admin.promotion.add');
+                Route::post('/admin/promotion/insert',[EmployeePromotionController::class,'insert'])->name('admin.promotion.insert');
+                Route::get('/admin/promotion/edit/{id}',[EmployeePromotionController::class,'edit'])->name('admin.promotion.edit');
+                Route::post('/admin/promotion/update',[EmployeePromotionController::class,'update'])->name('admin.promotion.update');
+                Route::post('/admin/promotion/softdelete',[EmployeePromotionController::class,'softdele'])->name('admin.promotion.softdelete');
+                Route::post('/admin/promotion/restore',[EmployeePromotionController::class,'restore'])->name('admin.promotion.restore');
+                Route::get('/admin/promotion/view/{slug}',[EmployeePromotionController::class,'view'])->name('admin.promotion.view');
+                Route::delete('/admin/promotion/delete',[EmployeePromotionController::class,'delete'])->name('admin.promotion.delete');
+
                 // Designation Controller
                 Route::get('/superadmin/designation',[DesgnationController::class,'index'])->name('superadmin.designation');
                 Route::get('/superadmin/designation/add',[DesgnationController::class,'add'])->name('superadmin.designation.add');
@@ -229,10 +241,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
                 Route::post('/superadmin/basic/update',[BasicController::class,'updateBasic'])->name('superadmin.basic.update');
                 Route::post('/superadmin/basic/currency',[BasicController::class,'updateCurrency'])->name('superadmin.basic.currency');
-
-                //TimeZone Basic Controller
-                Route::get('/superadmin/timezone',[TimeZoneController::class,'index'])->name('superadmin.timezone');
-                Route::post('/superadmin/timezone/update',[TimeZoneController::class,'update'])->name('superadmin.timezone.update');
+                Route::post('/superadmin/basic/time',[BasicController::class,'updateTimeZone'])->name('superadmin.basic.time');
 
                 //Email  Controller
                 Route::get('/superadmin/email',[AdminEmailController::class,'index'])->name('superadmin.email');

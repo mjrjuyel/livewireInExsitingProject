@@ -135,6 +135,11 @@ class AdminProfileController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
         // return $request->all();
+        // get Associated Employee Info:
+        $admin = User::findOrFail($id);
+        $employe = Employee::where('email',$admin->email)->first();
+        // return $employe;
+
         $request->validate([
             'name'=>'required',
             'image' => 'max:512 | image | mimes:jpeg,jpg,png',
@@ -162,18 +167,50 @@ class AdminProfileController extends Controller
                 'image'=>$image_name,
             ]);
         }
+        // Employee Image chnage also
+        if($employe){
+            $path = public_path('uploads/employe/profile/');
+
+           if($request->hasFile('image')){
+            if($employe->emp_image != '' && $employe->emp_image != null){
+                $old_pic = $path.$employe->emp_image;
+                unlink($old_pic);
+            }
+
+            $imageTake = $request->file('image');
+            $image_name = 'emp-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($imageTake);
+            // $image->scale(width: 300);
+            $image->save('uploads/employe/profile/'.$image_name);
+            
+            Employee::where('id',$employe->id)->update([
+                'emp_image'=>$image_name,
+            ]);
+        }
+        }
+        
         
         $update = User::where('id',$id)->update([
             'name'=>$request['name'],
             'email'=>$request['email'],
             'slug'=>$slug,
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
-
+        // Role Sync With User
         $user = User::findOrFail($id);
-
         $user->syncRoles($request->role);
-        
+
+        // update Associted Employee Info Also
+        if($employe){    
+            $update = Employee::where('id',$employe->id)->update([
+                'emp_name'=>$request['name'],
+                'email'=>$request['email'],
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+
+            // return $data = User::findOrFail($admin->id);
+        }
         // If Password Is changed
         if($request->oldpass){
             $request->validate([
@@ -187,6 +224,12 @@ class AdminProfileController extends Controller
             auth()->user()->update([
                 'password' => Hash::make($request->newpass),
             ]);
+
+            if($employe){
+                Employee::where('id',$employe->$id)->update([
+                    'password'=> Hash::make($request->newpass),
+                ]);
+            }
         }
         
         Session::flash('success','Profile Update Successfully');

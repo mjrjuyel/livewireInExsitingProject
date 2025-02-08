@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\EmployeLeaveSetting;
 use App\Models\UserRole;
 use App\Models\OfficeBranch;
@@ -18,6 +19,7 @@ use App\Models\Designation;
 use App\Models\BankName;
 use App\Models\BankBranch;
 use App\Models\Department;
+use App\Models\EmployeePromotion;
 use Carbon\Carbon;
 use DateTime;
 use Session;
@@ -28,7 +30,7 @@ class AdminEmployeController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Employee')->only('add','insert');
         $this->middleware('permission:Edit Employee')->only('edit','update');
-        $this->middleware('permission:View Employee')->only('view');
+        $this->middleware('permission:View Employee')->only('view','index');
         $this->middleware('permission:Soft Delete Employee')->only('softdele');
         $this->middleware('permission:Restore Employee')->only('softdele');
         $this->middleware('permission:Delete Employee')->only('delete');
@@ -223,9 +225,12 @@ class AdminEmployeController extends Controller
                 ->get();
             }
 
-        
-        // return $Evaleaves->sum('total_paid');
-        return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves']));
+            // All Designation and Department
+            $departs = Department::all();
+            $designs = Designation::all();
+            $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
+            // return $activeDesig;
+         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig']));
     }
 
     // Edit Admin
@@ -247,6 +252,11 @@ class AdminEmployeController extends Controller
 
         $id = $request['id'];
         $slug = $request['slug'];
+
+        // get Associted Admin User
+        $employe = Employee::findOrFail($id);
+        // get associated Admin Info.
+        $admin = User::where('email',$employe->email)->first();
         
         $request->validate([
             'name'=>'required',
@@ -288,6 +298,12 @@ class AdminEmployeController extends Controller
             Employee::where('id',$id)->update([
                 'password'=>Hash::make($request['pass']),
             ]);
+
+            if($admin){
+                User::where('id',$admin->$id)->update([
+                    'password'=> Hash::make($request->newpass),
+                ]);
+               }
         }
 
         $old= Employee::find($id);
@@ -329,6 +345,27 @@ class AdminEmployeController extends Controller
             Employee::where('id',$id)->update([
                 'emp_signature'=>$image_signa,
             ]);
+        }
+        // admin profile image
+        if($admin){
+            $path = public_path('uploads/adminprofile/');
+            if($request->hasFile('pic')){
+                if($admin->image !='' && $admin->image != null){
+                    $admin_pic = $path.$admin->image;
+                    unlink($admin_pic);
+                }
+
+                $imageTake = $request->file('pic');
+                $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($imageTake);
+                // $image->scale(width: 300);
+                $image->save('uploads/adminprofile/'.$image_name);
+
+                User::where('id',$admin->id)->update([
+                    'image'=>$image_name,
+                ]);
+            }
         }
 
         
@@ -383,6 +420,18 @@ class AdminEmployeController extends Controller
             'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
+
+        if($admin){
+            
+            $update = User::where('id',$admin->id)->update([
+                'name'=>$request['name'],
+                'email'=>$request['email'],
+                'designation_id'=>$request['desig'],
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+
+            // return $data = User::findOrFail($admin->id);
+        }
 
         if($update){
             if(!empty($request->resign)){

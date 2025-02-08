@@ -13,6 +13,9 @@ use App\Models\DailyReport;
 
 class RecyclebinController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:Recycle Bin')->only('dashboard','employe','dailyreport');
+    }
     public function dashboard(){
         $activeEmploye = Employee::where('emp_status',0)->latest('id')->count();
         $dailyReport = DailyReport::where('status',0)->latest('id')->count();

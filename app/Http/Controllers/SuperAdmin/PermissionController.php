@@ -16,7 +16,7 @@ class PermissionController extends Controller
         $this->middleware('permission:All Permission')->only('index');
         $this->middleware('permission:Add Permission')->only('add','insert');
         $this->middleware('permission:Edit Permission')->only('edit','update');
-        $this->middleware('permission:View Permission')->only('view');
+        $this->middleware('permission:View Permission')->only('view','index');
         $this->middleware('permission:Delete Permission')->only('delete');
     }
 

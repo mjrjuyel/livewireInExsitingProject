@@ -488,7 +488,7 @@ class LeaveFormController extends Controller
                                             'emp_id'=>Auth::guard('employee')->user()->id,
                                             'slug'=>'leav-'.uniqId(),
                                             'status'=>1,
-                                            'add_from'=>'Employee',
+                                            'add_from'=>Auth::guard('employee')->user()->emp_name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
     

@@ -16,7 +16,7 @@ class DepartmentController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Department')->only('add','insert');
         $this->middleware('permission:Edit Department')->only('edit','update');
-        $this->middleware('permission:View Department')->only('view');
+        $this->middleware('permission:View Department')->only('view','index');
         $this->middleware('permission:Delete Department')->only('delete');
     }
 

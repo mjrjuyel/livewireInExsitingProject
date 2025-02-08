@@ -158,7 +158,7 @@
                         <form action="{{ url('/dashboard/asAdmin/'.Crypt::encrypt($user->id)) }}" method="post">
                             @csrf
                             @method('post')
-                            <button class="btn side-nav-link menu-text text-primary" type="sumbit"><i class=" menu-icon text-primary mdi mdi-account-switch-outline"></i>Switch As Admin</button>
+                            <button class="btn side-nav-link menu-text text-primary" type="sumbit"><i class=" menu-icon text-primary mdi mdi-account-switch-outline"></i>Switch As @foreach($user->roles as $role) {{$role->name}} @endforeach</button>
                         </form>
                     </li>
                     @endif
