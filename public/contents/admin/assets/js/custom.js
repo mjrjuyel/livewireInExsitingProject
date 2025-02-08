@@ -18,8 +18,8 @@ $(document).ready(function() {
     //   Parmanent
      $(document).on("click", "#delete", function () {
            let deleteID = $(this).data('id');
-           $(".modal_body #modal_id").val( deleteID ); 
-});
+           $(".modal_body #modal_id").val( deleteID );   
+      });
 });
 
 !function(t) {

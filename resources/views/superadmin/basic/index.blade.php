@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                             <div class="card-body pt-2">
-                                <h6 class="">Single Select</h6>
+                                <h6 class="">Select Currency</h6>
                                 <form action="{{route('superadmin.basic.currency')}}" method="post">
                                     @method('post')
                                     @csrf
@@ -182,21 +182,53 @@
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title"> Auto Complete</h5>
+                                <h5 class="card-title">Application Time Zone</h5>
                             </div>
                             <div class="card-body pt-2">
-                                <form>
-                                    <div class="form-group mb-4">
-                                        <label class="control-label ">Ajax Lookup</label>
-                                        <input type="text" name="country" id="autocomplete-ajax" class="form-control" style=" z-index: 2;" />
-                                        <input type="text" name="country" id="autocomplete-ajax-x" disabled="disabled" class="form-control" style="color: #CCC; position: absolute; background: transparent; z-index: 1;display: none;" />
-                                    </div>
+                                <form action="{{route('superadmin.basic.time')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row mt-3">
+                                        <div class="col-8 offset-2">
 
-                                    <div class="form-group">
-                                        <label class="control-label ">Local Lookup and Grouping</label>
-                                        <input type="text" name="country" id="autocomplete" class="form-control" />
-                                    </div>
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <div class="">
+                                                        <label class="form-label">Current Time Zone<span class="text-danger">*
+                                                            </span>:
+                                                        </label>
+                                                        <input type="text" class="form-control" name="" value="{{$time->name}}" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            @php
+                                            $timeZoneList = timezone_identifiers_list();
+                                            @endphp
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <div class="">
+                                                        <label class="form-label">Select Time Zone for your Application<span class="text-danger">*
+                                                            </span>:
+                                                        </label>
+                                                        <select class="form-control" data-toggle="select2" name="name" data-placeholder="Choose ...">
+                                                            @foreach($timeZoneList as $name)
+                                                            <option value="{{$name}}" @if($time->name == $name) Selected @endif>{{$name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('month')
+                                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

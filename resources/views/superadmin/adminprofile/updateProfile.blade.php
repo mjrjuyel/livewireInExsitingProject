@@ -148,7 +148,9 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Image<span class="text-danger">*</span>:</label>
                                                         <input type="file" class="dropify" name="image">
-                                                        <small id="emailHelp" class="form-text text-muted"></small>
+                                                        @error('image')
+                                                        <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-6">

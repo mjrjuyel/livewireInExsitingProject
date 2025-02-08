@@ -17,7 +17,7 @@ class BankBranchController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Bank Branch')->only('add','insert');
         $this->middleware('permission:Edit Bank Branch')->only('edit','update');
-        $this->middleware('permission:View Bank Branch')->only('view');
+        $this->middleware('permission:View Bank Branch')->only('view','index');
         $this->middleware('permission:Delete Bank Branch')->only('delete');
     }
 

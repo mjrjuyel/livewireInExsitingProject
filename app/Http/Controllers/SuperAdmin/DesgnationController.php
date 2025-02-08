@@ -16,7 +16,7 @@ class DesgnationController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Designation')->only('add','insert');
         $this->middleware('permission:Edit Designation')->only('edit','update');
-        $this->middleware('permission:View Designation')->only('view');
+        $this->middleware('permission:View Designation')->only('view','index');
         $this->middleware('permission:Delete Designation')->only('delete');
     }
 

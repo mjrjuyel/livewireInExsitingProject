@@ -19,7 +19,7 @@ class AdminRoleController extends Controller
         $this->middleware('permission:All Role')->only('index');
         $this->middleware('permission:Add Role')->only('add','insert');
         $this->middleware('permission:Edit Role')->only('edit','update');
-        $this->middleware('permission:View Role')->only('view');
+        $this->middleware('permission:View Role')->only('view','index');
         $this->middleware('permission:Delete Role')->only('delete');
     }
     

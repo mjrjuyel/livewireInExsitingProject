@@ -16,7 +16,7 @@ class BankNameController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Bank Detail')->only('add','insert');
         $this->middleware('permission:Edit Bank Detail')->only('edit','update');
-        $this->middleware('permission:View Bank Detail')->only('view');
+        $this->middleware('permission:View Bank Detail')->only('view','index');
         $this->middleware('permission:Delete Bank Detail')->only('delete');
     }
 

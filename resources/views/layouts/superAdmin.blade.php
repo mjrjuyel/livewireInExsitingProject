@@ -470,18 +470,12 @@
                                         <span class="menu-text">Leave</span>
                                     </a>
                                 </li>
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.timezone')}}" class="side-nav-link">
-                                        <span class="menu-text">Time Zone</span>
-                                    </a>
-                                </li>
 
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.email')}}" class="side-nav-link">
                                         <span class="menu-text">Email</span>
                                     </a>
                                 </li>
-                                
                             </ul>
                         </div>
                     </li>

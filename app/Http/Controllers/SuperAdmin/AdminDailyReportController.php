@@ -17,7 +17,7 @@ class AdminDailyReportController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Daily-Report')->only('add','insert');
         $this->middleware('permission:Edit Daily-Report')->only('edit','update');
-        $this->middleware('permission:View Daily-Report')->only('view');
+        $this->middleware('permission:View Daily-Report')->only('view','index','searchName');
         $this->middleware('permission:Soft Delete Daily-Report')->only('softDelete');
         $this->middleware('permission:Restore Daily-Report')->only('restore');
         $this->middleware('permission:Delete Daily-Report')->only('delete');

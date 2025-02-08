@@ -93,7 +93,7 @@
                                         <div class="form-group clearfix">
                                             <label>Full Name <span class="text-danger">*</span> :</label>
                                             <div>
-                                                <input class="form-control" name="name" value="{{$edit->emp_name }}" type="text">
+                                                <input class="form-control" name="name" value="{{$edit->emp_name ?? old('name') }}" type="text">
                                             </div>
                                             @error('name')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -105,7 +105,7 @@
                                         <div class="form-group clearfix">
                                             <label>Date of Birth <span class="text-danger">*</span> :</label> </label>
                                             <div>
-                                                <input class="form-control" id="humanfd-datepicke" name="dob" value="{{$edit->emp_dob}}" type="text">
+                                                <input class="form-control" id="humanfd-datepicke" name="dob" value="{{$edit->emp_dob ?? old('dob')}}" type="text">
                                             </div>
                                             @error('dob')
                                             <small class="form-text text-warning">{{ $message }}</small>
@@ -175,13 +175,13 @@
                                             <legend class="col-form-label col-sm-6 pt-0">Maritial Status <span class="text-danger">*</span> :</legend>
                                             <div class="col-sm-6">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="marriage" id="marriage1" value="Married" @if($edit->marriage == 'Married') Checked @endif>
+                                                    <input class="form-check-input" type="radio" name="marriage" id="marriage1" value="Married" {{ $edit->marriage == 'Married'|| old('marriage') == 'Married'? 'Checked' : ''}} >
                                                     <label class="form-check-label" for="marriage1">
                                                         Married
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="marriage" id="marriage2" value="Single" @if($edit->marriage == 'Single') Checked @endif>
+                                                    <input class="form-check-input" type="radio" name="marriage" id="marriage2" value="Single" {{ $edit->marriage == 'Single'|| old('marriage') == 'Single' ? 'Checked' : '' }}>
                                                     <label class="form-check-label" for="marriage2">
                                                         Single
                                                     </label>
@@ -240,7 +240,7 @@
                                         <div class="form-group clearfix">
                                             <label>Email : <span class="text-info">(Alternate Email)</span></label>
                                             <div>
-                                                <input class="form-control" value="{{$edit->email2 ?? old('email2') }}" name="email2" type="email1">
+                                                <input class="form-control" value="{{$edit->email2 ?? old('ema il2') }}" name="email2" type="email1">
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +248,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
                                             <label>Phone Number <span class="text-danger">*</span> :</label>
-                                            <input name="phone" type="text" value="{{$edit->emp_phone }}" class="form-control">
+                                            <input name="phone" type="text" value="{{$edit->emp_phone ?? old('phone') }}" class="form-control">
                                             @error('phone')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -268,7 +268,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
                                             <label>Emergency Contact Number <span class="text-danger">*</span> :</label>
-                                            <input name="emerPhone" type="number" value="{{$edit->emp_emer_contact }}" class="required form-control">
+                                            <input name="emerPhone" type="number" value="{{$edit->emp_emer_contact ?? old('emerPhone') }}" class="required form-control">
                                             @error('emerPhone')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -288,7 +288,7 @@
                                         <div class="form-group clearfix">
                                             <label>Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
 
-                                            <input name="emerRelation" type="text" value="{{$edit->emp_emer_relation }}" class="required form-control">
+                                            <input name="emerRelation" type="text" value="{{$edit->emp_emer_relation ?? old('emerRelation')}}" class="required form-control">
                                             @error('emerRelation')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -300,7 +300,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
                                             <label>Parmanent Address <span class="text-danger">*</span> :</label>
-                                            <input name="add" type="text" class="required form-control" value="{{$edit->emp_address }}">
+                                            <input name="add" type="text" class="required form-control" value="{{$edit->emp_address ?? old('add') }}">
                                             @error('add')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -332,7 +332,7 @@
                                             <select type="text" class="form-control" id="department" name="department">
                                                 <option value="">Select One</option>
                                                 @foreach($department as $department)
-                                                <option value="{{$department->id}}" @if($edit->emp_depart_id == $department->id) Selected @endif>{{$department->depart_name}}</option>
+                                                <option value="{{$department->id}}"  {{ $edit->emp_depart_id == $department->id || old('department') == $department->id ? 'Selected' : ''}}>{{$department->depart_name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('department')
@@ -347,7 +347,7 @@
                                             <select type="text" class="form-control" name="desig" value="{{$edit->emp_desig }}">
                                                 <option value="">Select One</option>
                                                 @foreach($designation as $designation)
-                                                <option value="{{$designation->id}}" @if($edit->emp_desig_id == $designation->id) Selected @endif>{{$designation->title}}</option>
+                                                <option value="{{$designation->id}}"  {{ $edit->emp_desig_id == $designation->id || old('desig') == $designation->id ? 'Selected' : ''}}>{{$designation->title}}</option>
                                                 @endforeach
                                             </select>
                                             @error('desig')
@@ -385,7 +385,7 @@
                                             <select type="text" class="form-control" name="reporting">
                                                 <option value="">Select One</option>
                                                 @foreach($report as $repor)
-                                                <option value="{{$repor->id}}" @if($edit->emp_report_manager == $repor->id) Selected @endif>{{$repor->emp_name}}</option>
+                                                <option value="{{$repor->id}}" {{ $edit->emp_report_manager == $repor->id || old('reporting') == $repor->id ? 'Selected' : '' }}>{{$repor->emp_name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('reporting')
@@ -397,7 +397,7 @@
                                     <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
-                                            <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join }}" placeholder="Joining From">
+                                            <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join ?? old('join') }}" placeholder="Joining From">
                                             @error('join')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -422,7 +422,7 @@
                                     <div class="col-sm-4 offset-sm-2">
                                         <div class="form-group clearfix">
                                             <label>Last Evaluation Date <span class="text-danger">*</span> ::</label>
-                                            <input name="eva_start_date" type="date" class="form-control" value="{{$edit->eva_start_date}}">
+                                            <input name="eva_start_date" type="date" class="form-control" value="{{$edit->eva_start_date ?? old('eva_start_date')}}">
                                             @error('eva_start_date')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -431,7 +431,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
                                             <label>Next Evaluation Date <span class="text-danger">*</span> :</label>
-                                            <input name="eva_end_date" type="date" class="form-control" value="{{$edit->eva_end_date}}">
+                                            <input name="eva_end_date" type="date" class="form-control" value="{{$edit->eva_end_date ?? old('eva_end_date')}}">
                                             @error('eva_end_date')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -447,19 +447,19 @@
                                     <legend class="col-form-label col-sm-3 pt-0">Select One<span class="text-danger">*</span> :</legend>
                                     <div class="col-sm-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="id_type" {{ $edit->emp_id_type == 'national_id' ? 'Checked' : ''}} value="national_id" onclick="showInput('national_id_input')">
+                                            <input class="form-check-input" type="radio" name="id_type" {{ $edit->emp_id_type == 'national_id' || old('id_type') == 'national_id' ? 'Checked' : ''}} value="national_id" onclick="showInput('national_id_input')">
                                             <label class="form-check-label" for="gridRadios1">
                                                 National ID/Passport Number
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="id_type" {{ $edit->emp_id_type == 'ssn' ? 'Checked' : ''}} value="ssn" onclick="showInput('ssn_input')">
+                                            <input class="form-check-input" type="radio" name="id_type" {{ $edit->emp_id_type == 'ssn' || old('id_type') == 'ssn' ? 'Checked' : ''}} value="ssn" onclick="showInput('ssn_input')">
                                             <label class="form-check-label" for="gridRadios2">
                                                 Social Security Number (SSN) (or local equivalent)
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="id_type" {{ $edit->emp_id_type == 'driver_license' ? 'Checked' : ''}} value="driver_license" onclick="showInput('driver_license_input')">
+                                            <input class="form-check-input" type="radio" name="id_type" {{ $edit->emp_id_type == 'driver_license' || old('id_type') == 'driver_license' ? 'Checked' : ''}} value="driver_license" onclick="showInput('driver_license_input')">
                                             <label class="form-check-label" for="gridRadios2">
                                                 Driver’s License Number (if applicable)
                                             </label>
@@ -472,17 +472,17 @@
                                     <div class="col-sm-5">
                                         <div id="national_id_input" class="hiddenInput">
                                             <label for="national_id" class="form-label">National ID/Passport Number<span class="text-danger">*</span> :</label> </label>
-                                            <input type="text" id="national_id" class="form-control" value="{{$edit->emp_id_number }}" name="id_number">
+                                            <input type="text" id="national_id" class="form-control" value="{{$edit->emp_id_number ?? old('id_number') }}" name="id_number">
 
                                         </div>
                                         <div id="ssn_input" class="hiddenInput">
                                             <label for="ssn" class="form-label">Social Security Number (SSN)<span class="text-danger">*</span> :</label></label>
-                                            <input type="text" id="ssn" class="form-control" value="{{$edit->emp_id_number }}" name="id_number">
+                                            <input type="text" id="ssn" class="form-control" value="{{$edit->emp_id_number ?? old('id_number') }}" name="id_number">
 
                                         </div>
                                         <div id="driver_license_input" class="hiddenInput">
                                             <label for="driver_license" class="form-label">Driver’s License Number<span class="text-danger">*</span> :</label></label>
-                                            <input type="text" id="driver_license" value="{{$edit->emp_id_number }}" class="form-control" name="id_number">
+                                            <input type="text" id="driver_license" value="{{$edit->emp_id_number ?? old('id_number') }}" class="form-control" name="id_number">
 
                                         </div>
                                         @error('id_number')
@@ -493,7 +493,7 @@
                                     <div class="col-sm-5">
                                         <div id="national_id_input" class="">
                                             <label class="form-label">Identity Type : {{$edit->emp_id_type}}</label>
-                                            <input type="text" class="form-control" value="{{$edit->emp_id_number }}" name="id_number" disabled>
+                                            <input type="text" class="form-control" value="{{$edit->emp_id_number ?? old('id_number') }}" name="id_number" disabled>
 
                                         </div>
                                     </div>
@@ -525,7 +525,7 @@
                         <div class="col-sm-4">
                             <div class="form-group clearfix">
                                 <label for="">Last Academic Degree :- <span class="text-danger">*</span> :</label>
-                                <input class="required form-control" id="" value="{{$edit->emp_rec_degree }}" name="degre" type="text">
+                                <input class="required form-control" id="" value="{{$edit->emp_rec_degree ?? old('degre')}}" name="degre" type="text">
                                 @error('degre')
                                 <small class="form-text text-warning">{{ $message }}</small>
                                 @enderror
@@ -533,7 +533,7 @@
 
                             <div class="form-group clearfix">
                                 <label>Passing Year:- <span class="text-danger">*</span> :</label>
-                                <input class="required form-control" value="{{$edit->emp_rec_year }}" name="degreYear" type="text">
+                                <input class="required form-control" value="{{$edit->emp_rec_year ?? old('degreYear') }}" name="degreYear" type="text">
                                 @error('degreYear')
                                 <small class="form-text text-warning">{{ $message }}</small>
                                 @enderror
@@ -555,7 +555,7 @@
                                     <select type="text" class="form-control" id="bankName" name="bankName">
                                         <option value="">Select One</option>
                                         @foreach($bankName as $bankName)
-                                        <option value="{{ $bankName->id }}" @if($edit->emp_bank_id == $bankName->id) Selected @endif>{{ $bankName->bank_name }}
+                                        <option value="{{ $bankName->id }}" {{ $edit->emp_bank_id == $bankName->id || old('bankName') == $bankName->id ? 'Selected':'' }}>{{ $bankName->bank_name }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -572,7 +572,7 @@
                                 <div>
                                     <select class="form-control" name="bankBranch" type="text">
                                         @foreach($bankBranch as $branch)
-                                        <option value="{{ $branch->id }}" @if($edit->emp_bank_branch_id == $branch->id) Selected @endif>{{ $branch->bank_branch_name }}
+                                        <option value="{{ $branch->id }}" {{ $edit->emp_bank_branch_id == $branch->id || old('bankBranch') == $branch->id ? 'Selected':'' }}>{{ $branch->bank_branch_name }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -584,7 +584,7 @@
                             <div class="form-group clearfix">
                                 <label class="form-label">Account Name <span class="text-danger">*</span> :</label>
                                 <div>
-                                    <input class="form-control" name="accountName" value="{{$edit->emp_bank_account_name }}" type="text">
+                                    <input class="form-control" name="accountName" value="{{$edit->emp_bank_account_name ?? old('accountName')}}" type="text">
                                 </div>
                                 @error('accountName')
                                 <small class="form-text text-warning">{{ $message }}</small>
@@ -599,7 +599,7 @@
                             <div class="form-group clearfix">
                                 <label class="form-label">Account No <span class="text-danger">*</span> :</label>
                                 <div>
-                                    <input class="form-control" name="accountNumber" value="{{$edit->emp_bank_account_number}}" type="number">
+                                    <input class="form-control" name="accountNumber" value="{{$edit->emp_bank_account_number ?? old('accountNumber')}}" type="number">
                                 </div>
                                 @error('accountNumber')
                                 <small class="form-text text-warning">{{ $message }}</small>
@@ -639,7 +639,7 @@
                                     <select class="required form-control" name="OffBranch" type="text">
                                         <option value="">Select One</option>
                                         @foreach($officeBranch as $officeBranch)
-                                        <option value="{{$officeBranch->id}}" @if($edit->emp_office_branch_id == $officeBranch->id) Selected @endif>{{$officeBranch->branch_name}}</option>
+                                        <option value="{{$officeBranch->id}}" {{ $edit->emp_office_branch_id == $officeBranch->id || old('OffBranch') == $officeBranch->id ? 'Selected' : ''}}>{{$officeBranch->branch_name}}</option>
                                         @endforeach
                                     </select>
                                     @error('OffBranch')

@@ -8,6 +8,7 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Basic;
+use App\Models\TimeZone;
 use App\Models\Currency;
 use Auth;
 use Carbon\Carbon;
@@ -16,10 +17,11 @@ use Session;
 class BasicController extends Controller
 {
     public function index(){
+        $time = TimeZone::where('id',1)->first();
         $currency = Currency::first();
         $basic = Basic::where('id',1)->first();
         // return $currency;
-        return view('superadmin.basic.index',compact(['basic','currency']));
+        return view('superadmin.basic.index',compact(['basic','currency','time']));
     }
 
     public function updateBasic(Request $request){
@@ -115,5 +117,23 @@ class BasicController extends Controller
                 Session::flash('success','Currency Change For Website');
                 return redirect()->back();
             }
+    }
+    // timezone Setting
+    public function updateTimeZone(Request $request){
+
+        // return $request->all();
+        $request->validate([
+            'name'=>'required',
+        ]);
+
+        $update = TimeZone::where('id',1)->update([
+            'name'=>$request['name'],
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        if($update){
+            Session::flash('success','Time Zone Change For this Appliaction');
+            return redirect()->back();
+        }
     }
 }

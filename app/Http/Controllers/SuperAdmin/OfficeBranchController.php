@@ -16,7 +16,7 @@ class OfficeBranchController extends Controller
     public function __construct(){
         $this->middleware('permission:Add Office Branch')->only('add','insert');
         $this->middleware('permission:Edit Office Branch')->only('edit','update');
-        $this->middleware('permission:View Office Branch')->only('view');
+        $this->middleware('permission:View Office Branch')->only('view','index');
         $this->middleware('permission:Delete Office Branch')->only('delete');
     }
 
