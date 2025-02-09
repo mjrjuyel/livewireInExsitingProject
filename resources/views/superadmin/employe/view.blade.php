@@ -357,7 +357,7 @@
                                     <td>Designation</td>
                                     <td>:</td>
                                     <td>
-                                        <span class="text-info"> </span>
+                                        <span class="text-info"> {{ $activeDesig != '' ? $activeDesig->designation->title : optional($view->emp_desig)->title}}</span>
                                         <button class="btn btn-primary">
                                         <a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#promotion"><i class="mdi mdi-stairs-up"></i>Promotion</a></button>
                                     </td>
