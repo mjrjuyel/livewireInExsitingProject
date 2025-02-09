@@ -162,7 +162,7 @@
                                                             <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                             </li>
                                                            @endcan
-                                                            @if($data->add_from == "Admin" && $data->status == 2)
+                                                            @if($data->add_from == Auth::user()->name && $data->status == 2)
                                                             @can('Edit Leave')
                                                                 <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                             </li>

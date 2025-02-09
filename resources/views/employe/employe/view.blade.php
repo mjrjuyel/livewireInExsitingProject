@@ -132,6 +132,7 @@
                                     <li class="list-group-item">Designation : {{$activeDesig != '' ? $activeDesig->designation->title : optional($view->emp_desig)->title}}</li>
                                     <li class="list-group-item">Employee Job Type : {{$activeDesig != '' ? $activeDesig->emp_type : $view->emp_type}}</li>
                                     <li class="list-group-item">Employee Salary : {{$activeDesig != '' ? $activeDesig->salary : 'Not Yet'}}</li>
+                                    <li class="list-group-item text-info">Promotion Status : {{$activeDesig != '' ? $activeDesig->pro_status : '----'}}</li>
                                     <li class="list-group-item text-info">Employee Promotion Date : {{$activeDesig != '' ? $activeDesig->pro_date->format('d-M-Y') : $view->emp_join->format('Y-M-d')}}</li>
                                 </ul>
                             </div>
@@ -160,15 +161,15 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Evaluation</h5>
                                 </div>
-                                @php
-                                    if($view->eva_end_date == null){
-                                        $end_date = new DateTime($view->emp_join->format('Y-m-d'));
-                                        $end_date->modify('+1 year');
-                                    }
+                               @php
+                                if($EmpEva == null){
+                                $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+                                $end_date->modify('+1 year');
+                                }
                                 @endphp
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Last Evalution Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
-                                    <li class="list-group-item">Next Evaluation Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Last Evaluation Date : @if($EmpEva != ''){{$EmpEva->eva_last_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Next Evaluation Date: @if($EmpEva != ''){{$EmpEva->eva_next_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                                 </ul>
                             </div>
                         </div>

@@ -57,13 +57,13 @@
 
         @php
 
-            if($view->eva_end_date == null){
+            if($EmpEva == null){
                 $end_date = new DateTime($view->emp_join->format('Y-m-d'));
                 $end_date->modify('+1 year');
                 }
 
-            if($view->eva_start_date){
-                $start_date = new DateTime($view->eva_start_date);
+            if($EmpEva){
+                $start_date = new DateTime($EmpEva->eva_last_date);
                 }
             
             $totalEvaLeavePaid  = $Evaleaves->sum('total_paid');
@@ -79,9 +79,9 @@
                     <h6 class="text-muted text-uppercase mt-0">Evaluation Time<span class="text-danger text-italic">:
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Last Evalution Date :
-                                    @if($view->eva_start_date != ''){{$start_date->format('d-M-Y')}} @else @if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} @endif @endif</li>
+                                    @if($EmpEva != ''){{$start_date->format('d-M-Y')}} @else @if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} @endif @endif</li>
                                 <li class="list-group-item">Next Evaluation Date:
-                                    @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                                    @if($EmpEva != ''){{$EmpEva->eva_next_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                             </ul>
                     </h6>
                 </div>

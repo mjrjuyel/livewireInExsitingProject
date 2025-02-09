@@ -19,6 +19,7 @@ use App\Http\Controllers\SuperAdmin\AdminProfileController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController; 
 use App\Http\Controllers\SuperAdmin\AdminEmployeController; 
 use App\Http\Controllers\SuperAdmin\EmployeePromotionController; 
+use App\Http\Controllers\SuperAdmin\EmployeeEvaluationController; 
 use App\Http\Controllers\SuperAdmin\BasicController;
 use App\Http\Controllers\SuperAdmin\DesgnationController; 
 use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; 
@@ -140,6 +141,16 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
 
+                // Employee Evaluation
+                Route::get('/admin/evaluation/{id}',[EmployeeEvaluationController::class,'index'])->name('admin.evaluation');
+                Route::get('/admin/evaluation/add',[EmployeeEvaluationController::class,'add'])->name('admin.evaluation.add');
+                Route::post('/admin/evaluation/insert',[EmployeeEvaluationController::class,'insert'])->name('admin.evaluation.insert');
+                Route::get('/admin/evaluation/edit/{id}',[EmployeeEvaluationController::class,'edit'])->name('admin.evaluation.edit');
+                Route::post('/admin/evaluation/update',[EmployeeEvaluationController::class,'update'])->name('admin.evaluation.update');
+                Route::post('/admin/evaluation/softdelete',[EmployeeEvaluationController::class,'softdele'])->name('admin.evaluation.softdelete');
+                Route::post('/admin/evaluation/restore',[EmployeeEvaluationController::class,'restore'])->name('admin.evaluation.restore');
+                Route::get('/admin/evaluation/view/{slug}',[EmployeeEvaluationController::class,'view'])->name('admin.evaluation.view');
+                Route::delete('/admin/evaluation/delete',[EmployeeEvaluationController::class,'delete'])->name('admin.evaluation.delete');
                 // Employee Promotion
                 Route::get('/admin/promotion/{id}',[EmployeePromotionController::class,'index'])->name('admin.promotion');
                 Route::get('/admin/promotion/add',[EmployeePromotionController::class,'add'])->name('admin.promotion.add');

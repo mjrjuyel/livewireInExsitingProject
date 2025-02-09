@@ -20,6 +20,7 @@ use App\Models\BankName;
 use App\Models\BankBranch;
 use App\Models\Department;
 use App\Models\EmployeePromotion;
+use App\Models\EmployeeEvaluation;
 use Carbon\Carbon;
 use DateTime;
 use Session;
@@ -69,7 +70,7 @@ class AdminEmployeController extends Controller
             'desig'=>'required',
             'empType'=>'required',
             'join'=>'required',
-            'reporting'=>'required',
+            // 'reporting'=>'required',
             'id_type'=>'required',
             'id_number'=>'unique:employees,emp_id_number',
             'degre'=>'required',
@@ -102,6 +103,7 @@ class AdminEmployeController extends Controller
             // $image->scale(width: 300);
             $image->save('uploads/employe/profile/'.$image_signa);
         }
+
         if(empty($request->eva_end_date)){
             // return $request->join;
             $endDate = new DateTime($request->join);
@@ -109,7 +111,7 @@ class AdminEmployeController extends Controller
 
             // return $endDate->format('Y-m-d');
         }
-        
+   
         $insert = Employee::create([
             'emp_name'=>$request['name'],
             'emp_dob'=>$request['dob'],
@@ -158,17 +160,23 @@ class AdminEmployeController extends Controller
 
             'emp_slug'=>'emp-'.uniqId(),
             'emp_join'=>$request['join'],
-            'eva_start_date'=>$request->eva_start_date != null ? $report->eva_start_date : $request->join,
-            'eva_end_date'=>$request->eva_end_date != null ? $request->eva_end_date : $endDate ,
             'password'=>Hash::make($request['pass']),
             'emp_creator'=>Auth::user()->id,
             'created_at'=>Carbon::now('UTC'),
         ]);
+            // Evaluation Create
+            $evaluation = EmployeeEvaluation::create([
+                'emp_id' =>$insert->id,
+                'eva_last_date'=>$request->eva_start_date != null ? $request->eva_start_date : $request->join,
+                'eva_next_date'=>$request->eva_end_date != null ? $request->eva_end_date : $endDate,
+                'evaluated_by'=>Auth::user()->id,
+                'created_at'=>Carbon::now('UTC')
+            ]);
 
-        if($insert){
-            Session::flash('success','New Employee Add ');
-            return redirect()->route('superadmin.employe.add');
-        }
+            if($insert){
+                Session::flash('success','New Employee Add ');
+                return redirect()->route('superadmin.employe.add');
+            }
     }
     
     // Fethch All Employer Data
@@ -196,8 +204,12 @@ class AdminEmployeController extends Controller
         $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
+        // Evalution Data 
+        $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
+
+        // return $EmpEva->eva_next_date;
          //Eva date Calculation
-         if($view->eva_end_date == null || $view->eva_end_date == ' '){
+         if($EmpEva == null || $EmpEva->eva_next_date == ' '){
             // return 'No Eva Date';
             $end_date = new DateTime($view->emp_join->format('Y-m-d'));
             $end_date->modify('+1 year');
@@ -218,9 +230,9 @@ class AdminEmployeController extends Controller
                 
                 $Evaleaves = Leave::where('emp_id', $view->id)
                 ->where('status', 2)
-                ->where(function ($query) use ($view) {
-                    $query->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
-                          ->whereBetween('end_date', [$view->eva_start_date, $view->eva_end_date]);
+                ->where(function ($query) use ($EmpEva) {
+                    $query->whereBetween('start_date', [$EmpEva->eva_last_date, $EmpEva->eva_next_date])
+                          ->whereBetween('end_date', [$EmpEva->eva_last_date , $EmpEva->eva_next_date]);
                 })
                 ->get();
             }
@@ -229,8 +241,9 @@ class AdminEmployeController extends Controller
             $departs = Department::all();
             $designs = Designation::all();
             $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
+            // Employee Evalaution Data 
             // return $activeDesig;
-         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig']));
+         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva']));
     }
 
     // Edit Admin

@@ -142,8 +142,7 @@
                                                 @endcan
                                                 </li>
                                                 @can('Edit Employee')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
-                                                        </i>Edit</a>
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.$employe->emp_slug) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                 @endcan
                                                 @can('Delete Employee')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$employe->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">

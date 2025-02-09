@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\UserRole;
 use App\Models\Designation;
 use App\Models\EmployeePromotion;
+use App\Models\EmployeeEvaluation;
 use Carbon\Carbon;
 use Session;
 
@@ -33,7 +34,10 @@ class EmployeController extends Controller
     public function view($slug){
         $view = Employee::where('emp_slug',$slug)->first();
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
-        return view('employe.employe.view',compact(['view','activeDesig']));
+        // Evalution Data 
+        $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
+
+        return view('employe.employe.view',compact(['view','activeDesig','EmpEva']));
     }
 
     public function profileSettings($slug){

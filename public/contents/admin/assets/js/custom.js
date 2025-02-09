@@ -36,6 +36,11 @@ $(document).ready(function() {
             altFormat: "F j, Y",
             dateFormat: "Y-m-d"
         }),
+        t("#humanfd-datepic").flatpickr({
+            altInput: !0,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d"
+        }),
         t("#minmax-datepicker").flatpickr({
             minDate: "2020-01",
             maxDate: "2020-03"

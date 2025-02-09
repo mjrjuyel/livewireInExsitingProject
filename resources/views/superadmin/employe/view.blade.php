@@ -1,4 +1,13 @@
 @extends('layouts.superAdmin')
+
+@section('css')
+<link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
+<link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets/libs/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+@endsection
+
 @section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
@@ -75,13 +84,13 @@
         </div>
         @php
 
-        if($view->eva_end_date == null){
+        if($EmpEva == null){
         $end_date = new DateTime($view->emp_join->format('Y-m-d'));
         $end_date->modify('+1 year');
         }
 
-        if($view->eva_start_date){
-        $start_date = new DateTime($view->eva_start_date);
+        if($EmpEva){
+        $start_date = new DateTime($EmpEva->eva_last_date);
         }
         $totalEvaLeavePaid = $Evaleaves->sum('total_paid');
         $totalEvaLeaveUnPaid = $Evaleaves->sum('total_unpaid');
@@ -96,9 +105,9 @@
                     <h6 class="text-muted text-uppercase mt-0">Evaluation Time<span class="text-danger text-italic">:
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Last Evalution Date :
-                                    @if($view->eva_start_date != ''){{$start_date->format('d-M-Y')}} @else @if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} @endif @endif</li>
+                                    @if($EmpEva != ''){{$start_date->format('d-M-Y')}} @else @if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} @endif @endif</li>
                                 <li class="list-group-item">Next Evaluation Date:
-                                    @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                                    @if($EmpEva != ''){{$EmpEva->eva_next_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                             </ul>
                     </h6>
                 </div>
@@ -285,7 +294,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-8 offset-md-2">
+                        <div class="col-md-10 offset-md-1">
 
                             <div class="card-header bg-dark">
                                 <div class="row">
@@ -294,11 +303,14 @@
                                         </h3>
                                     </div>
                                     
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.employe')}}" class="btn btn-bg btn-primary btn_header ">
+                                    <div class="col-md-2 text-end"><a href="{{route('superadmin.employe')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Employe</a>
                                     </div>
-                                    <div class="col-md-3 text-center"><a href="{{route('admin.promotion',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header ">
-                                            <i class="fa-brands fa-servicestack btn_icon"></i>Promotion History</a>
+                                    <div class="col-md-2 text-center"><a href="{{route('admin.evaluation',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header ">
+                                            <i class="fa-brands fa-servicestack btn_icon"></i>Evaluation History</a>
+                                    </div>
+                                    <div class="col-md-2 text-center"><a href="{{route('admin.promotion',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header ">
+                                            <i class="fa-brands fa-servicestack btn_icon"></i> Promotion History</a>
                                     </div>
                                     <div class="col-md-2 text-center"><a href="{{route('superadmin.employe.view',$view->emp_slug)}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
@@ -403,6 +415,7 @@
                                     <li class="list-group-item">Designation : {{$activeDesig != '' ? $activeDesig->designation->title : optional($view->emp_desig)->title}}</li>
                                     <li class="list-group-item">Employee Job Type : {{$activeDesig != '' ? $activeDesig->emp_type : $view->emp_type}}</li>
                                     <li class="list-group-item">Employee Salary : {{$activeDesig != '' ? $activeDesig->salary : 'Not Yet'}}</li>
+                                    <li class="list-group-item text-info">Promotion Status : {{$activeDesig != '' ? $activeDesig->pro_status : '----'}}</li>
                                     <li class="list-group-item text-info">Employee Promotion Date : {{$activeDesig != '' ? $activeDesig->pro_date->format('d-M-Y') : $view->emp_join->format('Y-M-d')}}</li>
                                 </ul>
                             </div>
@@ -428,17 +441,20 @@
                         <div class="col-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Evaluation</h5>
+                                    <div class="row">
+                                     <div class="col-md-7"><h5 class="card-title">Evaluation</h5></div>
+                                     <div class="col-md-5 text-end"><button class="btn btn-primary"><a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#evaluation"><i class="mdi mdi-receipt-text-edit"></i> Renew</a></button></div>
+                                    </div>
                                 </div>
                                 @php
-                                if($view->eva_end_date == null){
+                                if($EmpEva == null){
                                 $end_date = new DateTime($view->emp_join->format('Y-m-d'));
                                 $end_date->modify('+1 year');
                                 }
                                 @endphp
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Last Evaluation Date : @if($view->eva_start_date != ''){{$view->eva_start_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
-                                    <li class="list-group-item">Next Evaluation Date: @if($view->eva_end_date != ''){{$view->eva_end_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Last Evaluation Date : @if($EmpEva != ''){{$EmpEva->eva_last_date}} @else {{$view->emp_join->format('d-M-Y')}} @endif</li>
+                                    <li class="list-group-item">Next Evaluation Date: @if($EmpEva != ''){{$EmpEva->eva_next_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                                 </ul>
                             </div>
                         </div>
@@ -525,6 +541,64 @@
 </div>
 
 </div> <!-- container -->
+
+{{-- Evaluation  --}}
+<div id="evaluation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content bg-warning">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Evaluate of {{$view->emp_name}} Job Duration?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <form action="{{route('admin.evaluation.insert')}}" method="post">
+                @csrf
+                <div class="modal-body modal_body">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="form-group clearfix">
+                                <label>Name<span class="text-danger">*</span> :</label>
+                                <select type="text" class="form-control" name="employe">
+                                    <option value="{{ $view->id }}">{{ $view->emp_name }}</option>
+                                </select>
+                                @error('employe')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="form-group clearfix">
+                                <label>Last Evaluation Date<span class="text-danger">*</span> :</label>
+                                <input type="text" class="form-control" id="humanfd-datepicke" name="eva_last_date" value="" placeholder="select Start date">
+                                @error('eva_last_date')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="form-group clearfix">
+                                <label>Next Evaluation Date<span class="text-danger">*</span> :</label>
+                                <input type="text" class="form-control" id="humanfd-datepicker" name="eva_next_date" value=""  placeholder="Select End Date">
+                                @error('eva_next_date')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 {{-- Promotion  --}}
 <div id="promotion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -618,6 +692,18 @@
 
                     <div class="row">
                         <div class="col-md-6 offset-md-3">
+                            <div class="form-group clearfix">
+                                <label for="salary">Created At<span class="text-danger">*</span> :</label>
+                                <input class="required form-control" id="humanfd-datepic" value="{{$activeDesig != '' ? $activeDesig->pro_date->format('Y-m-d') : old('created_at')}}" name="created_at" type="date">
+                                @error('created_at')
+                                <small class="form-text text-warning">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
                             <fieldset class="row">
                                 <legend class="col-sm-6 pt-0">Status*:</legend>
                                 <div class="col-sm-6">
@@ -677,4 +763,15 @@
     });
 
 </script>
+@endsection
+
+@section('js')
+<script src="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<!-- Init js-->
+<script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
+
 @endsection

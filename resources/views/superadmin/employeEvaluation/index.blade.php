@@ -40,7 +40,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Super Admin</a></li>
 
-                    <li class="breadcrumb-item active">Promotion List</li>
+                    <li class="breadcrumb-item active">Evaluation History</li>
                 </ol>
             </div>
         </div>
@@ -61,43 +61,30 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="text-center">Designation</th>
-                                    <th class="text-center">Department</th>
-                                    <th class="text-center">Promotion Date</th>
-                                    <th class="text-center">Employee Type</th>
-                                    <th class="text-center">Salary</th>
-                                    <th class="text-center">ProMotion Status</th>
-                                    <th class="text-center">Promoted By</th>
+                                    <th class="text-center">Last Evaluation Date</th>
+                                    <th class="text-center">Next Evaluation Date</th>
+                                    <th class="text-center">Renewed Date</th>
+                                    <th class="text-center">Evaluated By</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($allPromotion as $promotion)
+                                @foreach($allEvaluation as $evaluation)
                                 <tr>
                                     <td>
-                                        {{ optional($promotion->designation)->title }}
-                                    </td>
-
-                                    <td>
-                                        {{optional($promotion->department)->depart_name}}
-                                    </td>
-
-                                    <td>
-                                        {{$promotion->pro_date->format('d-M-Y')}}
+                                        {{$evaluation->eva_last_date}}
                                     </td>
                                     <td>
-                                        {{optional($promotion)->emp_type}}
+                                        {{$evaluation->eva_next_date}}
                                     </td>
                                     <td>
-                                        {{optional($promotion)->salary}}
+                                        {{$evaluation->renewed_at->format('d-M-Y')}}
                                     </td>
-
-                                     <td>
-                                        {{optional($promotion)->pro_status}}
+                                    
                                     </td>
 
                                     <td class="text-info">
-                                        {{optional($promotion->creator)->name}}
+                                        {{optional($evaluation->creator)->name}}
                                     </td>
                                    
 
@@ -107,17 +94,17 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                {{-- <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$promotion->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
+                                                {{-- <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$evaluation->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
 
                                                 @php
-                                                    $onlyEdit = App\Models\EmployeePromotion::latest('pro_date')->first();
+                                                    $onlyEdit = App\Models\Employeeevaluation::latest('renewed_at')->first();
                                                 @endphp
-                                                @if($onlyEdit->id == $promotion->id)
-                                                <li><a href="{{route('admin.promotion.edit',Crypt::encrypt($promotion->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
+                                                @if($onlyEdit->id == $evaluation->id)
+                                                <li><a href="{{route('admin.evaluation.edit',Crypt::encrypt($evaluation->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
                                                         </i>Edit</a>
                                                 </li>
                                                 @endif
-                                                <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$promotion->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$evaluation->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>
                                             </ul>
@@ -145,10 +132,10 @@
     <div class="modal-dialog ">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Employee Promotion Data </h5>
+                <h5 class="modal-title" id="myModalLabel">Employee evaluation Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('admin.promotion.delete')}}" method="post">
+            <form action="{{route('admin.evaluation.delete')}}" method="post">
                 @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

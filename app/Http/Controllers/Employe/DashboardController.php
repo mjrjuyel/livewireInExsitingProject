@@ -12,6 +12,7 @@ use App\Models\UserRole;
 use App\Models\Designation;
 use App\Models\DailyReport;
 use App\Models\EmployeePromotion;
+use App\Models\EmployeeEvaluation;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -36,8 +37,12 @@ class DashboardController extends Controller
 
         $totalReportSubmit = DailyReport::where('submit_by',Auth::guard('employee')->user()->id)->count('id');
 
-        //Eva date Calculation
-        if($view->eva_end_date == null){
+        $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
+
+        // return $EmpEva->eva_next_date;
+         //Eva date Calculation
+         if($EmpEva == null || $EmpEva->eva_next_date == ' '){
+            // return 'No Eva Date';
             $end_date = new DateTime($view->emp_join->format('Y-m-d'));
             $end_date->modify('+1 year');
 
@@ -46,7 +51,6 @@ class DashboardController extends Controller
             $formatted_start_date = $start_date->format('Y-m-d');
             $formatted_end_date = $end_date->format('Y-m-d');
         
-            // Leave calculation (Paid/Unpaid)
             // Leave calculation (Paid/Unpaid)
             $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
             ->where(function ($query) use ($formatted_start_date, $formatted_end_date) {
@@ -58,15 +62,15 @@ class DashboardController extends Controller
                 
                 $Evaleaves = Leave::where('emp_id', $view->id)
                 ->where('status', 2)
-                ->where(function ($query) use ($view) {
-                    $query->whereBetween('start_date', [$view->eva_start_date, $view->eva_end_date])
-                          ->whereBetween('end_date', [$view->eva_start_date, $view->eva_end_date]);
+                ->where(function ($query) use ($EmpEva) {
+                    $query->whereBetween('start_date', [$EmpEva->eva_last_date, $EmpEva->eva_next_date])
+                          ->whereBetween('end_date', [$EmpEva->eva_last_date , $EmpEva->eva_next_date]);
                 })
                 ->get();
             }
         
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
 
-        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves']));
+        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves','EmpEva']));
     }
 }

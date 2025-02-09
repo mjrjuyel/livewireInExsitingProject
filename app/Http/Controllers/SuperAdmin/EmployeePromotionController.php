@@ -19,7 +19,8 @@ class EmployeePromotionController extends Controller
     public function index($id){
         $userId = Crypt::decrypt($id);
         $allPromotion = EmployeePromotion::where('emp_id',$userId)->orderBy('pro_date','DESC')->get();
-        $view = Employee::find(1);
+        $view = Employee::findOrFail($userId);
+        
         $departs = Department::all();
         $designs = Designation::all();
         return view('superadmin.employePromotion.index',compact(['allPromotion','view','departs','designs']));
@@ -36,12 +37,12 @@ class EmployeePromotionController extends Controller
             'pro_status'=>$request->status,
             'salary'=>$request->salary,
             'promoted_by'=>Auth::user()->id,
-            'pro_date' => Carbon::now('UTC')->toDateString(),
+            'pro_date' => $request->created_at,
             'created_at'=>Carbon::now('UTC'),
         ]);
 
         if($insert){
-            Session::flash('success','Employee Designation Update');
+            Session::flash('success','Employee Promotion ');
             return redirect()->back();
         }
     }
@@ -69,13 +70,28 @@ class EmployeePromotionController extends Controller
             'pro_status'=>$request->status,
             'salary'=>$request->salary,
             'promoted_by'=>Auth::user()->id,
-            'pro_date' => Carbon::now('UTC')->toDateString(),
             'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($insert){
             Session::flash('success','Employee Promotion Update');
             return redirect()->route('admin.promotion',Crypt::encrypt($id));
+        }
+    }
+
+    public function delete(Request $request){
+
+        $delete = EmployeePromotion::findOrFail($request->id);
+        $delete->delete();
+        if($delete){
+        //     $admin = User::all();
+        // // Update the auto-incrementing column values
+        //     foreach ($admin as $index => $row) {
+        //         $row->id = $index + 1;
+        //         $row->save();
+        //     }
+        Session::flash('error','One Employee Promotion Data is  Deleted');
+        return redirect()->back();
         }
     }
 }
