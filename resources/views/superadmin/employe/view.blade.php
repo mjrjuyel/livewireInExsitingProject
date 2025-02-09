@@ -1,5 +1,30 @@
 @extends('layouts.superAdmin')
 @section('superAdminContent')
+@if(Session::has('success'))
+<script type="text/javascript">
+    swal({
+        title: "Success!"
+        , text: "{{ Session::get('success') }}"
+        , icon: "success"
+        , button: "OK"
+        , timer: 5000
+    , });
+
+</script>
+@endif
+@if(Session::has('error'))
+<script type="text/javascript">
+    swal({
+        title: "Opps!"
+        , text: "{{ Session::get('error') }}"
+        , icon: "error"
+        , button: "OK"
+        , timer: 5000
+    , });
+
+</script>
+@endif
+
 <div class="page-container">
     <div class="page-title-box">
 
@@ -332,7 +357,7 @@
                                     <td>Designation</td>
                                     <td>:</td>
                                     <td>
-                                        <span class="text-info"> {{ $activeDesig != '' ? $activeDesig->designation->title : 'Not Yet'}}</span>
+                                        <span class="text-info"> </span>
                                         <button class="btn btn-primary">
                                         <a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#promotion"><i class="mdi mdi-stairs-up"></i>Promotion</a></button>
                                     </td>
@@ -374,11 +399,11 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
-                                    <li class="list-group-item">Department : {{$activeDesig != '' ? $activeDesig->department->depart_name : 'Not Yet'}}</li>
-                                    <li class="list-group-item">Designation : {{$activeDesig != '' ? $activeDesig->designation->title : 'Not Yet'}}</li>
-                                    <li class="list-group-item">Employee Job Type : {{$activeDesig != '' ? $activeDesig->emp_type : 'Not Yet'}}</li>
+                                    <li class="list-group-item">Department : {{$activeDesig != '' ? $activeDesig->department->depart_name : optional($view->department)->depart_name}}</li>
+                                    <li class="list-group-item">Designation : {{$activeDesig != '' ? $activeDesig->designation->title : optional($view->emp_desig)->title}}</li>
+                                    <li class="list-group-item">Employee Job Type : {{$activeDesig != '' ? $activeDesig->emp_type : $view->emp_type}}</li>
                                     <li class="list-group-item">Employee Salary : {{$activeDesig != '' ? $activeDesig->salary : 'Not Yet'}}</li>
-                                    <li class="list-group-item text-info">Employee Promotion Date : {{$activeDesig != '' ? $activeDesig->pro_date->format('d-M-Y') : 'Not Yet'}}</li>
+                                    <li class="list-group-item text-info">Employee Promotion Date : {{$activeDesig != '' ? $activeDesig->pro_date->format('d-M-Y') : $view->emp_join->format('Y-M-d')}}</li>
                                 </ul>
                             </div>
                         </div>
@@ -564,13 +589,13 @@
                                 <label class="form-label">Employement Type<span class="text-danger">*</span> :</label>
                                 <select type="text" class="form-control" name="empType">
                                     <option value="">Select One</option>
-                                    <option value="Full Time" @if($view->emp_type == 'Full Time') Selected @elseif(old('empType') == 'Full Time') Selected @endif>Full Time </option>
-                                    <option value="Part Time" @if($view->emp_type == 'Part Time') Selected @elseif(old('empType') == 'Part Time') Selected @endif>Part Time</option>
-                                    <option value="Freelance" @if($view->emp_type == 'Freelance') Selected @elseif(old('empType') == 'Freelance') Selected @endif>Frelance</option>
-                                    <option value="Contract" @if($view->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
-                                    <option value="Internship" @if($view->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
-                                    <option value="Remote" @if($view->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
-                                    <option value="Hybrid" @if($view->emp_type == 'Hybrid') Selected @elseif(old('empType') == 'Hybrid') Selected @endif>Hybrid</option>
+                                    <option value="Full Time" @if($activeDesig != '' && $activeDesig->emp_type == 'Full Time') Selected @elseif($activeDesig == '' && $view->emp_type == 'Full Time') Selected @elseif(old('empType') == 'Full Time') Selected @endif>Full Time </option>
+                                    <option value="Part Time" @if($activeDesig != '' && $activeDesig->emp_type == 'Part Time') Selected @elseif($activeDesig == '' && $view->emp_type == 'Part Time') Selected @elseif(old('empType') == 'Part Time') Selected @endif>Part Time</option>
+                                    <option value="Freelance" @if($activeDesig != '' && $activeDesig->emp_type == 'Freelance') Selected @elseif($activeDesig == '' && $view->emp_type == 'Freelance') Selected @elseif(old('empType') == 'Freelance') Selected @endif>Frelance</option>
+                                    <option value="Contract" @if($activeDesig != '' && $activeDesig->emp_type == 'Contract') Selected @elseif($activeDesig == '' && $view->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
+                                    <option value="Internship" @if($activeDesig != '' && $activeDesig->emp_type == 'Internship') Selected @elseif($activeDesig == '' && $view->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
+                                    <option value="Remote" @if($activeDesig != '' && $activeDesig->emp_type == 'Remote') Selected @elseif($activeDesig == '' && $view->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
+                                    <option value="Hybrid" @if($activeDesig != '' && $activeDesig->emp_type == 'Hybrid') Selected @elseif($activeDesig == '' && $view->emp_type == 'Hybrid') Selected @elseif(old('empType') == 'Hybrid') Selected @endif>Hybrid</option>
                                 </select>
                                 @error('empType')
                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -583,7 +608,7 @@
                         <div class="col-md-6 offset-md-3">
                             <div class="form-group clearfix">
                                 <label for="salary">Salary<span class="text-danger">*</span> :</label>
-                                <input class="required form-control" id="salary" value="{{old('salary')}}" name="salary" type="number">
+                                <input class="required form-control" id="salary" value="{{$activeDesig != '' ? $activeDesig->salary : old('salary')}}" name="salary" type="number">
                                 @error('salary')
                                 <small class="form-text text-warning">{{ $message }}</small>
                                 @enderror

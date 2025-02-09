@@ -11,6 +11,7 @@ use App\Models\EmployeLeaveSetting;
 use App\Models\UserRole;
 use App\Models\Designation;
 use App\Models\DailyReport;
+use App\Models\EmployeePromotion;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -63,6 +64,8 @@ class DashboardController extends Controller
                 })
                 ->get();
             }
+        
+        $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
 
         return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves']));
     }

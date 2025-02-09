@@ -346,6 +346,7 @@ class AdminEmployeController extends Controller
                 'emp_signature'=>$image_signa,
             ]);
         }
+
         // admin profile image
         if($admin){
             $path = public_path('uploads/adminprofile/');
@@ -420,7 +421,7 @@ class AdminEmployeController extends Controller
             'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
-
+        
         if($admin){
             
             $update = User::where('id',$admin->id)->update([

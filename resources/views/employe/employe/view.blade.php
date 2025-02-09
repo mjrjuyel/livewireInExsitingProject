@@ -87,18 +87,10 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Role</td>
-                                    <td>:</td>
-                                    <td>
-                                        Working Role Is<button class="btn bg-primary"> {{optional($view->emp_role)->role_name}}</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
                                     <td>Designation</td>
                                     <td>:</td>
-                                    <td>
-                                        Work As A <button class="btn bg-primary">{{optional($view->emp_desig)->title}}</button>
+                                    <td> 
+                                    <button class="btn bg-primary">{{ $activeDesig != '' ? $activeDesig->designation->title : optional($view->emp_desig)->title}}</button>
                                     </td>
                                 </tr>
 
@@ -135,10 +127,12 @@
                                     <h5 class="card-title">Employee Details</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                 <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
-                                    <li class="list-group-item">Department : {{optional($view->department)->depart_name}}</li>
-                                    <li class="list-group-item">Designation : {{optional($view->emp_desig)->title}}</li>
-                                    <li class="list-group-item">Employee Job Type : {{$view->emp_type}}</li>
+                                    <li class="list-group-item text-danger">Reporting Manager : {{optional($view->reporting)->emp_name}}</li>
+                                    <li class="list-group-item">Department : {{$activeDesig != '' ? $activeDesig->department->depart_name : optional($view->department)->depart_name}}</li>
+                                    <li class="list-group-item">Designation : {{$activeDesig != '' ? $activeDesig->designation->title : optional($view->emp_desig)->title}}</li>
+                                    <li class="list-group-item">Employee Job Type : {{$activeDesig != '' ? $activeDesig->emp_type : $view->emp_type}}</li>
+                                    <li class="list-group-item">Employee Salary : {{$activeDesig != '' ? $activeDesig->salary : 'Not Yet'}}</li>
+                                    <li class="list-group-item text-info">Employee Promotion Date : {{$activeDesig != '' ? $activeDesig->pro_date->format('d-M-Y') : $view->emp_join->format('Y-M-d')}}</li>
                                 </ul>
                             </div>
                         </div>
