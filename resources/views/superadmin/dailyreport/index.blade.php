@@ -55,39 +55,48 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <label class="form-label">Search by Name: </label>
-                                <select class="form-control" data-toggle="select2" id="nameSearch" name="id" data-placeholder="Choose ...">
-                                    <option value="">Select Employee Name</option>
-                                    @foreach($name as $name)
-                                    <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-2">
-                                <label class="form-label">Search by Year: </label>
-                                <select class="form-control" data-toggle="select2" id="yearSearch" data-placeholder="Choose ...">
-                                   <option value="">Select Year</option>
-                                    @foreach($dates as $date)
-                                    <option value="{{$date->submit_date->format('Y')}}">{{$date->submit_date->format('Y')}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-2">
-                                <label class="form-label">Search by Month: </label>
-                                <select class="form-control" data-toggle="select2" id="monthSearch" data-placeholder="Choose ...">
-                                    <option value="">Select Month</option>
-                                    @foreach($months as $month)
-                                    <option value="{{$month->submit_date->format('F')}}">{{$month->submit_date->format('F')}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label class="form-label">Search by Name: </label>
+                            <select class="form-control" data-toggle="select2" id="nameSearch" name="id" data-placeholder="Choose ...">
+                                <option value="">Select Employee Name</option>
+                                @foreach($name as $name)
+                                <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    <div class="mt-5">
-                        <table class="table table-centered text-center" id="productTable">
+
+                        <div class="col-2">
+                            <label class="form-label">Search by Year: </label>
+                            <select class="form-control" data-toggle="select2" id="yearSearch" data-placeholder="Choose ...">
+                                <option value="">Select Year</option>
+                                @foreach($dates as $date)
+                                <option value="{{$date->submit_date->format('Y')}}">{{$date->submit_date->format('Y')}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-2">
+                            <label class="form-label">Search by Month: </label>
+                            <select class="form-control" data-toggle="select2" id="monthSearch" data-placeholder="Choose ...">
+                                <option value="">Select Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="">
+                        <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Submit By</th>
@@ -98,7 +107,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="dailyReport">
                                 @foreach($alldata as $data)
                                 <tr>
 
@@ -190,11 +199,35 @@
 
         $('#yearSearch').on('change', function() {
             let year = $(this).val();
-            let name = $('#nameSearch').val();
-            let month = $('$monthSearch').val();
-            if (year) {
-                window.location.href = "{{url('/superadmin/dailyreport/searchYear/')}}/" + year + "/" + name + "/" + month;
-            }
+            $.ajax({
+                url: "{{url('/superadmin/dailyreport/searchYear/')}}/" + year
+                , type: "get"
+                , success: function(response) {
+                    $('#dailyReport').html(response); // Update only table body
+                }
+            , });
+        });
+
+        $('#nameSearch').on('change', function() {
+            let name = $(this).val();
+            $.ajax({
+                url: "{{url('/superadmin/dailyreport/searchName/')}}/" + name
+                , type: "get"
+                , success: function(response) {
+                    $('#dailyReport').html(response); // Update only table body
+                }
+            , });
+        });
+
+        $('#monthSearch').on('change', function() {
+            let month = $(this).val();
+            $.ajax({
+                url: "{{url('/superadmin/dailyreport/searchMonth/')}}/" + month
+                , type: "get"
+                , success: function(response) {
+                    $('#dailyReport').html(response); // Update only table body
+                }
+            , });
         });
     });
 
@@ -209,20 +242,10 @@
 <script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js">
 </script>
 <script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js">
-</script>
 
 <!-- Datatables init -->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/table-datatable.js"></script>
 
-<script src="{{ asset('contents/admin') }}/assets/libs/@adactive/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/mohithg-switchery/switchery.min.js"></script>
 <script src="{{ asset('contents/admin') }}/assets/libs/multiselect/js/jquery.multi-select.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/jquery.quicksearch/jquery.quicksearch.min.js"></script>
 <script src="{{ asset('contents/admin') }}/assets/libs/select2/js/select2.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
-<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-
-<script src="{{ asset('contents/admin') }}/assets/js/pages/form-advanced.js"></script>
 @endsection

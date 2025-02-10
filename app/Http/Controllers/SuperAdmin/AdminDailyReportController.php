@@ -41,22 +41,62 @@ class AdminDailyReportController extends Controller
 
     //Search By Name
     
-    public function searchName(Request $request){
-        $id = $request->id;
-        $recentName = Employee::where('id',$id)->first();
-        $alldata = DailyReport::where('submit_by',$id)->where('status',1)->orderBy('created_at','DESC')->get();
-        $name = DailyReport::with('employe')->distinct()->get('submit_by');
-        // return $recentName;
-        return view('superadmin.dailyreport.searchname',compact(['alldata','name','recentName']));
+    public function searchName($name){
+        $alldata = DailyReport::where('submit_by',$name)->orderBy('submit_date','DESC')->get();
+            $html = '';
+                foreach ($alldata as $data) {
+                    $html .= '<tr>
+                                <td>' . htmlspecialchars($data->employe->emp_name) . '</td>
+                                <td>' . $data->submit_date->format('d-M-Y') . '</td>
+                                <td>' . formatDate($data->created_at) . '</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">';
+                
+                    // Check if the user has "View Daily-Report" permission
+                    if (auth()->user()->can('View Daily-Report')) {
+                        $html .= '<li><a class="dropdown-item" href="' . url('superadmin/dailyreport/view/'.$data->slug) . '"><i class="mdi mdi-eye-circle-outline"></i> View</a></li>';
+                    }
+                
+                    // Check if the user has "Soft Delete Daily-Report" permission
+                    if (auth()->user()->can('Soft Delete Daily-Report')) {
+                        $html .= '<li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="' . $data->id . '" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert"></i> Delete</a></li>';
+                    }
+                
+                    $html .= '</ul>
+                                    </div>
+                                </td>
+                            </tr>';
+                    }
+                    return response()->json(['html'=> $html]);
     }
 
-    // Search By Year
-    public function searchYear($year,$name,$month){
-        $recentName = Employee::where('id',$name)->first();
+    public function searchYear($year){
         $alldata = DailyReport::whereYear('submit_date',$year)->get();
-        $name = DailyReport::with('employe')->distinct()->get('submit_by');
-        // return $alldata;
-        return view('superadmin.dailyreport.searchYear',compact('alldata'));
+        $html = '';
+        foreach ($alldata as $data) {
+            $html .= '<tr>
+                        <td>' . $data->employe->emp_name . '</td>
+                        <td>' . $data->submit_date->format('d-M-Y') . '</td>
+                        <td>' . formatDate($data->created_at) . '</td>
+                    </tr>';
+        }
+        return response()->json($html);
+    }
+    public function searchMonth($month){
+        $alldata = DailyReport::whereMonth('submit_date',$month)->get();
+        $html = '';
+        foreach ($alldata as $data) {
+            $html .= '<tr>
+                        <td>' . $data->employe->emp_name . '</td>
+                        <td>' . $data->submit_date->format('d-M-Y') . '</td>
+                        <td>' . formatDate($data->created_at) . '</td>
+                    </tr>';
+        }
+        return response()->json($html);
     }
 
     // soft Delete
