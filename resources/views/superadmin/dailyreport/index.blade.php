@@ -95,70 +95,75 @@
                             </select>
                         </div>
                     </div>
-                    <div class="mt-5">
-                        <table class="table table-centered text-center" id="">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="text-center">Submit By</th>
-                                    <th class="text-center">Report Date</th>
-                                    <th class="text-center">Submited Date</th>
-                                    <th class="text-center">Text</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
+                    <form action="" method="">
+                        <div class="mt-5">
+                            <table class="table table-centered text-center" id="datatable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-center">mark</th>
+                                        <th class="text-center">Submit By</th>
+                                        <th class="text-center">Report Date</th>
+                                        <th class="text-center">Submited Date</th>
+                                        <th class="text-center">Text</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody id="dailyReport">
-                                @foreach($alldata as $data)
-                                <tr>
+                                <tbody id="dailyReport">
+                                    @foreach($alldata as $data)
+                                    <tr>
+                                        <td>
+                                          <input type="checkbox" value="1">
+                                        </td>
+                                        <td>
+                                            {{ $data->employe->emp_name }}
+                                        </td>
 
-                                    <td>
-                                        {{ $data->employe->emp_name }}
-                                    </td>
+                                        <td>
+                                            {{ $data->submit_date->format('d-M-Y') }}
+                                        </td>
 
-                                    <td>
-                                        {{ $data->submit_date->format('d-M-Y') }}
-                                    </td>
-
-                                    <td>
-                                        {{ formatDate($data->created_at) }}
-                                    </td>
-
-
-                                    <td>
-                                        {!! Str::words($data->detail,15) !!}
-                                    </td>
-
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                @can('View Daily-Report')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
-                                                        </i>View</a></li>
-                                                </li>
-                                                @endcan
-                                                @can('Soft Delete Daily-Report')
-                                                <li>
-                                                    <a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
-                                                        </i>Delete</a>
-                                                </li>
-                                                @endcan
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                @endforeach
+                                        <td>
+                                            {{ formatDate($data->created_at) }}
+                                        </td>
 
 
-                            </tbody>
-                            <tfoot>
-                            </tfoot>
-                        </table>
-                        {{$alldata->links()}}
-                    </div>
+                                        <td>
+                                            {!! Str::words($data->detail,15) !!}
+                                        </td>
+
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Action
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @can('View Daily-Report')
+                                                    <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                            </i>View</a></li>
+                                                    </li>
+                                                    @endcan
+                                                    @can('Soft Delete Daily-Report')
+                                                    <li>
+                                                        <a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$data->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
+                                                            </i>Delete</a>
+                                                    </li>
+                                                    @endcan
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    @endforeach
+
+
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                            {{$alldata->links()}}
+                        </div>
+                    </form>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
         </div> <!-- end col -->
@@ -198,42 +203,21 @@
             ordering: false // Disables ordering for all columns
         });
 
-         $('.allSearch').on('change', function() {
+        $('.allSearch').on('change', function() {
             let year = $('#yearSearch').val() || 'all';
             let month = $('#monthSearch').val() || 'all';
             let name = $('#nameSearch').val() || 'all';
-            
+
             $.ajax({
-                url: "{{url('/superadmin/dailyreport/search/')}}/" + year + "/" + month + "/"+ name, 
-                type: "get",
-                success: function(response) {
-                $('#dailyReport').html(response); // Update only table body
+                url: "{{url('/superadmin/dailyreport/search/')}}/" + year + "/" + month + "/" + name
+                , type: "get"
+                , success: function(response) {
+                    console.log(response);
+                    $('#dailyReport').html(response); // Update only table body
                 }
             });
-            
+
         });
-
-    //    $('#nameSearch').on('change', function() {
-    //        let name = $(this).val();
-   //         $.ajax({
-   ////             url: "{{url('/superadmin/dailyreport/searchName/')}}/" + name
-   //             , type: "get"
-   //             , success: function(response) {
-    //                $('#dailyReport').html(response); // Update only table body
-    //            }
-    //        , });
-    //    });
-
-   //     $('#monthSearch').on('change', function() {
-   //         let month = $(this).val();
-   //         $.ajax({
-   //             url: "{{url('/superadmin/dailyreport/searchMonth/')}}/" + month
-   //             , type: "get"
-   //             , success: function(response) {
-    //                $('#dailyReport').html(response); // Update only table body
-     //           }
-       //     , });
-       // });
     });
 
 </script>
