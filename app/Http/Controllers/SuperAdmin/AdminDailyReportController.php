@@ -26,8 +26,11 @@ class AdminDailyReportController extends Controller
     public function index(){
         $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->get();
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
+        $dates = DailyReport::distinct()->orderBy('submit_date','ASC')->get('submit_date');
+        $months = DailyReport::distinct('submit_date')->orderBy('submit_date','ASC')->get('submit_date');
+        // return $date;
         // return $alldata;
-        return view('superadmin.dailyreport.index',compact(['alldata','name']));
+        return view('superadmin.dailyreport.index',compact(['alldata','name','dates','months']));
     }
 
     public function view($slug){
@@ -42,10 +45,18 @@ class AdminDailyReportController extends Controller
         $id = $request->id;
         $recentName = Employee::where('id',$id)->first();
         $alldata = DailyReport::where('submit_by',$id)->where('status',1)->orderBy('created_at','DESC')->get();
-
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
         // return $recentName;
         return view('superadmin.dailyreport.searchname',compact(['alldata','name','recentName']));
+    }
+
+    // Search By Year
+    public function searchYear($year,$name,$month){
+        $recentName = Employee::where('id',$name)->first();
+        $alldata = DailyReport::whereYear('submit_date',$year)->get();
+        $name = DailyReport::with('employe')->distinct()->get('submit_by');
+        // return $alldata;
+        return view('superadmin.dailyreport.searchYear',compact('alldata'));
     }
 
     // soft Delete

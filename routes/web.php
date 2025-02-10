@@ -243,6 +243,8 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/dailyreport/restore',[AdminDailyReportController::class,'restore'])->name('superadmin.dailyreport.restore');
                 Route::delete('/superadmin/dailyreport/delete',[AdminDailyReportController::class,'delete'])->name('superadmin.dailyreport.delete');
                 Route::get('/superadmin/dailyreport/searchname',[AdminDailyReportController::class,'searchName'])->name('superadmin.dailyreport.searchname');
+
+                Route::get('/superadmin/dailyreport/searchYear/{year}/{month}/{name}',[AdminDailyReportController::class,'searchYear'])->name('superadmin.dailyreport.searchYear');
                 
                 // Leave Setting status
                 Route::get('/superadmin/leavesetting',[LeaveSettingController::class,'index'])->name('superadmin.leavesetting');

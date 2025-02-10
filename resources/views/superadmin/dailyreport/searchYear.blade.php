@@ -55,37 +55,34 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <form action="{{route('superadmin.dailyreport.searchname')}}" method="">
+                        @csrf
                         <div class="row">
                             <div class="col-2">
                                 <label class="form-label">Search by Name: </label>
-                                <select class="form-control" data-toggle="select2" id="nameSearch" name="id" data-placeholder="Choose ...">
-                                    <option value="">Select Employee Name</option>
+                                <select class="form-control" data-toggle="select2" name="id" data-placeholder="Choose ...">
                                     @foreach($name as $name)
+                                    <option value="">Select Employee Name</option>
                                     <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
-
+                            @if($alldata->count() != null)
+                            <div class="col-4" style="margin-top: 20px;">
+                                <button class="btn btn-danger" type="submit"><span class="mdi mdi-magnify" style="font-size:24px;"></span></button>
+                            </div>
+                            @endif
                             <div class="col-2">
                                 <label class="form-label">Search by Year: </label>
                                 <select class="form-control" data-toggle="select2" id="yearSearch" data-placeholder="Choose ...">
-                                   <option value="">Select Year</option>
                                     @foreach($dates as $date)
+                                    <option value="">Select Year</option>
                                     <option value="{{$date->submit_date->format('Y')}}">{{$date->submit_date->format('Y')}}</option>
                                     @endforeach
                                 </select>
                             </div>
-
-                            <div class="col-2">
-                                <label class="form-label">Search by Month: </label>
-                                <select class="form-control" data-toggle="select2" id="monthSearch" data-placeholder="Choose ...">
-                                    <option value="">Select Month</option>
-                                    @foreach($months as $month)
-                                    <option value="{{$month->submit_date->format('F')}}">{{$month->submit_date->format('F')}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                         </div>
+                    </form>
                     <div class="mt-5">
                         <table class="table table-centered text-center" id="productTable">
                             <thead class="table-light">
@@ -190,10 +187,8 @@
 
         $('#yearSearch').on('change', function() {
             let year = $(this).val();
-            let name = $('#nameSearch').val();
-            let month = $('$monthSearch').val();
             if (year) {
-                window.location.href = "{{url('/superadmin/dailyreport/searchYear/')}}/" + year + "/" + name + "/" + month;
+                window.location.href = "{{url('/superadmin/dailyreport/searchYear/')}}?name=" + year;
             }
         });
     });
