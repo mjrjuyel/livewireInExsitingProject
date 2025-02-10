@@ -26,11 +26,10 @@ class AdminDailyReportController extends Controller
     public function index(){
         $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->get();
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
-        $dates = DailyReport::distinct()->orderBy('submit_date','ASC')->get('submit_date');
-        $months = DailyReport::distinct('submit_date')->orderBy('submit_date','ASC')->get('submit_date');
-        // return $date;
+        $dates = DailyReport::selectRaw('YEAR(submit_date) as year')->distinct()->orderBy('year', 'ASC')->pluck('year');
+        // return $dates;
         // return $alldata;
-        return view('superadmin.dailyreport.index',compact(['alldata','name','dates','months']));
+        return view('superadmin.dailyreport.index',compact(['alldata','name','dates']));
     }
 
     public function view($slug){

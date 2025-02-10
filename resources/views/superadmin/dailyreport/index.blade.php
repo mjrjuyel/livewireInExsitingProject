@@ -71,7 +71,7 @@
                             <select class="form-control" data-toggle="select2" id="yearSearch" data-placeholder="Choose ...">
                                 <option value="">Select Year</option>
                                 @foreach($dates as $date)
-                                <option value="{{$date->submit_date->format('Y')}}">{{$date->submit_date->format('Y')}}</option>
+                                <option value="{{$date}}">{{$date}}</option>
                                 @endforeach
                             </select>
                         </div>
