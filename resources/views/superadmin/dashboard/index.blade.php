@@ -68,6 +68,22 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Days Approved In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h3 class="my-3">
+                    @if($leaveTotalDayApprovedInMonth < 1 ) 
+                        <h3 class="my-3"><span data-plugin="counterup">{{$leaveTotalDayApprovedInMonth}}</span> Day</h3>
+                    @else
+                    <h3 class="my-3"><span data-plugin="counterup">{{$leaveTotalDayApprovedInMonth}}</span> Days</h3>
+                    @endif
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
                     <a href="{{route('superadmin.leaveYear',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
@@ -98,6 +114,22 @@
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request Approved in <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInApproved}}</h3>
                     </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Days Approved In {{date('Y')}} :</h6>
+                    <h3 class="my-3">
+                    @if($leaveTotalDayApprovedInYear < 1 ) 
+                        <h3 class="my-3"><span data-plugin="counterup">{{$leaveTotalDayApprovedInYear}}</span> Day</h3>
+                    @else
+                    <h3 class="my-3"><span data-plugin="counterup">{{$leaveTotalDayApprovedInYear}}</span> Days</h3>
+                    @endif
+                    </h3>
                 </div>
             </div>
         </div>

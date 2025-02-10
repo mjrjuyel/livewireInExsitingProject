@@ -58,11 +58,11 @@
                     <form action="{{route('superadmin.dailyreport.searchname')}}" method="">
                        @csrf
                         <div class="row">
-                            <div class="col-4 offset-2">
+                            <div class="col-2">
                                 <label class="form-label">Search by Name: </label>
                                 <select class="form-control" data-toggle="select2" name="id"  data-placeholder="Choose ...">
                                     @foreach($name as $name)
-                                    
+                                    <option value="">Select Employee Name</option>
                                     <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
                                     @endforeach
                                 </select> 

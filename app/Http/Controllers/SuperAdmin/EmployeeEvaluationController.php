@@ -20,7 +20,6 @@ class EmployeeEvaluationController extends Controller
     public function index($id){
         $userId = Crypt::decrypt($id);
         $allEvaluation = EmployeeEvaluation::where('emp_id',20)->latest('id')->get();
-        // return $allEvaluation->renewed_at->format('Y-m-d');
         // dd($allEvaluation->toSql(), $allEvaluation->getBindings());
         $view = Employee::findOrFail($userId);
         // return $view;
@@ -61,8 +60,6 @@ class EmployeeEvaluationController extends Controller
 
             $id = $request->id;
         
-        //    return $request->all();
-        // if($request->eva_last_date < $request->eva_next_date){
             $update = EmployeeEvaluation::where('id',$id)->update([
                 'emp_id'=>$request->employe,
                 'eva_last_date'=>$request->eva_last_date,
@@ -74,21 +71,13 @@ class EmployeeEvaluationController extends Controller
                 Session::flash('success','Employee Evalution Update By Admin ');
                 return redirect()->back();
             }
-        // }
-        // Session::flash('error','Please Check Evaluation Last Date is over from Evaluation Next Date');
-        // return redirect()->back();
     }
+
     public function delete(Request $request){
 
         $delete = EmployeeEvaluation::findOrFail($request->id);
         $delete->delete();
         if($delete){
-        //     $admin = User::all();
-        // // Update the auto-incrementing column values
-        //     foreach ($admin as $index => $row) {
-        //         $row->id = $index + 1;
-        //         $row->save();
-        //     }
         Session::flash('error','Employe Evalution Data Delete');
         return redirect()->back();
         }
