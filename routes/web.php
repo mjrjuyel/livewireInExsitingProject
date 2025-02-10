@@ -242,9 +242,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/dailyreport/softdelete',[AdminDailyReportController::class,'softDelete'])->name('superadmin.dailyreport.softdelete');
                 Route::post('/superadmin/dailyreport/restore',[AdminDailyReportController::class,'restore'])->name('superadmin.dailyreport.restore');
                 Route::delete('/superadmin/dailyreport/delete',[AdminDailyReportController::class,'delete'])->name('superadmin.dailyreport.delete');
-                Route::get('/superadmin/dailyreport/searchName/{name}',[AdminDailyReportController::class,'searchName'])->name('superadmin.dailyreport.searchName');
-                Route::get('/superadmin/dailyreport/searchYear/{year}',[AdminDailyReportController::class,'searchYear'])->name('superadmin.dailyreport.searchYear');
-                Route::get('/superadmin/dailyreport/searchMonth/{month}',[AdminDailyReportController::class,'searchMonth'])->name('superadmin.dailyreport.searchMonth');
+                Route::get('/superadmin/dailyreport/search/{year}/{month}/{name}',[AdminDailyReportController::class,'allSearch'])->name('superadmin.dailyreport.search');
                 
                 // Leave Setting status
                 Route::get('/superadmin/leavesetting',[LeaveSettingController::class,'index'])->name('superadmin.leavesetting');

@@ -11,6 +11,7 @@ use App\Models\DailyReport;
 use Carbon\Carbon;
 use Session;
 use Auth;
+use DB;
 
 class AdminDailyReportController extends Controller
 {
@@ -24,7 +25,7 @@ class AdminDailyReportController extends Controller
     }
 
     public function index(){
-        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->get();
+        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->simplePaginate(2);
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
         $dates = DailyReport::selectRaw('YEAR(submit_date) as year')->distinct()->orderBy('year', 'ASC')->pluck('year');
         // return $dates;
@@ -39,7 +40,39 @@ class AdminDailyReportController extends Controller
     }
 
     //Search By Name
-    
+    public function allSearch($year, $month, $name){
+
+        $year = ($year === 'all') ? null : $year;
+        $month = ($month === 'all') ? null : $month;
+        $name = ($name === 'all') ? null : $name;
+
+        $query = DailyReport::query();
+
+            if (!is_null($year)) {
+                $query->whereYear('submit_date', $year);
+            }
+            if (!is_null($month)) {
+                $query->whereMonth('submit_date', $month);
+            }
+            if (!is_null($name)) {
+                $query->where('submit_by',$name);
+            }
+
+            $alldata = $query->orderBy('submit_date', 'DESC')->get();
+
+            $html = '';
+            foreach ($alldata as $data) {
+                $html .= '<tr>
+                            <td>' . $data->employe->emp_name . '</td>
+                            <td>' . $data->submit_date->format('d-M-Y') . '</td>
+                            <td>' . formatDate($data->created_at) . '</td>
+                        </tr>';
+            }
+ 
+     // Return JSON response with generated HTML
+     return response()->json($html);
+       
+    }
     public function searchName($name){
         $alldata = DailyReport::where('submit_by',$name)->orderBy('submit_date','DESC')->get();
             $html = '';

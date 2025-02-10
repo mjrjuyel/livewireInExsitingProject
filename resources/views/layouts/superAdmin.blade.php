@@ -25,7 +25,7 @@
                 <span class="logo-light">
                     <span class="logo-lg">
                         <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
-                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto" alt="logo"></span>
+                        <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">

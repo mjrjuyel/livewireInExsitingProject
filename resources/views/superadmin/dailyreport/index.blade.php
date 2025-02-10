@@ -58,7 +58,7 @@
                     <div class="row">
                         <div class="col-2">
                             <label class="form-label">Search by Name: </label>
-                            <select class="form-control" data-toggle="select2" id="nameSearch" name="id" data-placeholder="Choose ...">
+                            <select class="form-control allSearch" id="nameSearch" data-toggle="select2" name="id" data-placeholder="Choose ...">
                                 <option value="">Select Employee Name</option>
                                 @foreach($name as $name)
                                 <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
@@ -68,7 +68,7 @@
 
                         <div class="col-2">
                             <label class="form-label">Search by Year: </label>
-                            <select class="form-control" data-toggle="select2" id="yearSearch" data-placeholder="Choose ...">
+                            <select class="form-control allSearch" id="yearSearch" data-toggle="select2" data-placeholder="Choose ...">
                                 <option value="">Select Year</option>
                                 @foreach($dates as $date)
                                 <option value="{{$date}}">{{$date}}</option>
@@ -78,7 +78,7 @@
 
                         <div class="col-2">
                             <label class="form-label">Search by Month: </label>
-                            <select class="form-control" data-toggle="select2" id="monthSearch" data-placeholder="Choose ...">
+                            <select class="form-control allSearch" id="monthSearch" data-toggle="select2" data-placeholder="Choose ...">
                                 <option value="">Select Month</option>
                                 <option value="1">January</option>
                                 <option value="2">February</option>
@@ -95,8 +95,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="">
-                        <table class="table table-centered text-center" id="datatable">
+                    <div class="mt-5">
+                        <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
                                     <th class="text-center">Submit By</th>
@@ -157,6 +157,7 @@
                             <tfoot>
                             </tfoot>
                         </table>
+                        {{$alldata->links()}}
                     </div>
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
@@ -197,38 +198,42 @@
             ordering: false // Disables ordering for all columns
         });
 
-        $('#yearSearch').on('change', function() {
-            let year = $(this).val();
+         $('.allSearch').on('change', function() {
+            let year = $('#yearSearch').val() || 'all';
+            let month = $('#monthSearch').val() || 'all';
+            let name = $('#nameSearch').val() || 'all';
+            
             $.ajax({
-                url: "{{url('/superadmin/dailyreport/searchYear/')}}/" + year
-                , type: "get"
-                , success: function(response) {
-                    $('#dailyReport').html(response); // Update only table body
+                url: "{{url('/superadmin/dailyreport/search/')}}/" + year + "/" + month + "/"+ name, 
+                type: "get",
+                success: function(response) {
+                $('#dailyReport').html(response); // Update only table body
                 }
-            , });
+            });
+            
         });
 
-        $('#nameSearch').on('change', function() {
-            let name = $(this).val();
-            $.ajax({
-                url: "{{url('/superadmin/dailyreport/searchName/')}}/" + name
-                , type: "get"
-                , success: function(response) {
-                    $('#dailyReport').html(response); // Update only table body
-                }
-            , });
-        });
+    //    $('#nameSearch').on('change', function() {
+    //        let name = $(this).val();
+   //         $.ajax({
+   ////             url: "{{url('/superadmin/dailyreport/searchName/')}}/" + name
+   //             , type: "get"
+   //             , success: function(response) {
+    //                $('#dailyReport').html(response); // Update only table body
+    //            }
+    //        , });
+    //    });
 
-        $('#monthSearch').on('change', function() {
-            let month = $(this).val();
-            $.ajax({
-                url: "{{url('/superadmin/dailyreport/searchMonth/')}}/" + month
-                , type: "get"
-                , success: function(response) {
-                    $('#dailyReport').html(response); // Update only table body
-                }
-            , });
-        });
+   //     $('#monthSearch').on('change', function() {
+   //         let month = $(this).val();
+   //         $.ajax({
+   //             url: "{{url('/superadmin/dailyreport/searchMonth/')}}/" + month
+   //             , type: "get"
+   //             , success: function(response) {
+    //                $('#dailyReport').html(response); // Update only table body
+     //           }
+       //     , });
+       // });
     });
 
 </script>
