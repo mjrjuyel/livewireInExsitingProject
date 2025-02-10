@@ -64,6 +64,7 @@ class AdminDailyReportController extends Controller
             $html = '';
             foreach ($alldata as $data) {
                 $html .= '<tr>
+                                <td><input type="checkbox" class="markItem" data-id="'. $data->id .'"></td>
                                 <td>' . htmlspecialchars($data->employe->emp_name) . '</td>
                                 <td>' . $data->submit_date->format('d-M-Y') . '</td>
                                 <td>' . formatDate($data->created_at) . '</td>
