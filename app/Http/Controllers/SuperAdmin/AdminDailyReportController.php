@@ -26,7 +26,7 @@ class AdminDailyReportController extends Controller
     }
 
     public function index(){
-        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->simplePaginate(10);
+        $alldata = DailyReport::with('employe')->where('status',1)->orderBy('created_at','DESC')->get();
         $name = DailyReport::with('employe')->distinct()->get('submit_by');
         $dates = DailyReport::selectRaw('YEAR(submit_date) as year')->distinct()->orderBy('year', 'ASC')->pluck('year');
         // return $dates;

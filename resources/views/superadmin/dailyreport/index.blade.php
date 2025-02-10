@@ -100,6 +100,8 @@
                             <table class="table table-centered text-center" id="datatable">
                                 <thead class="table-light">
                                     <tr>
+                                       
+                                        <th class="text-left"><input type="checkbox" id="markAll"> Mark All</th>
                                         <th class="text-center">Submit By</th>
                                         <th class="text-center">Report Date</th>
                                         <th class="text-center">Submited Date</th>
@@ -111,6 +113,9 @@
                                 <tbody id="dailyReport">
                                     @foreach($alldata as $data)
                                     <tr>
+                                        <td>
+                                           <input type="checkbox" class="markItem" data-id="{{ $data->id }}">
+                                        </td>
                                         <td>
                                             {{ $data->employe->emp_name }}
                                         </td>
@@ -157,7 +162,6 @@
                                 <tfoot>
                                 </tfoot>
                             </table>
-                            {{$alldata->links()}}
                         </div>
                     </form>
                 </div> <!-- end card-body-->
@@ -211,7 +215,15 @@
                     $('#dailyReport').html(response); // Update only table body
                 }
             });
+        });
+    });
 
+     document.getElementById('markAll').addEventListener('change', function() {
+        const isChecked = this.checked;
+        const markItems = document.querySelectorAll('.markItem');
+        
+        markItems.forEach(item => {
+            item.checked = isChecked;
         });
     });
 
