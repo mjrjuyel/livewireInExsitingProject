@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Employee;
@@ -95,7 +96,7 @@ class AdminDailyReportController extends Controller
      return response()->json($html);
        
     }
-    
+
     // soft Delete
     public function softDelete(Request $request){
         $slug = $request['id'];

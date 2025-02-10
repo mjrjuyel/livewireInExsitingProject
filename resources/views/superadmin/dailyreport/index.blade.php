@@ -100,7 +100,6 @@
                             <table class="table table-centered text-center" id="datatable">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="text-center">mark</th>
                                         <th class="text-center">Submit By</th>
                                         <th class="text-center">Report Date</th>
                                         <th class="text-center">Submited Date</th>
@@ -112,9 +111,6 @@
                                 <tbody id="dailyReport">
                                     @foreach($alldata as $data)
                                     <tr>
-                                        <td>
-                                          <input type="checkbox" value="1">
-                                        </td>
                                         <td>
                                             {{ $data->employe->emp_name }}
                                         </td>
