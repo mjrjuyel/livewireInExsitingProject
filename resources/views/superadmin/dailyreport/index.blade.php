@@ -208,7 +208,6 @@
                 url: "{{url('/superadmin/dailyreport/search/')}}/" + year + "/" + month + "/" + name
                 , type: "get"
                 , success: function(response) {
-                    console.log(response);
                     $('#dailyReport').html(response); // Update only table body
                 }
             });
