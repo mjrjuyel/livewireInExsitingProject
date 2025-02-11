@@ -100,6 +100,22 @@
                                     </td>
                                 </tr>
 
+                                <tr>
+                                    <td>Check In</td>
+                                    <td>:</td>
+                                    <td class="text-danger">
+                                        {{$view->check_in}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Check out</td>
+                                    <td>:</td>
+                                    <td class="text-danger">
+                                        {{$view->check_out}}
+                                    </td>
+                                </tr>
+
                                 
                                 <tr>
                                     <td>Submited Date</td>

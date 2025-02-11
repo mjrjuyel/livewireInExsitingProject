@@ -95,6 +95,8 @@
             <p><strong>Employee: {{$insert['employe']->emp_name}}</strong></p>
 
             <p><strong>Submit Date: {{$insert['submit_date']->format('d-M-Y ')}}</strong></p>
+            <p><strong>Check In: {{$insert['check_in']}}</strong></p>
+            <p><strong>Check Out: {{$insert['check_out']}}</strong></p>
             <p><strong>Created At: {{formatDate($insert['created_at'])}}</strong></p>
 
             <p><strong>Report Detail: {!! $insert['detail'] !!}</strong></p>

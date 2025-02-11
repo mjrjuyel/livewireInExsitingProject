@@ -68,7 +68,9 @@ class AdminDailyReportController extends Controller
                                 <td>' . htmlspecialchars($data->employe->emp_name) . '</td>
                                 <td>' . $data->submit_date->format('d-M-Y') . '</td>
                                 <td>' . formatDate($data->created_at) . '</td>
+                                 <td>' . $data->check_in . "-" .$data->check_out . '</td>
                                 <td>' . Str::words($data->detail,15) . '</td>
+                               
                                 <td>
                                     <div class="btn-group" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

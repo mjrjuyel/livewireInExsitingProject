@@ -70,6 +70,31 @@
                         <div class="row mt-3">
                             <div class="col-5 offset-2">
                             <input type="hidden" name="id" value="{{$edit->id}}">
+                             <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Office Check in Time<span class="text-danger">* </span>:
+                                            </label>
+                                            <input type="time" name="checkin" class="form-control"  value="{{\Carbon\Carbon::parse($edit->check_in)->format('H:i')}}" placeholder="">
+
+                                            @error('checkin')
+                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Office Check in Time<span class="text-danger">* </span>:
+                                            </label>
+                                            <input type="time" name="checkout" class="form-control" value="{{ \Carbon\Carbon::parse($edit->check_out)->format('H:i') }}" placeholder="">
+
+                                            @error('checkout')
+                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>

@@ -104,7 +104,8 @@
                                         <th class="text-left"><input type="checkbox" id="markAll"> Mark All</th>
                                         <th class="text-center">Submit By</th>
                                         <th class="text-center">Report Date</th>
-                                        <th class="text-center">Submited Date</th>
+                                        <th class="text-center">Submited Date</th> 
+                                        <th class="text-center">check In/Out</th> 
                                         <th class="text-center">Text</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -123,12 +124,12 @@
                                         <td>
                                             {{ $data->submit_date->format('d-M-Y') }}
                                         </td>
-
                                         <td>
                                             {{ formatDate($data->created_at) }}
                                         </td>
-
-
+                                         <td>
+                                        {{ $data->check_in }} - {{ $data->check_out }}
+                                        </td>
                                         <td>
                                             {!! Str::words($data->detail,15) !!}
                                         </td>

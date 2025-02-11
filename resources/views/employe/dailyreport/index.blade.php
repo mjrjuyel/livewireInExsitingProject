@@ -56,6 +56,7 @@
                                 <tr>
                                     <th class="text-center">Submit By</th>
                                     <th class="text-center">Submit Date</th>
+                                    <th class="text-center">Office Check In/Out</th>
                                     <th class="text-center">Text</th>
                                     <th class="text-center">Action</th>
                                 </tr>
@@ -71,6 +72,10 @@
 
                                     <td>
                                         {{ $data->submit_date->format('d-M-Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ $data->check_in }} - {{ $data->check_out }}
                                     </td>
 
 
