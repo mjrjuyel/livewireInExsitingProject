@@ -136,13 +136,19 @@
 
                                 <li class="side-nav-item">
                                     <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
-                                        <span class="menu-text">Request Form</span>
+                                        <span class="menu-text">Application Form</span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard.earlyleave.add') }}" class="side-nav-link">
+                                        <span class="menu-text">Early Leave</span>
                                     </a>
                                 </li>
 
                                 <li class="side-nav-item">
                                     <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="side-nav-link">
-                                        <span class="menu-text">My History</span>
+                                        <span class="menu-text">History</span>
                                     </a>
                                 </li>
                             </ul>

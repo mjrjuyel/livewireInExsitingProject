@@ -127,8 +127,8 @@
                                         <td>
                                             {{ formatDate($data->created_at) }}
                                         </td>
-                                         <td>
-                                        {{ $data->check_in }} - {{ $data->check_out }}
+                                        <td>
+                                        {{ displayTime($data->check_in) }}-{{ displayTime($data->check_out)}}
                                         </td>
                                         <td>
                                             {!! Str::words($data->detail,15) !!}

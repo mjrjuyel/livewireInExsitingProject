@@ -73,9 +73,12 @@
                                     <td>
                                         {{ $data->submit_date->format('d-M-Y') }}
                                     </td>
-
+                                  
                                     <td>
-                                        {{ $data->check_in }} - {{ $data->check_out }}
+                                        {{ displayTime($data->check_in) }}
+                                        -
+                                        {{ displayTime($data->check_out)}}
+
                                     </td>
 
 
@@ -94,7 +97,7 @@
                                                 </li>
                                                 @if(now()->format('Y-m-d') == $data->submit_date->format('Y-m-d'))
                                                 <li>
-                                                   <a class="dropdown-item" href="{{ url('dashboard/dailyreport/edit/'.$data->slug) }}"><i class="mdi mdi-octagram-edit-outline">
+                                                    <a class="dropdown-item" href="{{ url('dashboard/dailyreport/edit/'.$data->slug) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
                                                 </li>
                                                 @endif

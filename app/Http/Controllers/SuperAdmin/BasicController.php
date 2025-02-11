@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\Basic;
 use App\Models\TimeZone;
 use App\Models\Currency;
+use App\Models\OfficeTime;
 use Auth;
 use Carbon\Carbon;
 use Session;
@@ -20,8 +21,9 @@ class BasicController extends Controller
         $time = TimeZone::where('id',1)->first();
         $currency = Currency::first();
         $basic = Basic::where('id',1)->first();
-        // return $currency;
-        return view('superadmin.basic.index',compact(['basic','currency','time']));
+        $officeTime = OfficeTime::first();
+        // return $officeTime;
+        return view('superadmin.basic.index',compact(['basic','currency','time','officeTime']));
     }
 
     public function updateBasic(Request $request){
@@ -128,11 +130,33 @@ class BasicController extends Controller
 
         $update = TimeZone::where('id',1)->update([
             'name'=>$request['name'],
-            'updated_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($update){
             Session::flash('success','Time Zone Change For this Appliaction');
+            return redirect()->back();
+        }
+    }
+
+    public function updateOfficeTime(Request $request){
+
+        // return $request->all();
+        $request->validate([
+            'start'=>'required',
+            'end'=>'required',
+        ]);
+        $time = OfficeTime::first();
+
+        $update = OfficeTime::where('id',1)->update([
+            'office_start'=>Carbon::parse($request->input('start'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+            'office_end'=>Carbon::parse($request->input('end'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+            'editor'=>Auth::user()->id,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+
+        if($update){
+            Session::flash('success','New Time Has Set For Office');
             return redirect()->back();
         }
     }

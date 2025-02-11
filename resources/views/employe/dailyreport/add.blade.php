@@ -75,7 +75,9 @@
                                         <div class="mb-3">
                                             <label class="form-label">Office Check in Time<span class="text-danger">* </span>:
                                             </label>
-                                            <input type="time" name="checkin" class="form-control"  value="11:00" placeholder="">
+                                   
+
+                                            <input type="time" name="checkin" class="form-control" value="" placeholder="">
 
                                             @error('checkin')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -84,7 +86,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="mb-3">
-                                            <label class="form-label">Office Check in Time<span class="text-danger">* </span>:
+                                            <label class="form-label">Office Check Out<span class="text-danger">* </span>:
                                             </label>
                                             <input type="time" name="checkout" class="form-control" value="{{ \Carbon\Carbon::now()->format('H:i') }}" placeholder="">
 

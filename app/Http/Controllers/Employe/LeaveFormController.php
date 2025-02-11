@@ -39,7 +39,7 @@ class LeaveFormController extends Controller
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
-                        'others'=>'max:30',
+                        'others'=>'max:50',
                         'reason'=>'required',
                         'end'=>'required',
                     ]);
@@ -47,7 +47,7 @@ class LeaveFormController extends Controller
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
                     $lastLeave = Leave::latest('id')->where('emp_id',Auth::guard('employee')->user()->id)->first();
 
-             if($lastLeave == Null || $lastLeave->status == 2 || $lastLeave->status == 3){
+                    if($lastLeave == Null || $lastLeave->status == 2 || $lastLeave->status == 3){
 
                           // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);

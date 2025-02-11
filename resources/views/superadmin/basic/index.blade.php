@@ -234,6 +234,58 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-12 bg-dark">
+                                        <h3 class="card_header"><i class="mdi mdi-currency-usd header_icon"></i>Office Time Schedule
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-2">
+                                <h6 class="">Select Start And End Time</h6>
+                                <form action="{{route('superadmin.basic.officetime')}}" method="post">
+                                    @method('post')
+                                    @csrf
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Starting Time<span class="text-danger">* </span>:
+                                            @if($officeTime != '' && $officeTime->office_start != '')
+                                            <input type="time" name="start" class="form-control" value="{{ \Carbon\Carbon::parse(displayTime($officeTime->office_start))->format('H:i') }}" placeholder="">
+                                            @else
+                                            <input type="time" name="start" class="form-control" value="{{ \Carbon\Carbon::parse('11:00 AM')->format('H:i') }}" placeholder="">
+                                            @endif
+                                            @error('start')
+                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Ending Time<span class="text-danger">* </span>:
+                                            </label>
+                                            @if($officeTime != '' && $officeTime->office_end != '')
+                                            <input type="time" name="end" class="form-control" value="{{ \Carbon\Carbon::parse(displayTime($officeTime->office_end))->format('H:i') }}" placeholder="">
+                                            @else
+                                            <input type="time" name="end" class="form-control" value="{{ \Carbon\Carbon::parse('11:00 AM')->format('H:i') }}" placeholder="">
+                                            @endif
+                                            @error('end')
+                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                    <button type="submit" class="btn btn-primary mt-3 text-right">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div> <!-- end card-->
         </div> <!-- end col -->

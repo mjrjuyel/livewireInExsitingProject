@@ -17,6 +17,22 @@ if (! function_exists('formatDate')) {
                      ->format('d-M-Y | h:i:s A');
     }
 }
+if (! function_exists('displayTime')) {
+
+    function displayTime(?string $time): ?string
+    {
+        if (!$time) return null;
+        $format = strpos($time, ':') !== false && strpos($time, ':', strpos($time, ':') + 1) !== false
+              ? 'H:i:s'
+              : 'H:i';
+        
+        return Carbon::createFromFormat($format, $time, 'UTC')
+        ->setTimezone(config('app.timezone'))
+        ->format('h:i A');
+
+    }
+}
+
 
 if ( ! function_exists('currencyCahnge')) {
     /**

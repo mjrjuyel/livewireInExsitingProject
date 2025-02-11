@@ -56,8 +56,8 @@ class DailyReportController extends Controller
                         'submit_by'=>$request['name'],
                         'submit_date'=>$request['submit_date'],
                         'detail'=>$request['detail'],
-                        'check_in'=>Carbon::parse($request->input('checkin'))->format('h:i A'),
-                        'check_out'=>Carbon::parse($request->input('checkout'))->format('h:i A'),
+                        'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                        'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
@@ -112,8 +112,8 @@ class DailyReportController extends Controller
         
         // return $request->all();
         $insert= DailyReport::where('id',$id)->update([
-            'check_in'=>Carbon::parse($request->input('checkin'))->format('h:i A'),
-            'check_out'=>Carbon::parse($request->input('checkout'))->format('h:i A'),
+            'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+            'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
             'detail'=>$request['detail'],
             'updated_at'=>Carbon::now('UTC'),
         ]);

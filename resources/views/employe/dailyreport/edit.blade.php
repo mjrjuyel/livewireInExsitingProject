@@ -75,7 +75,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Office Check in Time<span class="text-danger">* </span>:
                                             </label>
-                                            <input type="time" name="checkin" class="form-control"  value="{{\Carbon\Carbon::parse($edit->check_in)->format('H:i')}}" placeholder="">
+                                            <input type="time" name="checkin" class="form-control" value="{{ \Carbon\Carbon::parse(displayTime($edit->check_in))->format('H:i') }}" placeholder="">
 
                                             @error('checkin')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -86,7 +86,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Office Check in Time<span class="text-danger">* </span>:
                                             </label>
-                                            <input type="time" name="checkout" class="form-control" value="{{ \Carbon\Carbon::parse($edit->check_out)->format('H:i') }}" placeholder="">
+                                            <input type="time" name="checkout" class="form-control" value="{{ \Carbon\Carbon::parse(displayTime($edit->check_out))->format('H:i') }}" placeholder="">
 
                                             @error('checkout')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

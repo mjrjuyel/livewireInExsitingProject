@@ -104,7 +104,7 @@
                                     <td>Check In</td>
                                     <td>:</td>
                                     <td class="text-danger">
-                                        {{$view->check_in}}
+                                        {{displayTime($view->check_in)}}
                                     </td>
                                 </tr>
 
@@ -112,7 +112,7 @@
                                     <td>Check out</td>
                                     <td>:</td>
                                     <td class="text-danger">
-                                        {{$view->check_out}}
+                                        {{displayTime($view->check_out)}}
                                     </td>
                                 </tr>
 

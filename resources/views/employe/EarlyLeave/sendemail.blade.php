@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Daily Report of {{$insert['employe']->emp_name}}</title>
+    <title>Leave Request</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,17 +89,38 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Daily Report From <strong style="color:#4CAF50;">{{$insert['employe']->emp_name}}</strong>
+            New Leave Request From <strong style="color:#4CAF50;">{{$leave['employe']->emp_name}}</strong>
         </div>
         <div class="email-body">
-            <p><strong>Employee: {{$insert['employe']->emp_name}}</strong></p>
+            <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
+            <p><strong>Leave Type: @if($leave['leave_type_id'] != 0) {{$leave['leavetype']->type_title}}@else Other Reason @endif</strong></p>
+            <p><strong>Reason: {!! $leave['reason'] !!}</strong> </p>
+            <p><strong>Start Date: {{$leave['start_date']->format('d-M-Y')}}</strong></p>
+            <p><strong>End Date:</strong> {{ $leave['end_date']->format('d-M-Y') }}</p>
+            @if($leave['total_paid'] != 0)
+                @if($leave['total_paid'] <= 1) 
+                    @if($leave['total_paid'] !== null)
+                    <p><strong>Total Paid leave : </strong> {{ $leave['total_paid']}} Day</p>
+                    @endif
+                    @else
+                    <p><strong>Total Paid Leave : </strong>{{ $leave['total_paid'] }} Days</p> 
+                @endif
+            @endif
 
-            <p><strong>Submit Date: {{$insert['submit_date']->format('d-M-Y ')}}</strong></p>
-            <p><strong>Check In: {{displayTime($insert['check_in'])}}</strong></p>
-            <p><strong>Check Out: {{displayTime($insert['check_out'])}}</strong></p>
-            <p><strong>Created At: {{formatDate($insert['created_at'])}}</strong></p>
-
-            <p><strong>Report Detail: {!! $insert['detail'] !!}</strong></p>
+            @if($leave['total_unpaid'] != 0)
+                @if($leave['total_unpaid'] <= 1) 
+                    @if($leave['total_unpaid'] !== null)
+                    <p><strong>Total Un-Paid Leave : </strong>{{ $leave['total_unpaid']}} Day</p> 
+                    @endif
+                    @else
+                    <p><strong>Total Un-Paid Leave: </strong>{{ $leave['total_unpaid']}} Days</p>
+                @endif
+            @endif
+            @if($leave['status']==1)
+                <strong style="color:red;">Pending</strong>
+            @endif
+                   
+            <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} All rights reserved.

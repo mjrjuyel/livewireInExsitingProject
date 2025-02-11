@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Employe\DashboardController;
 use App\Http\Controllers\Employe\RoleController;
 use App\Http\Controllers\Employe\LeaveFormController;
+use App\Http\Controllers\Employe\EarlyLeaveController;
 use App\Http\Controllers\Employe\DailyReportController;
 use App\Http\Controllers\Employe\EmployeController; 
 
@@ -76,6 +77,18 @@ Route::middleware('isEmploye')->group(function(){
          Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
          Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
          Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
+
+            // Leave Application status by General User
+            Route::get('/dashboard/earlyleave/add',[EarlyLeaveController::class,'add'])->name('dashboard.earlyleave.add');
+            Route::post('/dashboard/earlyleave/insert',[EarlyLeaveController::class,'insert'])->name('dashboard.earlyleave.insert');
+            Route::get('/dashboard/earlyleave/view/{slug}',[EarlyLeaveController::class,'view'])->name('dashboard.earlyleave.view'); 
+            Route::get('/dashboard/earlyleave/edit/{slug}',[EarlyLeaveController::class,'edit'])->name('dashboard.earlyleave.edit'); 
+            Route::post('/dashboard/earlyleave/update',[EarlyLeaveController::class,'update'])->name('dashboard.earlyleave.update');
+            Route::get('/dashboard/earlyleave/history/{slug}',[EarlyLeaveController::class,'history'])->name('dashboard.earlyleave.history'); 
+            Route::get('/dashboard/earlyleave/historyMonth/{slug}',[EarlyLeaveController::class,'historyMonth'])->name('dashboard.earlyleave.historyMonth'); 
+            Route::get('/dashboard/earlyleave/historyYear/{slug}',[EarlyLeaveController::class,'historyYear'])->name('dashboard.earlyleave.historyYear'); 
+       
+       
          //  Switch Into User
          Route::post('/dashboard/asAdmin/{id}',[EmployeController::class,'loginAdmin'])->name('dashboard.asAdmin');
 
@@ -253,6 +266,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/basic/update',[BasicController::class,'updateBasic'])->name('superadmin.basic.update');
                 Route::post('/superadmin/basic/currency',[BasicController::class,'updateCurrency'])->name('superadmin.basic.currency');
                 Route::post('/superadmin/basic/time',[BasicController::class,'updateTimeZone'])->name('superadmin.basic.time');
+                Route::post('/superadmin/basic/officetime',[BasicController::class,'updateOfficeTime'])->name('superadmin.basic.officetime');
 
                 //Email  Controller
                 Route::get('/superadmin/email',[AdminEmailController::class,'index'])->name('superadmin.email');
