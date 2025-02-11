@@ -20,14 +20,15 @@ return new class extends Migration
             $table->string('other_type',50)->nullable;
             $table->text('detail')->nullable();
             $table->integer('status')->default('1');
-            $table->integer('total_hour')->nullable();
+            $table->string('total_hour')->nullable();
+            $table->string('leave_summary')->nullable();
             // unpaid
             $table->integer('unpaid_request')->nullable();
             $table->string('submit_by',50)->nullable();
             // Foreign key constraint
             $table->foreignId('emp_id')->constrained('employees')->onDelete('cascade');
             $table->string('comments')->nullable();
-            $table->$table->foreignId('editor')->constrained('employees')->onDelete('cascade');
+            $table->foreignId('editor')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

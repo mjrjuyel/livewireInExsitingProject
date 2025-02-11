@@ -62,7 +62,7 @@ class DailyReportController extends Controller
                         'created_at'=>Carbon::now('UTC'),
                     ]);
 
-                    return $insert;
+                    // return $insert;
                     $email = AdminEmail::where('id',1)->first();
                      
                     // return $email;

@@ -90,8 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('dashboard.leave.insert')}}" method="post">
-
+                    <form action="{{route('dashboard.earlyleave.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">

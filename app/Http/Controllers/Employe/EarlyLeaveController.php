@@ -40,5 +40,12 @@ class EarlyLeaveController extends Controller
             'others'=>'max:50',
             'reason'=>'required',
         ]);
+
+        if($rerquest->start < $request->end){
+            return 'yes';
+        }
+        else{
+            return "plz go back";
+        }
     } 
 }

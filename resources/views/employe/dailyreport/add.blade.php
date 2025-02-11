@@ -77,7 +77,7 @@
                                             </label>
                                    
 
-                                            <input type="time" name="checkin" class="form-control" value="" placeholder="">
+                                            <input type="time" name="checkin" class="form-control" value="{{ \Carbon\Carbon::parse('11:00 AM')->format('H:i') }}" placeholder="">
 
                                             @error('checkin')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

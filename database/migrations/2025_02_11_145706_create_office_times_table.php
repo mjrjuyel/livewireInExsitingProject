@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('office_times', function (Blueprint $table) {
             $table->id();
-            $table->time('office_start')->nullable();
-            $table->time('office_end')->nullable();
+            $table->string('office_start')->nullable();
+            $table->string('office_end')->nullable();
             $table->integer('editor')->nullable();
             $table->timestamps();
         });
