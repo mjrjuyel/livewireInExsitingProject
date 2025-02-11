@@ -125,7 +125,7 @@
                                                 Approve
                                             </button>
                                             @elseif($leavehistory->status == 3)
-                                            <button type="button" class="btn btn-primary " >
+                                            <button type="button" class="btn btn-danger " >
                                                 Reject
                                             </button>
                                             @elseif($leavehistory->status == 4)

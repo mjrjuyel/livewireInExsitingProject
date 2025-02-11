@@ -67,7 +67,7 @@ class SuperAdminLeaveController extends Controller
                 if($start_time <= $end_time ){
 
                     // **NEW CONDITION: Check for overlapping leaves**
-                        $overlappingLeaves = Leave::where('emp_id', $request->employe)
+                        $overlappingLeaves = Leave::where('emp_id', $request->employe)->where('status',2)
                             ->where(function ($query) use ($request) {
                                 $query->whereBetween('start_date', [$request['start'], $request['end']])
                                     ->orWhereBetween('end_date', [$request['start'], $request['end']])
@@ -288,7 +288,7 @@ class SuperAdminLeaveController extends Controller
                 if($start_time <= $end_time ){
 
                     // **NEW CONDITION: Check for overlapping leaves**
-                            $overlappingLeaves = Leave::where('id', '!=', $id)
+                            $overlappingLeaves = Leave::where('id', '!=', $id)->where('status',2)
                             ->where('emp_id', $request->employe)
                             ->where(function ($query) use ($request) {
                                 $query->where(function ($q) use ($request) {

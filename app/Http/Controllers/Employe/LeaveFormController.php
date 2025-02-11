@@ -47,7 +47,7 @@ class LeaveFormController extends Controller
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
                     $lastLeave = Leave::latest('id')->where('emp_id',Auth::guard('employee')->user()->id)->first();
 
-             if($lastLeave == Null || $lastLeave->status == 2){
+             if($lastLeave == Null || $lastLeave->status == 2 || $lastLeave->status == 3){
 
                           // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
@@ -61,7 +61,7 @@ class LeaveFormController extends Controller
                 if($start_time <= $end_time && $start_time >= $before5Days){
 
                     // **NEW CONDITION: Check for overlapping leaves**
-                        $overlappingLeaves = Leave::where('emp_id', Auth::guard('employee')->user()->id)
+                        $overlappingLeaves = Leave::where('emp_id', Auth::guard('employee')->user()->id)->where('status',2)
                             ->where(function ($query) use ($request) {
                                 $query->whereBetween('start_date', [$request['start'], $request['end']])
                                     ->orWhereBetween('end_date', [$request['start'], $request['end']])
@@ -300,7 +300,7 @@ class LeaveFormController extends Controller
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
                     $lastLeave = Leave::latest('id')->where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->first();
 
-            if($lastLeave == Null || $lastLeave->status == 2){
+            if($lastLeave == Null || $lastLeave->status == 1 || $lastLeave->status == 4){
 
                         // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
@@ -314,7 +314,7 @@ class LeaveFormController extends Controller
                 if($start_time <= $end_time && $start_time >= $before5Days){
 
                     // **NEW CONDITION: Check for overlapping leaves**
-                        $overlappingLeaves = Leave::where('emp_id', '!=', Auth::guard('employee')->user()->id)
+                        $overlappingLeaves = Leave::where('id','!=',$id)->where('emp_id', Auth::guard('employee')->user()->id)->where('status',2)
                             ->where(function ($query) use ($request) {
                                 $query->whereBetween('start_date', [$request['start'], $request['end']])
                                     ->orWhereBetween('end_date', [$request['start'], $request['end']])
@@ -327,7 +327,7 @@ class LeaveFormController extends Controller
 
                         if ($overlappingLeaves) {
                             Session::flash('error', 'Your leave request overlaps with a previously submitted leave.');
-                            return redirect()->route('dashboard.leave.add');
+                            return redirect()->route('dashboard.leave.edit',Crypt::encrypt($id));
                         }
                     
                     // Check Date And Count Total Day between 2 dates
@@ -522,10 +522,10 @@ class LeaveFormController extends Controller
                     return redirect()->route('dashboard.leave.history',Crypt::encrypt(Auth::guard('employee')->user()->id));
                 }
             Session::flash('error','Date Is not Correct!');
-            return redirect()->route('dashboard.leave.add');
+            return redirect()->route('dashboard.leave.edit',Crypt::encrypt($id));
         }
-        Session::flash('error','Already Your last Leave Request Is Pending');
-        return redirect()->route('dashboard.leave.add');
+        Session::flash('error','You Can Not Edit This Leave Data');
+        return redirect()->route('dashboard.leave.edit',Crypt::encrypt($id));
                 
         }
 
