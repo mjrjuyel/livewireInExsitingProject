@@ -303,9 +303,7 @@ class AdminEmployeController extends Controller
 
         if($request->pass != ''){
             $request->validate([
-                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
-                ->numbers()
-                ->symbols()],
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)],
                 'repass' => 'required | same:pass',
             ]);
             Employee::where('id',$id)->update([
