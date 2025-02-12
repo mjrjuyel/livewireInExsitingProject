@@ -221,12 +221,14 @@ class AdminProfileController extends Controller
             if (!Hash::check($request->oldpass,auth()->user()->password)) {
                 return back()->withErrors(['oldpass' => 'Incorrect current password.']);
             }
+            
             auth()->user()->update([
                 'password' => Hash::make($request->newpass),
             ]);
-
+            
             if($employe){
-                Employee::where('id',$employe->$id)->update([
+                // return "yes";
+                Employee::where('id',$employe->id)->update([
                     'password'=> Hash::make($request->newpass),
                 ]);
             }

@@ -313,7 +313,7 @@ class AdminEmployeController extends Controller
             ]);
 
             if($admin){
-                User::where('id',$admin->$id)->update([
+                User::where('id',$admin->id)->update([
                     'password'=> Hash::make($request->newpass),
                 ]);
                }
