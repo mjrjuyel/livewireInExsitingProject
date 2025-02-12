@@ -266,6 +266,27 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('M')}}</span></h6>
+                    <h3 class="my-3">{{convertTime($earlyleave)}}</h3>
+                
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    <h3 class="my-3">{{convertTime($earlyleaveYear)}}</h3>
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
                     @if($totalReportSubmit < 0 )
                     <a href="{{ route('dashboard.dailyreport') }}">
                         <i class="icon-rocket float-end m-0 h2 text-muted"></i>

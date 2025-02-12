@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -81,7 +81,7 @@
                                             FeedBack
                                         </button>
                                         @if($leave->status == 4 || $leave->status == 1)
-                                        <a class="btn btn-primary" href="{{ url('dashboard/earlyleave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
+                                        <a class="btn btn-primary" href="{{ url('/admin/earlyleave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                         @endif
                                         @endif
                                     </td>

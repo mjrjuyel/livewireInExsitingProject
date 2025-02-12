@@ -13,6 +13,7 @@ use App\Models\Designation;
 use App\Models\DailyReport;
 use App\Models\EmployeePromotion;
 use App\Models\EmployeeEvaluation;
+use App\Models\EarlyLeave;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -22,20 +23,21 @@ class DashboardController extends Controller
 {
     public function index(){
 
+        $userId = Auth::guard('employee')->user()->id;
         $defaultLeave = EmployeLeaveSetting::first();
-        $view = Employee::with(['emp_role','emp_desig','creator'])->where('id',Auth::guard('employee')->user()->id)->first();
+        $view = Employee::with(['emp_role','emp_desig','creator'])->where('id',$userId)->first();
 
-        $whole_approved_leave = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->sum('total_leave_this_month');
-        $leaveRequestInMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
-        $leaveRequestInYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereYear('start_date',date('Y'))->count();
+        $whole_approved_leave = Leave::where('emp_id',$userId)->where('status',2)->sum('total_leave_this_month');
+        $leaveRequestInMonth = Leave::where('emp_id',$userId)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
+        $leaveRequestInYear = Leave::where('emp_id',$userId)->whereYear('start_date',date('Y'))->count();
 
-        $paidRemainingMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
-        $paidRemainingYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
+        $paidRemainingMonth = Leave::where('emp_id',$userId)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
+        $paidRemainingYear = Leave::where('emp_id',$userId)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
 
-        $unpaidRemainingMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
-        $unpaidRemainingYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        $unpaidRemainingMonth = Leave::where('emp_id',$userId)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        $unpaidRemainingYear = Leave::where('emp_id',$userId)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
-        $totalReportSubmit = DailyReport::where('submit_by',Auth::guard('employee')->user()->id)->count('id');
+        $totalReportSubmit = DailyReport::where('submit_by',$userId)->count('id');
 
         $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
 
@@ -70,7 +72,9 @@ class DashboardController extends Controller
             }
         
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
-
-        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves','EmpEva']));
+        $earlyleave = EarlyLeave::where('emp_id',$userId)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
+        $earlyleaveYear = EarlyLeave::where('emp_id',$userId)->whereYear('leave_date',date('Y'))->sum('total_hour');
+        // return $earlyleave;
+        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves','EmpEva','earlyleave','earlyleaveYear']));
     }
 }

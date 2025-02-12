@@ -32,6 +32,30 @@
 </script>
 @endif
 
+@if(Session::has('unpaid'))
+<script type="text/javascript">
+    swal({
+            title: "Are you sure?"
+            , text: "You will not be able to recover this imaginary file!"
+            , type: "warning"
+            , showCancelButton: true
+            , confirmButtonColor: "#DD6B55"
+            , confirmButtonText: "Yes, delete it!"
+            , cancelButtonText: "No, cancel plx!"
+            , closeOnConfirm: false
+            , closeOnCancel: false
+        }
+        , function(isConfirm) {
+            if (isConfirm) {
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+
+</script>
+@endif
+
 <div class="page-container">
     <div class="page-title-box">
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
@@ -44,9 +68,8 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
 
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
 
-                    <li class="breadcrumb-item active">EarlyLeave</li>
+                    <li class="breadcrumb-item active">Early Leave</li>
                 </ol>
             </div>
         </div>
@@ -59,28 +82,26 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Edit EarlyLeave Application Form
+                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Early Leave Application Form
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All EarlyLeave Data</a>
+                                <a href="{{ url('/dashboard/earlyleave/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('dashboard.earlyleave.update')}}" method="post">
+                    <form action="{{route('dashboard.earlyleave.insert')}}" method="post">
                         @csrf
-
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
-                                <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
 
-                                    <label class="form-label">EarlyLeave Type<span class="text-danger">* </span>:
+                                    <label class="form-label">Early Leave Type<span class="text-danger">* </span>:
                                     </label>
-                                    <select type="text" class="form-control" name="leave_type" placeholder="Enter EarlyLeave">
+                                    <select type="text" class="form-control" name="leave_type" placeholder="Enter Early Leave">
                                         <option value="">Select A Type</option>
                                         @foreach($leaveType as $type)
-                                        <option value="{{$type->id}}" {{ $type->id == $edit->leave_type ? 'Selected' : ' '}}>{{$type->type_title}}</option>
+                                        <option value="{{$type->id}}">{{$type->type_title}}</option>
                                         @endforeach
                                         <option value="0" id="other_reason">Other</option>
                                     </select>
@@ -102,7 +123,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Leave Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" value="{{$edit->leave_date->format('Y-m-d')}}" name="date" class="form-control" placeholder="">
+                                    <input type="text" id="humanfd-datepicker" value="{{now()->format('Y-m-d')}}" name="date" class="form-control" placeholder="">
                                     @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -112,7 +133,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Start Time<span class="text-danger">* </span>:
                                             </label>
-                                            <input type="time" name="start" value="{{\Carbon\Carbon::parse(displayTime($edit->start))->format('H:i')}}" class="form-control" placeholder="">
+                                            <input type="time" name="start" value="{{\Carbon\Carbon::now()->format('H:i')}}" class="form-control" placeholder="">
                                             @error('start')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -122,8 +143,9 @@
                                         <div class="mb-3">
                                             <label class="form-label">End Time<span class="text-danger">* </span>:
                                             </label>
-                                            
-                                            <input type="time" name="end" class="form-control" value="{{ \Carbon\Carbon::parse(displayTime($edit->end))->format('H:i') }}" placeholder="">
+                                            @if($officeTime != '' && $officeTime->office_end != '')
+                                            <input type="time" name="end" class="form-control" value="{{ \Carbon\Carbon::parse(displayTime($officeTime->office_end))->format('H:i') }}" placeholder="">
+                                            @endif
                                             @error('end')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -135,9 +157,9 @@
                                     <label class="form-label">Detail<span class="text-danger">* </span>:
                                     </label>
 
-                                    <textarea type="text" style="resize:none;" rows="4" id="editor" name="detail" class="form-control" placeholder="Write Some Reason">{{$edit->detail}}</textarea>
+                                    <textarea type="text" style="resize:none;" rows="4" id="editor" name="detail" class="form-control" placeholder="Write Some Reason">{{old('reason')}}</textarea>
 
-                                    @error('detail')
+                                    @error('reason')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -151,7 +173,6 @@
 
                             </div>
                         </div>
-                        {{-- --}}
                     </form>
                 </div>
                 <!-- end card-body-->
@@ -165,19 +186,6 @@
 
 <!--end Footer -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let dateInput = document.getElementById("humanfd-datepicker");
-        let existingDate = dateInput.value; // Laravel-passed value
-
-        console.log(existingDate);
-        flatpickr("#humanfd-datepicker", {
-            altInput: true
-            , altFormat: "F j, Y"
-            , dateFormat: "Y-m-d"
-            , defaultDate: existingDate ? existingDate : null
-        });
-    });
-
     $(document).ready(function() {
 
         $('.leave_type').hide();
@@ -197,7 +205,8 @@
 <script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <!-- Init js-->
 <script src="{{ asset('contents/admin') }}/assets/js/pages/form-pickers.js"></script>
-
+<script src="{{ asset('contents/admin') }}/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+<script src="{{ asset('contents/admin') }}/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 <!-- CKEditor CDN -->
 <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 <script>

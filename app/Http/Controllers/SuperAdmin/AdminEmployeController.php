@@ -21,6 +21,7 @@ use App\Models\BankBranch;
 use App\Models\Department;
 use App\Models\EmployeePromotion;
 use App\Models\EmployeeEvaluation;
+use App\Models\EarlyLeave;
 use Carbon\Carbon;
 use DateTime;
 use Session;
@@ -241,9 +242,11 @@ class AdminEmployeController extends Controller
             $departs = Department::all();
             $designs = Designation::all();
             $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
+            $earlyleave = EarlyLeave::where('emp_id',$view->id)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
+            $earlyleaveYear = EarlyLeave::where('emp_id',$view->id)->whereYear('leave_date',date('Y'))->sum('total_hour');
             // Employee Evalaution Data 
             // return $activeDesig;
-         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva']));
+         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva','earlyleave','earlyleaveYear']));
     }
 
     // Edit Admin

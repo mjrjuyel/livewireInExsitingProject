@@ -58,7 +58,7 @@ class EmployeController extends Controller
         // get associated Admin Info.
         $admin = User::where('email',$employe->email)->first();
 
-        // return $admin;
+       
         $request->validate([
             'name'=>'required',
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
@@ -75,16 +75,19 @@ class EmployeController extends Controller
                    'oldpass' => 'required',
                    'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()->numbers()],
                ]);
-       
+              
                if (!Hash::check($request->oldpass,auth('employee')->user()->password)) {
+                
                    return back()->withErrors(['oldpass' => 'Incorrect current password.']);
                }
+            //    return $admin;
                auth('employee')->user()->update([
                    'password' => Hash::make($request->newpass),
                ]);
                // admin password change
                if($admin){
-                User::where('id',$admin->$id)->update([
+                
+                User::where('id',$admin->id)->update([
                     'password'=> Hash::make($request->newpass),
                 ]);
                }

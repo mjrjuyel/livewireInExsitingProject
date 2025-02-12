@@ -24,6 +24,7 @@ use App\Http\Controllers\SuperAdmin\EmployeeEvaluationController;
 use App\Http\Controllers\SuperAdmin\BasicController;
 use App\Http\Controllers\SuperAdmin\DesgnationController; 
 use App\Http\Controllers\SuperAdmin\SuperAdminLeaveController; 
+use App\Http\Controllers\SuperAdmin\AdminEarlyLeaveController; 
 use App\Http\Controllers\SuperAdmin\AdminDailyReportController; 
 
 use App\Http\Controllers\SuperAdmin\LeaveSettingController; 
@@ -245,6 +246,25 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/leave/softdelete',[SuperAdminLeaveController::class,'softDelete'])->name('superadmin.leave.softdelete');
                 Route::post('/superadmin/leave/restore',[SuperAdminLeaveController::class,'restore'])->name('superadmin.leave.restore');
                 Route::delete('/superadmin/leave/delete/',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.delete');
+                
+                // Leave Application status
+                
+                Route::get('/admin/earlyleave',[AdminEarlyLeaveController::class,'index'])->name('admin.earlyleave');
+                Route::get('/admin/earlyleave/view/{slug}',[AdminEarlyLeaveController::class,'view'])->name('admin.earlyleave.view');
+                Route::get('/admin/earlyleave/add',[AdminEarlyLeaveController::class,'add'])->name('admin.earlyleave.add');
+                Route::post('/admin/earlyleave/insert',[AdminEarlyLeaveController::class,'insert'])->name('admin.earlyleave.insert');
+                Route::get('/admin/earlyleave/edit/{id}',[AdminEarlyLeaveController::class,'edit'])->name('admin.earlyleave.edit');
+                Route::post('/admin/earlyleave/updateleave',[AdminEarlyLeaveController::class,'updateleave'])->name('admin.earlyleave.updateleave');
+                Route::get('/admin/earlyleavemonth/{slug}',[AdminEarlyLeaveController::class,'indexMonth'])->name('admin.earlyleavemonth');
+                Route::get('/admin/earlyleaveyear/{slug}',[AdminEarlyLeaveController::class,'indexYear'])->name('admin.earlyleaveyear');
+                Route::get('/admin/earlyleave/pending',[AdminEarlyLeaveController::class,'pending'])->name('admin.earlyleave.pending');
+                Route::get('/admin/earlyleave/approved',[AdminEarlyLeaveController::class,'approved'])->name('admin.earlyleave.approved');
+                Route::get('/admin/earlyleave/cancled',[AdminEarlyLeaveController::class,'cancled'])->name('admin.earlyleave.cancled');
+                
+                Route::post('/admin/earlyleave/update',[AdminEarlyLeaveController::class,'update'])->name('admin.earlyleave.update');
+                Route::post('/admin/earlyleave/softdelete',[AdminEarlyLeaveController::class,'softDelete'])->name('admin.earlyleave.softdelete');
+                Route::post('/admin/earlyleave/restore',[AdminEarlyLeaveController::class,'restore'])->name('admin.earlyleave.restore');
+                Route::delete('/admin/earlyleave/delete/',[AdminEarlyLeaveController::class,'delete'])->name('admin.earlyleave.delete');
                 
                 // remove notifuication
                 Route::delete('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'removeNotification']);
