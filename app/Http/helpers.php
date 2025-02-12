@@ -17,6 +17,7 @@ if (! function_exists('formatDate')) {
                      ->format('d-M-Y | h:i:s A');
     }
 }
+
 if (! function_exists('displayTime')) {
 
     function displayTime(?string $time): ?string
@@ -35,15 +36,21 @@ if (! function_exists('displayTime')) {
 
 
 if ( ! function_exists('currencyCahnge')) {
-    /**
-     * Format a given date.
-     *
-     * @param string $date
-     * @return string
-     */
+
     function currencyChange()
     {
         $currency = Currency::first();
         return $currency->currency_icon;
+    }
+}
+
+if ( ! function_exists('convertTime')) {
+
+    function convertTime($time)
+    {
+        $hours = floor($time/60);
+        $minutes = $time%60;
+        $totalTime =  $hours ." h " . $minutes ." mins";
+        return $totalTime;
     }
 }

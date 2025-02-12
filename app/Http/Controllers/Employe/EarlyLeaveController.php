@@ -27,6 +27,12 @@ use Exception;
 
 class EarlyLeaveController extends Controller
 {
+    public function index($id){
+        $userId = Crypt::decrypt($id);
+        $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',$userId)->latest('id')->get();
+        // return $leaves;
+        return view('employe.earlyleave.index',compact('leaves'));
+    }
     public function add(){
         $officeTime = OfficeTime::first();
         $leaveType = LeaveType::latest('id')->get();
@@ -38,14 +44,51 @@ class EarlyLeaveController extends Controller
             'leave_type'=>'required',
             'start'=>'required',
             'others'=>'max:50',
-            'reason'=>'required',
+            'detail'=>'required',
         ]);
+        $start = Carbon::parse($request->start);
+        $sameDate = EarlyLeave::whereDay('leave_date',$start->day)->whereMonth('leave_date',$start->month)->whereYear('leave_date',$start->year)->exists();
 
-        if($rerquest->start < $request->end){
-            return 'yes';
+        if($sameDate){
+            Session::flash('error','You Have Already Early Leave On This Day');
+            return redirect()->back();
+        }
+
+        if($request->start < $request->end){
+
+            $end = Carbon::parse($request->end);
+            $duration = $start->diffInMinutes($end);
+            // return $totalTime;
+          
+            $insert = EarlyLeave::create([
+                'emp_id'=>Auth::guard('employee')->user()->id,
+                'leave_type'=>$request->leave_type,
+                'other_type' => $request->leave_type == 0 ? $request->others : null,
+                'detail' => $request->detail,
+                'leave_date'=>$request->date,
+                'start'=>Carbon::parse($request->input('start'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                'end'=>Carbon::parse($request->input('end'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                'total_hour'=>$duration,
+                'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
+                'status'=>1,
+                'submit_by'=>Auth::guard('employee')->user()->emp_name,
+                'created_at'=>Carbon::now('UTC'),
+            ]);
+
+            if($insert){
+                Session::flash('success','You have create a Early Leave Request For ' .$insert->total_hour .'minutes' );
+                return redirect()->back();
+            }
         }
         else{
-            return "plz go back";
+            Session::flash('error','Please Insert Right Time To Apply');
+            return redirect()->back();
         }
     } 
+
+    public function view($id){
+        $Id = Crypt::decrypt($id);
+        $view = EarlyLeave::findOrFail($Id);
+        return view('employe.earlyleave.view',compact('view'));
+    }
 }

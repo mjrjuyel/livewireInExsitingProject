@@ -59,7 +59,7 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Manual Leave Application Form
+                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Edit Your Leave Info
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
@@ -72,29 +72,15 @@
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
+                                <input type="hidden" name="id" value="{{$edit->id}}">
                                 <div class="mb-3">
-                                    <input type="hidden" name="id" value="{{$edit->id}}">
-                                    <label class="form-label">Employee Name<span class="text-danger">* </span>:
-                                    </label>
-                                    <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
-                                        <option value="">Select an Employee</option>
-                                        @foreach($employees as $employe)
-                                        <option value="{{$employe->id}}" {{ $employe->id == $edit->emp_id ? 'Selected' : ' '}}>{{$employe->emp_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('employe')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-
                                     <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                     </label>
                                     <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">
                                         <option value="">Select A Type</option>
-                                        @foreach($leaveType as $type)
-                                        <option value="{{$type->id}}" {{ $type->id == $edit->leave_type_id ? 'Selected' : ' '}}>{{$type->type_title}}</option>
-                                        @endforeach
+                                          @foreach($leaveType as $type)
+                                           <option value="{{$type->id}}" {{ $edit->leave_type_id == $type->id ? 'Selected' : ' '}}>{{$type->type_title}}</option>
+                                           @endforeach
                                         <option value="0" id="other_reason">Other</option>
                                     </select>
                                     @error('leave_type')

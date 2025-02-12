@@ -84,7 +84,7 @@ Route::middleware('isEmploye')->group(function(){
             Route::get('/dashboard/earlyleave/view/{slug}',[EarlyLeaveController::class,'view'])->name('dashboard.earlyleave.view'); 
             Route::get('/dashboard/earlyleave/edit/{slug}',[EarlyLeaveController::class,'edit'])->name('dashboard.earlyleave.edit'); 
             Route::post('/dashboard/earlyleave/update',[EarlyLeaveController::class,'update'])->name('dashboard.earlyleave.update');
-            Route::get('/dashboard/earlyleave/history/{slug}',[EarlyLeaveController::class,'history'])->name('dashboard.earlyleave.history'); 
+            Route::get('/dashboard/earlyleave/{slug}',[EarlyLeaveController::class,'index'])->name('dashboard.earlyleave'); 
             Route::get('/dashboard/earlyleave/historyMonth/{slug}',[EarlyLeaveController::class,'historyMonth'])->name('dashboard.earlyleave.historyMonth'); 
             Route::get('/dashboard/earlyleave/historyYear/{slug}',[EarlyLeaveController::class,'historyYear'])->name('dashboard.earlyleave.historyYear'); 
        

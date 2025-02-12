@@ -37,8 +37,8 @@
                 <ol class="breadcrumb m-0 py-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
-                    <li class="breadcrumb-item">Employe</li>
-                    <li class="breadcrumb-item active">Leave</li>
+                    <li class="breadcrumb-item">Employee</li>
+                    <li class="breadcrumb-item active">Early Leave</li>
                 </ol>
             </div>
         </div>
@@ -61,7 +61,7 @@
 
                             <table class="table border view_table">
                                 <tr>
-                                    <td>Leave Status</td>
+                                    <td>Early Leave Status</td>
                                     <td>:</td>
                                     <td>
                                         @if($view->status == 1)
@@ -80,8 +80,8 @@
                                         <button type="button" class="btn btn-primary">
                                             FeedBack
                                         </button>
-                                        @if($view->status == 4)
-                                        <a class="btn btn-primary" href="{{ url('dashboard/leave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
+                                        @if($leave->status == 4 || $leave->status == 1)
+                                        <a class="btn btn-primary" href="{{ url('dashboard/earlyleave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                         @endif
                                         @endif
                                     </td>
@@ -112,7 +112,7 @@
                                     <td>Type</td>
                                     <td>:</td>
                                     <td class="text-danger">
-                                        @if($view->leave_type_id != 0)
+                                        @if($view->leave_type != 0)
                                         {{$view->leavetype->type_title}}
                                         @else
                                         Other Reason
@@ -121,56 +121,29 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Reason</td>
+                                    <td>Short Detail</td>
                                     <td>:</td>
                                     <td>
-                                        {!! $view->reason !!}
+                                        {!! $view->detail !!}
                                     </td>
-                                </tr>
+                               </tr>
                                 <tr>
-                                    <td> Leave Start to End</td>
+                                    <td> Early Leave Date</td>
                                     <td>:</td>
 
-                                    <td>{{$view->start_date->format('d-M-Y')}} To {{$view->end_date->format('d-M-Y')}}</td>
+                                    <td>{{$view->leave_date->format('d-M-Y')}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Total leave</td>
+                                    <td>Start Time to End Time</td>
                                     <td>:</td>
-
-                                    @php
-                                    $total_leave = $view->total_paid + $view->total_unpaid;
-                                    @endphp
-
-                                    @if($total_leave <= 1) <td class="text-danger">
-                                        {{ $total_leave }}Day
-                                        </td>
-                                        @else
-                                        <td class="text-danger">
-                                            {{ $total_leave }}Days
-                                        </td>
-                                        @endif
+                                    <td>{{displayTime($view->start)}} To {{displayTime($view->end)}}</td>
                                 </tr>
 
-
-
-                                @if($view->total_paid != '')
                                 <tr>
-                                    <td>Total Paid</td>
+                                    <td>Total Time (in hour)</td>
                                     <td>:</td>
-                                    @if($view->total_paid <= 1) <td class="">
-                                        @if($view->total_paid !== null)
-                                        {{ $view->total_paid}}Day
-                                        @else
-                                        0 Day
-                                        @endif
-                                        </td>
-                                        @else
-                                        <td class="">
-                                            {{ $view->total_paid }}Days
-                                        </td>
-                                        @endif
+                                    <td>{{convertTime($view->total_hour)}} Hours</td>
                                 </tr>
-                                @endif
 
                                 @if($view->total_unpaid != '')
                                 <tr>

@@ -279,15 +279,13 @@ class LeaveFormController extends Controller
     public function edit($id){
         $ID = Crypt::decrypt($id);
         $edit= Leave::where('id',$ID)->first();
-        $employees = Employee::get(['id','emp_name']);
-        $leaveType = LeaveType::get(['id','type_title']);
-        // return $edit;
-        return view('employe.leave.edit',compact(['employees','edit','leaveType']));
+        $leaveType = LeaveType::all();
+        // return $leaveType;
+        return view('employe.leave.edit',compact(['edit','leaveType']));
     }
     public function update(Request $request){
-        // validation
 
-           $id = $request->id;
+                $id = $request->id;
                 // return $request->all();
                     $request->validate([
                         'leave_type'=>'required',
@@ -298,9 +296,6 @@ class LeaveFormController extends Controller
                     ]);
 
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
-                    $lastLeave = Leave::latest('id')->where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->first();
-
-            if($lastLeave == Null || $lastLeave->status == 1 || $lastLeave->status == 4){
 
                         // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
@@ -312,7 +307,7 @@ class LeaveFormController extends Controller
                     // return $start_time . " > Start Time <br>" . "current time " .$curr;
                 // 2 dates are valid or not!
                 if($start_time <= $end_time && $start_time >= $before5Days){
-
+                    
                     // **NEW CONDITION: Check for overlapping leaves**
                         $overlappingLeaves = Leave::where('id','!=',$id)->where('emp_id', Auth::guard('employee')->user()->id)->where('status',2)
                             ->where(function ($query) use ($request) {
@@ -324,14 +319,14 @@ class LeaveFormController extends Controller
                                     });
                             })
                             ->exists();
-
+                         
                         if ($overlappingLeaves) {
                             Session::flash('error', 'Your leave request overlaps with a previously submitted leave.');
-                            return redirect()->route('dashboard.leave.edit',Crypt::encrypt($id));
+                            return redirect()->back();
                         }
                     
                     // Check Date And Count Total Day between 2 dates
-
+                    // return "juyel";
                     function countDaysExcludingDynamicAndWeeklyOffs( $startDate,$endDate, $weeklyOffs = [],$specialOffDates = [],) {
                         // Create DateTime objects for the start and end dates
                         $start = new DateTime($startDate);
@@ -423,13 +418,13 @@ class LeaveFormController extends Controller
                             $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
 
                             // check total Paid of in a month
-                            $checkMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkMonth = Leave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
-                            $previousLeave = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
+                            $previousLeave = Leave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
                             // return $previousLeave !== null ? "this have value " : "Its A  null property";
 
                             // check total paid off in an annual year
-                            $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkYear = Leave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
                             $remainingMonthlyPaidLeave = max(0, $definedLeave->month_limit - $checkMonth);
 
@@ -437,8 +432,9 @@ class LeaveFormController extends Controller
                             $paidLeaves = min($remainingMonthlyPaidLeave,$leavePermonth['totalDays']);
                             // return $paidLeaves;
                             $unPaidLeaves = $leavePermonth['totalDays'] - $paidLeaves;
-
+                            
                                     if($request->unpaid){
+                                        // return "unpaid";
                                         $update = Leave::where('id',$request->id)->update([
                                             'leave_type_id'=>$request['leave_type'],
                                             'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
@@ -452,11 +448,12 @@ class LeaveFormController extends Controller
                                             'emp_id'=>Auth::guard('employee')->user()->id,
                                             'slug'=>'leav-'.uniqId(),
                                             'status'=>1,
-                                            'add_from'=>'Employee',
+                                            'add_from'=>Auth::guard('employee')->user()->emp_name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
     
                                         $data = Leave::where('id',$id)->first();
+
                                         $adminEmail = AdminEmail::first();
     
                                         if($adminEmail->email_leave == 1){
@@ -493,6 +490,7 @@ class LeaveFormController extends Controller
                                         ]);
     
                                         $data = Leave::where('id',$id)->first();
+                                        
                                         $adminEmail = AdminEmail::first();
     
                                         if($adminEmail->email_leave == 1){
@@ -519,14 +517,10 @@ class LeaveFormController extends Controller
                             
                     }
 
-                    return redirect()->route('dashboard.leave.history',Crypt::encrypt(Auth::guard('employee')->user()->id));
+                    return redirect()->back();
                 }
             Session::flash('error','Date Is not Correct!');
-            return redirect()->route('dashboard.leave.edit',Crypt::encrypt($id));
-        }
-        Session::flash('error','You Can Not Edit This Leave Data');
-        return redirect()->route('dashboard.leave.edit',Crypt::encrypt($id));
-                
+            return redirect()->back();
         }
 
     public function view($slug){

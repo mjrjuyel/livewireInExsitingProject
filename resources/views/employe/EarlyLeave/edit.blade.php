@@ -46,7 +46,7 @@
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
 
-                    <li class="breadcrumb-item active">Leave</li>
+                    <li class="breadcrumb-item active">EarlyLeave</li>
                 </ol>
             </div>
         </div>
@@ -59,38 +59,24 @@
                     <div class="card-header bg-dark">
                         <div class="row">
                             <div class="col-md-8">
-                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Manual Leave Application Form
+                                <h3 class="card_header"><i class="mdi mdi-coffee-off header_icon"></i>Edit EarlyLeave Application Form
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Leave Data</a>
+                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All EarlyLeave Data</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('dashboard.leave.update')}}" method="post">
+                    <form action="" method="post">
 
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">
+                               
                                 <div class="mb-3">
-                                    <input type="hidden" name="id" value="{{$edit->id}}">
-                                    <label class="form-label">Employee Name<span class="text-danger">* </span>:
+                                    <label class="form-label">EarlyLeave Type<span class="text-danger">* </span>:
                                     </label>
-                                    <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
-                                        <option value="">Select an Employee</option>
-                                        @foreach($employees as $employe)
-                                        <option value="{{$employe->id}}" {{ $employe->id == $edit->emp_id ? 'Selected' : ' '}}>{{$employe->emp_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('employe')
-                                    <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-
-                                    <label class="form-label">Leave Type<span class="text-danger">* </span>:
-                                    </label>
-                                    <select type="text" class="form-control" name="leave_type" placeholder="Enter Leave">
+                                    <select type="text" class="form-control" name="leave_type" placeholder="Enter EarlyLeave">
                                         <option value="">Select A Type</option>
                                         @foreach($leaveType as $type)
                                         <option value="{{$type->id}}" {{ $type->id == $edit->leave_type_id ? 'Selected' : ' '}}>{{$type->type_title}}</option>
@@ -141,7 +127,7 @@
                                 <div class="mb-3">
 
                                     <input type="checkbox" name="unpaid" value="1" {{ $edit->unpaid_request == 1 ? 'Checked' : ''}}>
-                                    <label class="form-label">Is This Totally Un-Paid Leave? :
+                                    <label class="form-label">Is This Totally Un-Paid EarlyLeave? :
                                     </label>
 
                                 </div>

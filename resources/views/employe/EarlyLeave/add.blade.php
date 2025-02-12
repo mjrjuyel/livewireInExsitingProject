@@ -86,7 +86,7 @@
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
+                                <a href="{{ url('/dashboard/earlyleave/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
                             </div>
                         </div>
                     </div>
@@ -123,8 +123,8 @@
                                 <div class="mb-3">
                                     <label class="form-label">Leave Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" value="{{now()->format('Y-m-d')}}" name="start" class="form-control" placeholder="">
-                                    @error('start')
+                                    <input type="text" id="humanfd-datepicker" value="{{now()->format('Y-m-d')}}" name="date" class="form-control" placeholder="">
+                                    @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
@@ -133,8 +133,8 @@
                                         <div class="mb-3">
                                             <label class="form-label">Start Time<span class="text-danger">* </span>:
                                             </label>
-                                            <input type="time" name="start_time" value="{{\Carbon\Carbon::now()->format('H:i')}}" class="form-control" placeholder="">
-                                            @error('start_time')
+                                            <input type="time" name="start" value="{{\Carbon\Carbon::now()->format('H:i')}}" class="form-control" placeholder="">
+                                            @error('start')
                                             <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                             @enderror
                                         </div>
@@ -154,10 +154,10 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Short Reason<span class="text-danger">* </span>:
+                                    <label class="form-label">Detail<span class="text-danger">* </span>:
                                     </label>
 
-                                    <textarea type="text" style="resize:none;" rows="4" id="editor" name="reason" class="form-control" placeholder="Write Some Reason">{{old('reason')}}</textarea>
+                                    <textarea type="text" style="resize:none;" rows="4" id="editor" name="detail" class="form-control" placeholder="Write Some Reason">{{old('reason')}}</textarea>
 
                                     @error('reason')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

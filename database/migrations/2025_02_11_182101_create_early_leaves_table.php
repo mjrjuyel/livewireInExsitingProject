@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('end')->nullable();
             $table->date('leave_date')->nullable();
             $table->foreignId('leave_type')->constrained('leave_types')->onDelete('cascade');
-            $table->string('other_type',50)->nullable;
+            $table->string('other_type',50)->nullable();
             $table->text('detail')->nullable();
             $table->integer('status')->default('1');
             $table->string('total_hour')->nullable();
