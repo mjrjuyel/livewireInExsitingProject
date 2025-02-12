@@ -270,7 +270,7 @@ class AdminEmployeController extends Controller
         $employe = Employee::findOrFail($id);
         // get associated Admin Info.
         $admin = User::where('email',$employe->email)->first();
-        
+        // return $admin;
         $request->validate([
             'name'=>'required',
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
@@ -313,8 +313,9 @@ class AdminEmployeController extends Controller
             ]);
 
             if($admin){
+                
                 User::where('id',$admin->id)->update([
-                    'password'=> Hash::make($request->newpass),
+                    'password'=> Hash::make($request->pass),
                 ]);
                }
         }
