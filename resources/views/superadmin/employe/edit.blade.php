@@ -415,31 +415,6 @@
 
                             </section>
 
-                            <h3 class="text-info mt-5">Joinig Evaluation</h3>
-                            <hr class="text-info">
-                            <section>
-                                <div class="row">
-                                    <div class="col-sm-4 offset-sm-2">
-                                        <div class="form-group clearfix">
-                                            <label>Last Evaluation Date <span class="text-danger">*</span> ::</label>
-                                            <input name="eva_start_date" type="date" class="form-control" value="{{$edit->eva_start_date ?? old('eva_start_date')}}">
-                                            @error('eva_start_date')
-                                            <small class="form-text text-warning">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group clearfix">
-                                            <label>Next Evaluation Date <span class="text-danger">*</span> :</label>
-                                            <input name="eva_end_date" type="date" class="form-control" value="{{$edit->eva_end_date ?? old('eva_end_date')}}">
-                                            @error('eva_end_date')
-                                            <small class="form-text text-warning">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div><!-- end row -->
-                            </section>
-
                             <h3 class="text-info mt-5">Identy Verification :-</h3>
                             <hr class="text-info">
                             <section>

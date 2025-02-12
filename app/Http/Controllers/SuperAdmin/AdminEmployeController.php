@@ -288,8 +288,8 @@ class AdminEmployeController extends Controller
             'desig'=>'required',
             'empType'=>'required',
             'join'=>'required',
-            'eva_start_date'=>'required',
-            'eva_end_date'=>'required',
+            // 'eva_start_date'=>'required',
+            // 'eva_end_date'=>'required',
             'reporting'=>'required',
             'id_type'=>'required',
             'id_number'=>'unique:employees,emp_id_number,'.$id,
@@ -303,7 +303,9 @@ class AdminEmployeController extends Controller
 
         if($request->pass != ''){
             $request->validate([
-                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)],
+                'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
+                ->numbers()
+                ->symbols()],
                 'repass' => 'required | same:pass',
             ]);
             Employee::where('id',$id)->update([
@@ -425,9 +427,6 @@ class AdminEmployeController extends Controller
 
             'emp_slug'=>$slug,
             'emp_join'=>$request['join'],
-
-            'eva_start_date'=>$request->eva_start_date,
-            'eva_end_date'=>$request->eva_end_date,
 
             'emp_resign'=>$request->resign,
             'emp_editor'=>Auth::user()->id,
