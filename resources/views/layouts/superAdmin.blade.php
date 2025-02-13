@@ -166,9 +166,7 @@
                                         <span class="menu-text">Leave Application </span>
                                     </a>
                                 </li>
-                                @endcan
-
-                                @can('Leave Application List')
+                               
                                 <li class="side-nav-item">
                                     <a href="{{route('admin.earlyleave')}}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
