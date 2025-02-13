@@ -254,6 +254,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/admin/earlyleave/add',[AdminEarlyLeaveController::class,'add'])->name('admin.earlyleave.add');
                 Route::post('/admin/earlyleave/insert',[AdminEarlyLeaveController::class,'insert'])->name('admin.earlyleave.insert');
                 Route::get('/admin/earlyleave/edit/{id}',[AdminEarlyLeaveController::class,'edit'])->name('admin.earlyleave.edit');
+                Route::get('/admin/earlyleave/update/{id}',[AdminEarlyLeaveController::class,'update'])->name('admin.earlyleave.update');
                 Route::post('/admin/earlyleave/updateleave',[AdminEarlyLeaveController::class,'updateleave'])->name('admin.earlyleave.updateleave');
                 Route::get('/admin/earlyleavemonth/{slug}',[AdminEarlyLeaveController::class,'indexMonth'])->name('admin.earlyleavemonth');
                 Route::get('/admin/earlyleaveyear/{slug}',[AdminEarlyLeaveController::class,'indexYear'])->name('admin.earlyleaveyear');

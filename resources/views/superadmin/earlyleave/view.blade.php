@@ -58,133 +58,134 @@
                                     </div>
                                 </div>
                             </div>
+                            <form action="{{ route('admin.earlyleave.update') }}" method="post">
+                                @csrf
 
-                            <table class="table border view_table">
-                                <tr>
-                                    <td>Early Leave Status</td>
-                                    <td>:</td>
-                                    <td>
-                                        @if($view->status == 1)
-                                        <button type="button" class="btn btn-warning">
-                                            Pending
-                                        </button>
-                                        @elseif($view->status == 2)
-                                        <button type="button" class="btn btn-primary">
-                                            Approve
-                                        </button>
-                                        @elseif($view->status == 3)
-                                        <button type="button" class="btn btn-danger">
-                                            Reject
-                                        </button>
-                                        @elseif($view->status == 4)
-                                        <button type="button" class="btn btn-primary">
-                                            FeedBack
-                                        </button>
-                                        @if($leave->status == 4 || $leave->status == 1)
-                                        <a class="btn btn-primary" href="{{ url('/admin/earlyleave/edit/'.Crypt::encrypt($view->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
-                                        @endif
-                                        @endif
-                                    </td>
-                                </tr>
+                                <div class="row mt-3">
+                                    <div class="col-5 offset-1">
+                                        <input type="hidden" value="{{ $view->id }}" name="id">
 
-                                @if($view->comments != '')
-                                <tr>
-                                    <td>Reply From Admin</td>
-                                    <td>:</td>
-                                    <td>
-                                        <span class=" btn-warning ">
-                                            {{$view->comments}}
-                                        </span>
-                                        
-                                    </td>
-                                </tr>
-                                @endif
+                                        <div class="mb-3">
+                                            <label class="form-label">Leave Type<span class="text-danger">* </span>:
+                                            </label>
+                                            @if($view->leave_type_id != 0) {{$view->leavetype->type_title}}
+                                            @else
+                                            Other Reason : {{$view->other_type}}
+                                            @endif
+                                        </div>
 
-                                <tr>
-                                    <td>Submit By</td>
-                                    <td>:</td>
-                                    <td>
-                                        {{$view->employe->emp_name}}
-                                    </td>
-                                </tr>
+                                        <div class="mb-3">
+                                            <label class="form-label">Submitted Date<span class="text-danger">* </span>:
+                                            </label>
+                                            {{$view->created_at->format('d-M-Y')}}
+                                        </div>
 
-                                <tr>
-                                    <td>Type</td>
-                                    <td>:</td>
-                                    <td class="text-danger">
-                                        @if($view->leave_type != 0)
-                                        {{$view->leavetype->type_title}}
+                                        <div class="mb-3">
+                                            <label class="form-label">leave Date<span class="text-danger">*</span> :</label>
+                                            <input type="text" class="form-control" name="start" value="{{ $view->leave_date->format('d-M-Y') }}" disabled>
+
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">leave Start Time<span class="text-danger">*</span> :</label>
+                                            <input type="text" class="form-control" value="{{ displayTime($view->start) }}" disabled>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">leave End Time<span class="text-danger">*</span> :</label>
+                                            <input type="text" class="form-control" value="{{displayTime($view->end)}}" disabled>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="text-dark">Leave Description:</div>
+                                            <div class="mt-2">{!! $view->detail !!}</div>
+                                        </div>
+
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label class="form-label">Status</label>
+                                            <select class="form-control" type="text" name="status">
+                                                <option value="">Application Status</option>
+                                                <option class="text-warning" value="1" @if($view->status == 1) Selected @endif> Pending</option>
+                                                <option class="text-primary" value="2" @if($view->status == 2) Selected @endif> Approved</option>
+                                                <option class="text-danger" value="3" @if($view->status == 3) Selected @endif> Cancle</option>
+                                                <option class="text-info" value="4" @if($view->status == 4) Selected @endif> Feedback</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-5">
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Request Leave For (hours) <span class="text-danger">* </span>:
+                                            </label>
+                                            <h4 class="text-danger">{{convertTime($view->total_hour)}}</h4>
+                                        </div>
+
+
+                                        {{-- <div class="mb-3">
+                                                <label class="form-label">Modified date<span class="text-danger">* </span>:
+                                                </label>
+                                                <input type="text" id="humanfd-datepicker" name="end" class="form-control" value="" placeholder="If Reduce Date" placeholder="">
+                                                @error('end')
+                                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                        @enderror
+                                    </div> --}}
+                                    <div class="mb-3">
+                                        <label class="text-dark">Application sent From:</label>
+                                        <span class="mt-2">{{ $view->submit_by }} Dashboard</span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="text-dark">Application Created At:</label>
+                                        <span class="mt-2">{{formatDate($view->created_at)}} </span>
+                                    </div>
+
+                                    @if($view->updated_at)
+                                    <div class="mb-3">
+                                        <label class="text-dark">Application Edited At:</label>
+                                        <span class="mt-2">{{formatDate($view->updated_at)}} </span>
+                                    </div>
+                                    @endif
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Feedback</label>
+                                        @if($view->comments != '')
+                                        <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment">{{ $view->comments }}</textarea>
                                         @else
-                                        Other Reason
+                                        <textarea class="form-control" rows="4" style="resize:none" type="text" name="comment" placeholder="Some Feedback"></textarea>
                                         @endif
-                                    </td>
-                                </tr>
+                                    </div>
 
-                                <tr>
-                                    <td>Short Detail</td>
-                                    <td>:</td>
-                                    <td>
-                                        {!! $view->detail !!}
-                                    </td>
-                               </tr>
-                                <tr>
-                                    <td> Early Leave Date</td>
-                                    <td>:</td>
+                                    <hr>
+                                    {{-- <h4 class="text-info">Click Here to Customize leave Days From Applicant Total Days</h4>
+                                    <label class="form-label text-danger">
+                                        <input type="checkbox" name="unpaidLeave" value="1" id="unpaidLeaveCheckbox">Want To Customize Un-Paid leave
+                                    </label>
 
-                                    <td>{{$view->leave_date->format('d-M-Y')}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Start Time to End Time</td>
-                                    <td>:</td>
-                                    <td>{{displayTime($view->start)}} To {{displayTime($view->end)}}</td>
-                                </tr>
+                                    <div id="unpaidLeaveFields" style="display: none;">
+                                        <label for="unpaidDays">Un-Paid Leave Days:</label>
+                                        <input class="form-control" type="number" id="unpaidDays" name="unpaidDay" min="0" max="">
 
-                                <tr>
-                                    <td>Total Time (in hour)</td>
-                                    <td>:</td>
-                                    <td>{{convertTime($view->total_hour)}}</td>
-                                </tr>
+                                        <input type="hidden" name="total_leave" value="">
+                                    </div> --}}
 
-                                @if($view->total_unpaid != '')
-                                <tr>
-                                    <td>Total Un-Paid</td>
-                                    <td>:</td>
-                                    @if($view->total_unpaid <= 1) <td class="text-danger">
-                                        @if($view->total_unpaid !== null)
-                                        {{ $view->total_unpaid}}Day
-                                        @else
-                                        0 Day
-                                        @endif
-                                        </td>
-                                        @else
-                                        <td class="text-danger">
-                                            {{ $view->total_unpaid }}Days
-                                        </td>
-                                        @endif
-                                </tr>
-                                @endif
-
-                                <tr>
-                                    <td>Created At</td>
-                                    <td>:</td>
-                                    <td>{{formatDate($view->created_at)}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Edited At</td>
-                                    <td>:</td>
-                                    <td>@if($view->updated_at)
-                                        {{formatDate($view->updated_at)}}
-                                        @endif
-                                    </td>
-                                </tr>
-                            </table>
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 offset-4">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                    </div>
+                                </div>
                         </div>
+                        </form>
+
                     </div>
                 </div>
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-    </div> <!-- end col -->
+            </div>
+        </div> <!-- end card-body-->
+    </div> <!-- end card-->
+</div> <!-- end col -->
 </div>
 </div>
 

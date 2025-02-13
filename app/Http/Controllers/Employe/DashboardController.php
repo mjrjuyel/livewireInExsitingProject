@@ -72,8 +72,8 @@ class DashboardController extends Controller
             }
         
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
-        $earlyleave = EarlyLeave::where('emp_id',$userId)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
-        $earlyleaveYear = EarlyLeave::where('emp_id',$userId)->whereYear('leave_date',date('Y'))->sum('total_hour');
+        $earlyleave = EarlyLeave::where('status',2)->where('emp_id',$userId)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
+        $earlyleaveYear = EarlyLeave::where('status',2)->where('emp_id',$userId)->whereYear('leave_date',date('Y'))->sum('total_hour');
         // return $earlyleave;
         return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves','EmpEva','earlyleave','earlyleaveYear']));
     }
