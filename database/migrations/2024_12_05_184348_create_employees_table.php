@@ -74,6 +74,8 @@ return new class extends Migration
             $table->integer('emp_editor')->nullable();
             $table->string('password');
             $table->string('remember_token')->nullable();
+            $table->string('device_token')->nullable();
+            $table->string('api_token')->nullable();
             $table->timestamps();
         });
     }

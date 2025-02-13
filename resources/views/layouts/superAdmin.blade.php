@@ -169,7 +169,7 @@
                                
                                 <li class="side-nav-item">
                                     <a href="{{route('admin.earlyleave')}}" class="side-nav-link">
-                                        <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
+                                        <span class="menu-icon"><i class="mdi mdi-battery-off-outline"></i></span>
                                         <span class="menu-text">Early Leave Application </span>
                                     </a>
                                 </li>

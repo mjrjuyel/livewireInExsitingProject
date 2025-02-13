@@ -31,12 +31,12 @@ class EarlyLeaveController extends Controller
         $userId = Crypt::decrypt($id);
         $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',$userId)->latest('id')->get();
         // return $leaves;
-        return view('employe.juyel.index',compact('leaves'));
+        return view('employe.earlyleave.index',compact('leaves'));
     }
     public function add(){
         $officeTime = OfficeTime::first();
         $leaveType = LeaveType::latest('id')->get();
-        return view('employe.juyel.add',compact(['leaveType','officeTime']));
+        return view('employe.earlyleave.add',compact(['leaveType','officeTime']));
     }
 
     public function insert(Request $request){
@@ -90,7 +90,7 @@ class EarlyLeaveController extends Controller
     public function view($id){
         $Id = Crypt::decrypt($id);
         $view = EarlyLeave::findOrFail($Id);
-        return view('employe.juyel.view',compact('view'));
+        return view('employe.earlyleave.view',compact('view'));
     }
 
     public function edit($id){
@@ -98,7 +98,7 @@ class EarlyLeaveController extends Controller
         $edit= EarlyLeave::where('id',$ID)->first();
         $leaveType = LeaveType::all();
         // return $edit;
-        return view('employe.juyel.edit',compact(['edit','leaveType']));
+        return view('employe.earlyleave.edit',compact(['edit','leaveType']));
     }
 
     public function update(Request $request){
