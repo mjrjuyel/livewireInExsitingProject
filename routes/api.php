@@ -16,9 +16,9 @@ Route::post('/employe/login',[EmployeeAuthController::class,'loginEmploye'])->na
 Route::get('/employe',[EmployeeAuthController::class,'index'])->name('employe')->middleware('auth:sanctum');
 // daily reports
 
-
+Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.daiyreport');
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/employe/logout',[EmployeeAuthController::class,'logoutEmploye'])->name('employe.logout');
-    Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.daiyreport');
+    
 });
 
