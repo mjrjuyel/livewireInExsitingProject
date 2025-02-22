@@ -27,7 +27,7 @@ class EmployeeDashboardController extends Controller
         try{
             $userId = $id = auth('sanctum')->user()->id;
             $defaultLeave = EmployeLeaveSetting::first();
-            $view = Employee::with(['emp_desig','creator'])->where('id',$userId)->first();
+            $view = Employee::with(['creator:id,name','emp_desig:id,title'])->where('id',$userId)->first();
 
             $whole_approved_leave = Leave::where('emp_id',$userId)->where('status',2)->sum('total_leave_this_month');
             $leaveRequestInMonth = Leave::where('emp_id',$userId)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
@@ -41,11 +41,11 @@ class EmployeeDashboardController extends Controller
 
             $totalReportSubmit = DailyReport::where('submit_by',$userId)->count('id');
 
-            $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
+            $last_employe_evaluation = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
 
-            // return $EmpEva->eva_next_date;
+            // return $last_employe_evaluation->eva_next_date;
             //Eva date Calculation
-            if($EmpEva == null || $EmpEva->eva_next_date == ' '){
+            if($last_employe_evaluation == null || $last_employe_evaluation->eva_next_date == ' '){
                 // return 'No Eva Date';
                 $end_date = new DateTime($view->emp_join->format('Y-m-d'));
                 $end_date->modify('+1 year');
@@ -66,9 +66,9 @@ class EmployeeDashboardController extends Controller
                     
                     $Evaleaves = Leave::where('emp_id', $view->id)
                     ->where('status', 2)
-                    ->where(function ($query) use ($EmpEva) {
-                        $query->whereBetween('start_date', [$EmpEva->eva_last_date, $EmpEva->eva_next_date])
-                            ->whereBetween('end_date', [$EmpEva->eva_last_date , $EmpEva->eva_next_date]);
+                    ->where(function ($query) use ($last_employe_evaluation) {
+                        $query->whereBetween('start_date', [$last_employe_evaluation->eva_last_date, $last_employe_evaluation->eva_next_date])
+                            ->whereBetween('end_date', [$last_employe_evaluation->eva_last_date , $last_employe_evaluation->eva_next_date]);
                     })
                     ->get();
                 }
@@ -84,7 +84,7 @@ class EmployeeDashboardController extends Controller
             return strtotime($a) - strtotime($b);
         });
         $groupByMonth = [];
-        
+
         $currentMonth = date('F');
         $nextMonth = date('F', strtotime('+1 month'));
         foreach($explode as $dates){
@@ -95,22 +95,22 @@ class EmployeeDashboardController extends Controller
 
             return response()->json([
                 'status'=>true,
-                'Message'=>'All Employee Dashboard Details',
-                'employeeView' => $view,
-                'leaveRequestInMonth'=>$leaveRequestInMonth,
-                'leaveRequestInYear'=>$leaveRequestInYear,
-                'paidRemainingMonth'=>$paidRemainingMonth,
+                'message'=>'All Employee Dashboard Details',
+                'employee_view' => $view,
+                'leave_request_in_month'=>$leaveRequestInMonth,
+                'leave_request_in_year'=>$leaveRequestInYear,
+                'paid_remaining_month'=>$paidRemainingMonth,
                 'whole_approved_leave'=>$whole_approved_leave,
-                'paidRemainingYear'=>$paidRemainingYear,
-                'defaultLeave'=>$defaultLeave,
-                'unpaidRemainingMonth'=>$unpaidRemainingMonth,
-                'unpaidRemainingYear'=>$unpaidRemainingYear,
-                'totalReportSubmit'=>$totalReportSubmit,
-                'Evaleaves'=>$Evaleaves,
-                'EmpEva'=>$EmpEva,
-                'earlyleave'=>$earlyleave,
-                'earlyleaveYear'=>$earlyleaveYear,
-                'groupByMonth'=>$filteredMonths,
+                'paid_remaining_year'=>$paidRemainingYear,
+                'default_leave'=>$defaultLeave,
+                'unpaid_remaining_month'=>$unpaidRemainingMonth,
+                'unpaid_remaining_year'=>$unpaidRemainingYear,
+                'total_report_submit'=>$totalReportSubmit,
+                'evaluation_leaves'=>$Evaleaves,
+                'last_employe_evaluation'=>$last_employe_evaluation,
+                'early_leave'=>$earlyleave,
+                'early_leave_year'=>$earlyleaveYear,
+                'group_by_month'=>$filteredMonths,
 
             ],200);
         }
