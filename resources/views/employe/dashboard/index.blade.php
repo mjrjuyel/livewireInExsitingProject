@@ -301,10 +301,45 @@
                 </div>
             </div>
         </div>
-
-
-
     </div> <!-- end row -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <h4 class="text-info">Special Off Day List</h4>
+                <hr>
+            </div>
+            <div class="row">
+                @foreach($filteredMonths as $month => $dates)
+                <div class="col-md-3 col-xl-3">
+                    @php
+                    $convertMonth = new DateTime($month);
+                    @endphp
+                    <div class="card tilebox-one">
+                        <div class="card-body">
+                            <i class="mdi mdi-calendar-range float-end m-0 h2 text-muted"></i>
+                            <h6 class="text-info text-uppercase">{{$convertMonth->format('F')}}</h6>
+                            <span>Dates</span>
+                            <ul class="list-group">
+
+                                @foreach($dates as $date)
+                                @php
+                                $convert = new DateTime($date);
+                                @endphp
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{$convert->format('Y-m-d')}}
+                                    <span class="badge badge-primary text-info badge-pill">{{$convert->format('D')}}</span>
+                                </li>
+
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div> <!-- end row -->
+        </div>
+    </div>
 
 </div> <!-- container -->
 

@@ -82,7 +82,7 @@ class DailyReportController extends Controller
 
                     // return "3 day after";
                     $insert= DailyReport::create([
-                        'submit_by'=>$request['name'],
+                        'submit_by'=>$request['submit_by'],
                         'submit_date'=>$request['submit_date'],
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
@@ -152,9 +152,9 @@ class DailyReportController extends Controller
         return view('employe.dailyreport.edit',compact('edit'));
     }
 
-    public function update(Request $request,$id){
+    public function update(Request $request){
         try{
-         $report = DailyReport::find($id);
+         $report = DailyReport::find($request->id);
             if(!$report){
                 return response()->json([
                     'status'=>true,
