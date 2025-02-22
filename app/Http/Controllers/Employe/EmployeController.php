@@ -36,7 +36,6 @@ class EmployeController extends Controller
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
         // Evalution Data 
         $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
-
         return view('employe.employe.view',compact(['view','activeDesig','EmpEva']));
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use App\Mail\DailyReportMail;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -13,15 +14,26 @@ use App\Models\DailyReport;
 use App\Models\AdminEmail;
 use Carbon\Carbon;
 use Session;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class DailyReportController extends Controller
 {
+    public function getEmployee(){
+       $users = auth('sanctum')->user()->id;
+
+       $employee = Employee::where('id',employeId())->first();
+        return response()->json([
+            'status'=>true,
+            'message'=>'Fetch Complete',
+            'data'=>$employee,
+        ],200);
+    }
     public function index(){
         try{
             // dd('hello');
-            $alldata = DailyReport::all();
+            $id = auth('sanctum')->user()->id;
+            $alldata = DailyReport::where('submit_by',$id)->first();
             // dd($alldata);
                 return response()->json([
                     'status'=>true,
@@ -38,19 +50,31 @@ class DailyReportController extends Controller
     }
 
     public function add(){
+        $id = auth('sanctum')->user()->id;
         return view('employe.dailyreport.add');
     }
 
     public function submit(Request $request){
 
-        $request->validate([
-            'name'=>'required',
+     try{
+        $validate = Validator::make($request->all(),[
+            'submit_by'=>'required',
             'submit_date'=>'required',
+            'checkin'=>'required',
+            'checkout'=>'required',
             'detail'=>'required',
         ]);
-        //Check that is There any chances to Same Date  
+
+        if($validate->fails()){
+            return response()->json([
+                'status'=>true,
+                'mesage'=>'Validation Error',
+                'Error-message'=>$validate->errors(), 
+            ]);
+        }
+        $id = auth('sanctum')->user()->id;
         $submitDate = Carbon::parse($request->submit_date);
-        $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::guard('employee')->user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
+        $checkDate=DailyReport::where('status',1)->where('submit_by',$id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
 
         // return $request->all();
         if($checkDate == null || $checkDate == 0){
@@ -93,23 +117,43 @@ class DailyReportController extends Controller
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
-                        return redirect()->back();
+                        return response()->json([
+                            'status'=>true,
+                            'Message'=>'Report Submit Success Fully',
+                            'Data'=>$insert,
+                        ],200);
                     }
                 }else{
                     // return "3 days Before";
                     Session::flash('error','You can not Submit report 3 Days before From Current Day!');
-                    return redirect()->back();
+                    return response()->json([
+                        'status'=>false,
+                        'Message'=>'You can not Submit report 3 Days before From Current Day!'
+                    ],201);
                 }
                 
             }else{
                 Session::flash('error','The Date is not come yet!');
-                return redirect()->back();
+                return response()->json([
+                    'status'=>false,
+                    'Message'=>'The Date is not come yet!',
+                ],201);
             }
         }else{
             // return "Else";
             Session::flash('error','Already You have Submitted on This day!');
-            return redirect()->back();
+            return response()->json([
+                'status'=>false,
+                'Message'=>'Already You have Submitted on This day!',
+            ],200);
         }
+     }catch(Exception $e){
+        return response()->json([
+            'status'=>false,
+            'Message'=>'failed to Insert',
+            'data'=>$e->getMessage(),
+        ],404);
+     }
         
     }
 
@@ -118,32 +162,78 @@ class DailyReportController extends Controller
         return view('employe.dailyreport.edit',compact('edit'));
     }
 
-    public function update(Request $request){
-        $id = $request->id;
-        // return $id;
-        $request->validate([
-            'detail'=>'required',
-        ]);  
-        
-        // return $request->all();
-        $insert= DailyReport::where('id',$id)->update([
-            'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-            'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-            'detail'=>$request['detail'],
-            'updated_at'=>Carbon::now('UTC'),
-        ]);
-        
-        if($insert){
-            Session::flash('success','Updated Daily Report Details');
-            return redirect()->back();
+    public function update(Request $request,$id){
+        try{
+         $report = DailyReport::find($id);
+            if(!$report){
+                return response()->json([
+                    'status'=>true,
+                    'message'=>"Error MESSAGE",
+                    'Data'=>"Data is Not Found",
+                ],404);
+            }
+
+            $validate = Validator::make($request->all(),[
+                'checkin'=>'required',
+                'checkout'=>'required',
+                'detail'=>'required',
+            ]);
+    
+            if($validate->fails()){
+                return response()->json([
+                    'status'=>true,
+                    'mesage'=>'Validation Error',
+                    'Error-message'=>$validate->errors(), 
+                ]);
+            }
+
+
+        $report->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
+        $report->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
+        $report->detail = $request['detail'];
+        $report->editor = auth('sanctum')->user()->id;
+        $report->updated_at = Carbon::now('UTC');
+    
+        $report->save();
+
+        return response()->json([
+            'status'=>true,
+            'Message'=>'Report Update SuccessFully',
+            'Data'=>$report,
+        ],200);
+            
         }
-        
+        catch(Exception $e){
+            return response()->json([
+                'status'=>false,
+                'Message'=>'Report Faild to Update',
+                'Data'=>$e->getMessage(),
+            ],500);
+        }
+    }
+    
+    public function getData(Request $request){
+        return response()->json([
+            'data'=>$request->all(),
+        ]);
     }
 
-    public function view($slug){
-        // fetch data from designation table
-        $view = DailyReport::with('employe.emp_desig')->where('slug',$slug)->first();
-        // return $view;
-        return view('employe.dailyreport.view',compact('view'));
+
+    public function view($id){
+        try{
+            $view = DailyReport::find($id);
+            return response()->json([
+                'status'=>true,
+                'message'=>'Single Daily Report view',
+                'data'=>$view,
+            ],200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Single Daily Report view',
+                'data'=>$e->getMessage(),
+            ],404);
+        }
     }
 }

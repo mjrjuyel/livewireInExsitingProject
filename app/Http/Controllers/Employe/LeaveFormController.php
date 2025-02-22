@@ -199,7 +199,7 @@ class LeaveFormController extends Controller
                                             'unpaid_request'=>$request->unpaid,
                                             'emp_id'=>Auth::guard('employee')->user()->id,
                                             'slug'=>'leav-'.uniqId(),
-                                            'add_from'=>'Employee',
+                                            'add_from'=>Auth::guard('employee')->user()->name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
     
