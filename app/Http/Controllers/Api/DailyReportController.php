@@ -19,25 +19,15 @@ use Exception;
 
 class DailyReportController extends Controller
 {
-    public function getEmployee(){
-       $users = auth('sanctum')->user()->id;
-
-       $employee = Employee::where('id',employeId())->first();
-        return response()->json([
-            'status'=>true,
-            'message'=>'Fetch Complete',
-            'data'=>$employee,
-        ],200);
-    }
     public function index(){
         try{
             // dd('hello');
             $id = auth('sanctum')->user()->id;
-            $alldata = DailyReport::where('submit_by',$id)->first();
+            $alldata = DailyReport::where('status',1)->where('submit_by',$id)->get();
             // dd($alldata);
                 return response()->json([
                     'status'=>true,
-                    'Message'=>'Daily Reports For Specific Employee',
+                    'Message'=>'All Daily Reports For Specific Employee',
                     'Data'=> $alldata
                 ],200);
         }
