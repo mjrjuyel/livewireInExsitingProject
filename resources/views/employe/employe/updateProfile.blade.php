@@ -159,6 +159,7 @@
                                     <input type="text" class="form-control" name="add" value="{{ $edit->emp_address }}" placeholder="Enter Present Address">
                                     @error('add')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    
                                     @enderror
                                 </div>
 
