@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('employee_promotions')) {
+
         Schema::create('employee_promotions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('emp_id')->nullable()->constrained('employees')->onDelete('cascade');
@@ -23,6 +25,7 @@ return new class extends Migration
             $table->timestamp('pro_date')->nullable();
             $table->timestamps();
         });
+    }
     }
 
     /**

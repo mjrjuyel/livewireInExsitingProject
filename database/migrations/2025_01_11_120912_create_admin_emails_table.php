@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+    if (!Schema::hasTable('admin_emails')) {
         Schema::create('admin_emails', function (Blueprint $table) {
             $table->id();
             $table->string('email');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->integer('editor')->nullable();
             $table->timestamps();
         });
+      }
     }
 
     /**

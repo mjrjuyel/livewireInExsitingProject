@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('early_leaves')) {
+
         Schema::create('early_leaves', function (Blueprint $table) {
             $table->id();
             $table->string('start')->nullable();
@@ -31,6 +33,7 @@ return new class extends Migration
             $table->foreignId('editor')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
+    }
     }
 
     /**

@@ -52,4 +52,95 @@ return new class extends Migration
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
+
+//     Schema::create('users', function (Blueprint $table) {
+//         $table->id();
+//         $table->string('name',100)->nullable();
+//         $table->string('email',40)->nullable();
+//         $table->string('email2',40)->nullable();
+//         $table->string('phone',20)->nullable();
+//         $table->string('phone2',20)->nullable();
+//         $table->string('address',100)->nullable();
+//         $table->string('present',100)->nullable();
+//         $table->string('emer_contact',20)->nullable();
+//         $table->string('emer_name',50)->nullable();
+//         $table->string('emer_relation',100)->nullable();
+//         $table->date('dob',100)->nullable();
+//         $table->string('gender',20)->nullable();
+//         $table->string('marriage',20)->nullable();
+//         $table->string('image',100)->nullable();
+//         $table->string('slug',24)->nullable();
+//         // job detail
+//         $table->integer('report_manager')->nullable();
+//         $table->integer('depart_id')->nullable();
+//         $table->integer('desig_id')->nullable();
+//         $table->string('type')->nullable();
+//         $table->date('join',100)->nullable();
+//         $table->date('resign',100)->nullable();
+        
+//         // evaluation
+//         $table->date('eva_start_date',100)->nullable();
+//         $table->date('eva_start_end',100)->nullable();
+//         // identi verification
+//         $table->string('id_type')->nullable();
+//         $table->string('id_number')->nullable();
+
+//         // education qualification
+//         $table->string('rec_degree')->nullable();
+//         $table->string('rec_year')->nullable();
+
+//         // bank statement
+//         $table->integer('bank_id')->nullable();
+//         $table->integer('bank_branch_id')->nullable();
+//         $table->string('bank_account_name')->nullable();
+//         $table->string('bank_account_number',50)->nullable();
+//         $table->string('bank_swift_code')->nullable();
+//         $table->string('bank_sort_code')->nullable();
+//         $table->string('bank_routing_number')->nullable();
+//         $table->string('bank_country')->nullable();
+    
+//         // Office 
+//         $table->integer('office_branch_id')->nullable();
+//         $table->string('office_id_number')->nullable();
+//         $table->string('office_card_number')->nullable();
+//         $table->string('office_IT_requirement')->nullable();
+//         $table->string('office_work_schedule')->nullable();
+
+//         // $table->integer('aggrement')->nullable();
+//         $table->string('signature')->nullable();
+
+//         $table->string('remember_token')->nullable();
+//         $table->string('device_token')->nullable();
+   
+//         $table->timestamp('email_verified_at')->nullable();
+//         $table->string('password');
+//         $table->rememberToken();
+//         $table->timestamps();
+//     });
+
+//     Schema::create('password_reset_tokens', function (Blueprint $table) {
+//         $table->string('email')->primary();
+//         $table->string('token');
+//         $table->timestamp('created_at')->nullable();
+//     });
+
+//     Schema::create('sessions', function (Blueprint $table) {
+//         $table->string('id')->primary();
+//         $table->foreignId('user_id')->nullable()->index();
+//         $table->string('ip_address', 45)->nullable();
+//         $table->text('user_agent')->nullable();
+//         $table->longText('payload');
+//         $table->integer('last_activity')->index();
+//     });
+// }
+
+// /**
+//  * Reverse the migrations.
+//  */
+// public function down(): void
+// {
+//     Schema::dropIfExists('users');
+//     Schema::dropIfExists('password_reset_tokens');
+//     Schema::dropIfExists('sessions');
+// }
 };
