@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\LeaveMailToAdmin;
+use App\Mail\EarlyLeaveMail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\LeaveToAdminNotification;
@@ -75,9 +75,20 @@ class EarlyLeaveController extends Controller
                 'submit_by'=>Auth::guard('employee')->user()->emp_name,
                 'created_at'=>Carbon::now('UTC'),
             ]);
+          
+            $adminEmail = AdminEmail::first();
+    
+            if($adminEmail->email_leave == 1){
+                
+                $getEmail = AdminEmail::where('id',1)->first();
+                $explode = explode(',',$getEmail->email);
+                foreach($explode as $email){
+                    Mail::to($email)->send(new EarlyLeaveMail($insert));
+                }
+            }
 
             if($insert){
-                Session::flash('success','You have create a Early Leave Request For '.$hours .' Hours -' . $minutes .' minutes' );
+                Session::flash('success','You have create a Early Leave Request For '.$hours .' Hours ' . $minutes .' minutes' );
                 return redirect()->back();
             }
         }

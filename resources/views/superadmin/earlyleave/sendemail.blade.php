@@ -89,20 +89,35 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Leave Request From <strong style="color:#4CAF50;">{{$leave['employe']->emp_name}}</strong>
+            New Early Leave Request From <strong style="color:#4CAF50;">Admin</strong>
         </div>
         <div class="email-body">
             <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
             <p><strong>Leave Type: @if($leave['leave_type'] != 0) {{$leave['leavetype']->type_title}}@else Other Reason @endif</strong></p>
             <p><strong>Reason: {!! $leave['detail'] !!}</strong> </p>
             <p><strong>Start Date: {{$leave['leave_date']->format('d-M-Y')}}</strong></p>
-            <p><strong>Start To End Time: {{$leave['leave_date']->format('d-M-Y')}}</strong></p>
-        
-            @if($leave['status']==1)
-                <strong style="color:red;">Pending</strong>
+            <p><strong>Start To End Time: {{displayTime($leave->start)}} To {{displayTime($leave->end)}}</strong></p>
+            <p><strong>Total Time(hours): {{convertTime($leave->total_hour)}}</strong></p>
+
+            @if($leave->status == 1)
+            <button type="button" class="btn btn-warning ">
+                Pending
+            </button>
+            @elseif($leave->status == 2)
+            <button type="button" class="btn btn-primary ">
+                Approve
+            </button>
+            @elseif($leave->status == 3)
+            <button type="button" class="btn btn-danger ">
+                Reject
+            </button>
+            @elseif($leave->status == 4)
+            <button type="button" class="btn btn-info ">
+                Feedback
+            </button>
             @endif
-                   
-            <a href="{{url('superadmin/earlyleave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
+
+            <a href="{{url('/dashboard/earlyleave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} All rights reserved.

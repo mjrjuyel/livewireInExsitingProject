@@ -4,7 +4,10 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EarlyLeaveResponseMail;
 use App\Models\EarlyLeave;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Auth;
@@ -32,9 +35,9 @@ class AdminEarlyLeaveController extends Controller
 
         // $default = EmployeLeaveSetting::where('id',1)->first();
 
-        // $email = EarlyLeave::find($id);
+        $email = EarlyLeave::find($id);
         // dynamic 
-        // $employe = Employee::where('id',$email->emp_id)->first();
+        $employe = Employee::where('id',$email->emp_id)->first();
 
             $update= EarlyLeave::where('id',$id)->update([
                 'status'=>$request['status'],
@@ -78,9 +81,10 @@ class AdminEarlyLeaveController extends Controller
             }
 
 
-            // $alldata = EarlyLeave::where('id',$id)->first();
+           
+            $alldata = EarlyLeave::where('id',$id)->first();
             
-            // Mail::to($employe->email)->send(new LeaveResponseByAdmin($alldata));
+            Mail::to($employe->email)->send(new EarlyLeaveResponseMail($alldata));
 
             // $employe->notify(new LeaveToEmployeNotification($alldata));
 

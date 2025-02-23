@@ -56,6 +56,7 @@
                         <table class="table table-centered text-center" id="datatable">
                             <thead class="table-light">
                                 <tr>
+                                    <th class="text-center">Submit By</th>
                                     <th class="text-center">Early Leave For</th>
                                     <th class="text-center">Leave Date</th>
                                     <th class="text-center">Start to End Time</th>
@@ -68,6 +69,10 @@
                                 @foreach ($leaves as $leave)
                                 <tr>
                                     <td>
+                                       {{$leave->employe->emp_name}}
+                                    </td>
+
+                                    <td>
                                         @if($leave->leave_type != 0)
                                           {{$leave->leavetype->type_title}}
                                         @else
@@ -79,7 +84,7 @@
                                         {{$leave->leave_date->format('d-M-Y')}}
                                     </td>
                                     <td>
-                                        At {{displayTime($leave->start)}} To At {{displayTime($leave->end)}}
+                                         {{displayTime($leave->start)}} To {{displayTime($leave->end)}}
                                     </td>
 
                                     <td>
