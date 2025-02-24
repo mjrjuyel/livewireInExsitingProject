@@ -53,7 +53,7 @@
                     <li class="side-nav-title">General Navigation Bar</li>
 
                     <li class="side-nav-item">
-                        <a href="{{ route('dashboard',Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="side-nav-link">
+                        <a href="{{ route('dashboard',Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text"> Dashboard </span>
                         </a>
@@ -92,7 +92,7 @@
                         <div class="collapse" id="sidebarLeave">
                             <ul class="sub-menu">
                                 @php
-                                $check = App\Models\Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status','!=','1')->latest('id')->first();
+                                $check = App\Models\Leave::where('emp_id',Auth::user()->id)->where('status','!=','1')->latest('id')->first();
                                 @endphp
 
                                 <li class="side-nav-item">
@@ -108,7 +108,7 @@
                                 </li>
 
                                 <li class="side-nav-item">
-                                    <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="side-nav-link">
+                                    <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
                                         <span class="menu-text">History</span>
                                     </a>
                                 </li>
@@ -118,7 +118,7 @@
 
                     <hr>
                     @php
-                    $user = App\Models\User::where('email',Auth::guard('employee')->user()->email)->first();
+                    $user = App\Models\User::where('email',Auth::user()->email)->first();
                     @endphp
                     @if($user)
                     <li class="side-nav-item">
@@ -276,24 +276,24 @@
                     <div class="topbar-item nav-user">
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                                @if(Auth::guard('employee')->user()->emp_image != '')
-                                <img src="{{ asset('uploads/employe/profile/'.Auth::guard('employee')->user()->emp_image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
+                                @if(Auth::user()->emp_image != '')
+                                <img src="{{ asset('uploads/employe/profile/'.Auth::user()->emp_image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @else
                                 <img src="{{ asset('uploads/adminprofile/img.jpg')}}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h6 class="my-0">{{ Auth::guard('employee')->user()->emp_name }}</h6>
+                                    <h6 class="my-0">{{ Auth::user()->emp_name }}</h6>
                                 </span>
                                 <i class="mdi mdi-chevron-down d-none d-lg-block align-middle ms-2"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
-                                    <h6 class="text-overflow text-white m-0">Welcome ! {{Auth::guard('employee')->user()->emp_name}}</h6>
+                                    <h6 class="text-overflow text-white m-0">Welcome ! {{Auth::user()->emp_name}}</h6>
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('dashboard.employe.view',Auth::guard('employee')->user()->emp_slug ) }}" class="dropdown-item notify-item">
+                                <a href="{{ route('dashboard.employe.view',Auth::user()->emp_slug ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Profile</span>
                                 </a>

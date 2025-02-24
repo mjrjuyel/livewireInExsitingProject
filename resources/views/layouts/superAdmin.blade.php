@@ -25,7 +25,7 @@
                 <span class="logo-light">
                     <span class="logo-lg">
                         <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
-                        <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto" alt="logo"></span>
+                    <span class="logo-sm"> <img src="{{asset('uploads/basic/'.$basic->favlogo)}}" class=" img-fluid" style="width:100%; height:auto" alt="logo"></span>
                 </span>
 
                 <span class="logo-dark">
@@ -166,7 +166,7 @@
                                         <span class="menu-text">Leave Application </span>
                                     </a>
                                 </li>
-                               
+
                                 <li class="side-nav-item">
                                     <a href="{{route('admin.earlyleave')}}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-battery-off-outline"></i></span>
@@ -456,6 +456,82 @@
                         </div>
                     </li>
                     @endcan
+
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#employeActivity" aria-expanded="false" aria-controls="employeActivity" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-account-hard-hat"></i></span>
+                            <span class="menu-text">My Profile</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="employeActivity">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard',Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                                        <span class="menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-title">Extra Pages</li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarDailyReportemployee" aria-expanded="false" aria-controls="sidebarDailyReportemployee" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-chart-arc"></i></span>
+                                        <span class="menu-text">Daily Report</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarDailyReportemployee">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.dailyreport') }}" class="side-nav-link">
+                                                    <span class="menu-text">Reports</span>
+                                                </a>
+                                            </li>
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.dailyreport.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Submit Report</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarLeaveEmployee" aria-expanded="false" aria-controls="sidebarLeaveEmployee" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                                        <span class="menu-text"> Leave Application</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarLeaveEmployee">
+                                        <ul class="sub-menu">
+                                            @php
+                                            $check = App\Models\Leave::where('emp_id',Auth::user()->id)->where('status','!=','1')->latest('id')->first();
+                                            @endphp
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Application Form</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.earlyleave.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Early Leave</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
+                                                    <span class="menu-text">History</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
                     @can('Setting')
                     <li class="side-nav-item">

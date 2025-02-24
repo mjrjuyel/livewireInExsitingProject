@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 <div class="page-container">
 
     <div class="page-title-box">
@@ -287,7 +287,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    @if($totalReportSubmit < 0 )
+                    @if($totalReportSubmit > 0 )
                     <a href="{{ route('dashboard.dailyreport') }}">
                         <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                         <h6 class="text-muted text-uppercase mt-0">Total Daily Report Submit <span class="text-danger text-italic"></span></h6>

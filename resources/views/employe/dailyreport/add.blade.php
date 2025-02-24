@@ -1,4 +1,4 @@
-@extends('layouts.employe')
+@extends('layouts.superAdmin')
 @section('css')
 <link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
 <link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
@@ -8,7 +8,7 @@
 
 @endsection
 
-@section('content')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -98,12 +98,12 @@
                                 </div>
                                 <div class="mb-3">
                                     @php
-                                    $employe = Auth::guard('employee')->user();
+                                    $employe = Auth::user();
                                     @endphp
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
                                     <select type="text" class="form-control" name="name" placeholder="Enter Daily Report">
-                                        <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
+                                        <option value="{{$employe->id}}">{{$employe->name}}</option>
                                     </select>
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

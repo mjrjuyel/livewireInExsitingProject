@@ -40,7 +40,7 @@ return new class extends Migration
             
             // evaluation
             $table->date('eva_start_date',100)->nullable();
-            $table->date('eva_start_end',100)->nullable();
+            $table->date('eva_end_date',100)->nullable();
             // identi verification
             $table->string('emp_id_type')->nullable();
             $table->string('emp_id_number')->nullable();

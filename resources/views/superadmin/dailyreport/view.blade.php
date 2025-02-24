@@ -62,7 +62,7 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->emp_name}}!
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->name}}!
                                         </h3>
                                     </div>
 
@@ -80,7 +80,7 @@
                                     <td>Submit By</td>
                                     <td>:</td>
                                     <td>
-                                        {{$view->employe->emp_name}}
+                                        {{$view->employe->name}}
                                     </td>
                                 </tr>
 

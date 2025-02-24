@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -67,7 +67,7 @@
                                 <tr>
 
                                     <td>
-                                        {{ $data->employe->emp_name }}
+                                        {{ $data->employe->name }}
                                     </td>
 
                                     <td>
@@ -92,12 +92,12 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('dashboard/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('dashboard/dailyreport/view/'.Crypt::encrypt($data->id) )}}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
                                                 @if(now()->format('Y-m-d') == $data->submit_date->format('Y-m-d'))
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ url('dashboard/dailyreport/edit/'.$data->slug) }}"><i class="mdi mdi-octagram-edit-outline">
+                                                    <a class="dropdown-item" href="{{ url('dashboard/dailyreport/edit/'.Crypt::encrypt($data->id) )}}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
                                                 </li>
                                                 @endif

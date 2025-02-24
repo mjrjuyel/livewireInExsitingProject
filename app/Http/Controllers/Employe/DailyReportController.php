@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DailyReportMail;
 use Intervention\Image\ImageManager;
@@ -18,7 +19,8 @@ use Auth;
 class DailyReportController extends Controller
 {
     public function index(){
-        $alldata = DailyReport::with('employe')->where('submit_by',Auth::guard('employee')->user()->id)->where('status',1)->latest('submit_date')->get();
+        $alldata = DailyReport::with('employe')->where('submit_by',Auth::user()->id)->where('status',1)->latest('submit_date')->get();
+        // return $alldata->count('id');
         return view('employe.dailyreport.index',compact('alldata'));
     }
 
@@ -35,7 +37,7 @@ class DailyReportController extends Controller
         ]);
         //Check that is There any chances to Same Date  
         $submitDate = Carbon::parse($request->submit_date);
-        $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::guard('employee')->user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
+        $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
 
         // return $request->all();
         if($checkDate == null || $checkDate == 0){
@@ -58,7 +60,6 @@ class DailyReportController extends Controller
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                        'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
 
@@ -99,7 +100,8 @@ class DailyReportController extends Controller
     }
 
     public function edit($slug){
-        $edit = DailyReport::where('slug',$slug)->first();
+        $id = Crypt::decrypt($slug);
+        $edit = DailyReport::where('id',$id)->first();
         return view('employe.dailyreport.edit',compact('edit'));
     }
 
@@ -126,9 +128,10 @@ class DailyReportController extends Controller
     }
 
     public function view($slug){
+        $id = Crypt::decrypt($slug);
         // fetch data from designation table
-        $view = DailyReport::with('employe.emp_desig')->where('slug',$slug)->first();
-        // return $view;
+        $view = DailyReport::with('employe')->where('id',$id)->first();
+        return $view;
         return view('employe.dailyreport.view',compact('view'));
     }
 }

@@ -57,10 +57,6 @@ Route::middleware('isEmploye')->group(function(){
        Route::middleware('isEmployeActive')->group(function(){
          // Logout 
          Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
-
-         // Dsahboard Index
-         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
- 
          // Admin Controller 
          Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
          Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
@@ -69,15 +65,7 @@ Route::middleware('isEmploye')->group(function(){
          Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
          Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
       
-         // Leave Application status by General User
-         Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
-         Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
-         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
-         Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
-         Route::post('/dashboard/leave/update',[LeaveFormController::class,'update'])->name('dashboard.leave.update');
-         Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
-         Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
-         Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
+         
 
             // Leave Application status by General User
             Route::get('/dashboard/earlyleave/add',[EarlyLeaveController::class,'add'])->name('dashboard.earlyleave.add');
@@ -117,8 +105,6 @@ Route::post('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'
 Route::middleware(['auth','verified'])->group(function(){
         Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
 
-        // Only SuperAdmin Can access These Route ******************
-        
                 Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
                 Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
                 Route::get('/superadmin/recycle/dailyreport',[RecyclebinController::class,'dailyreport'])->name('superadmin.recycle.dailyreport');
@@ -346,8 +332,29 @@ Route::middleware(['auth','verified'])->group(function(){
                 // Not As A Super Admin // 404 for not authrized
                 Route::get('invalidAccess',function(){ 
                     return view('layouts.errorpage.notValidRole');
-                    })->name('invalidAccess');
-});
+                })->name('invalidAccess');
+
+                 // Work Like Employeee data
+                 // Dsahboard Index
+                Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+                 // Leave Application for Employee
+                Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
+                Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
+                Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
+                Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
+                Route::post('/dashboard/leave/update',[LeaveFormController::class,'update'])->name('dashboard.leave.update');
+                Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
+                Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
+                Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
+
+                 // Employe Daily Reports Submit
+                Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
+                Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
+                Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
+                Route::get('/dashboard/dailyreport/edit/{slug}',[DailyReportController::class,'edit'])->name('dashboard.dailyreport.edit');
+                Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
+                Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
+        });
 
 
 Route::middleware('auth')->group(function () {

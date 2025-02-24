@@ -61,7 +61,7 @@
                             <select class="form-control allSearch" id="nameSearch" data-toggle="select2" name="id" data-placeholder="Choose ...">
                                 <option value="">Select Employee Name</option>
                                 @foreach($name as $name)
-                                <option value="{{$name->submit_by}}">{{$name->employe->emp_name}}</option>
+                                <option value="{{$name->submit_by}}">{{$name->employe->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -118,7 +118,7 @@
                                            <input type="checkbox" class="markItem" data-id="{{ $data->id }}">
                                         </td>
                                         <td>
-                                            {{ $data->employe->emp_name }}
+                                            {{ $data->employe->name }}
                                         </td>
 
                                         <td>
@@ -141,7 +141,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     @can('View Daily-Report')
-                                                    <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                    <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                             </i>View</a></li>
                                                     </li>
                                                     @endcan

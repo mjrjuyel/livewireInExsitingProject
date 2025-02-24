@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Daily Report of {{$insert['employe']->emp_name}}</title>
+    <title>Daily Report of {{$insert['employe']->name}}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,10 +89,10 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Daily Report From <strong style="color:#4CAF50;">{{$insert['employe']->emp_name}}</strong>
+            New Daily Report From <strong style="color:#4CAF50;">{{$insert['employe']->name}}</strong>
         </div>
         <div class="email-body">
-            <p><strong>Employee: {{$insert['employe']->emp_name}}</strong></p>
+            <p><strong>Employee: {{$insert['employe']->name}}</strong></p>
 
             <p><strong>Submit Date: {{$insert['submit_date']->format('d-M-Y ')}}</strong></p>
             <p><strong>Check In: {{displayTime($insert['check_in'])}}</strong></p>

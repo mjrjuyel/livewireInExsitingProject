@@ -23,7 +23,7 @@ class DashboardController extends Controller
 {
     public function index(){
 
-        $userId = Auth::guard('employee')->user()->id;
+        $userId = Auth::user()->id;
         $defaultLeave = EmployeLeaveSetting::first();
         $view = Employee::with(['emp_role','emp_desig','creator'])->where('id',$userId)->first();
 
