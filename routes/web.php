@@ -118,8 +118,8 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
                 Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
                 Route::post('superadmin/view/softdelete',[AdminProfileController::class,'softDelete'])->name('superadmin.view.softdelete');
-                Route::post('superadmin/view/restore',[AdminProfileController::class,'restore'])->name('superadmin.view.restore');
-                Route::delete('/dashboard/admin/delete',[AdminProfileController::class,'delete'])->name('dashboard.admin.delete');
+                Route::post('superadmin/restore',[AdminProfileController::class,'restore'])->name('superadmin.restore');
+                Route::delete('admin/delete',[AdminProfileController::class,'delete'])->name('admin.delete');
                 // Admin Edit Access 
                 // Route::get('/dashboard/admin/edit/{slug}',[AdminController::class,'edit'])->name('dashboard.admin.edit');
                 // Route::delete('/dashboard/admin/delete/{slug}',[AdminController::class,'delete'])->name('dashboard.admin.view');
@@ -136,7 +136,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
                 // log in as a employee
                 Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
-                Route::post('/superadmin/asEmploye/{id}',[AdminEmployeController::class,'employeLogin'])->name('superadmin.asEmploye');
+                // Route::post('/superadmin/asEmploye/{id}',[AdminEmployeController::class,'employeLogin'])->name('superadmin.asEmploye');
                 // get data from select
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);

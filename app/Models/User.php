@@ -20,16 +20,19 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     public $timetamps = false;
+    public $guarded = [];
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'join_date'   => 'datetime',
+        'dob'    => 'datetime',
+        'resign_date' => 'datetime',
     ];
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role_id',
         'status',
         'username',
         'image',
@@ -66,6 +69,7 @@ class User extends Authenticatable
     public function leave(){
         return $this->belongsTo(Leave::class,'user_id');
     }
+    
     // Copy From Employee Model
 
     public function emp_desig(){

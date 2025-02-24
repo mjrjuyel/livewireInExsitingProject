@@ -75,12 +75,12 @@
                                 @foreach ($employe as $employe)
                                 <tr>
                                     <td>
-                                        {{ $employe->emp_name }}
+                                        {{ $employe->name }}
                                     </td>
 
                                     <td>
-                                        @if ($employe->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
+                                        @if ($employe->image != '')
+                                        <img src="{{ asset('uploads/employe/profile/' . $employe->image) }}" class="img-fluid" alt="" style="width:50px; height:100px; object-fit:cover;">
                                         @endif
                                     </td>
                                     <td>{{ optional($employe->emp_desig)->title }}</td>
@@ -89,18 +89,18 @@
                                     </td>
 
                                     <td>
-                                        {{ optional($employe->reporting)->emp_name }}
+                                        {{ optional($employe->reporting)->name }}
                                     </td>
                                     <td>
-                                        @if($employe->emp_status == 1)
+                                        @if($employe->status == 1)
                                         <button type="button" class="btn btn-primary ">
                                             Active
                                         </button>
-                                        @elseif($employe->emp_status == 2)
+                                        @elseif($employe->status == 2)
                                         <button type="button" class="btn btn-warning ">
                                             Suspend
                                         </button>
-                                        @elseif($employe->emp_status == 0)
+                                        @elseif($employe->status == 0)
                                         <button type="button" class="btn btn-danger">
                                             Recycle Bin
                                         </button>
@@ -151,7 +151,7 @@
                 <h5 class="modal-title" id="myModalLabel">Parment Delete A Employee !</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.employe.delete')}}" method="post">
+            <form action="{{route('admin.delete')}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body modal_body">
@@ -176,7 +176,7 @@
                 <h5 class="modal-title" id="myModalLabel">Restore Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.employe.restore')}}" method="post">
+            <form action="{{route('superadmin.restore')}}" method="post">
                 @csrf
 
                 <div class="modal-body modal_body">

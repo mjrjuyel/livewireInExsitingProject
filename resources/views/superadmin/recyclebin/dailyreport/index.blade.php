@@ -60,7 +60,7 @@
 
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Submit Date</th>
-                                    <th class="text-center">Designation</th>
+                                    <th class="text-center">Report Detail</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -68,7 +68,7 @@
                                 @foreach ($reports as $report)
                                 <tr>
                                     <td>
-                                        {{ $report->employe->emp_name }}
+                                        {{ $report->employe->name }}
                                     </td>
                                     
                                     <td>
@@ -76,7 +76,7 @@
                                     </td>
 
                                     <td>
-                                        {{ Str::words($report->detail,20) }}
+                                        {!! Str::words($report->detail,20) !!}
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
