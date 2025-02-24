@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('daily_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('submit_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('submit_by')->references('id')->on('employees')->onDelete('cascade');
             $table->date('submit_date')->nullable();
             $table->text('detail')->nullable();
             $table->string('check_in',50)->nullable();

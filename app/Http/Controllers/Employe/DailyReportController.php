@@ -131,7 +131,7 @@ class DailyReportController extends Controller
         $id = Crypt::decrypt($slug);
         // fetch data from designation table
         $view = DailyReport::with('employe')->where('id',$id)->first();
-        return $view;
+        // return $view;
         return view('employe.dailyreport.view',compact('view'));
     }
 }

@@ -46,12 +46,88 @@
             <div data-simplebar>
                 <!--- Sidenav Menu -->
                 <ul class="side-nav">
-                    <li class="side-nav-title">Super Admin Navigation</li>
+                    <li class="side-nav-title">Navigation Bar</li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#employeActivity" aria-expanded="false" aria-controls="employeActivity" class="side-nav-link">
+                            <span class="menu-icon"><i class="mdi mdi-account-hard-hat"></i></span>
+                            <span class="menu-text">My Dashboard</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="employeActivity">
+                            <ul class="sub-menu">
+                                <li class="side-nav-item">
+                                    <a href="{{ route('dashboard',Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                                        <span class="menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+
+                                <li class="side-nav-title">Extra Pages</li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarDailyReportemployee" aria-expanded="false" aria-controls="sidebarDailyReportemployee" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-chart-arc"></i></span>
+                                        <span class="menu-text">Daily Report</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarDailyReportemployee">
+                                        <ul class="sub-menu">
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.dailyreport') }}" class="side-nav-link">
+                                                    <span class="menu-text">Reports</span>
+                                                </a>
+                                            </li>
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.dailyreport.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Submit Report</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarLeaveEmployee" aria-expanded="false" aria-controls="sidebarLeaveEmployee" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
+                                        <span class="menu-text"> Leave Application</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarLeaveEmployee">
+                                        <ul class="sub-menu">
+                                            @php
+                                            $check = App\Models\Leave::where('emp_id',Auth::user()->id)->where('status','!=','1')->latest('id')->first();
+                                            @endphp
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Application Form</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.earlyleave.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Early Leave</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
+                                                    <span class="menu-text">History</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                     <hr>
 
                     <li class="side-nav-item">
                         <a href="{{route('superadmin')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
-                            <span class="menu-text"> Dashboard </span>
+                            <span class="menu-text">Application Dashboard </span>
                         </a>
                     </li>
 
@@ -458,80 +534,7 @@
                     @endcan
 
 
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#employeActivity" aria-expanded="false" aria-controls="employeActivity" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-hard-hat"></i></span>
-                            <span class="menu-text">My Profile</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="employeActivity">
-                            <ul class="sub-menu">
-                                <li class="side-nav-item">
-                                    <a href="{{ route('dashboard',Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
-                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
-                                        <span class="menu-text"> Dashboard </span>
-                                    </a>
-                                </li>
-
-                                <li class="side-nav-title">Extra Pages</li>
-
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarDailyReportemployee" aria-expanded="false" aria-controls="sidebarDailyReportemployee" class="side-nav-link">
-                                        <span class="menu-icon"><i class="mdi mdi-chart-arc"></i></span>
-                                        <span class="menu-text">Daily Report</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarDailyReportemployee">
-                                        <ul class="sub-menu">
-                                            <li class="side-nav-item">
-                                                <a href="{{ route('dashboard.dailyreport') }}" class="side-nav-link">
-                                                    <span class="menu-text">Reports</span>
-                                                </a>
-                                            </li>
-                                            <li class="side-nav-item">
-                                                <a href="{{ route('dashboard.dailyreport.add') }}" class="side-nav-link">
-                                                    <span class="menu-text">Submit Report</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#sidebarLeaveEmployee" aria-expanded="false" aria-controls="sidebarLeaveEmployee" class="side-nav-link">
-                                        <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
-                                        <span class="menu-text"> Leave Application</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="sidebarLeaveEmployee">
-                                        <ul class="sub-menu">
-                                            @php
-                                            $check = App\Models\Leave::where('emp_id',Auth::user()->id)->where('status','!=','1')->latest('id')->first();
-                                            @endphp
-
-                                            <li class="side-nav-item">
-                                                <a href="{{ route('dashboard.leave.add') }}" class="side-nav-link">
-                                                    <span class="menu-text">Application Form</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="side-nav-item">
-                                                <a href="{{ route('dashboard.earlyleave.add') }}" class="side-nav-link">
-                                                    <span class="menu-text">Early Leave</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="side-nav-item">
-                                                <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
-                                                    <span class="menu-text">History</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    
 
                     @can('Setting')
                     <li class="side-nav-item">
@@ -574,22 +577,6 @@
                     @endcan
 
                     <hr>
-                    @php
-                    $employe = App\Models\Employee::where('email',Auth::user()->email)->first();
-                    @endphp
-                    @if($employe)
-                    <li class="side-nav-item">
-                        <form action="{{ url('/superadmin/asEmploye/'.Crypt::encrypt($employe->id)) }}" method="post">
-                            @csrf
-                            @method('post')
-                            <button class="btn side-nav-link menu-text text-primary" type="sumbit"><i class=" menu-icon text-primary mdi mdi-account-switch-outline"></i>Switch As Employee</button>
-                        </form>
-                    </li>
-                    @endif
-
-                    <hr>
-
-                    <li class="side-nav-title">Logout</li>
 
                     <li class="side-nav-item">
                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="
