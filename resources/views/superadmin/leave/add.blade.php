@@ -81,7 +81,7 @@
                                     <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
                                         <option value="">Select An Employee</option>
                                         @foreach($employees as $employe)
-                                        <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
+                                        <option value="{{$employe->id}}">{{$employe->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('employe')

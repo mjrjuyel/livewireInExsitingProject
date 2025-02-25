@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('add_from',50)->nullable();
             // Foreign key constraint
             $table->integer('emp_id')->nullable();
+            // $table->foreignId('emp_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('comments')->nullable();
             $table->integer('editor')->nullable();
             $table->timestamps();

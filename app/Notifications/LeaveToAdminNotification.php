@@ -38,7 +38,7 @@ class LeaveToAdminNotification extends Notification
         $employe = Employee::where('id',$this->data->emp_id)->first();
         return [
             'leave_id' => $this->data['id'], 
-            'emp_name' => $employe->emp_name, 
+            'name' => $employe->name, 
         ];
     }
 }

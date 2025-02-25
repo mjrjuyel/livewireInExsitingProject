@@ -22,7 +22,7 @@ class Leave extends Model
     }
 
     public function employe(){
-        return $this->belongsTo(Employee::class,'emp_id','id');
+        return $this->belongsTo(User::class,'emp_id','id');
     }
 
     public function leavetype(){

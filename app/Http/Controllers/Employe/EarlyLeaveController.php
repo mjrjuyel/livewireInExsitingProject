@@ -78,14 +78,14 @@ class EarlyLeaveController extends Controller
           
             $adminEmail = AdminEmail::first();
     
-            if($adminEmail->email_leave == 1){
+            // if($adminEmail->email_leave == 1){
                 
-                $getEmail = AdminEmail::where('id',1)->first();
-                $explode = explode(',',$getEmail->email);
-                foreach($explode as $email){
-                    Mail::to($email)->send(new EarlyLeaveMail($insert));
-                }
-            }
+            //     $getEmail = AdminEmail::where('id',1)->first();
+            //     $explode = explode(',',$getEmail->email);
+            //     foreach($explode as $email){
+            //         Mail::to($email)->send(new EarlyLeaveMail($insert));
+            //     }
+            // }
 
             if($insert){
                 Session::flash('success','You have create a Early Leave Request For '.$hours .' Hours ' . $minutes .' minutes' );

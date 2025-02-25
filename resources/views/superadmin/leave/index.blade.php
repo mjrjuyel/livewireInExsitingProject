@@ -79,7 +79,7 @@
                                 <tr>
 
                                     <td>
-                                        {{ $data->employe->emp_name }}
+                                        {{ $data->employe->name }}
                                     </td>
 
                                     <td>

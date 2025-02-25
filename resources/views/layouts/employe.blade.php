@@ -200,7 +200,7 @@
                     <!-- Email Dropdown -->
 
                     @php
-                        $notification = auth('employee')->user()->unreadNotifications;
+                        $notification = auth()->user()->unreadNotifications;
                     @endphp
 
                     <div class="topbar-item">
@@ -276,24 +276,24 @@
                     <div class="topbar-item nav-user">
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
-                                @if(Auth::user()->emp_image != '')
-                                <img src="{{ asset('uploads/employe/profile/'.Auth::user()->emp_image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
+                                @if(Auth::user()->image != '')
+                                <img src="{{ asset('uploads/employe/profile/'.Auth::user()->image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @else
                                 <img src="{{ asset('uploads/adminprofile/img.jpg')}}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif
                                 <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h6 class="my-0">{{ Auth::user()->emp_name }}</h6>
+                                    <h6 class="my-0">{{ Auth::user()->name }}</h6>
                                 </span>
                                 <i class="mdi mdi-chevron-down d-none d-lg-block align-middle ms-2"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <div class="dropdown-header bg-primary mt-n3 rounded-top-2">
-                                    <h6 class="text-overflow text-white m-0">Welcome ! {{Auth::user()->emp_name}}</h6>
+                                    <h6 class="text-overflow text-white m-0">Welcome ! {{Auth::user()->name}}</h6>
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('dashboard.employe.view',Auth::user()->emp_slug ) }}" class="dropdown-item notify-item">
+                                <a href="{{ route('dashboard.employe.view',Auth::user()->slug ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Profile</span>
                                 </a>

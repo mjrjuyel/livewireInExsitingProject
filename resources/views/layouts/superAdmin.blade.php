@@ -647,7 +647,7 @@
                     $notification = auth()->user()->unreadNotifications;
                     @endphp
                     <!-- Email Dropdown -->
-                    @if(Auth::user()->role_id != 3)
+                 
                     <div class="topbar-item">
                         <div class="dropdown position-relative">
                             <button class="topbar-link dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" data-bs-auto-close="outside" aria-haspopup="false" aria-expanded="false">
@@ -673,7 +673,6 @@
                                     <!-- item-->
                                     @if($notificAdmin >=1)
                                     @foreach ($notification as $item)
-
                                     <div class="dropdown-item notification-item py-2 text-wrap" id="notification-3">
                                         <span class="d-flex align-items-center">
                                             <div class="avatar-md flex-shrink-0 me-3">
@@ -683,7 +682,7 @@
                                             </div>
                                             <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($item->data['leave_id']))}}">
                                                 <span class="flex-grow-1 text-muted">
-                                                    You have a notification <span class="fw-medium text-body"></span> From <span class="fw-medium text-body">{{$item->data['emp_name']}}</span>
+                                                    You have a notification <span class="fw-medium text-body"></span> From <span class="fw-medium text-body"></span>
                                                     <br />
                                                     <span class="font-12"></span>
                                                 </span>
@@ -719,7 +718,6 @@
                             </div>
                         </div>
                     </div>
-                    @endif
 
                     <!-- User Dropdown -->
                     <div class="topbar-item nav-user">
