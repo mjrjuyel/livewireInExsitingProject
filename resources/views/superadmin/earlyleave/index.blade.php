@@ -69,7 +69,7 @@
                                 @foreach ($leaves as $leave)
                                 <tr>
                                     <td>
-                                       {{$leave->employe->emp_name}}
+                                       {{$leave->employe->name}}
                                     </td>
 
                                     <td>
@@ -120,10 +120,10 @@
                                                 <li><a class="dropdown-item" href="{{ url('/admin/earlyleave/view/'.Crypt::encrypt($leave->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                 </li>
 
-                                                @if($leave->status == 4 || $leave->status == 1)
+                                                {{-- @if($leave->status == 4 || $leave->status == 1)
                                                 <li><a class="dropdown-item" href="{{ url('/admin/earlyleave/edit/'.Crypt::encrypt($leave->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                 </li>
-                                                @endif
+                                                @endif --}}
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$leave->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>

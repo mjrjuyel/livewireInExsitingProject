@@ -80,11 +80,9 @@ class AdminEarlyLeaveController extends Controller
                 }
             }
 
-
-           
-            $alldata = EarlyLeave::where('id',$id)->first();
+            // $alldata = EarlyLeave::where('id',$id)->first();
             
-            Mail::to($employe->email)->send(new EarlyLeaveResponseMail($alldata));
+            // Mail::to($employe->email)->send(new EarlyLeaveResponseMail($alldata));
 
             // $employe->notify(new LeaveToEmployeNotification($alldata));
 
@@ -96,7 +94,7 @@ class AdminEarlyLeaveController extends Controller
     // soft Delete
     public function softDelete(Request $request){
         $id = $request->id;
-
+        
         $softdele = EarlyLeave::where('id',$id)->update([
             'status'=>0,
             'editor'=>Auth::user()->id,

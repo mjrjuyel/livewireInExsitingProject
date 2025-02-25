@@ -1,5 +1,5 @@
-@extends('layouts.employe')
-@section('content')
+@extends('layouts.superAdmin')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -112,7 +112,7 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('dashboard/earlyleave/view/'.Crypt::encrypt($leave->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
+                                                <li><a class="dropdown-item" href="{{ url('/dashboard/earlyleave/view/'.Crypt::encrypt($leave->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                 </li>
 
                                                 @if($leave->status == 4 || $leave->status == 1)

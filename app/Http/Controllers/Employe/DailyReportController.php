@@ -67,15 +67,14 @@ class DailyReportController extends Controller
                     $email = AdminEmail::where('id',1)->first();
                      
                     // return $email;
-                    // try {
-                    // if($email->email_report == 1){
+                    if($email->email_report == 1){
                         
-                    //     $explode = explode(',',$email->email);
-                    //                 // try {
-                    //     foreach($explode as $emai){
-                    //         Mail::to($emai)->send(new DailyReportMail($insert));
-                    //     }
-                    // }
+                        $explode = explode(',',$email->email);
+                                    // try {
+                        foreach($explode as $emai){
+                            Mail::to($emai)->send(new DailyReportMail($insert));
+                        }
+                    }
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
