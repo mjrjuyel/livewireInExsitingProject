@@ -20,29 +20,10 @@ use Session;
 
 class EmployeController extends Controller
 {
-    public function index(){
-        $employe = Employee::with(['emp_role'=>function($query){
-            $query->select('id','role_name');
-        },'emp_desig'=>function($query){
-            $query->select('id','title');
-        },])->latest('id')->get();
-        $desig = Designation::with('employe')->get();
-        // return $employe;
-        return view('employe.employe.all',compact('employe'));
-    }
-
-    public function view($slug){
-        $view = Employee::where('emp_slug',$slug)->first();
-        $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
-        // Evalution Data 
-        $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
-        return view('employe.employe.view',compact(['view','activeDesig','EmpEva']));
-    }
-
     public function profileSettings($slug){
         // return $slug;
-        $edit = Employee::where('emp_slug',$slug)->first();
-        // $role= UserRole::all();
+        $userId = Crypt::decrypt($slug);
+        $edit = User::where('id',$userId)->first();
         $designation= Designation::all();
         // return $data;
         return view('employe.employe.updateProfile',compact(['edit','designation']));
@@ -53,7 +34,7 @@ class EmployeController extends Controller
         $id = $request['id'];
         $slug = $request['slug'];
 
-        $employe = Employee::findOrFail($id);
+        $employe = User::findOrFail($id);
         // get associated Admin Info.
         $admin = User::where('email',$employe->email)->first();
 
@@ -96,7 +77,7 @@ class EmployeController extends Controller
         $date = strtotime($request['join']);
 
         // image Change
-        $old= Employee::find($id);
+        $old= User::find($id);
         $path = public_path('uploads/employe/profile/');
         if($request->hasFile('pic')){
 
@@ -112,7 +93,7 @@ class EmployeController extends Controller
             // $image->scale(width: 300);
             $image->save('uploads/employe/profile/'.$image_name);
 
-            Employee::where('id',$id)->update([
+            User::where('id',$id)->update([
                 'emp_image'=>$image_name,
             ]);
         }
@@ -139,7 +120,7 @@ class EmployeController extends Controller
                 }
         }
         
-        $insert = Employee::where('id',$id)->update([
+        $insert = User::where('id',$id)->update([
             'emp_name'=>$request['name'],
             'email'=>$request['email'],
             'email2'=>$request['email2'],

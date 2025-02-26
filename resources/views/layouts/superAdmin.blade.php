@@ -122,7 +122,6 @@
                             </ul>
                         </div>
                     </li>
-                    
                      <hr>
 
                     <li class="side-nav-item">
@@ -136,7 +135,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
-                            <span class="menu-text">Admin And Role</span>
+                            <span class="menu-text">Users,Role,Permission</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
@@ -145,21 +144,21 @@
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#sidebarAdminAdd" aria-expanded="false" aria-controls="sidebarAdminAdd" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
-                                        <span class="menu-text"> Admin</span>
+                                        <span class="menu-text"> Users</span>
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <div class="collapse" id="sidebarAdminAdd">
                                         <ul class="sub-menu">
 
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.admin')}}" class="side-nav-link">
+                                                <a href="{{route('superadmin.employe')}}" class="side-nav-link">
                                                     <span class="menu-text">All Admin</span>
                                                 </a>
                                             </li>
 
                                             @can('Add Admin')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.admin.add')}}" class="side-nav-link">
+                                                <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Admin</span>
                                                 </a>
                                             </li>
@@ -739,7 +738,7 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('superadmin.view.profile',Crypt::encrypt(Auth::user()->id) ) }}" class="dropdown-item notify-item">
+                                <a href="{{ route('superadmin.employe.profile',Crypt::encrypt(Auth::user()->id) ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Profile</span>
                                 </a>

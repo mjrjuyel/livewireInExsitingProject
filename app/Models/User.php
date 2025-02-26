@@ -29,21 +29,6 @@ class User extends Authenticatable
         'resign_date' => 'datetime',
     ];
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'status',
-        'username',
-        'image',
-        'slug',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -78,6 +63,9 @@ class User extends Authenticatable
 
     public function creator(){
         return $this->belongsTo(User::class,'creator','id');
+    }
+    public function editor(){
+        return $this->belongsTo(User::class,'editor','id');
     }
 
     public function dailyreport(){

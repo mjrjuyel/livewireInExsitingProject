@@ -334,6 +334,21 @@
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
+                                                
+                                                    <div class="col-sm-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Role</label>
+                                                            <select class="form-control" type="text" name="role">
+                                                            <option disabled> Select Role</option>
+                                                            @foreach($roles as $role)
+                                                            <option value="{{$role->name}}">{{$role->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                            @error('department')
+                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
 
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
@@ -398,7 +413,7 @@
                                                             <select type="text" class="form-control" name="reporting" value="{{old('reporting')}}">
                                                                 <option value="">Select One</option>
                                                                 @foreach($report as $employe)
-                                                                <option value="{{$employe->id}}" {{old('reporting') == $employe->id ? 'Selected' : '' }}>{{$employe->emp_name}}</option>
+                                                                <option value="{{$employe->id}}" {{old('reporting') == $employe->id ? 'Selected' : '' }}>{{$employe->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('reporting')
@@ -424,7 +439,7 @@
                                                         <div class="form-group clearfix">
                                                             <label>Next Evaluation Date : </label>
                                                             <input name="eva_end_date" type="date" class="form-control" value="{{old('eva_end_date')}}">
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->

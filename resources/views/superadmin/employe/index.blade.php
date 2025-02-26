@@ -65,10 +65,11 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Employee Pic</th>
+                                    
+                                    <th class="text-center">Picture</th>
                                     <th class="text-center">Designation</th>
+                                    <th class="text-center">Role</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-center">Reporting Manager</th>
 
                                     <th class="text-center">Status</th>
                                     @can('Login Employee Profile')
@@ -82,37 +83,42 @@
                                 @foreach ($employe as $employe)
                                 <tr>
                                     <td>
-                                        {{ $employe->emp_name }}
+                                        {{ $employe->name }}
                                     </td>
 
                                     <td>
-                                        @if ($employe->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" alt="" style="width: 100%;
+                                        @if ($employe->image != '')
+                                        <img src="{{ asset('uploads/employe/profile/'.$employe->image) }}" alt="" style="width: 100%;
                                          max-width: 70px; height: 100%;object-fit: cover;border-radius: 50%;max-height: 70px;object-position: top;">
                                         @endif
                                     </td>
                                     <td>{{ optional($employe->emp_desig)->title }}</td>
                                     <td>
+                                        @foreach($employe->roles as $role)
+                                         <button type="button" class="btn btn-primary mt-1">
+                                            {{$role->name}}
+                                            </button>
+                                        @endforeach
+                                    </td>
+                                    <td>
                                         {{ $employe->email }}
                                     </td>
 
+                                   
                                     <td>
-                                        {{ optional($employe->reporting)->emp_name }}
-                                    </td>
-                                    <td>
-                                        @if($employe->emp_status == 1)
+                                        @if($employe->status == 1)
                                         <button type="button" class="btn btn-primary ">
                                             Active
                                         </button>
-                                        @elseif($employe->emp_status == 2)
+                                        @elseif($employe->status == 2)
                                         <button type="button" class="btn btn-warning ">
                                             Suspend
                                         </button>
-                                        @elseif($employe->emp_status == 3)
+                                        @elseif($employe->status == 3)
                                         <button type="button" class="btn btn-danger ">
                                             Resigned
                                         </button>
-                                        @elseif($employe->emp_status == 0)
+                                        @elseif($employe->status == 0)
                                         <button type="button" class="btn btn-danger">
                                             Recycle Bin
                                         </button>
@@ -137,12 +143,12 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 @can('View Employee')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                 </i>View</a>
                                                 @endcan
                                                 </li>
                                                 @can('Edit Employee')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.$employe->emp_slug) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
+                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                 @endcan
                                                 @can('Delete Employee')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$employe->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
@@ -183,7 +189,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.employe.softdelete')}}" method="post">
+            <form action="{{route('superadmin.view.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>

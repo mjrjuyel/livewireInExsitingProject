@@ -64,27 +64,7 @@ Route::middleware('isEmploye')->group(function(){
          // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
          Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
          Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-      
-         
-
-       
-       
-         //  Switch Into User
-         Route::post('/dashboard/asAdmin/{id}',[EmployeController::class,'loginAdmin'])->name('dashboard.asAdmin');
-
-        // // Employe Daily Reports Submit
-        //  Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
-        //  Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
-        //  Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
-        //  Route::get('/dashboard/dailyreport/edit/{slug}',[DailyReportController::class,'edit'])->name('dashboard.dailyreport.edit');
-        //  Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
-        //  Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
-
        });
-
-       Route::get('/notActiveUser',function(){ 
-        return view('employe.notActiveUser');
-        })->name('notActiveUser');
 
 });
 
@@ -125,10 +105,16 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/superadmin/employe/restore',[AdminEmployeController::class,'restore'])->name('superadmin.employe.restore');
                 Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
                 Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
+
+                // my Profile
+                Route::get('/superadmin/employe/profile/{slug}',[AdminEmployeController::class,'profileView'])->name('superadmin.employe.profile');
+                Route::get('/superadmin/employe/editprofile/{slug}',[AdminEmployeController::class,'profileEdit'])->name('superadmin.employe.editprofile');
+                Route::get('/superadmin/employe/updateprofile/{slug}',[AdminEmployeController::class,'updateProfile'])->name('superadmin.employe.updateprofile');
                 // log in as a employee
                 Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
-                // Route::post('/superadmin/asEmploye/{id}',[AdminEmployeController::class,'employeLogin'])->name('superadmin.asEmploye');
+               
                 // get data from select
+
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
 
