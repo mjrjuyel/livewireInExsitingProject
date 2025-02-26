@@ -326,9 +326,10 @@ Route::middleware(['auth','verified'])->group(function(){
                 })->name('invalidAccess');
 
                  // Work Like Employeee data
-                 // Dsahboard Index
+
+                // Dsahboard Index
                 Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-                 // Leave Application for Employee
+                // Leave Application for Employee
                 Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
                 Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
                 Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
@@ -337,7 +338,6 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
                 Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
                 Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
-
                 
                 // Leave Application status by General User
                 Route::get('/dashboard/earlyleave/add',[EarlyLeaveController::class,'add'])->name('dashboard.earlyleave.add');

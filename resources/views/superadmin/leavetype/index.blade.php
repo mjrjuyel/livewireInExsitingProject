@@ -80,11 +80,9 @@
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.leavetype.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('superadmin.leavetype.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
-                                                @if(Auth::user()->role_id == 1)
                                                 <li>
                                                     <a href="#" id="delete" data-id="{{$role->id}}" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert"></i>Delete</a>
                                                 </li>
-                                                @endif
                                             </ul>
                                         </div>
                                     </td>

@@ -122,6 +122,7 @@
                             </ul>
                         </div>
                     </li>
+                    
                      <hr>
 
                     <li class="side-nav-item">
@@ -288,8 +289,6 @@
                         </div>
                     </li>
                     @endcan
-
-
 
                     @can('Daily-Report')
                     <li class="side-nav-item">
