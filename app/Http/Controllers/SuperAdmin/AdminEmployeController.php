@@ -32,23 +32,13 @@ class AdminEmployeController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('permission:All Admin')->only('index');
-        $this->middleware('permission:Add Admin')->only('add','insert');
-        $this->middleware('permission:Edit Admin')->only('edit','update');
-        $this->middleware('permission:View Admin')->only('view');
-        $this->middleware('permission:Delete Admin')->only('delete','softDelete');
-        $this->middleware('permission:Login Employee Profile')->only('login');
+        $this->middleware('permission:All User')->only('index');
+        $this->middleware('permission:Add User')->only('add','insert');
+        $this->middleware('permission:Edit User')->only('edit','update');
+        $this->middleware('permission:View User')->only('view');
+        $this->middleware('permission:Delete User')->only('delete','softDelete');
+        $this->middleware('permission:Login Another Profile')->only('login');
     }
-
-    // public function __construct(){
-    //     $this->middleware('permission:Add Employee')->only('add','insert');
-    //     $this->middleware('permission:Edit Employee')->only('edit','update');
-    //     $this->middleware('permission:View Employee')->only('view','index');
-    //     $this->middleware('permission:Soft Delete Employee')->only('softdele');
-    //     $this->middleware('permission:Restore Employee')->only('softdele');
-    //     $this->middleware('permission:Delete Employee')->only('delete');
-    
-    // }
 
     // Fethch All Employer Data
     public function index(){

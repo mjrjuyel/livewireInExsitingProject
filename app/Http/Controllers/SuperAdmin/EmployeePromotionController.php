@@ -16,6 +16,14 @@ use Session;
 
 class EmployeePromotionController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:All Employee Promotion')->only('index');
+        $this->middleware('permission:Add Employee Promotion')->only('add','insert');
+        $this->middleware('permission:Edit Employee Promotion')->only('edit','update');
+        $this->middleware('permission:View Employee Promotion')->only('view');
+        $this->middleware('permission:Delete Employee Promotion')->only('delete','softDelete');
+    }
+
     public function index($id){
         $userId = Crypt::decrypt($id);
         $allPromotion = EmployeePromotion::where('emp_id',$userId)->orderBy('pro_date','DESC')->get();

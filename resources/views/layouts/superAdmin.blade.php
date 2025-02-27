@@ -124,14 +124,16 @@
                     </li>
                      <hr>
 
+                    @can('Application Dashboard')
                     <li class="side-nav-item">
                         <a href="{{route('superadmin')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text">Application Dashboard </span>
                         </a>
                     </li>
+                    @endcan
 
-                    @can('Admin & Role')
+                    @can('User & Role')
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
@@ -140,7 +142,7 @@
                         </a>
                         <div class="collapse" id="sidebarAdmin">
                             <ul class="sub-menu">
-                                @can('All Admin')
+                                @can('All User')
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#sidebarAdminAdd" aria-expanded="false" aria-controls="sidebarAdminAdd" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
@@ -156,7 +158,7 @@
                                                 </a>
                                             </li>
 
-                                            @can('Add Admin')
+                                            @can('Add User')
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add User</span>
@@ -239,21 +241,25 @@
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.leave')}}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
-                                        <span class="menu-text">Leave Application </span>
+                                        <span class="menu-text">All Leave Application </span>
                                     </a>
                                 </li>
+                                @endcan
 
-                                <li class="side-nav-item">
+                                @can('All Early Leave')
+                                    <li class="side-nav-item">
                                     <a href="{{route('admin.earlyleave')}}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-battery-off-outline"></i></span>
                                         <span class="menu-text">Early Leave Application </span>
                                     </a>
                                 </li>
                                 @endcan
+                                
 
-                                @can('Leave Manually Add')
+                                @can('Add Manual Leave')
                                 <li class="side-nav-item">
                                     <a href="{{route('superadmin.leave.add')}}" class="side-nav-link">
+                                        <span class="menu-icon"><i class="mdi mdi-battery-off-outline"></i></span>
                                         <span class="menu-text">Add Leave Manually</span>
                                     </a>
                                 </li>
@@ -722,7 +728,7 @@
                         <div class="dropdown">
                             <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,25" type="button" aria-haspopup="false" aria-expanded="false">
                                 @if(Auth::user()->image != '')
-                                <img src="{{ asset('uploads/adminprofile/'.Auth::user()->image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
+                                <img src="{{ asset('uploads/employe/profile/'.Auth::user()->image) }}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @else
                                 <img src="{{ asset('uploads/adminprofile/img.jpg')}}" class="rounded-circle me-lg-2 d-flex img-fluid" style="width:35px; height:35px; object-fit:cover;" alt="user-image">
                                 @endif

@@ -163,7 +163,7 @@
                                                             </li>
                                                            @endcan
                                                             @if($data->add_from == Auth::user()->name && $data->status == 2)
-                                                            @can('Edit Leave')
+                                                            @can('Edit Manual Leave')
                                                                 <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                             </li>
                                                             @endcan

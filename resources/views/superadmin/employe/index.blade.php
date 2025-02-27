@@ -52,7 +52,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        @can('Add Employee')
+                        @can('Add User')
                         <div class="col-sm-5">
                             <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
@@ -72,7 +72,7 @@
                                     <th class="text-center">Email</th>
 
                                     <th class="text-center">Status</th>
-                                    @can('Login Employee Profile')
+                                    @can('Login Another Profile')
                                     <th class="text-center">Dashboard login</th>
                                     @endcan
 
@@ -125,7 +125,7 @@
                                         @endif
                                     </td>
 
-                                    @can('Login Employee Profile')
+                                    @can('Login Another Profile')
                                     <td>
                                         <form action="{{ url('/superadmin/employe/login/'.$employe->id) }}" method="post">
                                             @csrf
@@ -142,15 +142,15 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                @can('View Employee')
+                                                @can('View User')
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                 </i>View</a>
                                                 @endcan
                                                 </li>
-                                                @can('Edit Employee')
+                                                @can('Edit User')
                                                 <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                 @endcan
-                                                @can('Delete Employee')
+                                                @can('Delete User')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$employe->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>

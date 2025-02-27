@@ -22,7 +22,7 @@
     </div>
 
     <div class="row">
-        @can('Employee')
+        @can('All User')
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">

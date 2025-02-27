@@ -291,7 +291,7 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('M')}}</span></h6>
                     <h3 class="my-3">{{convertTime($earlyleave)}}</h3>
-                
+
                 </div>
             </div>
         </div>
@@ -301,7 +301,7 @@
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     <h3 class="my-3">{{convertTime($earlyleaveYear)}}</h3>
-                
+
                 </div>
             </div>
         </div>
@@ -323,19 +323,25 @@
                                         <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>{{$view->name}}
                                         </h3>
                                     </div>
-                                    
+
                                     <div class="col-md-2 text-end"><a href="{{route('superadmin.employe')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Employe</a>
                                     </div>
+                                    @can('All Employee Evaluation')
                                     <div class="col-md-2 text-center"><a href="{{route('admin.evaluation',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>Evaluation History</a>
                                     </div>
+                                    @endcan
+                                    @can('All Employee Promotion')
                                     <div class="col-md-2 text-center"><a href="{{route('admin.promotion',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i> Promotion History</a>
                                     </div>
+                                    @endcan
+                                    @can('Edit User')
                                     <div class="col-md-2 text-center"><a href="{{route('superadmin.employe.edit',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
                                     </div>
+                                    @endcan
                                 </div>
                             </div>
 
@@ -391,8 +397,10 @@
                                     <td>:</td>
                                     <td>
                                         <span class="text-info"> {{ $activeDesig != '' ? $activeDesig->emp_desig->title : optional($view->emp_desig)->title}}</span>
+                                        @can('Add Employee Promotion')
                                         <button class="btn btn-primary">
-                                        <a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#promotion"><i class="mdi mdi-stairs-up"></i>Promotion</a></button>
+                                            <a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#promotion"><i class="mdi mdi-stairs-up"></i>Promotion</a></button>
+                                        @endcan
                                     </td>
                                 </tr>
 
@@ -463,8 +471,15 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                     <div class="col-md-7"><h5 class="card-title">Evaluation</h5></div>
-                                     <div class="col-md-5 text-end"><button class="btn btn-primary"><a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#evaluation"><i class="mdi mdi-receipt-text-edit"></i> Renew</a></button></div>
+                                        <div class="col-md-7">
+                                            <h5 class="card-title">Evaluation</h5>
+                                        </div>
+                                        <div class="col-md-5 text-end">
+                                            @can('Add Employee Evaluation')
+                                            <button class="btn btn-primary"><a href="#" class=" dropdown-item waves-effect waves-light text-white" data-bs-toggle="modal" data-bs-target="#evaluation"><i class="mdi mdi-receipt-text-edit"></i> Renew</a>
+                                            </button>
+                                            @endcan
+                                        </div>
                                     </div>
                                 </div>
                                 @php
@@ -603,7 +618,7 @@
                         <div class="col-md-6 offset-md-3">
                             <div class="form-group clearfix">
                                 <label>Next Evaluation Date<span class="text-danger">*</span> :</label>
-                                <input type="text" class="form-control" id="humanfd-datepicker" name="eva_next_date" value=""  placeholder="Select End Date">
+                                <input type="text" class="form-control" id="humanfd-datepicker" name="eva_next_date" value="" placeholder="Select End Date">
                                 @error('eva_next_date')
                                 <small class="form-text text-warning">{{ $message }}</small>
                                 @enderror
@@ -685,20 +700,20 @@
                                 <select type="text" class="form-control" name="empType">
                                     <option value="">Select One</option>
 
-                                    <option value="Full Time" @if($activeDesig != '' && $activeDesig->emp_type == 'Full Time') Selected @elseif($activeDesig == '' && $view->emp_type == 'Full Time') Selected @elseif(old('empType') == 'Full Time') Selected @endif>Full Time </option>
+                                    <option value="Full Time" @if($activeDesig !='' && $activeDesig->emp_type == 'Full Time') Selected @elseif($activeDesig == '' && $view->emp_type == 'Full Time') Selected @elseif(old('empType') == 'Full Time') Selected @endif>Full Time </option>
 
-                                    <option value="Part Time" @if($activeDesig != '' && $activeDesig->emp_type == 'Part Time') Selected @elseif($activeDesig == '' && $view->emp_type == 'Part Time') Selected @elseif(old('empType') == 'Part Time') Selected @endif>Part Time</option>
+                                    <option value="Part Time" @if($activeDesig !='' && $activeDesig->emp_type == 'Part Time') Selected @elseif($activeDesig == '' && $view->emp_type == 'Part Time') Selected @elseif(old('empType') == 'Part Time') Selected @endif>Part Time</option>
 
-                                    <option value="Freelance" @if($activeDesig != '' && $activeDesig->emp_type == 'Freelance') Selected @elseif($activeDesig == '' && $view->emp_type == 'Freelance') Selected @elseif(old('empType') == 'Freelance') Selected @endif>Frelance</option>
+                                    <option value="Freelance" @if($activeDesig !='' && $activeDesig->emp_type == 'Freelance') Selected @elseif($activeDesig == '' && $view->emp_type == 'Freelance') Selected @elseif(old('empType') == 'Freelance') Selected @endif>Frelance</option>
 
-                                    <option value="Contract" @if($activeDesig != '' && $activeDesig->emp_type == 'Contract') Selected @elseif($activeDesig == '' && $view->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
+                                    <option value="Contract" @if($activeDesig !='' && $activeDesig->emp_type == 'Contract') Selected @elseif($activeDesig == '' && $view->emp_type == 'Contract') Selected @elseif(old('empType') == 'Contract') Selected @endif>Contract</option>
 
-                                    <option value="Internship" @if($activeDesig != '' && $activeDesig->emp_type == 'Internship') Selected @elseif($activeDesig == '' && $view->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
+                                    <option value="Internship" @if($activeDesig !='' && $activeDesig->emp_type == 'Internship') Selected @elseif($activeDesig == '' && $view->emp_type == 'Internship') Selected @elseif(old('empType') == 'Internship') Selected @endif>Internship</option>
 
-                                    <option value="Remote" @if($activeDesig != '' && $activeDesig->emp_type == 'Remote') Selected @elseif($activeDesig == '' && $view->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
+                                    <option value="Remote" @if($activeDesig !='' && $activeDesig->emp_type == 'Remote') Selected @elseif($activeDesig == '' && $view->emp_type == 'Remote') Selected @elseif(old('empType') == 'Remote') Selected @endif>Remote</option>
 
-                                    <option value="Hybrid" @if($activeDesig != '' && $activeDesig->emp_type == 'Hybrid') Selected @elseif($activeDesig == '' && $view->emp_type == 'Hybrid') Selected @elseif(old('empType') == 'Hybrid') Selected @endif>Hybrid</option>
-                                    
+                                    <option value="Hybrid" @if($activeDesig !='' && $activeDesig->emp_type == 'Hybrid') Selected @elseif($activeDesig == '' && $view->emp_type == 'Hybrid') Selected @elseif(old('empType') == 'Hybrid') Selected @endif>Hybrid</option>
+
                                 </select>
                                 @error('empType')
                                 <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -749,7 +764,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" id="gender3" value="Unchanged"  Checked>
+                                        <input class="form-check-input" type="radio" name="status" id="gender3" value="Unchanged" Checked>
                                         <label class="form-check-label" for="gender3">
                                             Unchanged
                                         </label>

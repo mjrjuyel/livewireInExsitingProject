@@ -15,6 +15,14 @@ use Session;
 
 class AdminEarlyLeaveController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:All Early Leave')->only('index');
+        $this->middleware('permission:Add Early Leave')->only('add','insert');
+        $this->middleware('permission:Edit Early Leave')->only('edit');
+        $this->middleware('permission:View Early Leave')->only('view','update');
+        $this->middleware('permission:Delete Early Leave')->only('delete','softDelete');
+    }
+
     public function index(){
         $leaves = EarlyLeave::where('status','!=',0)->latest('id')->get();
         // return $leaves;

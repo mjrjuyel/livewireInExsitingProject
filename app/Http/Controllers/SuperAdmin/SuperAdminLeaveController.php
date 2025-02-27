@@ -29,8 +29,8 @@ class SuperAdminLeaveController extends Controller
 
     public function __construct(){
         $this->middleware('permission:Leave Application List')->only('index');
-        $this->middleware('permission:Leave Manually Add')->only('add','insert');
-        $this->middleware('permission:Edit Leave')->only('edit','updateleave');
+        $this->middleware('permission:Add Manual Leave')->only('add','insert');
+        $this->middleware('permission:Edit Manual Leave')->only('edit','updateleave');
         $this->middleware('permission:View Leave')->only('view','update');
         $this->middleware('permission:Delete Leave')->only('delete');
     }

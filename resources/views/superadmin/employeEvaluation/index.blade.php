@@ -103,14 +103,20 @@
                                                 @php
                                                     $onlyEdit = App\Models\Employeeevaluation::latest('renewed_at')->first();
                                                 @endphp
+
                                                 @if($onlyEdit->id == $evaluation->id)
-                                                <li><a href="{{route('admin.evaluation.edit',Crypt::encrypt($evaluation->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
+                                                @can('Edit Employee Evaluation')
+                                                    <li><a href="{{route('admin.evaluation.edit',Crypt::encrypt($evaluation->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
                                                         </i>Edit</a>
                                                 </li>
+                                                @endcan
                                                 @endif
-                                                <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$evaluation->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                
+                                                @can('Delete Employee Evaluation')
+                                                    <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$evaluation->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
-                                                </li>
+                                                    </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </td>

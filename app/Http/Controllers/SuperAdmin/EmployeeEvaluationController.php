@@ -17,6 +17,13 @@ use Session;
 
 class EmployeeEvaluationController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:All Employee Evaluation')->only('index');
+        $this->middleware('permission:Add Employee Evaluation')->only('add','insert');
+        $this->middleware('permission:Edit Employee Evaluation')->only('edit','update');
+        $this->middleware('permission:View Employee Evaluation')->only('view');
+        $this->middleware('permission:Delete Employee Evaluation')->only('delete','softDelete');
+    }
     public function index($id){
         $userId = Crypt::decrypt($id);
         $allEvaluation = EmployeeEvaluation::where('emp_id',$userId)->latest('id')->get();

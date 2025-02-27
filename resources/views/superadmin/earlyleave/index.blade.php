@@ -69,12 +69,12 @@
                                 @foreach ($leaves as $leave)
                                 <tr>
                                     <td>
-                                       {{$leave->employe->name}}
+                                        {{$leave->employe->name}}
                                     </td>
 
                                     <td>
                                         @if($leave->leave_type != 0)
-                                          {{$leave->leavetype->type_title}}
+                                        {{$leave->leavetype->type_title}}
                                         @else
                                         Other Reason
                                         @endif
@@ -84,7 +84,7 @@
                                         {{$leave->leave_date->format('d-M-Y')}}
                                     </td>
                                     <td>
-                                         {{displayTime($leave->start)}} To {{displayTime($leave->end)}}
+                                        {{displayTime($leave->start)}} To {{displayTime($leave->end)}}
                                     </td>
 
                                     <td>
@@ -117,16 +117,20 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                               
+                                                @can('View Early Leave')
                                                 <li><a class="dropdown-item" href="{{ url('/admin/earlyleave/view/'.Crypt::encrypt($leave->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                 </li>
-
+                                                @endcan
                                                 {{-- @if($leave->status == 4 || $leave->status == 1)
                                                 <li><a class="dropdown-item" href="{{ url('/admin/earlyleave/edit/'.Crypt::encrypt($leave->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                 </li>
                                                 @endif --}}
+                                                @can('Delete Early Leave')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$leave->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>
+                                                @endcan
                                             </ul>
                                         </div>
                                     </td>
