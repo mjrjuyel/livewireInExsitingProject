@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Add Employee')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.view',$view->emp_slug)}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>View Employee</a>
+                            <a href="{{route('superadmin.employe.view',Crypt::encrypt($view->id))}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>Back View</a>
                         </div>
                         @endcan
                     </div>
@@ -78,7 +78,11 @@
                                         {{$evaluation->eva_next_date}}
                                     </td>
                                     <td>
+                                    @if($evaluation->renewed_at)
                                         {{$evaluation->renewed_at->format('d-M-Y')}}
+                                    @else
+                                        Not Yet
+                                    @endif
                                     </td>
                                     
                                     </td>

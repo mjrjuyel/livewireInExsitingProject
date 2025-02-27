@@ -203,25 +203,24 @@ class AdminEmployeController extends Controller
     public function view($slug){
 
         $userId = Crypt::decrypt($slug);
-     
+
         $defaultLeave = EmployeLeaveSetting::first();
         $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
 
-        $whole_approved_leave = Leave::where('id',$view->id)->where('status',2)->latest('id')->sum('total_leave_this_month');
-        $leaveRequestInMonth = Leave::where('id',$view->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
-        $leaveRequestInYear = Leave::where('id',$view->id)->whereYear('start_date',date('Y'))->count();
+        $whole_approved_leave = Leave::where('emp_id',$view->id)->where('status',2)->latest('id')->sum('total_leave_this_month');
+        $leaveRequestInMonth = Leave::where('emp_id',$view->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
+        $leaveRequestInYear = Leave::where('emp_id',$view->id)->whereYear('start_date',date('Y'))->count();
 
-        $paidRemainingMonth = Leave::where('id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
-        $paidRemainingYear = Leave::where('id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
+        $paidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_paid');
+        $paidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
 
-        $unpaidRemainingMonth = Leave::where('id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
-        $unpaidRemainingYear = Leave::where('id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
 
         // Evalution Data 
-        $EmpEva = EmployeeEvaluation::where('id',$view->id)->latest('renewed_at')->first();
+        $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
 
-        // return $EmpEva->eva_next_date;
-         //Eva date Calculation
+         //Evaluation date Calculation
          if($EmpEva == null || $EmpEva->eva_next_date == ' '){
             // return 'No Eva Date';
             $end_date = new DateTime($view->join_date->format('Y-m-d'));
@@ -233,7 +232,7 @@ class AdminEmployeController extends Controller
             $formatted_end_date = $end_date->format('Y-m-d');
         
             // Leave calculation (Paid/Unpaid)
-            $Evaleaves = Leave::where('id', $view->id)->where('status',2)
+            $Evaleaves = Leave::where('emp_id', $view->id)->where('status',2)
             ->where(function ($query) use ($formatted_start_date, $formatted_end_date) {
                 $query->whereBetween('start_date', [$formatted_start_date, $formatted_end_date])
                       ->whereBetween('end_date', [$formatted_start_date, $formatted_end_date]);
@@ -241,7 +240,7 @@ class AdminEmployeController extends Controller
             }
             else{
                 
-                $Evaleaves = Leave::where('id', $view->id)
+                $Evaleaves = Leave::where('emp_id', $view->id)
                 ->where('status', 2)
                 ->where(function ($query) use ($EmpEva) {
                     $query->whereBetween('start_date', [$EmpEva->eva_last_date, $EmpEva->eva_next_date])
@@ -255,8 +254,8 @@ class AdminEmployeController extends Controller
             $designs = Designation::all();
             $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('id')->first();
             
-            $earlyleave = EarlyLeave::where('status',2)->where('id',$view->id)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
-            $earlyleaveYear = EarlyLeave::where('status',2)->where('id',$view->id)->whereYear('leave_date',date('Y'))->sum('total_hour');
+            $earlyleave = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
+            $earlyleaveYear = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereYear('leave_date',date('Y'))->sum('total_hour');
             // Employee Evalaution Data 
             // return $activeDesig;
          return view('superadmin.employe.view',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva','earlyleave','earlyleaveYear']));

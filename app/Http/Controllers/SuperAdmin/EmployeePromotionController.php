@@ -23,6 +23,8 @@ class EmployeePromotionController extends Controller
         
         $departs = Department::get(['id','depart_name']);
         $designs = Designation::get(['id','title']);
+
+        // return $userId;
         return view('superadmin.employePromotion.index',compact(['allPromotion','view','departs','designs']));
     }
 
@@ -76,7 +78,7 @@ class EmployeePromotionController extends Controller
 
         if($insert){
             Session::flash('success','Employee Promotion Update');
-            return redirect()->route('admin.promotion',Crypt::encrypt($id));
+            return redirect()->route('admin.promotion',Crypt::encrypt($request->employe));
         }
     }
 

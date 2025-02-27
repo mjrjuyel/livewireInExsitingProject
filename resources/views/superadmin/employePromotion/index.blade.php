@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Add Employee')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.view',$view->emp_slug)}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>View Employee</a>
+                            <a href="{{route('superadmin.employe.view',Crypt::encrypt($view->id))}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>Back View</a>
                         </div>
                         @endcan
                     </div>
@@ -61,6 +61,7 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
+                                    <th class="text-center">Name</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Department</th>
                                     <th class="text-center">Promotion Date</th>
@@ -75,7 +76,10 @@
                                 @foreach($allPromotion as $promotion)
                                 <tr>
                                     <td>
-                                        {{ optional($promotion->designation)->title }}
+                                        {{ optional($promotion->employe)->name }}
+                                    </td>
+                                    <td>
+                                        {{ optional($promotion->emp_desig)->title }}
                                     </td>
 
                                     <td>
