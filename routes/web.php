@@ -48,9 +48,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('.');
 
-// Employe Login ======
-// Route::get('/employe/login',[EmployeLoginController::class,'loginEmploye'])->name('employe.login');
-// Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit'])->name('employe.loginsubmit');
 
 // ========= Employe Dashboard
 Route::middleware('isEmploye')->group(function(){
@@ -58,7 +55,7 @@ Route::middleware('isEmploye')->group(function(){
          // Logout 
         //  Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
          // Admin Controller 
-         
+
          Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
          Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
          // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
@@ -75,7 +72,8 @@ Route::post('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'
 // Super Admin Dashboard
 
 Route::middleware(['auth','verified'])->group(function(){
-        Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
+    Route::middleware('isEmployeActive')->group(function(){
+                 Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
 
                 Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
                 Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
@@ -307,11 +305,6 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/superadmin/cateringpayment/{month}',[CateringPaymentController::class,'searchMonth']);
                 Route::get('/superadmin/cateringpayment/year/{year}',[CateringPaymentController::class,'searchYear']);
 
-                // Not As A Super Admin // 404 for not authrized
-                Route::get('invalidAccess',function(){ 
-                    return view('layouts.errorpage.notValidRole');
-                })->name('invalidAccess');
-
                  // Work Like Employeee data
 
                 // Dsahboard Index
@@ -342,6 +335,11 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
                 Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
         });
+
+        Route::get('notActiveUser',function(){
+            return view('employe.notActiveUser');
+        })->name('notActiveUser');
+    });
 
 
 Route::middleware('auth')->group(function () {
