@@ -22,12 +22,12 @@ class DailyReportController extends Controller
     public function index(){
         try{
             // dd('hello');
-            $id = auth('sanctum')->user()->id;
-            $alldata = DailyReport::where('status',1)->where('submit_by',$id)->get();
+            $id = auth()->user()->id;
+            $alldata = DailyReport::where('status',1)->where('submit_by',$id)->simplePaginate(10);
             // dd($alldata);
                 return response()->json([
                     'status'=>true,
-                    'Message'=>'All Daily Reports For Specific Employee',
+                    'Message'=>'Total Daily Reports For Specific Employee is ' .$alldata->count('id'),
                     'Data'=> $alldata
                 ],200);
         }
@@ -207,7 +207,6 @@ class DailyReportController extends Controller
             'data'=>$request->all(),
         ]);
     }
-
 
     public function view($id){
         try{

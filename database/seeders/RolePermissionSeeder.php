@@ -34,9 +34,9 @@ class RolePermissionSeeder extends Seeder
                             -- Employee Dashboard
                             ('Employee', 'web', '2025-02-03 05:35:32', '2025-02-03 05:35:32'),
                             -- Application Dashboard
-                            ('Application Dashboard', 'web', '2025-02-03 05:35:32', '2025-02-03 05:35:32'),
+                            ('Admin Overview', 'web', '2025-02-03 05:35:32', '2025-02-03 05:35:32'),
                             -- User and Role
-                            ('User & Role', 'web', '2025-02-03 05:36:03', '2025-02-03 05:36:15'),
+                            ('User Management', 'web', '2025-02-03 05:36:03', '2025-02-03 05:36:15'),
                             ('All User', 'web', '2025-02-03 05:36:32', '2025-02-03 05:36:32'),
                             ('Add User', 'web', '2025-02-03 05:36:56', '2025-02-03 05:36:56'),
                             ('View User', 'web', '2025-02-03 05:37:29', '2025-02-03 05:37:29'),

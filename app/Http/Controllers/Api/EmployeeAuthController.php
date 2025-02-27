@@ -18,9 +18,9 @@ class EmployeeAuthController extends Controller
 
         // nurul vai
         try{
-            $employee = Employee::select('id', 'emp_name', 'email','email2', 'emp_phone', 'emp_phone2', 'emp_address', 'emp_present', 'emp_emer_contact', 'emp_emer_name', 'emp_emer_relation', 'emp_dob', 'gender', 'marriage', 'emp_image', 'emp_status', 'emp_report_manager', 'emp_depart_id','emp_desig_id','emp_type','emp_join','emp_resign','emp_id_type','emp_id_number','emp_rec_degree','emp_rec_year','emp_bank_id','emp_bank_branch_id', 'emp_bank_account_name','emp_bank_account_number','remember_token','device_token')->Where('email', $request->email)->first();
+            $user = User::select('id', 'name', 'email','email2', 'phone', 'phone2', 'address', 'present', 'emer_contact', 'emer_name', 'emer_relation', 'dob', 'gender', 'marriage', 'image', 'status', 'report_manager', 'depart_id','desig_id','emp_type','join_date','resign_date','id_type','id_number','rec_degree','rec_year','bank_id','bank_branch_id', 'bank_account_name','bank_account_number','remember_token','device_token')->Where('email', $request->email)->first();
 
-        if (!$employee) {
+        if (!$user) {
             return response()->json([
                 'success' => false,
                 'message' => 'Employee not found.',
@@ -28,18 +28,18 @@ class EmployeeAuthController extends Controller
                 'user' => null,
             ],404);
         }
-        DB::table('employees')
-            ->where('device_token', $employee->device_token)
-            ->where('id', '!=', $employee->id)
+        DB::table('users')
+            ->where('device_token', $user->device_token)
+            ->where('id', '!=', $user->id)
             ->update(['device_token' => null]);
 
-            if ($employee && Auth::guard('employee')->attempt(['email' => $employee->email, 'password' => $request->password])) {
-                $token = $employee->createToken('MyApp')->plainTextToken;
+            if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
+                $token = $user->createToken('MyApp')->plainTextToken;
                 return response()->json([
                     'success' => true,
                     'message' => 'User login successfully.',
                     'token' => $token,
-                    'user' => $employee,
+                    'user' => $user,
                 ],200);
             } else {
                 return response()->json([

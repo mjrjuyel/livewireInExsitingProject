@@ -57,7 +57,7 @@
                         <div class="collapse" id="employeActivity">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{ route('dashboard',Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
+                                    <a href="{{ route('dashboard') }}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                                         <span class="menu-text"> Dashboard </span>
                                     </a>
@@ -124,7 +124,7 @@
                     </li>
                      <hr>
 
-                    @can('Application Dashboard')
+                    @can('Admin Overview')
                     <li class="side-nav-item">
                         <a href="{{route('superadmin')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
@@ -133,7 +133,7 @@
                     </li>
                     @endcan
 
-                    @can('User & Role')
+                    @can('User Management')
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
@@ -303,35 +303,6 @@
                         </a>
                     </li>
                     @endcan
-
-                    {{-- @can('Employee')
-                    <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarEmployee" aria-expanded="false" aria-controls="sidebarEmployee" class="side-nav-link">
-                            <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
-                            <span class="menu-text"> Employees</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarEmployee">
-                            <ul class="sub-menu">
-
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.employe')}}" class="side-nav-link">
-                                        <span class="menu-text">All Employee</span>
-                                    </a>
-                                </li>
-
-                                @can('Add Employee')
-                                <li class="side-nav-item">
-                                    <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
-                                        <span class="menu-text">Add Employee</span>
-                                    </a>
-                                </li>
-                                @endcan
-
-                            </ul>
-                        </div>
-                    </li>
-                    @endcan --}}
 
                     @can('Department & Designation')
                     <li class="side-nav-item">
@@ -536,9 +507,6 @@
                         </div>
                     </li>
                     @endcan
-
-
-                    
 
                     @can('Setting')
                     <li class="side-nav-item">

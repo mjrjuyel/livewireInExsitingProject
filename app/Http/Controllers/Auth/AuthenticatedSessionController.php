@@ -30,13 +30,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         foreach(Auth::user()->roles as $role){
            if($role->name == 'Employee'){
-                return redirect()->intended(route('dashboard',Crypt::encrypt(auth()->user()->id)));
+                return redirect()->intended(route('dashboard'));
             }
             else{
                 return redirect()->intended(route('superadmin', absolute: false));
             }
         }
-        return redirect()->intended(route('dashboard',Crypt::encrypt(auth()->user()->id)));
+        return redirect()->intended(route('dashboard'));
         
     }
 

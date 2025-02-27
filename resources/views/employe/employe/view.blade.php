@@ -90,7 +90,7 @@
                                     <td>Designation</td>
                                     <td>:</td>
                                     <td> 
-                                    <button class="btn bg-primary">{{ $activeDesig != '' ? $activeDesig->designation->title : optional($view->desig)->title}}</button>
+                                    <button class="btn bg-primary">{{ $activeDesig != '' ? $activeDesig->emp_desig->title : optional($view->emp_desig)->title}}</button>
                                     </td>
                                 </tr>
 
