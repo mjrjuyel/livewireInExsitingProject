@@ -505,14 +505,9 @@ class AdminEmployeController extends Controller
         return view('superadmin.employe.profileEdit',compact(['edit','designation']));
     }
 
-    public function profileSettingUpdate(Request $request){
+    public function profileUpdate(Request $request){
 
         $id = $request['id'];
-
-        $employe = User::findOrFail($id);
-        // get associated Admin Info.
-        $admin = User::where('email',$employe->email)->first();
-
         $request->validate([
             'name'=>'required',
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
@@ -534,7 +529,8 @@ class AdminEmployeController extends Controller
                 
                    return back()->withErrors(['oldpass' => 'Incorrect current password.']);
                }
-                User::where('id',$admin->id)->update([
+
+                User::where('id',$id)->update([
                     'password'=> Hash::make($request->newpass),
                 ]);
            }
@@ -547,8 +543,8 @@ class AdminEmployeController extends Controller
         $path = public_path('uploads/employe/profile/');
         if($request->hasFile('pic')){
 
-            if($old->emp_image !='' && $old->emp_image != null){
-                $old_pic = $path.$old->emp_image;
+            if($old->image !='' && $old->image != null){
+                $old_pic = $path.$old->image;
                 unlink($old_pic);
             }
 
@@ -560,28 +556,28 @@ class AdminEmployeController extends Controller
             $image->save('uploads/employe/profile/'.$image_name);
 
             User::where('id',$id)->update([
-                'emp_image'=>$image_name,
+                'image'=>$image_name,
             ]);
         }
 
         $insert = User::where('id',$id)->update([
-            'emp_name'=>$request['name'],
+            'name'=>$request['name'],
             'email'=>$request['email'],
             'email2'=>$request['email2'],
-            'emp_phone'=>$request['phone'],
-            'emp_phone2'=>$request['phone2'],
-            'emp_address'=>$request['add'],
-            'emp_present'=>$request['preAdd'],
-            'emp_emer_contact'=>$request['emerPhone'],
-            'emp_emer_name'=>$request['emerName'],
-            'emp_emer_relation'=>$request['emerRelation'],
-            'emp_desig_id'=>$request['desig'],
+            'phone'=>$request['phone'],
+            'phone2'=>$request['phone2'],
+            'address'=>$request['add'],
+            'present'=>$request['preAdd'],
+            'emer_contact'=>$request['emerPhone'],
+            'emer_name'=>$request['emerName'],
+            'emer_relation'=>$request['emerRelation'],
+            'desig_id'=>$request['desig'],
             'updated_at'=>Carbon::now('UTC'),
         ]);
 
         if($insert){
             Session::flash('success','Update Profile SuccessFully ');
-            return redirect()->route('superadmin.employe.profileEdit',Crypt::encrypt($id));
+            return redirect()->route('superadmin.employe.editprofile',Crypt::encrypt($id));
         }
     }
 

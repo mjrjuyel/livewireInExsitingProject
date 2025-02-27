@@ -49,15 +49,16 @@ Route::get('/', function () {
 })->name('.');
 
 // Employe Login ======
-Route::get('/employe/login',[EmployeLoginController::class,'loginEmploye'])->name('employe.login');
-Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit'])->name('employe.loginsubmit');
+// Route::get('/employe/login',[EmployeLoginController::class,'loginEmploye'])->name('employe.login');
+// Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit'])->name('employe.loginsubmit');
 
 // ========= Employe Dashboard
 Route::middleware('isEmploye')->group(function(){
        Route::middleware('isEmployeActive')->group(function(){
          // Logout 
-         Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
+        //  Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
          // Admin Controller 
+         
          Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
          Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
          // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
@@ -109,7 +110,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 // my Profile
                 Route::get('/superadmin/employe/profile/{slug}',[AdminEmployeController::class,'profileView'])->name('superadmin.employe.profile');
                 Route::get('/superadmin/employe/editprofile/{slug}',[AdminEmployeController::class,'profileEdit'])->name('superadmin.employe.editprofile');
-                Route::get('/superadmin/employe/updateprofile/{slug}',[AdminEmployeController::class,'updateProfile'])->name('superadmin.employe.updateprofile');
+                Route::post('/superadmin/employe/updateprofile',[AdminEmployeController::class,'profileUpdate'])->name('superadmin.employe.updateprofile');
                 // log in as a employee
                 Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
                

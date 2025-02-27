@@ -135,7 +135,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
-                            <span class="menu-text">Users,Role,Permission</span>
+                            <span class="menu-text">Users, Roles & <br>Permissions</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">
@@ -152,14 +152,14 @@
 
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.employe')}}" class="side-nav-link">
-                                                    <span class="menu-text">All Admin</span>
+                                                    <span class="menu-text">All User</span>
                                                 </a>
                                             </li>
 
                                             @can('Add Admin')
                                             <li class="side-nav-item">
                                                 <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
-                                                    <span class="menu-text">Add Admin</span>
+                                                    <span class="menu-text">Add User</span>
                                                 </a>
                                             </li>
                                             @endcan
@@ -298,7 +298,7 @@
                     </li>
                     @endcan
 
-                    @can('Employee')
+                    {{-- @can('Employee')
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarEmployee" aria-expanded="false" aria-controls="sidebarEmployee" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-account-star"></i></span>
@@ -325,7 +325,7 @@
                             </ul>
                         </div>
                     </li>
-                    @endcan
+                    @endcan --}}
 
                     @can('Department & Designation')
                     <li class="side-nav-item">

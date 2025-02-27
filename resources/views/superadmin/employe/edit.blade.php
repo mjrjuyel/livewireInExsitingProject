@@ -75,7 +75,7 @@
                             <div class="col-md-2 text-end"><a href="{{ route('superadmin.employe') }}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-account-group btn_icon"></i>All Employe</a>
                             </div>
-                            <div class="col-md-2"><a href="{{ url('superadmin/employe/view/'.$edit->slug) }}" class="btn btn-bg btn-primary btn_header"><i class="mdi mdi-view-array btn_icon"></i>View</a>
+                            <div class="col-md-2"><a href="{{ url('superadmin/employe/view/'.Crypt::encrypt($edit->id)) }}" class="btn btn-bg btn-primary btn_header"><i class="mdi mdi-view-array btn_icon"></i>View</a>
                             </div>
                         </div>
                     </div>
