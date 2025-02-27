@@ -500,7 +500,7 @@
                                                             <label>Institute HSC:- <span class="text-danger">*</span> :</label>
                                                             <input class="required form-control" name="hsc" type="text">
                                                             @error('hsc')
-                                                            <small class="form-text text-warning">{{ $message }}</small>
+                                                        <small class="form-text text-warning">{{ $message }}</small>
                                     @enderror
                                 </div>
 

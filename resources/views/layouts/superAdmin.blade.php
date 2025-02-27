@@ -63,7 +63,7 @@
                                     </a>
                                 </li>
 
-                                <li class="side-nav-title">Extra Pages</li>
+                                <li class="side-nav-title">My Daily Duty</li>
 
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#sidebarDailyReportemployee" aria-expanded="false" aria-controls="sidebarDailyReportemployee" class="side-nav-link">
@@ -128,7 +128,7 @@
                     <li class="side-nav-item">
                         <a href="{{route('superadmin')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
-                            <span class="menu-text">Application Dashboard </span>
+                            <span class="menu-text">Admin Overview</span>
                         </a>
                     </li>
                     @endcan
@@ -137,7 +137,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarAdmin" aria-expanded="false" aria-controls="sidebarAdmin" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-shield-crown"></i></span>
-                            <span class="menu-text">Users, Roles & <br>Permissions</span>
+                            <span class="menu-text">User Management</span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarAdmin">

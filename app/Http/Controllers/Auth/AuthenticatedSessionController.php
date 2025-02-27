@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Crypt;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,8 +28,16 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('superadmin', absolute: false));
+        foreach(Auth::user()->roles as $role){
+           if($role->name == 'Employee'){
+                return redirect()->intended(route('dashboard',Crypt::encrypt(auth()->user()->id)));
+            }
+            else{
+                return redirect()->intended(route('superadmin', absolute: false));
+            }
+        }
+        return redirect()->intended(route('dashboard',Crypt::encrypt(auth()->user()->id)));
+        
     }
 
     /**

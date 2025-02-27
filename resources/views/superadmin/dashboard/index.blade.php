@@ -194,6 +194,19 @@
             </div>
         </div>
         @endcan
+
+       @can('Employee')
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <a href="{{route('dashboard',Crypt::encrypt(auth()->user()->id))}}">
+                     <i class="icon-chart float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-info text-uppercase mt-0">Please Go to:  My Dashboard</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endcan
     </div> <!-- end row -->
        
 </div> <!-- container -->
