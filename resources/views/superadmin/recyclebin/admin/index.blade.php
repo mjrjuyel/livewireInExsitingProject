@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                 <h5 class="modal-title" id="myModalLabel">Restore Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.restore')}}" method="post">
+            <form action="{{route('portal.restore')}}" method="post">
                 @csrf
 
                 <div class="modal-body modal_body">

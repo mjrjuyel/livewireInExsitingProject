@@ -21,7 +21,7 @@
         <!-- Sidenav Menu Start -->
         <div class="sidenav-menu">
             <!-- Brand Logo -->
-            <a href="{{route('superadmin')}}" class="logo">
+            <a href="{{route('portal')}}" class="logo">
                 <span class="logo-light">
                     <span class="logo-lg">
                         <img src="{{asset('uploads/basic/'.$basic->Mlogo)}}" class=" img-fluid" style="width:60%; height:auto" alt="logo"></span>
@@ -126,7 +126,7 @@
 
                     @can('Admin Overview')
                     <li class="side-nav-item">
-                        <a href="{{route('superadmin')}}" class="side-nav-link">
+                        <a href="{{route('portal')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-view-dashboard"></i></span>
                             <span class="menu-text">Admin Overview</span>
                         </a>
@@ -153,14 +153,14 @@
                                         <ul class="sub-menu">
 
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.employe')}}" class="side-nav-link">
+                                                <a href="{{route('portal.employe')}}" class="side-nav-link">
                                                     <span class="menu-text">All User</span>
                                                 </a>
                                             </li>
 
                                             @can('Add User')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.employe.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.employe.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add User</span>
                                                 </a>
                                             </li>
@@ -180,14 +180,14 @@
                                     <div class="collapse" id="sidebarRole">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.role')}}" class="side-nav-link">
+                                                <a href="{{route('portal.role')}}" class="side-nav-link">
                                                     <span class="menu-text">All Role</span>
                                                 </a>
                                             </li>
 
                                             @can('Add Role')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.role.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.role.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Role</span>
                                                 </a>
                                             </li>
@@ -207,14 +207,14 @@
                                     <div class="collapse" id="sidebarPermission">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.permission')}}" class="side-nav-link">
+                                                <a href="{{route('portal.permission')}}" class="side-nav-link">
                                                     <span class="menu-text">All Permission</span>
                                                 </a>
                                             </li>
 
                                             @can('Add')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.permission.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.permission.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add New Permission</span>
                                                 </a>
                                             </li>
@@ -239,7 +239,7 @@
                             <ul class="sub-menu">
                                 @can('Leave Application List')
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.leave')}}" class="side-nav-link">
+                                    <a href="{{route('portal.leave')}}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-airplane-takeoff"></i></span>
                                         <span class="menu-text">All Leave Application </span>
                                     </a>
@@ -258,7 +258,7 @@
 
                                 @can('Add Manual Leave')
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.leave.add')}}" class="side-nav-link">
+                                    <a href="{{route('portal.leave.add')}}" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-battery-off-outline"></i></span>
                                         <span class="menu-text">Add Leave Manually</span>
                                     </a>
@@ -274,14 +274,14 @@
                                     <div class="collapse" id="sidebarLeaveType">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.leavetype')}}" class="side-nav-link">
+                                                <a href="{{route('portal.leavetype')}}" class="side-nav-link">
                                                     <span class="menu-text">All</span>
                                                 </a>
                                             </li>
 
                                             @can('Leave Type Add')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.leavetype.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.leavetype.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add New</span>
                                                 </a>
                                             </li>
@@ -297,7 +297,7 @@
 
                     @can('Daily-Report')
                     <li class="side-nav-item">
-                        <a href="{{route('superadmin.dailyreport')}}" class="side-nav-link">
+                        <a href="{{route('portal.dailyreport')}}" class="side-nav-link">
                             <span class="menu-icon"><i class="mdi mdi-notebook-edit"></i></span>
                             <span class="menu-text"> Daily Report </span>
                         </a>
@@ -323,14 +323,14 @@
                                     <div class="collapse" id="sidebarDepartmentList">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.department')}}" class="side-nav-link">
+                                                <a href="{{route('portal.department')}}" class="side-nav-link">
                                                     <span class="menu-text">All Department</span>
                                                 </a>
                                             </li>
 
                                             @can('Add Department')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.department.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.department.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Department</span>
                                                 </a>
                                             </li>
@@ -350,14 +350,14 @@
                                     <div class="collapse" id="sidebarDesignation">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.designation')}}" class="side-nav-link">
+                                                <a href="{{route('portal.designation')}}" class="side-nav-link">
                                                     <span class="menu-text">All Desigantion</span>
                                                 </a>
                                             </li>
 
                                             @can('Add Designation')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.designation.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.designation.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Desigantion</span>
                                                 </a>
                                             </li>
@@ -381,13 +381,13 @@
                         <div class="collapse" id="sidebarBranchName">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.office_branch')}}" class="side-nav-link">
+                                    <a href="{{route('portal.office_branch')}}" class="side-nav-link">
                                         <span class="menu-text">All Branch</span>
                                     </a>
                                 </li>
                                 @can('Add Bank Branch')
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.office_branch.add')}}" class="side-nav-link">
+                                    <a href="{{route('portal.office_branch.add')}}" class="side-nav-link">
                                         <span class="menu-text">Add Branch</span>
                                     </a>
                                 </li>
@@ -415,14 +415,14 @@
                                     <div class="collapse" id="sidebarBankName">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.bank_name')}}" class="side-nav-link">
+                                                <a href="{{route('portal.bank_name')}}" class="side-nav-link">
                                                     <span class="menu-text">All Bank</span>
                                                 </a>
                                             </li>
 
                                             @can('Add Bank Detail')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.bank_name.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.bank_name.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Bank</span>
                                                 </a>
                                             </li>
@@ -440,13 +440,13 @@
                                     <div class="collapse" id="sidebarBankBranch">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.bank_branch')}}" class="side-nav-link">
+                                                <a href="{{route('portal.bank_branch')}}" class="side-nav-link">
                                                     <span class="menu-text">All Branch</span>
                                                 </a>
                                             </li>
                                             @can('Add Bank Branch')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.bank_branch.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.bank_branch.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Branch</span>
                                                 </a>
                                             </li>
@@ -477,13 +477,13 @@
                                     <div class="collapse" id="sidebarFood">
                                         <ul class="sub-menu">
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.cateringfood')}}" class="side-nav-link">
+                                                <a href="{{route('portal.cateringfood')}}" class="side-nav-link">
                                                     <span class="menu-text">Order in {{date('F')}}</span>
                                                 </a>
                                             </li>
                                             @can('Add Meal')
                                             <li class="side-nav-item">
-                                                <a href="{{route('superadmin.cateringfood.add')}}" class="side-nav-link">
+                                                <a href="{{route('portal.cateringfood.add')}}" class="side-nav-link">
                                                     <span class="menu-text">Add Meal</span>
                                                 </a>
                                             </li>
@@ -494,7 +494,7 @@
 
                                 @can('Check Balance')
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.cateringpayment.checkbill')}}" class="side-nav-link">
+                                    <a href="{{route('portal.cateringpayment.checkbill')}}" class="side-nav-link">
                                         <span class="menu-icon">{{currencyChange()}}</span>
                                         <span class="menu-text"> Check Balance </span>
                                     </a>
@@ -519,18 +519,18 @@
                         <div class="collapse" id="sidebarBasicSetting">
                             <ul class="sub-menu">
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.basic')}}" class="side-nav-link">
+                                    <a href="{{route('portal.basic')}}" class="side-nav-link">
                                         <span class="menu-text">Global Settings</span>
                                     </a>
                                 </li>
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.leavesetting')}}" class="side-nav-link">
+                                    <a href="{{route('portal.leavesetting')}}" class="side-nav-link">
                                         <span class="menu-text">Leave</span>
                                     </a>
                                 </li>
 
                                 <li class="side-nav-item">
-                                    <a href="{{route('superadmin.email')}}" class="side-nav-link">
+                                    <a href="{{route('portal.email')}}" class="side-nav-link">
                                         <span class="menu-text">Email</span>
                                     </a>
                                 </li>
@@ -541,7 +541,7 @@
 
                     @can('Recycle Bin')
                     <li class="side-nav-item">
-                        <a href="{{route('superadmin.recycle')}}" class="side-nav-link">
+                        <a href="{{route('portal.recycle')}}" class="side-nav-link">
                             <span class="menu-icon text-warning"><i class="mdi mdi-trash-can"></i></span>
                             <span class="menu-text text-warning"> Recyclebin </span>
                         </a>
@@ -652,7 +652,7 @@
                                                     <iconify-icon icon="solar:wallet-money-bold-duotone"></iconify-icon>
                                                 </span>
                                             </div>
-                                            <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($item->data['leave_id']))}}">
+                                            <a href="{{url('portal/leave/view/'.Crypt::encrypt($item->data['leave_id']))}}">
                                                 <span class="flex-grow-1 text-muted">
                                                     You have a notification <span class="fw-medium text-body"></span> From <span class="fw-medium text-body"></span>
                                                     <br />
@@ -712,7 +712,7 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('superadmin.employe.profile',Crypt::encrypt(Auth::user()->id) ) }}" class="dropdown-item notify-item">
+                                <a href="{{ route('portal.employe.profile',Crypt::encrypt(Auth::user()->id) ) }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog"></i>
                                     <span>Profile</span>
                                 </a>

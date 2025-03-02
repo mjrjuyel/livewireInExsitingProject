@@ -324,7 +324,7 @@
                                         </h3>
                                     </div>
 
-                                    <div class="col-md-2 text-end"><a href="{{route('superadmin.employe')}}" class="btn btn-bg btn-primary btn_header ">
+                                    <div class="col-md-2 text-end"><a href="{{route('portal.employe')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Employe</a>
                                     </div>
                                     @can('All Employee Evaluation')
@@ -338,7 +338,7 @@
                                     </div>
                                     @endcan
                                     @can('Edit User')
-                                    <div class="col-md-2 text-center"><a href="{{route('superadmin.employe.edit',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                    <div class="col-md-2 text-center"><a href="{{route('portal.employe.edit',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
                                     </div>
                                     @endcan

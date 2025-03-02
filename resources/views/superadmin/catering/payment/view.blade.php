@@ -34,12 +34,12 @@
                                                 class="mdi mdi-noodles header_icon"></i>@if($view->order_date != '') {{$view->order_date->format('D-m-Y')}} @endif
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.cateringpayment')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('portal.cateringpayment')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-noodles btn_icon"></i>All Food Payment</a>
                                     </div>
                                     @can('Edit Payment')
-                                    <div class="col-md-2"><a href="{{route('superadmin.cateringpayment.edit',Crypt::encrypt($view->id))}}"
+                                    <div class="col-md-2"><a href="{{route('portal.cateringpayment.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>

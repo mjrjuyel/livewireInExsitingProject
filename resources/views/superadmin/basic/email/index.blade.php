@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.email.update')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('portal.email.update')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-8 offset-2">
@@ -125,7 +125,7 @@
                             $admin = App\Models\AdminEmail::first();
                             @endphp
 
-                            <form action="{{route('superadmin.activeDailyReportMail')}}" method="post" enctype="">
+                            <form action="{{route('portal.activeDailyReportMail')}}" method="post" enctype="">
                                 @csrf
                                 <div class="row mt-3">
                                     <div class="col-6 text-end">
@@ -159,7 +159,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="{{route('superadmin.activeDailyLeaveMail')}}" method="post" enctype="">
+                            <form action="{{route('portal.activeDailyLeaveMail')}}" method="post" enctype="">
                                 @csrf
                                 <div class="row mt-3">
                                     <div class="col-6 text-end">
@@ -193,7 +193,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="{{route('superadmin.activeDailySummaryMail')}}" method="post" enctype="">
+                            <form action="{{route('portal.activeDailySummaryMail')}}" method="post" enctype="">
                                 @csrf
                                 <div class="row mt-3">
                                     <div class="col-6 text-end">

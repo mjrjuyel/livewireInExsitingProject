@@ -66,7 +66,7 @@
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 offset-md-2 text-end"><a href="{{ route('superadmin.employe') }}" class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-2 offset-md-2 text-end"><a href="{{ route('portal.employe') }}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-account-group-outline btn_icon"></i>All Employee</a>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="card-body pt-2">
 
-                                    <form action="{{ route('superadmin.employe.insert') }}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('portal.employe.insert') }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div>
                                             <h3 class="text-info">Personal Information :-</h3>

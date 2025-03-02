@@ -32,7 +32,7 @@
                         <div class="row float-end">
                            <div class="col-md-12">
                              @can('View Payment')
-                             <a href="{{route('superadmin.cateringpayment')}}" class="btn btn-primary" style="display:inline-flex; gap:4px;">
+                             <a href="{{route('portal.cateringpayment')}}" class="btn btn-primary" style="display:inline-flex; gap:4px;">
                                 <span class="menu-icon" style="fonst-size:14px"><i class="mdi mdi-history"></i></span>
                                 <span class="menu-text"> Payment History </span>
                              </a>
@@ -141,7 +141,7 @@
                         <div class="float-end">
                             <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i class="fa fa-print"></i></a>
                             @can('Add Payment')
-                            <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary waves-effect waves-light">Pay Bill</a>
+                            <a href="{{route('portal.cateringpayment.add')}}" class="btn btn-primary waves-effect waves-light">Pay Bill</a>
                             @endcan
                         </div>
                         <div class="clearfix"></div>

@@ -119,7 +119,7 @@
                 <h5 class="modal-title" id="myModalLabel">Parmanent Delete A report !</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.dailyreport.delete')}}" method="post">
+            <form action="{{route('portal.dailyreport.delete')}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body modal_body">
@@ -144,7 +144,7 @@
                 <h5 class="modal-title" id="myModalLabel">Restore Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.dailyreport.restore')}}" method="post">
+            <form action="{{route('portal.dailyreport.restore')}}" method="post">
                 @csrf
 
                 <div class="modal-body modal_body">

@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         <div class="col-sm-5">
                             @can('Add Role')
-                            <a href="{{route('superadmin.role.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.role.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Role
                             </a>  
                             @endcan    
@@ -98,10 +98,10 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 @can('View Role')
-                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.view',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                 <li><a class="dropdown-item" href="{{ route('portal.role.view',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
                                                 @endcan
                                                 @can('Edit Role')
-                                                 <li><a class="dropdown-item" href="{{ route('superadmin.role.edit',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                 <li><a class="dropdown-item" href="{{ route('portal.role.edit',Crypt::encrypt($role->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 @endcan
                                                 @can('Delete Role')
                                                  <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$role->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
@@ -137,7 +137,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete a Role </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.role.delete')}}" method="post">
+            <form action="{{route('portal.role.delete')}}" method="post">
             @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

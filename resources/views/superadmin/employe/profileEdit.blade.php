@@ -68,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('superadmin.employe.updateprofile') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('portal.employe.updateprofile') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-5 offset-1">

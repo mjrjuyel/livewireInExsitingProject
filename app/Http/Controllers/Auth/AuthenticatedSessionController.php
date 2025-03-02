@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(route('dashboard'));
             }
             else{
-                return redirect()->intended(route('superadmin', absolute: false));
+                return redirect()->intended(route('portal', absolute: false));
             }
         }
         return redirect()->intended(route('dashboard'));

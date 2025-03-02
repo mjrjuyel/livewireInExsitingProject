@@ -82,7 +82,7 @@ class AdminDailyReportController extends Controller
                 
                                     // Check if the user has "View Daily-Report" permission
                                     if (auth()->user()->can('View Daily-Report')) {
-                                        $html .= '<li><a class="dropdown-item" href="' . url('superadmin/dailyreport/view/'.Crypt::encrypt($data->slug)) . '"><i class="mdi mdi-eye-circle-outline"></i> View</a></li>';
+                                        $html .= '<li><a class="dropdown-item" href="' . url('portal/dailyreport/view/'.Crypt::encrypt($data->slug)) . '"><i class="mdi mdi-eye-circle-outline"></i> View</a></li>';
                                     }
                                 
                                     // Check if the user has "Soft Delete Daily-Report" permission

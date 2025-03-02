@@ -61,7 +61,7 @@
 
                 <div class="card-body">
                     <div class="col-sm-5 mb-2">
-                        <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                        <a href="{{route('portal.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                             Employee</a>
                     </div>
                     <div class="card-header bg-dark">
@@ -72,14 +72,14 @@
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{ route('superadmin.employe') }}" class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-2 text-end"><a href="{{ route('portal.employe') }}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-account-group btn_icon"></i>All Employe</a>
                             </div>
-                            <div class="col-md-2"><a href="{{ url('superadmin/employe/view/'.Crypt::encrypt($edit->id)) }}" class="btn btn-bg btn-primary btn_header"><i class="mdi mdi-view-array btn_icon"></i>View</a>
+                            <div class="col-md-2"><a href="{{ url('portal/employe/view/'.Crypt::encrypt($edit->id)) }}" class="btn btn-bg btn-primary btn_header"><i class="mdi mdi-view-array btn_icon"></i>View</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('superadmin.employe.update') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('portal.employe.update') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mt-5">
                             <h3 class="text-info">Personal Information :-</h3>

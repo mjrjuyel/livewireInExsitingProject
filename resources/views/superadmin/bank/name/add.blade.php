@@ -82,12 +82,12 @@
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.bank_name')}}" class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-2 text-end"><a href="{{route('portal.bank_name')}}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Bank Name</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.bank_name.insert')}}" method="post">
+                    <form action="{{route('portal.bank_name.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">

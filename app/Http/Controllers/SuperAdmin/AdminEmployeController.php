@@ -36,7 +36,9 @@ class AdminEmployeController extends Controller
         $this->middleware('permission:Add User')->only('add','insert');
         $this->middleware('permission:Edit User')->only('edit','update');
         $this->middleware('permission:View User')->only('view');
-        $this->middleware('permission:Delete User')->only('delete','softDelete');
+        $this->middleware('permission:Soft Delete User')->only('softdele'); 
+        $this->middleware('permission:Restore User')->only('restore'); 
+        $this->middleware('permission:Delete User')->only('delete');
         $this->middleware('permission:Login Another Profile')->only('login');
     }
 
@@ -185,7 +187,7 @@ class AdminEmployeController extends Controller
 
             if($insert){
                 Session::flash('success','New Employee Add ');
-                return redirect()->route('superadmin.employe.add');
+                return redirect()->route('portal.employe.add');
             }
     }
     
@@ -432,7 +434,6 @@ class AdminEmployeController extends Controller
     // Softy Delete 
     public function softdele(Request $request){
         $id = $request['id'];
-
         $softdel = User::where('id',$id)->update([
             'status'=>0,
             'editor'=>Auth::user()->id,
@@ -566,7 +567,7 @@ class AdminEmployeController extends Controller
 
         if($insert){
             Session::flash('success','Update Profile SuccessFully ');
-            return redirect()->route('superadmin.employe.editprofile',Crypt::encrypt($id));
+            return redirect()->route('portal.employe.editprofile',Crypt::encrypt($id));
         }
     }
 
@@ -574,6 +575,6 @@ class AdminEmployeController extends Controller
     {
         $employe = User::findOrFail(($id));
         auth()->login($employe, true);
-        return redirect()->route('superadmin');
+        return redirect()->route('portal');
     }
 }

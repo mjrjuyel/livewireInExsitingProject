@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Add Employee')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.view',Crypt::encrypt($view->id))}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>Back View</a>
+                            <a href="{{route('portal.employe.view',Crypt::encrypt($view->id))}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>Back View</a>
                         </div>
                         @endcan
                     </div>
@@ -111,7 +111,7 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                {{-- <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$promotion->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
+                                                {{-- <li><a class="dropdown-item" href="{{ route('portal.designation.view',$promotion->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
 
                                                 @php
                                                 $onlyEdit = App\Models\EmployeePromotion::latest('pro_date')->first();

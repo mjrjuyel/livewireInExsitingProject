@@ -61,58 +61,58 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-2">
-                            <a href="{{route('superadmin.cateringfood.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
+                            <a href="{{route('portal.cateringfood.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
                                
                         </div>
                         <div class="col-8">
                             <div class="row text-center">
                                 <div class="col-1">
-                                <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-1-Y'))}}" class="btn btn-primary">Jan</a>
+                                <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-1-Y'))}}" class="btn btn-primary">Jan</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-2-Y'))}}" class="btn btn-primary">Feb</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-2-Y'))}}" class="btn btn-primary">Feb</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-3-Y'))}}" class="btn btn-primary">March</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-3-Y'))}}" class="btn btn-primary">March</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-4-Y'))}}" class="btn btn-primary">April</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-4-Y'))}}" class="btn btn-primary">April</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-5-Y'))}}" class="btn btn-primary">May</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-5-Y'))}}" class="btn btn-primary">May</a>
                                 </div>
                                   <div class="col-1">
-                                <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-6-Y'))}}" class="btn btn-primary">June</a>
+                                <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-6-Y'))}}" class="btn btn-primary">June</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-7-Y'))}}" class="btn btn-primary">July</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-7-Y'))}}" class="btn btn-primary">July</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-8-Y'))}}" class="btn btn-primary">Aug</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-8-Y'))}}" class="btn btn-primary">Aug</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-9-Y'))}}" class="btn btn-primary">Sept</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-9-Y'))}}" class="btn btn-primary">Sept</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-10-Y'))}}" class="btn btn-primary">Oct</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-10-Y'))}}" class="btn btn-primary">Oct</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-11-Y'))}}" class="btn btn-primary">Nov</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-11-Y'))}}" class="btn btn-primary">Nov</a>
                                 </div>
                                 <div class="col-1">
-                                    <a href="{{url('superadmin/cateringfood/'.$parseMonth->format('d-12-Y'))}}" class="btn btn-primary">Dec</a>
+                                    <a href="{{url('portal/cateringfood/'.$parseMonth->format('d-12-Y'))}}" class="btn btn-primary">Dec</a>
                                 </div>
                             </div>
 
                             <div class="row mt-5">
                                <div class="col-4">
-                               <a href="{{url('superadmin/cateringfood/year/'.$preYear->format('d-m-Y'))}}" class="btn btn-danger">{{$preYear->format('Y')}}</a>
+                               <a href="{{url('portal/cateringfood/year/'.$preYear->format('d-m-Y'))}}" class="btn btn-danger">{{$preYear->format('Y')}}</a>
                                </div>
                                <div class="col-4">
-                               <a href="{{url('superadmin/cateringfood/year/'.$parseMonth->format('d-m-Y'))}}" class="btn btn-primary">{{$parseMonth->format('Y')}}</a>
+                               <a href="{{url('portal/cateringfood/year/'.$parseMonth->format('d-m-Y'))}}" class="btn btn-primary">{{$parseMonth->format('Y')}}</a>
                                </div>
                                <div class="col-4">
-                               <a href="{{url('superadmin/cateringfood/year/'.$nextYear->format('d-m-Y'))}}" class="btn btn-danger">{{$nextYear->format('Y')}}</a>
+                               <a href="{{url('portal/cateringfood/year/'.$nextYear->format('d-m-Y'))}}" class="btn btn-danger">{{$nextYear->format('Y')}}</a>
                                </div>
                             </div>
 
@@ -157,8 +157,8 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.cateringfood.view',Crypt::encrypt($food->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.cateringfood.edit',Crypt::encrypt($food->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('portal.cateringfood.view',Crypt::encrypt($food->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('portal.cateringfood.edit',Crypt::encrypt($food->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 <li>
                                                     <a href="#" id="delete" data-id="{{$food->id}}" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert"></i>Delete</a>
                                                 </li>
@@ -209,7 +209,7 @@
                 <h5 class="modal-title" id="myModalLabel">Parmanent !</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.cateringfood.delete')}}" method="post">
+            <form action="{{route('portal.cateringfood.delete')}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body modal_body">

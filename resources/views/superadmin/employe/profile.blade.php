@@ -33,7 +33,7 @@
                                         <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>{{$view->name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-2 offset-md-3"><a href="{{route('superadmin.employe.editprofile',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
+                                    <div class="col-md-2 offset-md-3"><a href="{{route('portal.employe.editprofile',Crypt::encrypt($view->id))}}" class="btn btn-bg btn-primary btn_header"><i class="fa-solid fa-pen-to-square
                                             btn_icon"></i>Edit</a>
                                     </div>
                                 </div>

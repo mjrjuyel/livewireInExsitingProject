@@ -120,7 +120,7 @@
                 <strong style="color:red;">Pending</strong>
             @endif
                    
-            <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
+            <a href="{{url('portal/leave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} All rights reserved.

@@ -54,7 +54,7 @@
                     <div class="row mb-2">
                         @can('Add User')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
                         </div>
                         @endcan
@@ -143,14 +143,14 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 @can('View User')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('portal/employe/view/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                 </i>View</a>
                                                 @endcan
                                                 </li>
                                                 @can('Edit User')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
+                                                <li><a class="dropdown-item" href="{{ url('portal/employe/edit/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                 @endcan
-                                                @can('Delete User')
+                                                @can('Soft Delete User')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$employe->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>
@@ -186,10 +186,10 @@
     <div class="modal-dialog ">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                <h5 class="modal-title" id="myModalLabel">Delete An Employee? </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.view.softdelete')}}" method="post">
+            <form action="{{route('portal.employe.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>

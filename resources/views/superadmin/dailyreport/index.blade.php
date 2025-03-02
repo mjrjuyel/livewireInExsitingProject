@@ -141,7 +141,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     @can('View Daily-Report')
-                                                    <li><a class="dropdown-item" href="{{ url('superadmin/dailyreport/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-eye-circle-outline">
+                                                    <li><a class="dropdown-item" href="{{ url('portal/dailyreport/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                             </i>View</a></li>
                                                     </li>
                                                     @endcan
@@ -182,7 +182,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.dailyreport.softdelete')}}" method="post">
+            <form action="{{route('portal.dailyreport.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>

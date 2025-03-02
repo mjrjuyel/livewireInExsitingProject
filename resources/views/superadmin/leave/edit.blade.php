@@ -63,11 +63,11 @@
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Leave Data</a>
+                                <a href="{{route('portal.leave')}}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Leave Data</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.leave.updateleave')}}" method="post">
+                    <form action="{{route('portal.leave.updateleave')}}" method="post">
 
                         @csrf
                         <div class="row mt-3">

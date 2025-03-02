@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.leavetype.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.leavetype.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Leave Type</a>
                         </div>
                     </div>
@@ -78,8 +78,8 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.leavetype.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('superadmin.leavetype.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('portal.leavetype.view',$role->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('portal.leavetype.edit',$role->id) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                 <li>
                                                     <a href="#" id="delete" data-id="{{$role->id}}" class="dropdown-item waves-effect waves-light text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert"></i>Delete</a>
                                                 </li>
@@ -112,7 +112,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete an Employee Leave Request Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.leavetype.delete')}}" method="post">
+            <form action="{{route('portal.leavetype.delete')}}" method="post">
             @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

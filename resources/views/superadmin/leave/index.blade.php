@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Leave Manually Add')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.leave.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.leave.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Manual Leave</a>
                         </div>
                         @endcan
@@ -159,12 +159,12 @@
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                            @can('View Leave')
-                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
+                                                            <li><a class="dropdown-item" href="{{ url('portal/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                             </li>
                                                            @endcan
                                                             @if($data->add_from == Auth::user()->name && $data->status == 2)
                                                             @can('Edit Manual Leave')
-                                                                <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
+                                                                <li><a class="dropdown-item" href="{{ url('portal/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                             </li>
                                                             @endcan
                                                             @endif
@@ -202,7 +202,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete an Amin Dashboard User?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.view.softdelete')}}" method="post">
+            <form action="{{route('portal.view.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
@@ -226,7 +226,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete an Employee Leave Request Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.leave.delete')}}" method="post">
+            <form action="{{route('portal.leave.delete')}}" method="post">
                 @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

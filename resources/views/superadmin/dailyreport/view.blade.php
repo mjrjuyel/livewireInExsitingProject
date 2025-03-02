@@ -67,7 +67,7 @@
                                     </div>
 
                                     <div class="col-md-5 text-end">
-                                        <a href="{{route('superadmin.dailyreport')}}" class="btn btn-primary card_header text-end"><i class="mdi mdi-eye-circle-outline header_icon"></i>All Report
+                                        <a href="{{route('portal.dailyreport')}}" class="btn btn-primary card_header text-end"><i class="mdi mdi-eye-circle-outline header_icon"></i>All Report
                                         </a>
                                     </div>
                                 </div>

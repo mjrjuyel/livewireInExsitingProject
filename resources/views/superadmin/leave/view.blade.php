@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('superadmin.leave.update') }}" method="post">
+                                <form action="{{ route('portal.leave.update') }}" method="post">
                                     @csrf
 
                                     <div class="row mt-3">

@@ -63,12 +63,12 @@
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('superadmin.role')}}" class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-4 text-end"><a href="{{route('portal.role')}}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Role</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.role.update')}}" method="post">
+                    <form action="{{route('portal.role.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">

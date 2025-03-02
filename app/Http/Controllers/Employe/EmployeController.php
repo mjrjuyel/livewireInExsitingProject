@@ -160,7 +160,7 @@ class EmployeController extends Controller
         $userId = Crypt::decrypt($id);
         $user = User::findOrFail(($userId));
         auth()->login($user, true);
-        return redirect()->route('superadmin');
+        return redirect()->route('portal');
     }
 
 }

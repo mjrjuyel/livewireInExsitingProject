@@ -50,7 +50,7 @@
                     @endif
                 </p>
 
-                <a class="btn btn-info mt-3" href="{{route('superadmin')}}">Return Home</a>
+                <a class="btn btn-info mt-3" href="{{route('portal')}}">Return Home</a>
             </div> <!-- end /.text-center-->
         </div> <!-- end col-->
     </div>
