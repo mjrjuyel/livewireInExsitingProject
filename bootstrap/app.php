@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'api'=>\App\Http\Middleware\CheckApiLoginTokenExpiry::class,
             'is_superadmin' => \App\Http\Middleware\isSuperAdminRole::class,
             'isEmployeActive' => \App\Http\Middleware\isEmployeActive::class,
 

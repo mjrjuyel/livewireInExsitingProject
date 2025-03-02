@@ -40,7 +40,7 @@ class DailyReportController extends Controller
     }
 
     public function add(){
-        $id = auth('sanctum')->user()->id;
+        $id = auth()->user()->id;
         return view('employe.dailyreport.add');
     }
 
@@ -62,7 +62,7 @@ class DailyReportController extends Controller
                 'Error-message'=>$validate->errors(), 
             ]);
         }
-        $id = auth('sanctum')->user()->id;
+        $id = auth()->user()->id;
         $submitDate = Carbon::parse($request->submit_date);
         $checkDate=DailyReport::where('status',1)->where('submit_by',$id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
 
@@ -87,23 +87,20 @@ class DailyReportController extends Controller
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                        'slug'=>'report-'.uniqId(),
+                        // 'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
 
-                    // return $insert;
-                    $email = AdminEmail::where('id',1)->first();
-                     
-                    // return $email;
-                    // try {
-                    if($email->email_report == 1){
+                    // $email = AdminEmail::where('id',1)->first();
+                   
+                    // if($email->email_report == 1){
                         
-                        $explode = explode(',',$email->email);
-                                    // try {
-                        foreach($explode as $emai){
-                            Mail::to($emai)->send(new DailyReportMail($insert));
-                        }
-                    }
+                    //     $explode = explode(',',$email->email);
+                    //                 // try {
+                    //     foreach($explode as $emai){
+                    //         Mail::to($emai)->send(new DailyReportMail($insert));
+                    //     }
+                    // }
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
@@ -114,7 +111,7 @@ class DailyReportController extends Controller
                         ],200);
                     }
                 }else{
-                    // return "3 days Before";
+                
                     Session::flash('error','You can not Submit report 3 Days before From Current Day!');
                     return response()->json([
                         'status'=>false,
@@ -181,7 +178,7 @@ class DailyReportController extends Controller
         $report->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->detail = $request['detail'];
-        $report->editor = auth('sanctum')->user()->id;
+        $report->editor = auth()->user()->id;
         $report->updated_at = Carbon::now('UTC');
     
         $report->save();

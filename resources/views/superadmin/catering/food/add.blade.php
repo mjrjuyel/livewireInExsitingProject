@@ -79,7 +79,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Order Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{date('Y-m-d') ?? old('date')}}"
+                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{ date('Y-m-d') ?? old('date')}}"
                                         placeholder="Date">
                                     @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -99,7 +99,7 @@ swal({
                             </div>
                             <div class="col-3">
                                 <div class="mb-3">
-                                    <label class="form-label">Cost Per Quntity<span class="text-danger">* </span>:
+                                    <label class="form-label">Cost Per Quantity<span class="text-danger">* </span>:
                                     </label>
                                     <input type="number"  class="form-control" name="perCost" value="{{ $lastOrder->per_cost ?? old('perCost')}}"
                                         placeholder="Each Meal Price">

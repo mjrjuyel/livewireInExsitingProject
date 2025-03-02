@@ -9,12 +9,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use DB;
+use Carbon\Carbon;
 
 class EmployeeAuthController extends Controller
 {
 
     // employee Login Dashboard
-    public function loginEmploye(Request $request){
+    public function login(Request $request){
 
         // nurul vai
         try{
@@ -23,7 +24,7 @@ class EmployeeAuthController extends Controller
         if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'Employee not found.',
+                'message' => 'User not found.',
                 'token' => null,
                 'user' => null,
             ],404);
@@ -35,6 +36,11 @@ class EmployeeAuthController extends Controller
 
             if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
                 $token = $user->createToken('MyApp')->plainTextToken;
+                
+                $user->tokens()->latest()->first()->update([
+                    'expires_at' => Carbon::now()->addMinutes(60)
+                ]);
+
                 return response()->json([
                     'success' => true,
                     'message' => 'User login successfully.',
@@ -59,9 +65,14 @@ class EmployeeAuthController extends Controller
     }
 
     // Logout Employee
-    public function logoutEmploye(Request $request){
+    public function logout(Request $request){
        try{
-        $request->user()->currentAccessToken()->delete();
+
+        $user = auth()->user();
+        $user->tokens->each(function ($token) {
+            $token->delete();
+        });
+        
         return response()->json([
             'success' => true,
             'message' => 'Logout successfully.',
