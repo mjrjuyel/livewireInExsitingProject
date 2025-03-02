@@ -192,12 +192,20 @@
                                                 </a>
                                             </li>
                                             @endcan
+                                            
+                                            @can('All Permission')
+                                            <li class="side-nav-item">
+                                                <a href="{{route('portal.permission')}}" class="side-nav-link">
+                                                    <span class="menu-text">All Permission</span>
+                                                </a>
+                                            </li>
+                                            @endcan
                                         </ul>
                                     </div>
                                 </li>
                                 @endcan
 
-                                @can('All Permission')
+                                {{-- @can('All Permission')
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#sidebarPermission" aria-expanded="false" aria-controls="sidebarPermission" class="side-nav-link">
                                         <span class="menu-icon"><i class="mdi mdi-security"></i></span>
@@ -222,7 +230,7 @@
                                         </ul>
                                     </div>
                                 </li>
-                                @endcan
+                                @endcan --}}
                             </ul>
                         </div>
                     </li>

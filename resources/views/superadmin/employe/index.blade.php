@@ -127,7 +127,7 @@
 
                                     @can('Login Another Profile')
                                     <td>
-                                        <form action="{{ url('/superadmin/employe/login/'.$employe->id) }}" method="post">
+                                        <form action="{{ url('/portal/employe/login/'.$employe->id) }}" method="post">
                                             @csrf
                                             @method('post')
                                             <button class="btn btn-primary " type="sumbit"><i class="uil-trash-alt"></i>Login</button>

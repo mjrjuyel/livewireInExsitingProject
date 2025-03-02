@@ -49,9 +49,9 @@ class SendDailyReportSummary extends Command
         ];
 
         // Send email
-        // foreach($email as $value){
-        // Mail::to($value)->send(new DailyReportSummaryMail($summaryData));
-        // }
+        foreach($email as $value){
+        Mail::to($value)->send(new DailyReportSummaryMail($summaryData));
+        }
        $this->info('Daily report summary email sent successfully.');
     }
 }
