@@ -83,31 +83,21 @@ class DailyReportController extends Controller
                     // return "3 day after";
                     $insert= DailyReport::create([
                         'submit_by'=>$request['submit_by'],
-                        'submit_date'=>$request['submit_date'],
+                        'submit_date'=>Carbon::parse($request['submit_date'])->addHours(6),
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         // 'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
-
-                    // $email = AdminEmail::where('id',1)->first();
-                   
-                    // if($email->email_report == 1){
-                        
-                    //     $explode = explode(',',$email->email);
-                    //                 // try {
-                    //     foreach($explode as $emai){
-                    //         Mail::to($emai)->send(new DailyReportMail($insert));
-                    //     }
-                    // }
-        
+                    $data = DailyReport::where('submit_by',$request['submit_by'])->latest()->first();
                     if($insert){
+                        //dd($insert);
                         Session::flash('success','Daily Report Submited');
                         return response()->json([
                             'status'=>true,
                             'Message'=>'Report Submit Success Fully',
-                            'Data'=>$insert,
+                            'Data'=>$data,
                         ],200);
                     }
                 }else{
@@ -173,14 +163,11 @@ class DailyReportController extends Controller
                     'Error-message'=>$validate->errors(), 
                 ]);
             }
-
-
         $report->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->detail = $request['detail'];
         $report->editor = auth()->user()->id;
         $report->updated_at = Carbon::now('UTC');
-    
         $report->save();
 
         return response()->json([

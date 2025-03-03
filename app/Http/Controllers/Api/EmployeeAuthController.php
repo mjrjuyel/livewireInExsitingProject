@@ -43,8 +43,6 @@ class EmployeeAuthController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'User login successfully.',
-                    'image_path' => asset('uploads/employe/profile/'),
-                    'image'=>$user->image,
                     'token' => $token,
                     'user' => $user,
                 ],200);

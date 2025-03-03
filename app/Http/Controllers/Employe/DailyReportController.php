@@ -35,6 +35,7 @@ class DailyReportController extends Controller
             'submit_date'=>'required',
             'detail'=>'required',
         ]);
+
         //Check that is There any chances to Same Date  
         $submitDate = Carbon::parse($request->submit_date);
         $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
@@ -54,19 +55,29 @@ class DailyReportController extends Controller
                 if($maximumPreviousDate <= $submit){
 
                     // return "3 day after";
-                    $insert= DailyReport::create([
+                    // $insert = new DailyReport();
+                    // $insert->submit_by = $request['name'];
+                    // $insert->submit_date = Carbon::parse($request['submit_date'])->addHours(6);
+                    // $insert->detail = $request['detail'];
+                    // $insert->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
+                    // $insert->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
+                    // $insert->save();
+
+
+
+                    $insert = DailyReport::create([
                         'submit_by'=>$request['name'],
-                        'submit_date'=>$request['submit_date'],
+                        'submit_date'=>Carbon::parse($request['submit_date'])->addHours(6),
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
+                    return $insert;
 
-                    // return $insert;
                     $email = AdminEmail::where('id',1)->first();
                      
-                    return $insert;
+                 
                     // if($email->email_report == 1){
                         
                     //     $explode = explode(',',$email->email);

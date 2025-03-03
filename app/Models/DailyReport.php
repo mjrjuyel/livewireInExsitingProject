@@ -8,11 +8,11 @@ class DailyReport extends Model
 {
     protected $guarded = [];
 
-    public $timestamps = false;
-
+   public $timestamps = false;
+   
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at'=>'datetime',
+        'updated_at'=>'datetime',
         'submit_date' => 'datetime',
     ];
 
