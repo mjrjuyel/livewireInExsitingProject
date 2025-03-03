@@ -20,7 +20,6 @@ class EmployeeAuthController extends Controller
         // nurul vai
         try{
             $user = User::select('id', 'name', 'email','email2', 'phone', 'phone2', 'address', 'present', 'emer_contact', 'emer_name', 'emer_relation', 'dob', 'gender', 'marriage', 'image', 'status', 'report_manager', 'depart_id','desig_id','emp_type','join_date','resign_date','id_type','id_number','rec_degree','rec_year','bank_id','bank_branch_id', 'bank_account_name','bank_account_number','remember_token','device_token','creator','editor',)->with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->Where('email', $request->email)->first();
-
         if (!$user) {
             return response()->json([
                 'success' => false,
@@ -41,13 +40,11 @@ class EmployeeAuthController extends Controller
                     'expires_at' => Carbon::now()->addMinutes(60)
                 ]);
 
-                $user->image = asset('uploads/employe/profile/'.$user->img);
-                $user->save();
-
                 return response()->json([
                     'success' => true,
                     'message' => 'User login successfully.',
-                    'image_path' => public_path('uploads/employe/profile/'),
+                    'image_path' => asset('uploads/employe/profile/'),
+                    'image'=>$user->image,
                     'token' => $token,
                     'user' => $user,
                 ],200);
