@@ -35,7 +35,7 @@ class DailyReportController extends Controller
             return response()->json([
                 'status'=>false,
                 'Message'=>'Faild to Fetch Report',
-            ],404);
+            ],201);
         }
     }
 
@@ -129,7 +129,7 @@ class DailyReportController extends Controller
             'status'=>false,
             'Message'=>'failed to Insert',
             'data'=>$e->getMessage(),
-        ],404);
+        ],201);
      }
         
     }
@@ -147,7 +147,7 @@ class DailyReportController extends Controller
                     'status'=>true,
                     'message'=>"Error MESSAGE",
                     'Data'=>"Data is Not Found",
-                ],404);
+                ],201);
             }
 
             $validate = Validator::make($request->all(),[
@@ -161,7 +161,7 @@ class DailyReportController extends Controller
                     'status'=>true,
                     'mesage'=>'Validation Error',
                     'Error-message'=>$validate->errors(), 
-                ]);
+                ],201);
             }
         $report->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
@@ -206,7 +206,7 @@ class DailyReportController extends Controller
                 'status'=>false,
                 'message'=>'Single Daily Report view',
                 'data'=>$e->getMessage(),
-            ],404);
+            ],201);
         }
     }
 }

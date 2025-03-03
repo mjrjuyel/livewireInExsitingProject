@@ -26,7 +26,7 @@ class EmployeeAuthController extends Controller
                 'message' => 'User not found.',
                 'token' => null,
                 'user' => null,
-            ],404);
+            ],201);
         }
         DB::table('users')
             ->where('device_token', $user->device_token)
@@ -59,7 +59,7 @@ class EmployeeAuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
-            ],404);
+            ],201);
         }
     }
 
@@ -82,7 +82,7 @@ class EmployeeAuthController extends Controller
         return response()->json([
             'status'=>true,
             "message"=>$e->getMesaage(),
-             ],404);
+             ],201);
        }
     }
 }

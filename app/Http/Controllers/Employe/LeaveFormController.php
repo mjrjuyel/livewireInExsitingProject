@@ -33,9 +33,6 @@ class LeaveFormController extends Controller
     }
     // add Leave
     public function insert(Request $request){
-                // validation
-
-                // return $request->all();
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
@@ -189,8 +186,8 @@ class LeaveFormController extends Controller
                                         $insert = Leave::create([
                                             'leave_type_id'=>$request['leave_type'],
                                             'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
-                                            'start_date'=>Carbon::parse($leavePermonth['start_date']),
-                                            'end_date'=>$leavePermonth['end_date'],
+                                            'start_date'=>Carbon::parse($leavePermonth['start_date'])->addHours(6),
+                                            'end_date'=>Carbon::parse($leavePermonth['end_date'])->addHours(6),
                                             'reason'=>$request['reason'],
                                             'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
                                             // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
@@ -223,8 +220,8 @@ class LeaveFormController extends Controller
                                         $insert = Leave::create([
                                             'leave_type_id'=>$request['leave_type'],
                                             'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
-                                            'start_date'=>Carbon::parse($leavePermonth['start_date']),
-                                            'end_date'=>$leavePermonth['end_date'],
+                                            'start_date'=>Carbon::parse($leavePermonth['start_date'])->toDateString(),
+                                            'end_date'=>Carbon::parse($leavePermonth['end_date'])->toDateString(),
                                             'reason'=>$request['reason'],
                                             'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
                                             // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
@@ -235,7 +232,12 @@ class LeaveFormController extends Controller
                                             'add_from'=>Auth::user()->name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
-    
+
+                                        // return $insert;
+                                        // dd($insert);
+                                        $userTimezone = Auth::user()->timezone ?? 'UTC';
+
+                                        dd($insert);
                                         // $adminEmail = AdminEmail::first();
     
                                         // if($adminEmail->email_leave == 1){

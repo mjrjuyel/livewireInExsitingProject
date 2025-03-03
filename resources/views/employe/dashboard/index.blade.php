@@ -144,7 +144,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     @php
-                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeave;
+                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeavePaid;
                     @endphp
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Paid Leave Remaining Between Evaluation Periods</span></h6>
