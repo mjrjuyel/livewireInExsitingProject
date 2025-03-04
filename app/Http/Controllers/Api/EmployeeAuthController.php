@@ -19,6 +19,7 @@ class EmployeeAuthController extends Controller
 
         // nurul vai
         try{
+
             $user = User::select('id', 'name', 'email','email2', 'phone', 'phone2', 'address', 'present', 'emer_contact', 'emer_name', 'emer_relation', 'dob', 'gender', 'marriage', 'image', 'status', 'report_manager', 'depart_id','desig_id','emp_type','join_date','resign_date','id_type','id_number','rec_degree','rec_year','bank_id','bank_branch_id', 'bank_account_name','bank_account_number','remember_token','device_token','creator','editor',)->with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->Where('email', $request->email)->first();
         if (!$user) {
             return response()->json([
@@ -34,8 +35,9 @@ class EmployeeAuthController extends Controller
             ->update(['device_token' => null]);
 
             if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
+                // DB::table('personal_access_tokens')->truncate();
                 $token = $user->createToken('MyApp')->plainTextToken;
-                
+               
                 $user->tokens()->latest()->first()->update([
                     'expires_at' => Carbon::now()->addMinutes(60)
                 ]);
