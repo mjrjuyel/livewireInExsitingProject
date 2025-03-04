@@ -82,7 +82,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Payment Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value=""
+                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{now()->format('Y-m-d')}}"
                                         placeholder="Date">
                                     @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
