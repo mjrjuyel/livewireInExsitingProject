@@ -46,6 +46,7 @@
             <div data-simplebar>
                 <!--- Sidenav Menu -->
                 <ul class="side-nav">
+                
                     <li class="side-nav-title">Navigation Bar</li>
 
                     <li class="side-nav-item">

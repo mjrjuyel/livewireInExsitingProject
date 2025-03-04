@@ -255,6 +255,7 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::post('/portal/activeDailyReportMail',[AdminEmailController::class,'dailyReportMailActive'])->name('portal.activeDailyReportMail');
                 Route::post('/portal/activeDailyLeaveMail',[AdminEmailController::class,'dailyLeaveMailActive'])->name('portal.activeDailyLeaveMail');
                 Route::post('/portal/activeDailySummaryMail',[AdminEmailController::class,'dailySummaryMailActive'])->name('portal.activeDailySummaryMail');
+                Route::post('/portal/activeDeleteReport',[AdminEmailController::class,'deleteReport'])->name('portal.activeDeleteReport');
 
                 // Role Permission Management
                 // Permission Management

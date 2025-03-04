@@ -16,10 +16,11 @@ Route::get('/user', function (Request $request) {
 Route::post('/login',[EmployeeAuthController::class,'login'])->name('login');
 // daily reports
 Route::middleware(['auth:sanctum'])->group(function(){
-    //All dasboard 
-    Route::get('/dashboard',[EmployeeDashboardController::class,'index'])->name('dashboard');   
+    
+        //All dasboard 
+        Route::get('/dashboard',[EmployeeDashboardController::class,'index'])->name('dashboard');   
 
-    // dashboard data
+        // dashboard data
         Route::get('/employe',[EmployeeAuthController::class,'index'])->name('employe');   
 
         // logged Employee All Daily Report -------------------------------------------------------------
@@ -28,7 +29,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.daiyreport.submit');
         Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.daiyreport.update');
         Route::get('/dashboard/dailyreport/view/{id}',[DailyReportController::class,'view'])->name('dashboard.daiyreport.view');
-
 
         // Leave Application for Employee -------------------------------------------------------------
         Route::get('/dashboard/leavelist',[LeaveFormController::class,'leavTypeList'])->name('dashboard.leavelist');

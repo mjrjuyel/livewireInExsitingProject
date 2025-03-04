@@ -12,5 +12,6 @@ Artisan::command('inspire', function () {
 // Daily Summary Report
 Schedule::command('app:send-daily-report-summary')->dailyAt('23:00');
 Schedule::command('app:Api-Token-Delete')->hourly();
+Schedule::command('app:daily-report-delete')->dailyAt('23:00');
 
 

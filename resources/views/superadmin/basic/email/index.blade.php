@@ -202,7 +202,40 @@
                                                 Yes or No?
                                             </p>
                                             <div class="switchery-demo">
-                                                <input type="checkbox" name="dailyMail" value="1" data-plugin="switchery" data-color="#3db9dc" @if($setting->email_leave == 1) Checked @endif/>
+                                                <input type="checkbox" name="dailyMail" value="1" data-plugin="switchery" data-color="#3db9dc" @if($setting->email_summary == 1) Checked @endif/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card-body">
+                            <div class="card-header bg-dark">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="card_header"><i class="mdi mdi-notebook-edit header_icon"></i>Do You Want To Delete 180 days Old Report?
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="{{route('portal.activeDeleteReport')}}" method="post" enctype="">
+                                @csrf
+                                <div class="row mt-3">
+                                    <div class="col-6 text-end">
+                                        <div class="row mb-3">
+                                            <p class="sub-header">
+                                                Yes or No?
+                                            </p>
+                                            <div class="switchery-demo">
+                                                <input type="checkbox" name="deletereport" value="1" data-plugin="switchery" data-color="#3db9dc" @if($setting->delete_report == 1) Checked @endif/>
                                             </div>
                                         </div>
                                     </div>

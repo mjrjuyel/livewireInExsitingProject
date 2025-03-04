@@ -10,6 +10,7 @@ use App\Mail\DailyReportSummaryMail;
 use App\Models\AdminEmail;
 use App\Models\CateringFood;
 use App\Models\CateringPayment;
+use DB;
 
 class SendDailyReportSummary extends Command
 {
@@ -47,11 +48,17 @@ class SendDailyReportSummary extends Command
 
             'today_payment' => $cateringPayment && $cateringPayment->quantity ? $cateringPayment->quantity : 'No Payment Today',
         ];
-
-        // Send email
-        foreach($email as $value){
-        Mail::to($value)->send(new DailyReportSummaryMail($summaryData));
-        }
-       $this->info('Daily report summary email sent successfully.');
+        
+       if($adminEmail->email_summary == 1){
+         // Send email
+         foreach($email as $value){
+            Mail::to($value)->send(new DailyReportSummaryMail($summaryData));
+            }
+         $this->info('Daily report summary email sent successfully.');
+       }
+       else{
+        $this->info('Daily report summary email doesnot sent successfully.');
+       }
+      
     }
 }

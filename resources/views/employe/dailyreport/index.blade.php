@@ -36,11 +36,9 @@
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
-
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Employee</a></li>
-
-                    <li class="breadcrumb-item active">Daily Report</li>
+                    <li class="breadcrumb-item active">Daily Report {{now()->subDays(50)->format('d-M-Y')}}</li>
                 </ol>
             </div>
         </div>
