@@ -15,7 +15,7 @@ class isEmployeActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->status == 1){
+        if(Auth::guard('employee')->user()->emp_status == 1){
             return $next($request);
         }
         return redirect()->route('notActiveUser');

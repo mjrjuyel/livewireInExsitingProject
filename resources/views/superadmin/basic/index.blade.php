@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('portal.basic.update')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('superadmin.basic.update')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-8 offset-2">
@@ -160,7 +160,7 @@
                             </div>
                             <div class="card-body pt-2">
                                 <h6 class="">Select Currency</h6>
-                                <form action="{{route('portal.basic.currency')}}" method="post">
+                                <form action="{{route('superadmin.basic.currency')}}" method="post">
                                     @method('post')
                                     @csrf
                                     <select class="form-control" name="name" data-toggle="select2">
@@ -185,7 +185,7 @@
                                 <h5 class="card-title">Application Time Zone</h5>
                             </div>
                             <div class="card-body pt-2">
-                                <form action="{{route('portal.basic.time')}}" method="post" enctype="multipart/form-data">
+                                <form action="{{route('superadmin.basic.time')}}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row mt-3">
                                         <div class="col-8 offset-2">
@@ -247,7 +247,7 @@
                             </div>
                             <div class="card-body pt-2">
                                 <h6 class="">Select Start And End Time</h6>
-                                <form action="{{route('portal.basic.officetime')}}" method="post">
+                                <form action="{{route('superadmin.basic.officetime')}}" method="post">
                                     @method('post')
                                     @csrf
 

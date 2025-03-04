@@ -34,11 +34,11 @@
                                                 class="mdi mdi-bank header_icon"></i>{{$view->bank_branch_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('portal.bank_branch')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.bank_branch')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-bank btn_icon"></i>All Bank Branch</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('portal.bank_branch.edit',Crypt::encrypt($view->id))}}"
+                                    <div class="col-md-2"><a href="{{route('superadmin.bank_branch.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>

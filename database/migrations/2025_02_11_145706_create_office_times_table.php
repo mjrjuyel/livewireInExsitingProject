@@ -11,8 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('office_times')) {
-
         Schema::create('office_times', function (Blueprint $table) {
             $table->id();
             $table->string('office_start')->nullable();
@@ -20,8 +18,6 @@ return new class extends Migration
             $table->integer('editor')->nullable();
             $table->timestamps();
         });
-
-    }
     }
 
     /**

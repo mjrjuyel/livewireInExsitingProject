@@ -67,14 +67,14 @@ swal({
                             </div>
 
                             @can('View Payment')
-                            <div class="col-md-4 text-end"><a href="{{route('portal.cateringpayment')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.cateringpayment')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-cash-clock btn_icon"></i>Previous Payment</a>
                             </div>
                             @endcan
                         </div>
                     </div>
-                    <form action="{{route('portal.cateringpayment.insert')}}" method="post">
+                    <form action="{{route('superadmin.cateringpayment.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-3 offset-3">
@@ -82,7 +82,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Payment Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{now()->format('Y-m-d')}}"
+                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value=""
                                         placeholder="Date">
                                     @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-3">
-                            <a href="{{route('portal.leaveYear',$preYear->format('d-m-Y'))}}" class="btn btn-dark">Previous Year {{$preYear->format('Y')}}</a>
+                            <a href="{{route('superadmin.leaveYear',$preYear->format('d-m-Y'))}}" class="btn btn-dark">Previous Year {{$preYear->format('Y')}}</a>
                         </div>
 
                         <div class="col-2 offset-2">
@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="col-5 text-end">
-                            <a href="{{route('portal.leaveYear',$nextYear->format('d-m-Y'))}}" class="btn btn-dark">Next Year {{$nextYear->format('Y')}}</a>
+                            <a href="{{route('superadmin.leaveYear',$nextYear->format('d-m-Y'))}}" class="btn btn-dark">Next Year {{$nextYear->format('Y')}}</a>
                         </div>
                     </div>
                     <div class="">
@@ -90,7 +90,7 @@
                                 <tr>
 
                                     <td>
-                                        {{ $data->employe->name }}
+                                        {{ $data->employe->emp_name }}
                                     </td>
 
                                     <td>
@@ -167,11 +167,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                             @can('View Leave')
-                                                            <li><a class="dropdown-item" href="{{ url('portal/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                             </li>
                                                             @endcan
                                                             @can('Edit Leave')
-                                                            <li><a class="dropdown-item" href="{{ url('portal/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                             </li>
                                                             @endcan
                                                             @can('Delete Leave')
@@ -208,7 +208,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete an Employee Leave Request Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('portal.leave.delete')}}" method="post">
+            <form action="{{route('superadmin.leave.delete')}}" method="post">
                 @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

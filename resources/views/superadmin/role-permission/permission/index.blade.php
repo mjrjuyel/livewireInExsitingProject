@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Add Permissions')
                         <div class="col-sm-5">
-                            <a href="{{route('portal.permission.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('superadmin.permission.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 Permission</a>     
                         </div>
                         @endcan
@@ -88,9 +88,9 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ route('portal.permission.view',Crypt::encrypt($permission->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('superadmin.permission.view',Crypt::encrypt($permission->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
                                                  @can('Proecessing')
-                                                 <li><a class="dropdown-item" href="{{ route('portal.permission.edit',Crypt::encrypt($permission->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
+                                                 <li><a class="dropdown-item" href="{{ route('superadmin.permission.edit',Crypt::encrypt($permission->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                  </li>
                                                  
                                                    <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$permission->id}}"      data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
@@ -130,7 +130,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete a Permission Role </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('portal.permission.delete')}}" method="post">
+            <form action="{{route('superadmin.permission.delete')}}" method="post">
             @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -36,8 +35,7 @@ class AdminDailyReportController extends Controller
     }
 
     public function view($slug){
-        $id = Crypt::decrypt($slug);
-        $view = DailyReport::with(['employe','report_editor'])->where('id',$id)->latest('id')->first();
+        $view = DailyReport::with(['employe','report_editor'])->where('slug',$slug)->latest('id')->first();
         // return $view;
         return view('superadmin.dailyreport.view',compact('view'));
     }
@@ -67,7 +65,7 @@ class AdminDailyReportController extends Controller
             foreach ($alldata as $data) {
                 $html .= '<tr>
                                 <td><input type="checkbox" class="markItem" data-id="'. $data->id .'"></td>
-                                <td>' . htmlspecialchars($data->employe->name) . '</td>
+                                <td>' . htmlspecialchars($data->employe->emp_name) . '</td>
                                 <td>' . $data->submit_date->format('d-M-Y') . '</td>
                                 <td>' . formatDate($data->created_at) . '</td>
                                  <td>' . $data->check_in . "-" .$data->check_out . '</td>
@@ -82,7 +80,7 @@ class AdminDailyReportController extends Controller
                 
                                     // Check if the user has "View Daily-Report" permission
                                     if (auth()->user()->can('View Daily-Report')) {
-                                        $html .= '<li><a class="dropdown-item" href="' . url('portal/dailyreport/view/'.Crypt::encrypt($data->slug)) . '"><i class="mdi mdi-eye-circle-outline"></i> View</a></li>';
+                                        $html .= '<li><a class="dropdown-item" href="' . url('superadmin/dailyreport/view/'.$data->slug) . '"><i class="mdi mdi-eye-circle-outline"></i> View</a></li>';
                                     }
                                 
                                     // Check if the user has "Soft Delete Daily-Report" permission

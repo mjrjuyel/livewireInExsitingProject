@@ -25,7 +25,7 @@ class EmployeeDashboardController extends Controller
     public function index(){
 
         try{
-            $userId = $id = auth()->user()->id;
+            $userId = $id = auth('sanctum')->user()->id;
             $defaultLeave = EmployeLeaveSetting::first();
             $view = Employee::with(['creator:id,name','emp_desig:id,title'])->where('id',$userId)->first();
 
@@ -97,12 +97,12 @@ class EmployeeDashboardController extends Controller
                 'status'=>true,
                 'message'=>'All Employee Dashboard Details',
                 'employee_view' => $view,
-                'default_leave'=>$defaultLeave,
                 'leave_request_in_month'=>$leaveRequestInMonth,
                 'leave_request_in_year'=>$leaveRequestInYear,
                 'paid_remaining_month'=>$paidRemainingMonth,
                 'whole_approved_leave'=>$whole_approved_leave,
                 'paid_remaining_year'=>$paidRemainingYear,
+                'default_leave'=>$defaultLeave,
                 'unpaid_remaining_month'=>$unpaidRemainingMonth,
                 'unpaid_remaining_year'=>$unpaidRemainingYear,
                 'total_report_submit'=>$totalReportSubmit,

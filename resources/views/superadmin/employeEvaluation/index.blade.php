@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Add Employee')
                         <div class="col-sm-5">
-                            <a href="{{route('portal.employe.view',Crypt::encrypt($view->id))}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>Back View</a>
+                            <a href="{{route('superadmin.employe.view',$view->emp_slug)}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>View Employee</a>
                         </div>
                         @endcan
                     </div>
@@ -78,11 +78,7 @@
                                         {{$evaluation->eva_next_date}}
                                     </td>
                                     <td>
-                                    @if($evaluation->renewed_at)
                                         {{$evaluation->renewed_at->format('d-M-Y')}}
-                                    @else
-                                        Not Yet
-                                    @endif
                                     </td>
                                     
                                     </td>
@@ -98,25 +94,19 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                {{-- <li><a class="dropdown-item" href="{{ route('portal.designation.view',$evaluation->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
+                                                {{-- <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$evaluation->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
 
                                                 @php
                                                     $onlyEdit = App\Models\Employeeevaluation::latest('renewed_at')->first();
                                                 @endphp
-
                                                 @if($onlyEdit->id == $evaluation->id)
-                                                @can('Edit Employee Evaluation')
-                                                    <li><a href="{{route('admin.evaluation.edit',Crypt::encrypt($evaluation->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
+                                                <li><a href="{{route('admin.evaluation.edit',Crypt::encrypt($evaluation->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
                                                         </i>Edit</a>
                                                 </li>
-                                                @endcan
                                                 @endif
-                                                
-                                                @can('Delete Employee Evaluation')
-                                                    <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$evaluation->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
+                                                <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$evaluation->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
-                                                    </li>
-                                                @endcan
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>

@@ -262,7 +262,7 @@ class AdminProfileController extends Controller
         ]);
 
         if($store){
-            Session::flash('success','User Data Restore!');
+            Session::flash('success','Daily Report Restore!');
             return redirect()->back();
         }
     }
@@ -272,7 +272,7 @@ class AdminProfileController extends Controller
         $delete = User::findOrFail($request->id);
         $delete->delete();
         if($delete){
-        Session::flash('success','User Delete Successfully!');
+        Session::flash('success','SuperAdmin Dashboard User Delete Successfully!');
         return redirect()->back();
         }
     }
@@ -281,13 +281,5 @@ class AdminProfileController extends Controller
     {
         Auth::guard('web')->logout();
         return redirect('/login');
-    }
-
-    public function employeLogin($id)
-    {
-        $userId = Crypt::decrypt($id);
-        $employe = Employee::findOrFail(($userId));
-        auth('employee')->login($employe, true);
-        return redirect()->route('dashboard');
     }
 }

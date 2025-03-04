@@ -62,12 +62,12 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->name}}!
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->emp_name}}!
                                         </h3>
                                     </div>
 
                                     <div class="col-md-5 text-end">
-                                        <a href="{{route('portal.dailyreport')}}" class="btn btn-primary card_header text-end"><i class="mdi mdi-eye-circle-outline header_icon"></i>All Report
+                                        <a href="{{route('superadmin.dailyreport')}}" class="btn btn-primary card_header text-end"><i class="mdi mdi-eye-circle-outline header_icon"></i>All Report
                                         </a>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                     <td>Submit By</td>
                                     <td>:</td>
                                     <td>
-                                        {{$view->employe->name}}
+                                        {{$view->employe->emp_name}}
                                     </td>
                                 </tr>
 

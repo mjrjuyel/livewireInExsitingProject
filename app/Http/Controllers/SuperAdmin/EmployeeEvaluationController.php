@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\EmployeePromotion;
 use App\Models\EmployeeEvaluation;
 use App\Models\Designation;
-use App\Models\User;
+use App\Models\Employee;
 use App\Models\Department;
 use App\Models\Design;
 use carbon\Carbon;
@@ -17,19 +17,12 @@ use Session;
 
 class EmployeeEvaluationController extends Controller
 {
-    public function __construct(){
-        $this->middleware('permission:All Employee Evaluation')->only('index');
-        $this->middleware('permission:Add Employee Evaluation')->only('add','insert');
-        $this->middleware('permission:Edit Employee Evaluation')->only('edit','update');
-        $this->middleware('permission:View Employee Evaluation')->only('view');
-        $this->middleware('permission:Delete Employee Evaluation')->only('delete','softDelete');
-    }
     public function index($id){
         $userId = Crypt::decrypt($id);
-        $allEvaluation = EmployeeEvaluation::where('emp_id',$userId)->latest('id')->get();
+        $allEvaluation = EmployeeEvaluation::where('emp_id',20)->latest('id')->get();
         // dd($allEvaluation->toSql(), $allEvaluation->getBindings());
-        $view = User::findOrFail($userId);
-        // return $allEvaluation;
+        $view = Employee::findOrFail($userId);
+        // return $view;
         return view('superadmin.employeEvaluation.index',compact(['allEvaluation','view']));
     }
      public function insert(Request $request){
@@ -49,7 +42,7 @@ class EmployeeEvaluationController extends Controller
                 'created_at'=>Carbon::now('UTC'),
             ]);
             if($insert){
-                Session::flash('success','User Evalution Renewed By Admin ');
+                Session::flash('success','Employee Evalution Renewed By Admin ');
                 return redirect()->back();
             }
         }
@@ -64,7 +57,9 @@ class EmployeeEvaluationController extends Controller
     }
 
     public function update(Request $request){
+
             $id = $request->id;
+        
             $update = EmployeeEvaluation::where('id',$id)->update([
                 'emp_id'=>$request->employe,
                 'eva_last_date'=>$request->eva_last_date,
@@ -73,7 +68,7 @@ class EmployeeEvaluationController extends Controller
                 'updated_at'=>Carbon::now('UTC'),
             ]);
             if($update){
-                Session::flash('success','User Evalution Update By Admin ');
+                Session::flash('success','Employee Evalution Update By Admin ');
                 return redirect()->back();
             }
     }

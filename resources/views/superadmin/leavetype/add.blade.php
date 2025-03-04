@@ -56,13 +56,13 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('portal.leavetype')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('superadmin.leavetype')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Leave Type</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('portal.leavetype.insert')}}" method="post">
+                    <form action="{{route('superadmin.leavetype.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">

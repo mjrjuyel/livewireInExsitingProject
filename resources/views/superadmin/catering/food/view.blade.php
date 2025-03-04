@@ -34,11 +34,11 @@
                                                 class="mdi mdi-noodles header_icon"></i>{{$view->order_date->format('D-m-Y')}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('portal.cateringfood')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.cateringfood')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-noodles btn_icon"></i>All Food </a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('portal.cateringfood.edit',Crypt::encrypt($view->id))}}"
+                                    <div class="col-md-2"><a href="{{route('superadmin.cateringfood.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>

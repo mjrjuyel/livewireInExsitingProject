@@ -24,7 +24,6 @@ return new class extends Migration
             throw new \Exception('Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
-        if (!Schema::hasTable('permissions')) {
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             //$table->engine('InnoDB');
             $table->bigIncrements('id'); // permission id
@@ -34,9 +33,7 @@ return new class extends Migration
 
             $table->unique(['name', 'guard_name']);
         });
-       }
 
-       if (!Schema::hasTable('roles')) {
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
             //$table->engine('InnoDB');
             $table->bigIncrements('id'); // role id
@@ -53,8 +50,7 @@ return new class extends Migration
                 $table->unique(['name', 'guard_name']);
             }
         });
-     }
-        if (!Schema::hasTable('model_has_permissions')) {
+
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
             $table->unsignedBigInteger($pivotPermission);
 
@@ -78,9 +74,7 @@ return new class extends Migration
             }
 
         });
-    }
 
-    if (!Schema::hasTable('model_has_roles')) {
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
             $table->unsignedBigInteger($pivotRole);
 
@@ -103,9 +97,6 @@ return new class extends Migration
                     'model_has_roles_role_model_type_primary');
             }
         });
-    }
-
-    if (!Schema::hasTable('role_has_permissions')) {
 
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
             $table->unsignedBigInteger($pivotPermission);
@@ -123,7 +114,6 @@ return new class extends Migration
 
             $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
-    }
 
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
