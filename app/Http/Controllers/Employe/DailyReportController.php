@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Employe;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DailyReportMail;
 use Intervention\Image\ImageManager;
@@ -19,8 +18,7 @@ use Auth;
 class DailyReportController extends Controller
 {
     public function index(){
-        $alldata = DailyReport::with('employe')->where('submit_by',Auth::user()->id)->where('status',1)->latest('submit_date')->get();
-        // return $alldata->count('id');
+        $alldata = DailyReport::with('employe')->where('submit_by',Auth::guard('employee')->user()->id)->where('status',1)->latest('submit_date')->get();
         return view('employe.dailyreport.index',compact('alldata'));
     }
 
@@ -35,10 +33,9 @@ class DailyReportController extends Controller
             'submit_date'=>'required',
             'detail'=>'required',
         ]);
-
         //Check that is There any chances to Same Date  
         $submitDate = Carbon::parse($request->submit_date);
-        $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
+        $checkDate=DailyReport::where('status',1)->where('submit_by',Auth::guard('employee')->user()->id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
 
         // return $request->all();
         if($checkDate == null || $checkDate == 0){
@@ -55,37 +52,29 @@ class DailyReportController extends Controller
                 if($maximumPreviousDate <= $submit){
 
                     // return "3 day after";
-                    // $insert = new DailyReport();
-                    // $insert->submit_by = $request['name'];
-                    // $insert->submit_date = Carbon::parse($request['submit_date'])->addHours(6);
-                    // $insert->detail = $request['detail'];
-                    // $insert->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
-                    // $insert->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
-                    // $insert->save();
-
-
-
-                    $insert = DailyReport::create([
+                    $insert= DailyReport::create([
                         'submit_by'=>$request['name'],
-                        'submit_date'=>Carbon::parse($request['submit_date'])->addHours(6),
+                        'submit_date'=>$request['submit_date'],
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                        'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
-                    return $insert;
 
+                    // return $insert;
                     $email = AdminEmail::where('id',1)->first();
                      
-                 
-                    // if($email->email_report == 1){
+                    // return $email;
+                    // try {
+                    if($email->email_report == 1){
                         
-                    //     $explode = explode(',',$email->email);
-                    //                 // try {
-                    //     foreach($explode as $emai){
-                    //         Mail::to($emai)->send(new DailyReportMail($insert));
-                    //     }
-                    // }
+                        $explode = explode(',',$email->email);
+                                    // try {
+                        foreach($explode as $emai){
+                            Mail::to($emai)->send(new DailyReportMail($insert));
+                        }
+                    }
         
                     if($insert){
                         Session::flash('success','Daily Report Submited');
@@ -110,8 +99,7 @@ class DailyReportController extends Controller
     }
 
     public function edit($slug){
-        $id = Crypt::decrypt($slug);
-        $edit = DailyReport::where('id',$id)->first();
+        $edit = DailyReport::where('slug',$slug)->first();
         return view('employe.dailyreport.edit',compact('edit'));
     }
 
@@ -138,9 +126,8 @@ class DailyReportController extends Controller
     }
 
     public function view($slug){
-        $id = Crypt::decrypt($slug);
         // fetch data from designation table
-        $view = DailyReport::with('employe')->where('id',$id)->first();
+        $view = DailyReport::with('employe.emp_desig')->where('slug',$slug)->first();
         // return $view;
         return view('employe.dailyreport.view',compact('view'));
     }

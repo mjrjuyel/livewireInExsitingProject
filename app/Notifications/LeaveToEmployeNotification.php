@@ -34,7 +34,6 @@ class LeaveToEmployeNotification extends Notification
     public function toArray(object $notifiable): array
     {
         $allData = Leave::where('id',$this->data->id)->first();
-        // dd('juyel');
         return [
             'leave_id' => $allData->id,
             'emp_id'=>$allData->emp_id,

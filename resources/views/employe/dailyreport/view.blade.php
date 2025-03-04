@@ -1,4 +1,4 @@
-@extends('layouts.superAdmin')
+@extends('layouts.employe')
 
 @section('css')
 <link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
@@ -8,7 +8,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
 
-@section('superAdminContent')
+@section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -62,7 +62,7 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->name}}!
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Daily Report of :- {{$view->employe->emp_name}}!
                                         </h3>
                                     </div>
 
@@ -80,7 +80,7 @@
                                     <td>Submit By</td>
                                     <td>:</td>
                                     <td>
-                                        {{$view->employe->name}}
+                                        {{$view->employe->emp_name}}
                                     </td>
                                 </tr>
 

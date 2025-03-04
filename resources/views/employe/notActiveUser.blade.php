@@ -41,7 +41,7 @@
         <div class="col-lg-4">
             <div class="text-center">
                 <div class="font-80 text-danger">4<i class="mdi mdi-emoticon-sad-outline mx-2"></i>4</div>
-                <h3 class="text-uppercase">Sorry You have No Acces To Visit Dashboard</h3>
+                <h3 class="text-uppercase">Sorry You have No Acces To Visit Employee Dashboard</h3>
                 <p class="text-warning mt-4" style="color:red;">
                 Please Contact With Your Admin,HR.
                 </p>

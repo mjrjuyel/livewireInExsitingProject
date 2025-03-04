@@ -60,7 +60,7 @@
 
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Submit Date</th>
-                                    <th class="text-center">Report Detail</th>
+                                    <th class="text-center">Designation</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -68,7 +68,7 @@
                                 @foreach ($reports as $report)
                                 <tr>
                                     <td>
-                                        {{ $report->employe->name }}
+                                        {{ $report->employe->emp_name }}
                                     </td>
                                     
                                     <td>
@@ -76,7 +76,7 @@
                                     </td>
 
                                     <td>
-                                        {!! Str::words($report->detail,20) !!}
+                                        {{ Str::words($report->detail,20) }}
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
@@ -119,7 +119,7 @@
                 <h5 class="modal-title" id="myModalLabel">Parmanent Delete A report !</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('portal.dailyreport.delete')}}" method="post">
+            <form action="{{route('superadmin.dailyreport.delete')}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body modal_body">
@@ -144,7 +144,7 @@
                 <h5 class="modal-title" id="myModalLabel">Restore Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('portal.dailyreport.restore')}}" method="post">
+            <form action="{{route('superadmin.dailyreport.restore')}}" method="post">
                 @csrf
 
                 <div class="modal-body modal_body">

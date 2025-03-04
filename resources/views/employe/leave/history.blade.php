@@ -1,5 +1,5 @@
-@extends('layouts.superAdmin')
-@section('superAdminContent')
+@extends('layouts.employe')
+@section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({

@@ -9,12 +9,11 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
 use App\Models\Leave;
-// use App\Models\Employee;
+use App\Models\Employee;
 use App\Models\User;
 use App\Models\EmployeLeaveSetting;
+use App\Models\UserRole;
 use App\Models\OfficeBranch;
 use App\Models\Designation;
 use App\Models\BankName;
@@ -30,42 +29,34 @@ use Auth;
 
 class AdminEmployeController extends Controller
 {
-
     public function __construct(){
-        $this->middleware('permission:All User')->only('index');
-        $this->middleware('permission:Add User')->only('add','insert');
-        $this->middleware('permission:Edit User')->only('edit','update');
-        $this->middleware('permission:View User')->only('view');
-        $this->middleware('permission:Soft Delete User')->only('softdele'); 
-        $this->middleware('permission:Restore User')->only('restore'); 
-        $this->middleware('permission:Delete User')->only('delete');
-        $this->middleware('permission:Login Another Profile')->only('login');
-    }
-
-    // Fethch All Employer Data
-    public function index(){
-        $employe = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('status','!=',0)->latest('id')->get();
-        // return $employe;
-        return view('superadmin.employe.index',compact('employe'));
+        $this->middleware('permission:Add Employee')->only('add','insert');
+        $this->middleware('permission:Edit Employee')->only('edit','update');
+        $this->middleware('permission:View Employee')->only('view','index');
+        $this->middleware('permission:Soft Delete Employee')->only('softdele');
+        $this->middleware('permission:Restore Employee')->only('softdele');
+        $this->middleware('permission:Delete Employee')->only('delete');
+        $this->middleware('permission:Login Employee Profile')->only('login');
     }
     // Add Employe 
     public function add(){
-        $roles = Role::orderBy('id')->get(['id','name']);
-        $department = Department::get(['id','depart_name']);
-        $designation= Designation::get(['id','title']);
-        $report = User::where('status',1)->get();
-        $officeBranch = OfficeBranch::get(['id','branch_name']);
-        $bankName = BankName::get(['id','bank_name']);
-        $bankBranch = BankBranch::get(['id','bank_branch_name']);
-        // return $roles;
-        return view('superadmin.employe.add',compact(['roles','designation','report','officeBranch','bankName','bankBranch','department']));
+        $role = UserRole::all();
+        $designation= Designation::all();
+        $report = Employee::where('emp_status',1)->get();
+        $officeBranch = OfficeBranch::all();
+        $bankName = BankName::all();
+        $bankBranch = BankBranch::all();
+        $department = Department::all();
+    
+        // return $bankName;
+        return view('superadmin.employe.add',compact(['designation','report','officeBranch','bankName','bankBranch','department']));
     }
     public function insert(Request $request){
         // return $request->all();
         $request->validate([
             'name'=>'required',
             'pic'=>' max:512 | image | mimes:jpeg,jpg,png',
-            'email'=>'required | email:rfc,dns | unique:users,email',
+            'email'=>'required | email:rfc,dns | unique:employees,email',
             'phone'=>'required',
             'gender'=>'required',
             'marriage'=>'required',
@@ -82,7 +73,7 @@ class AdminEmployeController extends Controller
             'join'=>'required',
             // 'reporting'=>'required',
             'id_type'=>'required',
-            'id_number'=>'unique:users,id_number',
+            'id_number'=>'unique:employees,emp_id_number',
             'degre'=>'required',
             'degreYear'=>'required',
             'bankName'=>'required',
@@ -90,7 +81,6 @@ class AdminEmployeController extends Controller
             'accountName'=>'required',
             'OffBranch'=>'required',
             'signature'=>' max:300 | image | mimes:jpeg,jpg,png',
-            'role'=>'required',
             'pass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()
             ->numbers()
             ->symbols()],
@@ -116,70 +106,69 @@ class AdminEmployeController extends Controller
         }
 
         if(empty($request->eva_end_date)){
-            // return $request->join_date;
-            $endDate = new DateTime($request->join_date);
+            // return $request->join;
+            $endDate = new DateTime($request->join);
             $endDate->modify('+1 year');
 
             // return $endDate->format('Y-m-d');
         }
    
-        $insert = User::create([
-            'name'=>$request['name'],
-            'dob'=>$request['dob'],
+        $insert = Employee::create([
+            'emp_name'=>$request['name'],
+            'emp_dob'=>$request['dob'],
             'email'=>$request['email'],
             'email2'=>$request['email2'],
-            'phone'=>$request['phone'],
-            'phone2'=>$request['phone2'],
-            'address'=>$request['add'],
-            'present'=>$request->sameAdd == 1 ? $request->add : $request->preAdd,
+            'emp_phone'=>$request['phone'],
+            'emp_phone2'=>$request['phone2'],
+            'emp_address'=>$request['add'],
+            'emp_present'=>$request->sameAdd == 1 ? $request->add : $request->preAdd,
             'gender'=>$request['gender'],
             'marriage'=>$request['marriage'],
-            'emer_contact'=>$request['emerPhone'],
-            'emer_name'=>$request['emerName'],
-            'emer_relation'=>$request['emerRelation'],
-            'report_manager'=>$request['reporting'],
-            'depart_id'=>$request['department'],
-            'desig_id'=>$request['desig'],
+            'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_name'=>$request['emerName'],
+            'emp_emer_relation'=>$request['emerRelation'],
+            'emp_report_manager'=>$request['reporting'],
+            'emp_depart_id'=>$request['department'],
+            'emp_desig_id'=>$request['desig'],
             'emp_type'=>$request['empType'],
 
             // identity verification
-            'id_type'=>$request['id_type'],
-            'id_number'=>$request['id_number'],
+            'emp_id_type'=>$request['id_type'],
+            'emp_id_number'=>$request['id_number'],
 
-            'rec_degree'=>$request['degre'],
-            'rec_year'=>$request['degreYear'],
+            'emp_rec_degree'=>$request['degre'],
+            'emp_rec_year'=>$request['degreYear'],
 
-            'bank_id'=>$request['bankName'],
-            'bank_branch_id'=>$request['bankBranch'],
-            'bank_account_name'=>$request['accountName'],
-            'bank_account_number'=>$request['accountNumber'],
-            'bank_sort_code'=>$request['sortCode'],
-            'bank_swift_code'=>$request['swiftCode'],
-            // 'bank_routing_number'=>$request['add'],
-            // 'bank_country'=>$request['add'],
+            'emp_bank_id'=>$request['bankName'],
+            'emp_bank_branch_id'=>$request['bankBranch'],
+            'emp_bank_account_name'=>$request['accountName'],
+            'emp_bank_account_number'=>$request['accountNumber'],
+            'emp_bank_sort_code'=>$request['sortCode'],
+            'emp_bank_swift_code'=>$request['swiftCode'],
+            // 'emp_bank_routing_number'=>$request['add'],
+            // 'emp_bank_country'=>$request['add'],
 
-            'office_branch_id'=>$request['OffBranch'],
-            'office_id_number'=>rand(10000,99999),
-            'office_card_number'=>$request['accessCard'],
-            'office_IT_requirement'=>$request['system'],
-            'office_work_schedule'=>$request['schedule'],
+            'emp_office_branch_id'=>$request['OffBranch'],
+            'emp_office_id_number'=>rand(10000,99999),
+            'emp_office_card_number'=>$request['accessCard'],
+            'emp_office_IT_requirement'=>$request['system'],
+            'emp_office_work_schedule'=>$request['schedule'],
 
             
-            'signature'=>$image_signa ?? null,
+            'emp_signature'=>$image_signa ?? null,
             
-            'image'=>$image_name ?? null,
-            'join_date'=>$request['join'],
+            'emp_image'=>$image_name ?? null,
+
+            'emp_slug'=>'emp-'.uniqId(),
+            'emp_join'=>$request['join'],
             'password'=>Hash::make($request['pass']),
-            'creator'=>Auth::user()->id,
+            'emp_creator'=>Auth::user()->id,
             'created_at'=>Carbon::now('UTC'),
         ]);
-
-        $insert->syncRoles($request->role);
-      
             // Evaluation Create
             $evaluation = EmployeeEvaluation::create([
                 'emp_id' =>$insert->id,
-                'eva_last_date'=>$request->eva_start_date != null ? $request->eva_start_date : $request->join_date,
+                'eva_last_date'=>$request->eva_start_date != null ? $request->eva_start_date : $request->join,
                 'eva_next_date'=>$request->eva_end_date != null ? $request->eva_end_date : $endDate,
                 'evaluated_by'=>Auth::user()->id,
                 'created_at'=>Carbon::now('UTC')
@@ -187,17 +176,24 @@ class AdminEmployeController extends Controller
 
             if($insert){
                 Session::flash('success','New Employee Add ');
-                return redirect()->route('portal.employe.add');
+                return redirect()->route('superadmin.employe.add');
             }
     }
     
+    // Fethch All Employer Data
+    public function index(){
+        $employe = Employee::with(['emp_role','emp_desig'])->where('emp_status','!=',0)->latest('id')->get();
+        // return $employe;
+        return view('superadmin.employe.index',compact('employe'));
+    }
+
+
     // view for employe Dashboard
     public function view($slug){
-
-        $userId = Crypt::decrypt($slug);
-
         $defaultLeave = EmployeLeaveSetting::first();
-        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
+        $view = Employee::with(['emp_role','emp_desig','creator'])->where('emp_slug',$slug)->first();
+
+        $activeEmploye = Employee::where('emp_status',1)->count();
 
         $whole_approved_leave = Leave::where('emp_id',$view->id)->where('status',2)->latest('id')->sum('total_leave_this_month');
         $leaveRequestInMonth = Leave::where('emp_id',$view->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
@@ -207,20 +203,19 @@ class AdminEmployeController extends Controller
         $paidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
 
         $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
-        
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
-         //previous month 
-         $unpaidPreviousMonth = Leave::where('emp_id', $view->id)->where('status', 2)->whereMonth('start_date', now()->subMonth()->month)->whereYear('start_date', now('Y'))->sum('total_unpaid'); 
+
         // Evalution Data 
         $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
 
-         //Evaluation date Calculation
+        // return $EmpEva->eva_next_date;
+         //Eva date Calculation
          if($EmpEva == null || $EmpEva->eva_next_date == ' '){
             // return 'No Eva Date';
-            $end_date = new DateTime($view->join_date->format('Y-m-d'));
+            $end_date = new DateTime($view->emp_join->format('Y-m-d'));
             $end_date->modify('+1 year');
 
-            $start_date = new DateTime($view->join_date->format('Y-m-d'));
+            $start_date = new DateTime($view->emp_join->format('Y-m-d'));
 
             $formatted_start_date = $start_date->format('Y-m-d');
             $formatted_end_date = $end_date->format('Y-m-d');
@@ -246,45 +241,43 @@ class AdminEmployeController extends Controller
             // All Designation and Department
             $departs = Department::all();
             $designs = Designation::all();
-            $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('id')->first();
-            
+            $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
             $earlyleave = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
-           
             $earlyleaveYear = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereYear('leave_date',date('Y'))->sum('total_hour');
-            $previousMonthEarlyLeave = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereMonth('leave_date',now()->subMonth()->month)->whereYear('leave_date',date('Y'))->sum('total_hour');
             // Employee Evalaution Data 
-            // return $unpaidPreviousMonth;
-         return view('superadmin.employe.view',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva','earlyleave','earlyleaveYear','unpaidPreviousMonth','previousMonthEarlyLeave']));
+            // return $activeDesig;
+         return view('superadmin.employe.view',compact(['view','activeEmploye','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva','earlyleave','earlyleaveYear']));
     }
 
     // Edit Admin
     public function edit($slug){
-        $userId = Crypt::decrypt($slug);
-        $roles = Role::orderBy('id')->get(['id','name']);
-        $ModelRoles= DB::table('model_has_roles')->where('model_id',$userId)->pluck('role_id')->all();
+        $role = UserRole::all();
         $designation= Designation::all();
-        $report = User::where('status',1)->get();
+        $report = Employee::where('emp_status',1)->get();
         $officeBranch = OfficeBranch::all();
         $bankName = BankName::all();
         $bankBranch = BankBranch::all();
         $department = Department::all();
-        $edit = User::where('id',$userId)->first();
+        $edit = Employee::where('emp_slug',$slug)->first();
     
         // return $edit;
-        return view('superadmin.employe.edit',compact(['edit','roles','ModelRoles','designation','report','officeBranch','bankName','bankBranch','department']));
+        return view('superadmin.employe.edit',compact(['edit','designation','report','officeBranch','bankName','bankBranch','department']));
     }
 
     public function update(Request $request){
 
         $id = $request['id'];
-        // get Associted Admin User
-        $employe = User::findOrFail($id);
+        $slug = $request['slug'];
 
+        // get Associted Admin User
+        $employe = Employee::findOrFail($id);
+        // get associated Admin Info.
+        $admin = User::where('email',$employe->email)->first();
+        // return $admin;
         $request->validate([
             'name'=>'required',
             'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
-            'role'=>'required',
-            'email'=>'required | email:rfc,dns | unique:users,email,'.$id,
+            'email'=>'required | email:rfc,dns | unique:employees,email,'.$id,
             'phone'=>'required',
             'gender'=>'required',
             'marriage'=>'required',
@@ -302,11 +295,11 @@ class AdminEmployeController extends Controller
             // 'eva_end_date'=>'required',
             'reporting'=>'required',
             'id_type'=>'required',
-            'id_number'=>'unique:users,id_number,'.$id,
+            'id_number'=>'unique:employees,emp_id_number,'.$id,
             'degre'=>'required',
             'degreYear'=>'required',
             'bankName'=>'required',
-            'accountNumber'=>'required | unique:users,bank_account_number,'.$id,
+            'accountNumber'=>'required | unique:employees,emp_bank_account_number,'.$id,
             'accountName'=>'required',
             'OffBranch'=>'required',
         ]);
@@ -318,18 +311,25 @@ class AdminEmployeController extends Controller
                 ->symbols()],
                 'repass' => 'required | same:pass',
             ]);
-            User::where('id',$id)->update([
+            Employee::where('id',$id)->update([
                 'password'=>Hash::make($request['pass']),
             ]);
+
+            if($admin){
+                
+                User::where('id',$admin->id)->update([
+                    'password'=> Hash::make($request->pass),
+                ]);
+               }
         }
 
-        $old= User::find($id);
+        $old= Employee::find($id);
         $path = public_path('uploads/employe/profile/');
 
         if($request->hasFile('pic')){
 
-            if($old->image !='' && $old->image != null){
-                $old_pic = $path.$old->image;
+            if($old->emp_image !='' && $old->emp_image != null){
+                $old_pic = $path.$old->emp_image;
                 unlink($old_pic);
             }
 
@@ -340,15 +340,15 @@ class AdminEmployeController extends Controller
             // $image->scale(width: 300);
             $image->save('uploads/employe/profile/'.$image_name);
 
-            User::where('id',$id)->update([
-                'image'=>$image_name,
+            Employee::where('id',$id)->update([
+                'emp_image'=>$image_name,
             ]);
         }
 
         if($request->hasFile('signature')){
 
-            if($old->signature !='' && $old->signature != null){
-                $old_pic = $path.$old->signature;
+            if($old->emp_signature !='' && $old->emp_signature != null){
+                $old_pic = $path.$old->emp_signature;
                 unlink($old_pic);
             }
 
@@ -359,74 +359,106 @@ class AdminEmployeController extends Controller
             // $image->scale(width: 300);
             $image->save('uploads/employe/profile/'.$image_signa);
 
-            User::where('id',$id)->update([
-                'signature'=>$image_signa,
+            Employee::where('id',$id)->update([
+                'emp_signature'=>$image_signa,
             ]);
         }
+
+        // admin profile image
+        if($admin){
+            $path = public_path('uploads/adminprofile/');
+            if($request->hasFile('pic')){
+                if($admin->image !='' && $admin->image != null){
+                    $admin_pic = $path.$admin->image;
+                    unlink($admin_pic);
+                }
+
+                $imageTake = $request->file('pic');
+                $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($imageTake);
+                // $image->scale(width: 300);
+                $image->save('uploads/adminprofile/'.$image_name);
+
+                User::where('id',$admin->id)->update([
+                    'image'=>$image_name,
+                ]);
+            }
+        }
+
         
-        $update = User::where('id',$id)->update([
-            'name'=>$request['name'],
-            'dob'=>$request['dob'],
+        $update = Employee::where('id',$id)->update([
+            'emp_name'=>$request['name'],
+            'emp_dob'=>$request['dob'],
             'email'=>$request['email'],
             'email2'=>$request['email2'],
-            'phone'=>$request['phone'],
-            'phone2'=>$request['phone2'],
-            'address'=>$request['add'],
-            'present'=>$request['preAdd'],
+            'emp_phone'=>$request['phone'],
+            'emp_phone2'=>$request['phone2'],
+            'emp_address'=>$request['add'],
+            'emp_present'=>$request['preAdd'],
             'gender'=>$request['gender'],
             'marriage'=>$request['marriage'],
-            'emer_contact'=>$request['emerPhone'],
-            'emer_name'=>$request['emerName'],
-            'emer_relation'=>$request['emerRelation'],
-            'report_manager'=>$request['reporting'],
-            'depart_id'=>$request['department'],
-            'desig_id'=>$request['desig'],
+            'emp_emer_contact'=>$request['emerPhone'],
+            'emp_emer_name'=>$request['emerName'],
+            'emp_emer_relation'=>$request['emerRelation'],
+            'emp_report_manager'=>$request['reporting'],
+            'emp_depart_id'=>$request['department'],
+            'emp_desig_id'=>$request['desig'],
             'emp_type'=>$request['empType'],
 
             // identity verification
-            'id_type'=>$request['id_type'],
-            'id_number'=>$request['id_number'],
+            'emp_id_type'=>$request['id_type'],
+            'emp_id_number'=>$request['id_number'],
 
-            'rec_degree'=>$request['degre'],
-            'rec_year'=>$request['degreYear'],
+            'emp_rec_degree'=>$request['degre'],
+            'emp_rec_year'=>$request['degreYear'],
 
-            'bank_id'=>$request['bankName'],
-            'bank_branch_id'=>$request['bankBranch'],
-            'bank_account_name'=>$request['accountName'],
-            'bank_account_number'=>$request['accountNumber'],
-            'bank_sort_code'=>$request['sortCode'],
-            'bank_swift_code'=>$request['swiftCode'],
-            // 'bank_routing_number'=>$request['add'],
-            // 'bank_country'=>$request['add'],
+            'emp_bank_id'=>$request['bankName'],
+            'emp_bank_branch_id'=>$request['bankBranch'],
+            'emp_bank_account_name'=>$request['accountName'],
+            'emp_bank_account_number'=>$request['accountNumber'],
+            'emp_bank_sort_code'=>$request['sortCode'],
+            'emp_bank_swift_code'=>$request['swiftCode'],
+            // 'emp_bank_routing_number'=>$request['add'],
+            // 'emp_bank_country'=>$request['add'],
 
-            'office_branch_id'=>$request['OffBranch'],
-            'office_id_number'=>rand(10000,99999),
-            'office_card_number'=>$request['accessCard'],
-            'office_IT_requirement'=>$request['system'],
-            'office_work_schedule'=>$request['schedule'],
+            'emp_office_branch_id'=>$request['OffBranch'],
+            'emp_office_id_number'=>rand(10000,99999),
+            'emp_office_card_number'=>$request['accessCard'],
+            'emp_office_IT_requirement'=>$request['system'],
+            'emp_office_work_schedule'=>$request['schedule'],
 
-            'join_date'=>$request['join'],
+            'emp_slug'=>$slug,
+            'emp_join'=>$request['join'],
 
-            'resign_date'=>$request->resign,
-            'editor'=>Auth::user()->id,
+            'emp_resign'=>$request->resign,
+            'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
+        
+        if($admin){
+            
+            $update = User::where('id',$admin->id)->update([
+                'name'=>$request['name'],
+                'email'=>$request['email'],
+                'designation_id'=>$request['desig'],
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
 
-        $employe = User::findOrFail($id);
-
-        $employe->syncRoles($request->role);
+            // return $data = User::findOrFail($admin->id);
+        }
 
         if($update){
             if(!empty($request->resign)){
-                    User::where('id',$id)->update([
-                        'status'=>3
+                    Employee::where('id',$id)->update([
+                        'emp_status'=>3
                     ]);
                 Session::flash('success','Employee Have Resigned !');
                 return redirect()->back();
             }
             elseif(empty($request->resign)){
-                User::where('id',$id)->update([
-                    'status'=>1
+                Employee::where('id',$id)->update([
+                    'emp_status'=>1
                 ]);
             Session::flash('success','Update Employe Info');
             return redirect()->back();
@@ -435,12 +467,74 @@ class AdminEmployeController extends Controller
             return redirect()->back();
         }
     }
+
+    public function passwordChange($slug){
+        // return $slug;
+        $pass = Employee::where('slug',$slug)->first();
+        $role= UserRole::all();
+        // return $data;
+        return view('employe.employe.updateProfile',compact(['pass','role']));
+    }
+
+    public function SubmitNewPass(Request $request)
+    {
+        $id = $request['id'];
+        $slug = $request['slug'];
+        // return $request->all();
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required | email:rfc,dns',
+        ]);
+
+        if($request->hasFile('image')){
+            $imageTake = $request->file('image');
+            $image_name = 'user-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($imageTake);
+            // $image->scale(width: 300);
+            $image->save('uploads/admin/profile/'.$image_name);
+            
+            Employee::where('id',$id)->update([
+                'image'=>$image_name,
+            ]);
+        }
+        
+        $update = Employee::where('id',$id)->update([
+            'name'=>$request['name'],
+            'email'=>$request['email'],
+            'slug'=>$slug,
+            'updated_at'=>Carbon::now('UTC'),
+        ]);
+        
+        // If Password Is changed
+        if($request->oldpass){
+            $request->validate([
+                'oldpass' => 'required',
+                'newpass' => ['required ',\Illuminate\Validation\Rules\Password::min(5)->letters()
+                ->numbers()
+                ->symbols()],
+            ]);
+    
+            if (!Hash::check($request->oldpass,auth()->user()->password)) {
+                return back()->withErrors(['oldpass' => 'Incorrect current password.']);
+            }
+            auth()->user()->update([
+                'password' => Hash::make($request->newpass),
+            ]);
+        }
+        
+        Session::flash('success','Profile Update Successfully');
+        return redirect()->back();
+    }
+
     // Softy Delete 
+
     public function softdele(Request $request){
         $id = $request['id'];
-        $softdel = User::where('id',$id)->update([
-            'status'=>0,
-            'editor'=>Auth::user()->id,
+
+        $softdel = Employee::where('id',$id)->update([
+            'emp_status'=>0,
+            'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
 
@@ -453,9 +547,9 @@ class AdminEmployeController extends Controller
     public function restore(Request $request){
         $id = $request['id'];
 
-        $softdel = User::where('id',$id)->update([
-            'status'=>1,
-            'editor'=>Auth::user()->id,
+        $softdel = Employee::where('id',$id)->update([
+            'emp_status'=>1,
+            'emp_editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
 
@@ -470,7 +564,7 @@ class AdminEmployeController extends Controller
         $id = $request['id'];
 
 
-        $delete = User::where('id',$id)->first();
+        $delete = Employee::where('id',$id)->first();
         $delete->delete();
         if($delete){
 
@@ -479,106 +573,18 @@ class AdminEmployeController extends Controller
         }
     }
 
-    // View Logged User His Profile.
-    public function profileView($slug){
-        $userId = Crypt::decrypt($slug);
-        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
-        $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
-        // Evalution Data 
-        // return $view;
-        $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
-        return view('superadmin.employe.profile',compact(['view','activeDesig','EmpEva']));
-    }
-
-    // update User Own Profile
-    public function profileEdit($slug){
-        $userId = Crypt::decrypt($slug);
-        $edit = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
-        $designation= Designation::all();
-
-        return view('superadmin.employe.profileEdit',compact(['edit','designation']));
-    }
-
-    public function profileUpdate(Request $request){
-
-        $id = $request['id'];
-        $request->validate([
-            'name'=>'required',
-            'pic' => 'max:512 | image | mimes:jpeg,jpg,png',
-            'add' => 'required',
-            'emerPhone' => 'required',
-            'emerName' => 'required',
-            'emerRelation' => 'required',
-            'email'=>'required | email:rfc,dns | unique:users,email,'.$id,
-        ]);
-
-        if($request->oldpass != ''){
-            if($request->oldpass){
-               $request->validate([
-                   'oldpass' => 'required',
-                   'newpass' => ['required',\Illuminate\Validation\Rules\Password::min(5)->letters()->numbers()],
-               ]);
-              
-               if (!Hash::check($request->oldpass,auth()->user()->password)) {
-                
-                   return back()->withErrors(['oldpass' => 'Incorrect current password.']);
-               }
-
-                User::where('id',$id)->update([
-                    'password'=> Hash::make($request->newpass),
-                ]);
-           }
-       }
-
-        $date = strtotime($request['join']);
-
-        // image Change
-        $old= User::find($id);
-        $path = public_path('uploads/employe/profile/');
-        if($request->hasFile('pic')){
-
-            if($old->image !='' && $old->image != null){
-                $old_pic = $path.$old->image;
-                unlink($old_pic);
-            }
-
-            $imageTake = $request->file('pic');
-            $image_name = 'emp-'.uniqId().'.'.$imageTake->getClientOriginalExtension();
-            $manager = new ImageManager(new Driver());
-            $image = $manager->read($imageTake);
-            // $image->scale(width: 300);
-            $image->save('uploads/employe/profile/'.$image_name);
-
-            User::where('id',$id)->update([
-                'image'=>$image_name,
-            ]);
-        }
-
-        $insert = User::where('id',$id)->update([
-            'name'=>$request['name'],
-            'email'=>$request['email'],
-            'email2'=>$request['email2'],
-            'phone'=>$request['phone'],
-            'phone2'=>$request['phone2'],
-            'address'=>$request['add'],
-            'present'=>$request['preAdd'],
-            'emer_contact'=>$request['emerPhone'],
-            'emer_name'=>$request['emerName'],
-            'emer_relation'=>$request['emerRelation'],
-            'desig_id'=>$request['desig'],
-            'updated_at'=>Carbon::now('UTC'),
-        ]);
-
-        if($insert){
-            Session::flash('success','Update Profile SuccessFully ');
-            return redirect()->route('portal.employe.editprofile',Crypt::encrypt($id));
-        }
-    }
-
     public function login($id)
     {
-        $employe = User::findOrFail(($id));
-        auth()->login($employe, true);
-        return redirect()->route('portal');
+        $employe = Employee::findOrFail(($id));
+        auth('employee')->login($employe, true);
+        return redirect()->route('dashboard');
+    }
+
+    public function employeLogin($id)
+    {
+        $userId = Crypt::decrypt($id);
+        $employe = Employee::findOrFail(($userId));
+        auth('employee')->login($employe, true);
+        return redirect()->route('dashboard');
     }
 }

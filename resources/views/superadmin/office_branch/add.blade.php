@@ -56,13 +56,13 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('portal.office_branch')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('superadmin.office_branch')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Branches</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('portal.office_branch.insert')}}" method="post">
+                    <form action="{{route('superadmin.office_branch.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">

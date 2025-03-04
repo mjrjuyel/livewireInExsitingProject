@@ -66,7 +66,7 @@
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 offset-md-2 text-end"><a href="{{ route('portal.employe') }}" class="btn btn-bg btn-primary btn_header ">
+                            <div class="col-md-2 offset-md-2 text-end"><a href="{{ route('superadmin.employe') }}" class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-account-group-outline btn_icon"></i>All Employee</a>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="card-body pt-2">
 
-                                    <form action="{{ route('portal.employe.insert') }}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('superadmin.employe.insert') }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div>
                                             <h3 class="text-info">Personal Information :-</h3>
@@ -334,21 +334,6 @@
                                             <hr class="text-info">
                                             <section>
                                                 <div class="row">
-                                                
-                                                    <div class="col-sm-4">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Role</label>
-                                                            <select class="form-control" type="text" name="role">
-                                                            <option disabled> Select Role</option>
-                                                            @foreach($roles as $role)
-                                                            <option value="{{$role->name}}">{{$role->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                            @error('department')
-                                                            <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-sm-4">
                                                         <div class="mb-3">
@@ -413,7 +398,7 @@
                                                             <select type="text" class="form-control" name="reporting" value="{{old('reporting')}}">
                                                                 <option value="">Select One</option>
                                                                 @foreach($report as $employe)
-                                                                <option value="{{$employe->id}}" {{old('reporting') == $employe->id ? 'Selected' : '' }}>{{$employe->name}}</option>
+                                                                <option value="{{$employe->id}}" {{old('reporting') == $employe->id ? 'Selected' : '' }}>{{$employe->emp_name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('reporting')
@@ -439,7 +424,7 @@
                                                         <div class="form-group clearfix">
                                                             <label>Next Evaluation Date : </label>
                                                             <input name="eva_end_date" type="date" class="form-control" value="{{old('eva_end_date')}}">
-
+                                                            
                                                         </div>
                                                     </div>
                                                 </div><!-- end row -->

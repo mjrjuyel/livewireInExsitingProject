@@ -1,5 +1,5 @@
-@extends('layouts.superAdmin')
-@section('superAdminContent')
+@extends('layouts.employe')
+@section('content')
 <div class="page-container">
 
     <div class="page-title-box">
@@ -144,7 +144,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     @php
-                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeavePaid;
+                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeave;
                     @endphp
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Paid Leave Remaining Between Evaluation Periods</span></h6>
@@ -156,24 +156,6 @@
                         @endif
                     @else
                         <h3 class="my-3 text-danger">Zero</h3>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card tilebox-one">
-                <div class="card-body">
-                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid leave in <span class="text-danger text-italic">{{\Carbon\Carbon::now()->subMonth()->format('F')}}</span></h6>
-                    @if($unpaidPreviousMonth != null)
-                    @if($unpaidPreviousMonth >= 2)
-                    <h3 class="my-3 text-danger"><span data-plugin="counterup">{{$unpaidPreviousMonth}}</span> Days</h3>
-                    @else
-                    <h3 class="my-3 text-danger"><span data-plugin="counterup">{{$unpaidPreviousMonth}}</span> Day</h3>
-                    @endif
-                    @else
-                    <h3 class="my-3 text-danger">Not Yet</h3>
                     @endif
                 </div>
             </div>
@@ -285,24 +267,12 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{\Carbon\Carbon::now()->subMonth()->format('F')}}</span></h6>
-                    <h3 class="my-3 text-danger">{{convertTime($previousMonthEarlyLeave)}}</h3>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-6 col-xl-3">
-            <div class="card tilebox-one">
-                <div class="card-body">
-                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('M')}}</span></h6>
                     <h3 class="my-3">{{convertTime($earlyleave)}}</h3>
                 
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
@@ -317,7 +287,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    @if($totalReportSubmit > 0 )
+                    @if($totalReportSubmit < 0 )
                     <a href="{{ route('dashboard.dailyreport') }}">
                         <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                         <h6 class="text-muted text-uppercase mt-0">Total Daily Report Submit <span class="text-danger text-italic"></span></h6>

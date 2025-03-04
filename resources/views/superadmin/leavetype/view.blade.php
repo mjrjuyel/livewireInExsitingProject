@@ -34,11 +34,11 @@
                                                 class="mdi mdi-shield-crown header_icon"></i>{{$view->type_title}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('portal.leavetype')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.leavetype')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-emoticon-sick-outline btn_icon"></i>All Leave Type</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('portal.leavetype.edit',$view->id)}}"
+                                    <div class="col-md-2"><a href="{{route('superadmin.leavetype.edit',$view->id)}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>

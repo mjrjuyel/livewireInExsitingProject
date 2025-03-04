@@ -15,14 +15,6 @@ use Session;
 
 class AdminEarlyLeaveController extends Controller
 {
-    public function __construct(){
-        $this->middleware('permission:All Early Leave')->only('index');
-        $this->middleware('permission:Add Early Leave')->only('add','insert');
-        $this->middleware('permission:Edit Early Leave')->only('edit');
-        $this->middleware('permission:View Early Leave')->only('view','update');
-        $this->middleware('permission:Delete Early Leave')->only('delete','softDelete');
-    }
-
     public function index(){
         $leaves = EarlyLeave::where('status','!=',0)->latest('id')->get();
         // return $leaves;
@@ -88,9 +80,11 @@ class AdminEarlyLeaveController extends Controller
                 }
             }
 
-            // $alldata = EarlyLeave::where('id',$id)->first();
+
+           
+            $alldata = EarlyLeave::where('id',$id)->first();
             
-            // Mail::to($employe->email)->send(new EarlyLeaveResponseMail($alldata));
+            Mail::to($employe->email)->send(new EarlyLeaveResponseMail($alldata));
 
             // $employe->notify(new LeaveToEmployeNotification($alldata));
 
@@ -102,7 +96,7 @@ class AdminEarlyLeaveController extends Controller
     // soft Delete
     public function softDelete(Request $request){
         $id = $request->id;
-        
+
         $softdele = EarlyLeave::where('id',$id)->update([
             'status'=>0,
             'editor'=>Auth::user()->id,

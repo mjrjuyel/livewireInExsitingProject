@@ -70,7 +70,7 @@
                                 <div class="form-group clearfix">
                                     <label>Name<span class="text-danger">*</span> :</label>
                                     <select type="text" class="form-control" name="employe">
-                                        <option value="{{ $edit->emp_id }}">{{ $edit->employe->name}}</option>
+                                        <option value="{{ $edit->emp_id }}">{{ $edit->employe->emp_name}}</option>
                                     </select>
                                     @error('employe')
                                     <small class="form-text text-warning">{{ $message }}</small>
@@ -189,22 +189,4 @@
 </div> <!-- container -->
 
 <!--end Footer -->
-<script>
-$('body').ready(function() {
-
-        $('#department').on('change', function() {
-            var id = $(this).val();
-            $.ajax({
-                url: "{{url('/get_designation/')}}/" + id
-                , type: "get"
-                , success: function(data) {
-                    $('select[name="desig"]').empty();
-                    $.each(data, function(key, data) {
-                        $('select[name="desig"]').append('<option value="' + data.id + '">' + data.title + '</option>');
-                    })
-                }
-            })
-        });
-    });
-</script>
 @endsection

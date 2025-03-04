@@ -33,6 +33,9 @@ class LeaveFormController extends Controller
     }
     // add Leave
     public function insert(Request $request){
+                // validation
+
+                // return $request->all();
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
@@ -42,7 +45,7 @@ class LeaveFormController extends Controller
                     ]);
 
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
-                    $lastLeave = Leave::latest('id')->where('emp_id',Auth::user()->id)->first();
+                    $lastLeave = Leave::latest('id')->where('emp_id',Auth::guard('employee')->user()->id)->first();
 
                     if($lastLeave == Null || $lastLeave->status == 2 || $lastLeave->status == 3){
 
@@ -58,7 +61,7 @@ class LeaveFormController extends Controller
                 if($start_time <= $end_time && $start_time >= $before5Days){
 
                     // **NEW CONDITION: Check for overlapping leaves**
-                        $overlappingLeaves = Leave::where('emp_id', Auth::user()->id)->where('status',2)
+                        $overlappingLeaves = Leave::where('emp_id', Auth::guard('employee')->user()->id)->where('status',2)
                             ->where(function ($query) use ($request) {
                                 $query->whereBetween('start_date', [$request['start'], $request['end']])
                                     ->orWhereBetween('end_date', [$request['start'], $request['end']])
@@ -167,13 +170,13 @@ class LeaveFormController extends Controller
                             $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
 
                             // check total Paid of in a month
-                            $checkMonth = Leave::where('emp_id',Auth::user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkMonth = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
-                            $previousLeave = Leave::where('emp_id',Auth::user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
+                            $previousLeave = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
                             // return $previousLeave !== null ? "this have value " : "Its A  null property";
 
                             // check total paid off in an annual year
-                            $checkYear = Leave::where('emp_id',Auth::user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkYear = Leave::where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
                             $remainingMonthlyPaidLeave = max(0, $definedLeave->month_limit - $checkMonth);
 
@@ -186,16 +189,17 @@ class LeaveFormController extends Controller
                                         $insert = Leave::create([
                                             'leave_type_id'=>$request['leave_type'],
                                             'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
-                                            'start_date'=>Carbon::parse($leavePermonth['start_date'])->addHours(6),
-                                            'end_date'=>Carbon::parse($leavePermonth['end_date'])->addHours(6),
+                                            'start_date'=>Carbon::parse($leavePermonth['start_date']),
+                                            'end_date'=>$leavePermonth['end_date'],
                                             'reason'=>$request['reason'],
                                             'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
                                             // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
                                             'total_paid'=>0,
                                             'total_unpaid'=>$paidLeaves + $unPaidLeaves,
                                             'unpaid_request'=>$request->unpaid,
-                                            'emp_id'=>Auth::user()->id,
-                                            'add_from'=>Auth::user()->name,
+                                            'emp_id'=>Auth::guard('employee')->user()->id,
+                                            'slug'=>'leav-'.uniqId(),
+                                            'add_from'=>Auth::guard('employee')->user()->name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
     
@@ -220,35 +224,31 @@ class LeaveFormController extends Controller
                                         $insert = Leave::create([
                                             'leave_type_id'=>$request['leave_type'],
                                             'other_type'=>$request['leave_type'] == 0 ? $request->others : null,
-                                            'start_date'=>Carbon::parse($leavePermonth['start_date'])->toDateString(),
-                                            'end_date'=>Carbon::parse($leavePermonth['end_date'])->toDateString(),
+                                            'start_date'=>Carbon::parse($leavePermonth['start_date']),
+                                            'end_date'=>$leavePermonth['end_date'],
                                             'reason'=>$request['reason'],
                                             'total_leave_this_month'=> $paidLeaves + $unPaidLeaves,
                                             // 'total_leave_this_month'=>($previousLeave && $previousLeave->total_leave_this_month !== null)? $previousLeave->total_leave_this_month + $paidLeaves + $unPaidLeaves : $paidLeaves + $unPaidLeaves,
                                             'total_paid'=>$paidLeaves,
                                             'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
                                             'unpaid_request'=>$request->unpaid,
-                                            'emp_id'=>Auth::user()->id,
-                                            'add_from'=>Auth::user()->name,
+                                            'emp_id'=>Auth::guard('employee')->user()->id,
+                                            'slug'=>'leav-'.uniqId(),
+                                            'add_from'=>'Employee',
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
-
-                                        // return $insert;
-                                        // dd($insert);
-                                        $userTimezone = Auth::user()->timezone ?? 'UTC';
-
-                                        dd($insert);
-                                        // $adminEmail = AdminEmail::first();
     
-                                        // if($adminEmail->email_leave == 1){
+                                        $adminEmail = AdminEmail::first();
+    
+                                        if($adminEmail->email_leave == 1){
                                             
-                                        //     $getEmail = AdminEmail::where('id',1)->first();
-                                        //     $explode = explode(',',$getEmail->email);
-                                        //     // try {
-                                        //     foreach($explode as $email){
-                                        //         Mail::to($email)->send(new LeaveMailToAdmin($insert));
-                                        //     }
-                                        // }
+                                            $getEmail = AdminEmail::where('id',1)->first();
+                                            $explode = explode(',',$getEmail->email);
+                                            // try {
+                                            foreach($explode as $email){
+                                                Mail::to($email)->send(new LeaveMailToAdmin($insert));
+                                            }
+                                        }
                                         // notification
                                         // auth()->user()->notify(new LeaveToAdminNotification($insert));
     
@@ -264,7 +264,7 @@ class LeaveFormController extends Controller
                              
                     }
 
-                    return redirect()->route('dashboard.leave.history',Crypt::encrypt(Auth::user()->id));
+                    return redirect()->route('dashboard.leave.history',Crypt::encrypt(Auth::guard('employee')->user()->id));
                 }
             Session::flash('error','Date Is not Correct!');
             return redirect()->route('dashboard.leave.add');
@@ -309,7 +309,7 @@ class LeaveFormController extends Controller
                 if($start_time <= $end_time && $start_time >= $before5Days){
                     
                     // **NEW CONDITION: Check for overlapping leaves**
-                        $overlappingLeaves = Leave::where('id','!=',$id)->where('emp_id', Auth::user()->id)->where('status',2)
+                        $overlappingLeaves = Leave::where('id','!=',$id)->where('emp_id', Auth::guard('employee')->user()->id)->where('status',2)
                             ->where(function ($query) use ($request) {
                                 $query->whereBetween('start_date', [$request['start'], $request['end']])
                                     ->orWhereBetween('end_date', [$request['start'], $request['end']])
@@ -418,13 +418,13 @@ class LeaveFormController extends Controller
                             $end_date = Carbon::parse($leavePermonth['end_date']); // Parsing day in Month, year;
 
                             // check total Paid of in a month
-                            $checkMonth = Leave::where('id','!=',$id)->where('emp_id',Auth::user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkMonth = Leave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
-                            $previousLeave = Leave::where('id','!=',$id)->where('emp_id',Auth::user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
+                            $previousLeave = Leave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereMonth('start_date',$start_date->month)->whereYear('start_date',$start_date->year)->latest('id')->first();
                             // return $previousLeave !== null ? "this have value " : "Its A  null property";
 
                             // check total paid off in an annual year
-                            $checkYear = Leave::where('id','!=',$id)->where('emp_id',Auth::user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
+                            $checkYear = Leave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->where('status',2)->whereYear('start_date',$start_date->year)->sum('total_paid');
                             
                             $remainingMonthlyPaidLeave = max(0, $definedLeave->month_limit - $checkMonth);
 
@@ -445,10 +445,10 @@ class LeaveFormController extends Controller
                                             'total_paid'=>0,
                                             'total_unpaid'=>$paidLeaves + $unPaidLeaves,
                                             'unpaid_request'=>$request->unpaid,
-                                            'emp_id'=>Auth::user()->id,
+                                            'emp_id'=>Auth::guard('employee')->user()->id,
                                             'slug'=>'leav-'.uniqId(),
                                             'status'=>1,
-                                            'add_from'=>Auth::user()->name,
+                                            'add_from'=>Auth::guard('employee')->user()->emp_name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
     
@@ -482,10 +482,10 @@ class LeaveFormController extends Controller
                                             'total_paid'=>$paidLeaves,
                                             'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
                                             'unpaid_request'=>$request->unpaid,
-                                            'emp_id'=>Auth::user()->id,
+                                            'emp_id'=>Auth::guard('employee')->user()->id,
                                             'slug'=>'leav-'.uniqId(),
                                             'status'=>1,
-                                            'add_from'=>Auth::user()->name,
+                                            'add_from'=>Auth::guard('employee')->user()->emp_name,
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
     
@@ -524,15 +524,23 @@ class LeaveFormController extends Controller
         }
 
     public function view($slug){
+        $emp = Employee::where('emp_slug',Auth::guard('employee')->user()->emp_slug)->first();
+        // dd($emp);
         $useId = Crypt::decrypt($slug);
-        // 'creator:id,name','emp_desig:id,title'
-        $view = Leave::with(['employe:id,name'])->where('id',$useId)->first();
+
+        $view = Leave::with(['employe'=>function($query){
+            $query->select('id','emp_name');
+        },'leavetype'])->where('id',$useId)->where('emp_id',$emp->id)->first();
+        // return $view;
         return view('employe.leave.view',compact('view'));
     } 
 
     public function history($slug){
         $userId = Crypt::decrypt($slug);
-        $leavehistory = Leave::where('emp_id',$userId)->orderBy('created_at','DESC')->get();
+        // return $userId;
+        $employe = Employee::where('id',$userId)->first();
+
+        $leavehistory = Leave::where('emp_id',$employe->id)->orderBy('created_at','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.history',compact('leavehistory'));
     }
@@ -542,7 +550,7 @@ class LeaveFormController extends Controller
         $date = new DateTime($slug);
         $parseDate = Carbon::parse($date);
         // return $parseDate;
-        $leavehistory = Leave::where('emp_id',Auth::user()->id)->whereMonth('start_date',$parseDate->month)->orderBy('created_at','DESC')->get();
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereMonth('start_date',$parseDate->month)->orderBy('created_at','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.historyMonth',compact(['leavehistory','parseDate']));
     }
@@ -552,7 +560,7 @@ class LeaveFormController extends Controller
         $date = new DateTime($slug);
         $parseDate = Carbon::parse($date);
         // return $parseDate;/
-        $leavehistory = Leave::where('emp_id',Auth::user()->id)->whereYear('start_date',$parseDate->year)->orderBy('created_at','DESC')->get();
+        $leavehistory = Leave::where('emp_id',Auth::guard('employee')->user()->id)->whereYear('start_date',$parseDate->year)->orderBy('created_at','DESC')->get();
         // return $leavehistory;
         return view('employe.leave.historyYear',compact(['leavehistory','parseDate']));
     }

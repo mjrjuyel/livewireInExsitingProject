@@ -70,7 +70,7 @@
                                 <tr>
 
                                     <td>
-                                        {{ $data->employe->name }}
+                                        {{ $data->employe->emp_name }}
                                     </td>
 
                                     <td>
@@ -143,11 +143,11 @@
                                                         </button>
                                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                             @can('View Leave')
-                                                            <li><a class="dropdown-item" href="{{ url('portal/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/view/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a>
                                                             </li>
                                                             @endcan
                                                             @can('Edit Leave')
-                                                            <li><a class="dropdown-item" href="{{ url('portal/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
+                                                            <li><a class="dropdown-item" href="{{ url('superadmin/leave/edit/'.Crypt::encrypt($data->id)) }}"><i class="mdi mdi-view-agenda"></i>Edit</a>
                                                             </li>
                                                             @endcan
                                                             @can('Delete Leave')
@@ -183,7 +183,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete an Employee Leave Request Data </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('portal.leave.delete')}}" method="post">
+            <form action="{{route('superadmin.leave.delete')}}" method="post">
                 @method('delete')
                 @csrf
                 <div class="modal-body modal_body">

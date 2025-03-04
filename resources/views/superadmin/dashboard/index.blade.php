@@ -22,11 +22,11 @@
     </div>
 
     <div class="row">
-        @can('All User')
+        @can('Employee')
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.employe')}}">
+                    <a href="{{route('superadmin.employe')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Active Employees</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$activeEmploye}}</h3>
@@ -40,7 +40,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.role')}}">
+                    <a href="{{route('superadmin.role')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Role</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$role}}</h3>
@@ -55,7 +55,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.leaveMonth',date('d-m-Y'))}}">
+                    <a href="{{route('superadmin.leaveMonth',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
@@ -84,7 +84,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.leaveYear',date('d-m-Y'))}}">
+                    <a href="{{route('superadmin.leaveYear',date('d-m-Y'))}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
@@ -97,7 +97,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.leave.pending')}}">
+                    <a href="{{route('superadmin.leave.pending')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request Pending In  <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInPending}}</h3>
@@ -109,7 +109,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.leave.approved')}}">
+                    <a href="{{route('superadmin.leave.approved')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request Approved in <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInApproved}}</h3>
@@ -137,32 +137,11 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.leave.cancled')}}">
+                    <a href="{{route('superadmin.leave.cancled')}}">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request Cancelled in <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInCancled}}</h3>
                     </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card tilebox-one">
-                <div class="card-body">
-                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('M')}}</span></h6>
-                    <h3 class="my-3">{{convertTime($earlyleaveMonth)}}</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card tilebox-one">
-                <div class="card-body">
-                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
-                    <h3 class="my-3">{{convertTime($earlyleaveYear)}}</h3>
-                
                 </div>
             </div>
         </div>
@@ -172,7 +151,7 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.cateringfood')}}">
+                    <a href="{{route('superadmin.cateringfood')}}">
                      <i class="icon-chart float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Catering Cost of {{date('M')}}</h6>
                     <h3 class="my-3"><span data-plugin="counterup">{{number_format($curFoodCost,'2','.','')}}</span></h3>
@@ -184,25 +163,12 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
-                    <a href="{{route('portal.cateringpayment')}}">
+                    <a href="{{route('superadmin.cateringpayment')}}">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Catering Payment in {{date('M')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$curTotalPay}}</h3>
                     </a>
                     
-                </div>
-            </div>
-        </div>
-        @endcan
-
-       @can('Employee')
-        <div class="col-md-6 col-xl-3">
-            <div class="card tilebox-one">
-                <div class="card-body">
-                    <a href="{{route('dashboard')}}">
-                     <span class="mdi mdi-arrow-left-circle float-end m-0 h2 text-muted"></span>
-                    <h6 class="text-info text-uppercase mt-0">Click On Me To Go:  My Dashboard</h6>
-                    </a>
                 </div>
             </div>
         </div>

@@ -10,7 +10,6 @@ use App\Models\Leave;
 use App\Models\CateringFood;
 use App\Models\CateringPayment;
 use App\Models\DailyReport;
-use App\Models\User;
 
 class RecyclebinController extends Controller
 {
@@ -18,7 +17,7 @@ class RecyclebinController extends Controller
         $this->middleware('permission:Recycle Bin')->only('dashboard','employe','dailyreport');
     }
     public function dashboard(){
-        $activeEmploye = User::where('status',0)->latest('id')->count();
+        $activeEmploye = Employee::where('emp_status',0)->latest('id')->count();
         $dailyReport = DailyReport::where('status',0)->latest('id')->count();
         // $role = UserRole::count();
         // $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
@@ -33,9 +32,9 @@ class RecyclebinController extends Controller
     }
 
     public function employe(){
-        $employe = User::with(['emp_desig:id,title'])->where('status',0)->latest('id')->get();
+        $employe = Employee::with(['emp_role','emp_desig'])->where('emp_status',0)->latest('id')->get();
         // return $employe;
-        return view('superadmin.recyclebin.admin.index',compact('employe'));
+        return view('superadmin.recyclebin.employee.index',compact('employe'));
     }
 
     public function dailyreport(){

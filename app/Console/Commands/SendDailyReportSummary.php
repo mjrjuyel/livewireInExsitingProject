@@ -10,7 +10,6 @@ use App\Mail\DailyReportSummaryMail;
 use App\Models\AdminEmail;
 use App\Models\CateringFood;
 use App\Models\CateringPayment;
-use DB;
 
 class SendDailyReportSummary extends Command
 {
@@ -30,12 +29,9 @@ class SendDailyReportSummary extends Command
         $totalLeaves = Leave::whereDate('created_at', $date)->count();
         $totalLeaveEmploye = Leave::whereDate('created_at', $date)->distinct('emp_id')->count();
 
-        $cateringFoood = CateringFood::whereDate('order_date',$date)->first();
-        $totalOrderThisMonth = CateringFood::whereMonth('order_date',date('m'))->whereYear('order_date',date('Y'))->get();
-        $cateringPayment = CateringPayment::whereDate('payment_date',$date)->first();  
-        $totalPaymentThisMonth = CateringPayment::whereMonth('payment_date',now()->month)->whereYear('payment_date',now()->year)->get();
+        $cateringFoood = CateringFood::whereDate('created_at',$date)->first();
+        $cateringPayment = CateringPayment::whereDate('created_at',$date)->first();  
 
-        $totalDue = $totalOrderThisMonth->sum('total_cost') - $totalPaymentThisMonth->sum('payment');
         $adminEmail = AdminEmail::first();  // Replace with dynamic config or database value
         $email = explode(',',$adminEmail->email);
         $summaryData = [
@@ -46,23 +42,16 @@ class SendDailyReportSummary extends Command
             'totalLeaves' => $totalLeaves,
             'totalLeaveEmploye' => $totalLeaveEmploye,
             // catring Food 
-            'total_order' => $cateringFoood && $cateringFoood->quantity ? $cateringFoood->quantity : '0',
-            'total_cost' => $cateringFoood && $cateringFoood->total_cost ? $cateringFoood->total_cost : '00.00',
+            'total_order' => $cateringFoood && $cateringFoood->quantity ? $cateringFoood->quantity : 'No Order Today',
+            'total_cost' => $cateringFoood && $cateringFoood->total_cost ? $cateringFoood->total_cost : 'Zero Cost',
 
-            'today_payment' => $cateringPayment && $cateringPayment->payment ? $cateringPayment->payment : '00.00',
-            'total_due' =>$totalDue && $totalDue >= 0? $totalDue : '00.00', 
+            'today_payment' => $cateringPayment && $cateringPayment->quantity ? $cateringPayment->quantity : 'No Payment Today',
         ];
-        
-       if($adminEmail->email_summary == 1){
-         // Send email
-         foreach($email as $value){
-            Mail::to($value)->send(new DailyReportSummaryMail($summaryData));
-            }
-         $this->info('Daily report summary email sent successfully.');
-       }
-       else{
-        $this->info('Daily report summary email doesnot sent successfully.');
-       }
-      
+
+        // Send email
+        foreach($email as $value){
+        Mail::to($value)->send(new DailyReportSummaryMail($summaryData));
+        }
+       $this->info('Daily report summary email sent successfully.');
     }
 }
