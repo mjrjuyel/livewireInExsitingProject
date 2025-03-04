@@ -54,13 +54,13 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('portal.cateringfood')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('superadmin.cateringfood')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-emoticon-sick-outline btn_icon"></i>All Catering Food</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('portal.cateringfood.update')}}" method="post">
+                    <form action="{{route('superadmin.cateringfood.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-3 offset-1">

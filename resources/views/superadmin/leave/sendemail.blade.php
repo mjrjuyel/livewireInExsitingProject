@@ -91,7 +91,7 @@
             Response From ({{ config('app.name', 'Laravel') }}) by Admin
         </div>
         <div class="email-body">
-            <p><strong>Employee: </strong> {{ $data['employe']->name }}</p>
+            <p><strong>Employee: </strong> {{ $data['employe']->emp_name }}</p>
             <p><strong>Reason: </strong> {{ $data['reason'] }} </p>
             <p><strong>Start Date: </strong> {{ $data['start_date']->format('Y-M-d') }}</p>
             <p><strong>End Date: </strong> {{ $data['end_date']->format('Y-M-d') }}</p>

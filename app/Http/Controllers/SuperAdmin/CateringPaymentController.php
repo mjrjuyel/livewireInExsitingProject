@@ -101,7 +101,7 @@ class CateringPaymentController extends Controller
 
    public function index(){
     $search_date = new DateTime(now());
-    $allPayment = CateringPayment::whereMonth('payment_date',now()->month)->whereYear('payment_date',now()->year)->latest('payment_date')->get();
+    $allPayment = CateringPayment::whereYear('payment_date',now()->year)->latest('payment_date')->get();
     $totalPayment =  $allPayment->sum('payment');
     // return $allPayment->sum('payment');
     return view('superadmin.catering.payment.index',compact(['allPayment','totalPayment','search_date']));

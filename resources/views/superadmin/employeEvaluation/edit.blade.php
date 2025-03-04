@@ -70,7 +70,7 @@
                                     <div class="form-group clearfix">
                                         <label>Name<span class="text-danger">*</span> :</label>
                                         <select type="text" class="form-control" name="employe">
-                                            <option value="{{ $edit->emp_id }}">{{ $edit->employe->name }}</option>
+                                            <option value="{{ $edit->emp_id }}">{{ $edit->employe->emp_name }}</option>
                                         </select>
                                         @error('employe')
                                         <small class="form-text text-warning">{{ $message }}</small>

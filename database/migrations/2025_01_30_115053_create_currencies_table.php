@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('currencies')) {
-
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('currency_icon')->nullable();
             $table->integer('editor')->nullable();
             $table->timestamps();
         });
-    }
     }
 
     /**

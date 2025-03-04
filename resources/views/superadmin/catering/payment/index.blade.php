@@ -62,59 +62,59 @@
                     <div class="row mb-2">
                         <div class="col-2">
                         @can('Add Payment')
-                         <a href="{{route('portal.cateringpayment.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
+                         <a href="{{route('superadmin.cateringpayment.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add </a>
                         @endcan
                         </div>
                         <div class="col-8">
                             <div class="row text-center">
                                 <div class="row text-center">
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-1-Y'))}}" class="btn btn-primary">Jan</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-1-Y'))}}" class="btn btn-primary">Jan</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-2-Y'))}}" class="btn btn-primary">Feb</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-2-Y'))}}" class="btn btn-primary">Feb</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-3-Y'))}}" class="btn btn-primary">March</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-3-Y'))}}" class="btn btn-primary">March</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-4-Y'))}}" class="btn btn-primary">April</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-4-Y'))}}" class="btn btn-primary">April</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-5-Y'))}}" class="btn btn-primary">May</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-5-Y'))}}" class="btn btn-primary">May</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-6-Y'))}}" class="btn btn-primary">June</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-6-Y'))}}" class="btn btn-primary">June</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-7-Y'))}}" class="btn btn-primary">July</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-7-Y'))}}" class="btn btn-primary">July</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-8-Y'))}}" class="btn btn-primary">Aug</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-8-Y'))}}" class="btn btn-primary">Aug</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-9-Y'))}}" class="btn btn-primary">Sept</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-9-Y'))}}" class="btn btn-primary">Sept</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-10-Y'))}}" class="btn btn-primary">Oct</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-10-Y'))}}" class="btn btn-primary">Oct</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-11-Y'))}}" class="btn btn-primary">Nov</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-11-Y'))}}" class="btn btn-primary">Nov</a>
                                     </div>
                                     <div class="col-1">
-                                        <a href="{{url('portal/cateringpayment/'.$parseMonth->format('d-12-Y'))}}" class="btn btn-primary">Dec</a>
+                                        <a href="{{url('superadmin/cateringpayment/'.$parseMonth->format('d-12-Y'))}}" class="btn btn-primary">Dec</a>
                                     </div>
                                 </div>
 
                                 <div class="row mt-5">
                                     <div class="col-4">
-                                        <a href="{{url('portal/cateringpayment/year/'.$preYear->format('d-m-Y'))}}" class="btn btn-danger">{{$preYear->format('Y')}}</a>
+                                        <a href="{{url('superadmin/cateringpayment/year/'.$preYear->format('d-m-Y'))}}" class="btn btn-danger">{{$preYear->format('Y')}}</a>
                                     </div>
                                     <div class="col-4">
-                                        <a href="{{url('portal/cateringpayment/year/'.$parseMonth->format('d-m-Y'))}}" class="btn btn-primary">{{$parseMonth->format('Y')}}</a>
+                                        <a href="{{url('superadmin/cateringpayment/year/'.$parseMonth->format('d-m-Y'))}}" class="btn btn-primary">{{$parseMonth->format('Y')}}</a>
                                     </div>
                                     <div class="col-4">
-                                        <a href="{{url('portal/cateringpayment/year/'.$nextYear->format('d-m-Y'))}}" class="btn btn-danger">{{$nextYear->format('Y')}}</a>
+                                        <a href="{{url('superadmin/cateringpayment/year/'.$nextYear->format('d-m-Y'))}}" class="btn btn-danger">{{$nextYear->format('Y')}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -151,10 +151,10 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     @can('View Payment')
-                                                        <li><a class="dropdown-item" href="{{ route('portal.cateringpayment.view',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('superadmin.cateringpayment.view',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-view-agenda"></i>View</a></li>
                                                     @endcan
                                                     @can('Edit Payment')
-                                                     <li><a class="dropdown-item" href="{{ route('portal.cateringpayment.edit',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
+                                                     <li><a class="dropdown-item" href="{{ route('superadmin.cateringpayment.edit',Crypt::encrypt($allPayment->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a></li>
                                                     @endcan
                                                     @can('Delete Payment')
                                                     <li>
@@ -198,7 +198,7 @@
                 <h5 class="modal-title" id="myModalLabel">Parmanent !</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('portal.cateringpayment.delete')}}" method="post">
+            <form action="{{route('superadmin.cateringpayment.delete')}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body modal_body">

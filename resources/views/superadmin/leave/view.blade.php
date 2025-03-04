@@ -61,18 +61,20 @@
                             <div class="card-header bg-dark">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Update Leave For : {{$view->employe->name}}
+                                        <h3 class="card_header"><i class="fa-solid fa-user header_icon"></i>Update Leave For : {{$view->employe->emp_name}}
                                         </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('portal.leave.update') }}" method="post">
+                                <form action="{{ route('superadmin.leave.update') }}" method="post">
                                     @csrf
 
                                     <div class="row mt-3">
                                         <div class="col-5 offset-1">
                                             <input type="hidden" value="{{ $view->id }}" name="id">
+                                            <input type="hidden" value="{{ $view->slug }}" name="slug">
+
                                             <div class="mb-3">
                                                 <label class="form-label">Leave Type<span class="text-danger">* </span>:
                                                 </label>
@@ -170,7 +172,15 @@
                                                     </span>
                                                     @endif
                                             </div>
-                                            
+
+                                            {{-- <div class="mb-3">
+                                                <label class="form-label">Modified date<span class="text-danger">* </span>:
+                                                </label>
+                                                <input type="text" id="humanfd-datepicker" name="end" class="form-control" value="" placeholder="If Reduce Date" placeholder="">
+                                                @error('end')
+                                                <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                            @enderror
+                                        </div> --}}
                                         <div class="mb-3">
                                             <label class="text-dark">Application sent From:</label>
                                             <span class="mt-2">{{ $view->add_from }} Dashboard</span>

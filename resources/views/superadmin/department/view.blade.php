@@ -34,11 +34,11 @@
                                                 class="mdi mdi-sitemap header_icon"></i>{{$view->depart_name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('portal.department')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.department')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="mdi mdi-sitemap btn_icon"></i>All Department </a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('portal.department.edit',Crypt::encrypt($view->id))}}"
+                                    <div class="col-md-2"><a href="{{route('superadmin.department.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>

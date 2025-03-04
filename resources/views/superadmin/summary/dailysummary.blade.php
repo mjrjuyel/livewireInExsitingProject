@@ -74,21 +74,21 @@
 
         <div class="content">
             <div class="content-item">
-                <span class="label">Total Reports Submitted Today</span>
+                <span class="label">Total Report Submitted</span>
                 <span class="value highlight">{{ $data['totalReports'] }}</span>
             </div>
-            {{-- <div class="content-item">
+            <div class="content-item">
                 <span class="label">Total Employee Who Submitted Reports (Employee Count)</span>
                 <span class="value highlight">{{ $data['totalEmployees'] }}</span>
-            </div> --}}
+            </div>
             <div class="content-item">
-                <span class="label">Total Leaves Request Submitted Today</span>
+                <span class="label">Total Leave Request Submitted Today</span>
                 <span class="value highlight">{{ $data['totalLeaves'] }}</span>
             </div>
-            {{-- <div class="content-item">
+            <div class="content-item">
                 <span class="label">How Many Employee Sent Leave Request Today ?</span>
                 <span class="value highlight">{{ $data['totalLeaveEmploye'] }}</span>
-            </div> --}}
+            </div>
         </div>
 
         <div class="content">
@@ -97,17 +97,12 @@
                 <span class="value highlight">{{ $data['total_order'] }}</span>
             </div>
             <div class="content-item">
-                <span class="label">today's Total Cost Of Meal</span>
-                <span class="value highlight">{{currencyChange()}} {{ $data['total_cost'] }}</span>
+                <span class="label">Total Cost Of Meal</span>
+                <span class="value highlight">{{ $data['total_cost'] }}</span>
             </div>
             <div class="content-item">
-                <span class="label">Today's Payment in Catering?</span>
-                <span class="value highlight">{{currencyChange()}} {{ $data['today_payment'] }}</span>
-            </div>
-
-            <div class="content-item">
-                <span class="label">Total Due In This Month For The Catering</span>
-                <span class="value highlight">{{currencyChange()}} {{ $data['total_due'] }}</span>
+                <span class="label">Any Payment in Catering?</span>
+                <span class="value highlight">{{ $data['today_payment'] }}</span>
             </div>
         </div>
 

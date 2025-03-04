@@ -89,10 +89,10 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            New Leave Request From <strong style="color:#4CAF50;">{{$leave['employe']->name}}</strong>
+            New Leave Request From <strong style="color:#4CAF50;">{{$leave['employe']->emp_name}}</strong>
         </div>
         <div class="email-body">
-            <p><strong>Employee: {{$leave['employe']->name}}</strong></p>
+            <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
             <p><strong>Leave Type: @if($leave['leave_type_id'] != 0) {{$leave['leavetype']->type_title}}@else Other Reason @endif</strong></p>
             <p><strong>Reason: {!! $leave['reason'] !!}</strong> </p>
             <p><strong>Start Date: {{$leave['start_date']->format('d-M-Y')}}</strong></p>
@@ -120,7 +120,7 @@
                 <strong style="color:red;">Pending</strong>
             @endif
                    
-            <a href="{{url('portal/leave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
+            <a href="{{url('superadmin/leave/view/'.Crypt::encrypt($leave['id']))}}" class="button">Go To Dashboard</a>
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} All rights reserved.

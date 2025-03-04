@@ -13,7 +13,7 @@ use App\Models\User;
 
 class Employee extends Authenticatable
 {
-    use HasApiTokens,HasFactory;
+    use HasApiTokens,HasFactory,Notifiable;
 
     // protected $hidden = ['password', 'remember_token'];
 

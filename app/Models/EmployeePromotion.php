@@ -17,13 +17,13 @@ class EmployeePromotion extends Model
     ];
     
     public function employe(){
-        return $this->belongsTo(User::class,'emp_id','id');
+        return $this->belongsTo(Employee::class,'emp_id','id');
     }
 
     public function department(){
         return $this->belongsTo(Department::class,'depart_id','id');
     }
-    public function emp_desig(){
+    public function designation(){
         return $this->belongsTo(Designation::class,'desig_id','id');
     }
 

@@ -1,5 +1,5 @@
-@extends('layouts.superAdmin')
-@section('superAdminContent')
+@extends('layouts.employe')
+@section('content')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -36,9 +36,11 @@
             <div class="text-end">
                 <ol class="breadcrumb m-0 py-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">{{ config('app.name', 'Laravel') }}</a></li>
+
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Navigation</a></li>
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Employee</a></li>
-                    <li class="breadcrumb-item active">Daily Report {{now()->subDays(50)->format('d-M-Y')}}</li>
+
+                    <li class="breadcrumb-item active">Daily Report</li>
                 </ol>
             </div>
         </div>
@@ -65,7 +67,7 @@
                                 <tr>
 
                                     <td>
-                                        {{ $data->employe->name }}
+                                        {{ $data->employe->emp_name }}
                                     </td>
 
                                     <td>
@@ -90,12 +92,12 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item" href="{{ url('dashboard/dailyreport/view/'.Crypt::encrypt($data->id) )}}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('dashboard/dailyreport/view/'.$data->slug) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a></li>
                                                 </li>
                                                 @if(now()->format('Y-m-d') == $data->submit_date->format('Y-m-d'))
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ url('dashboard/dailyreport/edit/'.Crypt::encrypt($data->id) )}}"><i class="mdi mdi-octagram-edit-outline">
+                                                    <a class="dropdown-item" href="{{ url('dashboard/dailyreport/edit/'.$data->slug) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a></li>
                                                 </li>
                                                 @endif
