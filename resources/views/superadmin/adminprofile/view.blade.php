@@ -57,7 +57,7 @@
                                         </h3>
                                     </div>
 
-                                    <div class="col-md-5 text-end"><a href="{{route('superadmin.profile',Crypt::encrypt(Auth::user()->id))}}" class="btn btn-bg btn-info btn_header"><i class="mdi mdi-circle-edit-outline btn_icon"></i>Edit</a>
+                                    <div class="col-md-5 text-end"><a href="{{route('portal.profile',Crypt::encrypt(Auth::user()->id))}}" class="btn btn-bg btn-info btn_header"><i class="mdi mdi-circle-edit-outline btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">Name : {{$view->name}}</h5>
                                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                <a href="{{route('superadmin.profile',Crypt::encrypt(Auth::user()->id))}}" class="btn btn-bg btn-info btn_header"><i class="mdi mdi-circle-edit-outline btn_icon"></i>Edit My Profile</a>
+                                                <a href="{{route('portal.profile',Crypt::encrypt(Auth::user()->id))}}" class="btn btn-bg btn-info btn_header"><i class="mdi mdi-circle-edit-outline btn_icon"></i>Edit My Profile</a>
                                             </div>
                                         </div>
                                         </div>

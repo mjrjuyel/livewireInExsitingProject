@@ -92,7 +92,7 @@
             New Early Leave Request From <strong style="color:#4CAF50;">Admin</strong>
         </div>
         <div class="email-body">
-            <p><strong>Employee: {{$leave['employe']->emp_name}}</strong></p>
+            <p><strong>Employee: {{$leave['employe']->name}}</strong></p>
             <p><strong>Leave Type: @if($leave['leave_type'] != 0) {{$leave['leavetype']->type_title}}@else Other Reason @endif</strong></p>
             <p><strong>Reason: {!! $leave['detail'] !!}</strong> </p>
             <p><strong>Start Date: {{$leave['leave_date']->format('d-M-Y')}}</strong></p>

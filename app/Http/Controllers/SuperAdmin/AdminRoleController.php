@@ -52,7 +52,7 @@ class AdminRoleController extends Controller
 
         if($insert){
             Session::flash('success','New Role Add And Assigned with Permission');
-            return redirect()->route('superadmin.role');
+            return redirect()->route('portal.role');
         }
     }
 

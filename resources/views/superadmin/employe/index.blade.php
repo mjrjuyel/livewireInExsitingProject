@@ -52,9 +52,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        @can('Add Employee')
+                        @can('Add User')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.employe.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Employe</a>
                         </div>
                         @endcan
@@ -65,13 +65,14 @@
                                 <tr>
 
                                     <th class="text-center">Name</th>
-                                    <th class="text-center">Employee Pic</th>
+                                    
+                                    <th class="text-center">Picture</th>
                                     <th class="text-center">Designation</th>
+                                    <th class="text-center">Role</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-center">Reporting Manager</th>
 
                                     <th class="text-center">Status</th>
-                                    @can('Login Employee Profile')
+                                    @can('Login Another Profile')
                                     <th class="text-center">Dashboard login</th>
                                     @endcan
 
@@ -82,46 +83,51 @@
                                 @foreach ($employe as $employe)
                                 <tr>
                                     <td>
-                                        {{ $employe->emp_name }}
+                                        {{ $employe->name }}
                                     </td>
 
                                     <td>
-                                        @if ($employe->emp_image != '')
-                                        <img src="{{ asset('uploads/employe/profile/' . $employe->emp_image) }}" alt="" style="width: 100%;
+                                        @if ($employe->image != '')
+                                        <img src="{{ asset('uploads/employe/profile/'.$employe->image) }}" alt="" style="width: 100%;
                                          max-width: 70px; height: 100%;object-fit: cover;border-radius: 50%;max-height: 70px;object-position: top;">
                                         @endif
                                     </td>
                                     <td>{{ optional($employe->emp_desig)->title }}</td>
                                     <td>
+                                        @foreach($employe->roles as $role)
+                                         <button type="button" class="btn btn-primary mt-1">
+                                            {{$role->name}}
+                                            </button>
+                                        @endforeach
+                                    </td>
+                                    <td>
                                         {{ $employe->email }}
                                     </td>
 
+                                   
                                     <td>
-                                        {{ optional($employe->reporting)->emp_name }}
-                                    </td>
-                                    <td>
-                                        @if($employe->emp_status == 1)
+                                        @if($employe->status == 1)
                                         <button type="button" class="btn btn-primary ">
                                             Active
                                         </button>
-                                        @elseif($employe->emp_status == 2)
+                                        @elseif($employe->status == 2)
                                         <button type="button" class="btn btn-warning ">
                                             Suspend
                                         </button>
-                                        @elseif($employe->emp_status == 3)
+                                        @elseif($employe->status == 3)
                                         <button type="button" class="btn btn-danger ">
                                             Resigned
                                         </button>
-                                        @elseif($employe->emp_status == 0)
+                                        @elseif($employe->status == 0)
                                         <button type="button" class="btn btn-danger">
                                             Recycle Bin
                                         </button>
                                         @endif
                                     </td>
 
-                                    @can('Login Employee Profile')
+                                    @can('Login Another Profile')
                                     <td>
-                                        <form action="{{ url('/superadmin/employe/login/'.$employe->id) }}" method="post">
+                                        <form action="{{ url('/portal/employe/login/'.$employe->id) }}" method="post">
                                             @csrf
                                             @method('post')
                                             <button class="btn btn-primary " type="sumbit"><i class="uil-trash-alt"></i>Login</button>
@@ -136,15 +142,15 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                @can('View Employee')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/view/'.$employe->emp_slug) }}"><i class="mdi mdi-eye-circle-outline">
+                                                @can('View User')
+                                                <li><a class="dropdown-item" href="{{ url('portal/employe/view/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                 </i>View</a>
                                                 @endcan
                                                 </li>
-                                                @can('Edit Employee')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/employe/edit/'.$employe->emp_slug) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
+                                                @can('Edit User')
+                                                <li><a class="dropdown-item" href="{{ url('portal/employe/edit/'.Crypt::encrypt($employe->id)) }}"><i class="mdi mdi-receipt-text-edit"></i>Edit</a>
                                                 @endcan
-                                                @can('Delete Employee')
+                                                @can('Soft Delete User')
                                                 <li><a href="#" id="softDel" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$employe->id}}" data-bs-toggle="modal" data-bs-target="#softDelete"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>
@@ -180,10 +186,10 @@
     <div class="modal-dialog ">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete A Report </h5>
+                <h5 class="modal-title" id="myModalLabel">Delete An Employee? </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.employe.softdelete')}}" method="post">
+            <form action="{{route('portal.employe.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>

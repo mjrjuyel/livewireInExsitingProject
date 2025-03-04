@@ -64,12 +64,12 @@
                             </div>
                             @can('Leave Application List')
                             <div class="col-md-4 text-end">
-                                <a href="{{route('superadmin.leave')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> All Leave Data</a>
+                                <a href="{{route('portal.leave')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> All Leave Data</a>
                             </div>
                             @endcan
                         </div>
                     </div>
-                    <form action="{{route('superadmin.leave.insert')}}" method="post">
+                    <form action="{{route('portal.leave.insert')}}" method="post">
 
                         @csrf
                         <div class="row mt-3">
@@ -81,7 +81,7 @@
                                     <select type="text" class="form-control" name="employe" placeholder="Enter Leave">
                                         <option value="">Select An Employee</option>
                                         @foreach($employees as $employe)
-                                        <option value="{{$employe->id}}">{{$employe->emp_name}}</option>
+                                        <option value="{{$employe->id}}">{{$employe->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('employe')

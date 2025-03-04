@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('catering_payments')) {
+
         Schema::create('catering_payments', function (Blueprint $table) {
             $table->id();
             $table->date('payment_date')->nullable();
@@ -20,6 +22,7 @@ return new class extends Migration
             $table->integer('p_editor')->nullable();
             $table->timestamps();
         });
+    }
     }
     /**
      * Reverse the migrations.

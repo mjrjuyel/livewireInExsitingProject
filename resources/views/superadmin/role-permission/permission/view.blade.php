@@ -34,12 +34,12 @@
                                                 class="mdi mdi-shield-crown header_icon"></i>{{$view->name}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.permission')}}"
+                                    <div class="col-md-3 text-end"><a href="{{route('portal.permission')}}"
                                             class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Permission</a>
                                     </div>
                                     
-                                    <div class="col-md-2"><a href="{{route('superadmin.permission.edit',Crypt::encrypt($view->id))}}"
+                                    <div class="col-md-2"><a href="{{route('portal.permission.edit',Crypt::encrypt($view->id))}}"
                                             class="btn btn-bg btn-primary btn_header"><i
                                                 class="mdi mdi-pencil-off btn_icon"></i>Edit</a>
                                     </div>

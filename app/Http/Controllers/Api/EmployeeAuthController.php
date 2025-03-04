@@ -9,37 +9,44 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Exception;
 use DB;
+use Carbon\Carbon;
 
 class EmployeeAuthController extends Controller
 {
 
     // employee Login Dashboard
-    public function loginEmploye(Request $request){
+    public function login(Request $request){
 
         // nurul vai
         try{
-            $employee = Employee::select('id', 'emp_name', 'email','email2', 'emp_phone', 'emp_phone2', 'emp_address', 'emp_present', 'emp_emer_contact', 'emp_emer_name', 'emp_emer_relation', 'emp_dob', 'gender', 'marriage', 'emp_image', 'emp_status', 'emp_report_manager', 'emp_depart_id','emp_desig_id','emp_type','emp_join','emp_resign','emp_id_type','emp_id_number','emp_rec_degree','emp_rec_year','emp_bank_id','emp_bank_branch_id', 'emp_bank_account_name','emp_bank_account_number','remember_token','device_token')->Where('email', $request->email)->first();
 
-        if (!$employee) {
+            $user = User::select('id', 'name', 'email','email2', 'phone', 'phone2', 'address', 'present', 'emer_contact', 'emer_name', 'emer_relation', 'dob', 'gender', 'marriage', 'image', 'status', 'report_manager', 'depart_id','desig_id','emp_type','join_date','resign_date','id_type','id_number','rec_degree','rec_year','bank_id','bank_branch_id', 'bank_account_name','bank_account_number','remember_token','device_token','creator','editor',)->with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->Where('email', $request->email)->first();
+        if (!$user) {
             return response()->json([
                 'success' => false,
-                'message' => 'Employee not found.',
+                'message' => 'User not found.',
                 'token' => null,
                 'user' => null,
-            ],404);
+            ],201);
         }
-        DB::table('employees')
-            ->where('device_token', $employee->device_token)
-            ->where('id', '!=', $employee->id)
+        DB::table('users')
+            ->where('device_token', $user->device_token)
+            ->where('id', '!=', $user->id)
             ->update(['device_token' => null]);
 
-            if ($employee && Auth::guard('employee')->attempt(['email' => $employee->email, 'password' => $request->password])) {
-                $token = $employee->createToken('MyApp')->plainTextToken;
+            if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
+                // DB::table('personal_access_tokens')->truncate();
+                $token = $user->createToken('MyApp')->plainTextToken;
+               
+                $user->tokens()->latest()->first()->update([
+                    'expires_at' => Carbon::now()->addMinutes(60)
+                ]);
+
                 return response()->json([
                     'success' => true,
                     'message' => 'User login successfully.',
                     'token' => $token,
-                    'user' => $employee,
+                    'user' => $user,
                 ],200);
             } else {
                 return response()->json([
@@ -54,14 +61,19 @@ class EmployeeAuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
-            ],404);
+            ],201);
         }
     }
 
     // Logout Employee
-    public function logoutEmploye(Request $request){
+    public function logout(Request $request){
        try{
-        $request->user()->currentAccessToken()->delete();
+
+        $user = auth()->user();
+        $user->tokens->each(function ($token) {
+            $token->delete();
+        });
+        
         return response()->json([
             'success' => true,
             'message' => 'Logout successfully.',
@@ -72,7 +84,7 @@ class EmployeeAuthController extends Controller
         return response()->json([
             'status'=>true,
             "message"=>$e->getMesaage(),
-             ],404);
+             ],201);
        }
     }
 }

@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @can('Add Employee')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.employe.view',$view->emp_slug)}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>View Employee</a>
+                            <a href="{{route('portal.employe.view',Crypt::encrypt($view->id))}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i>Back View</a>
                         </div>
                         @endcan
                     </div>
@@ -61,6 +61,7 @@
                         <table class="table table-centered text-center" id="">
                             <thead class="table-light">
                                 <tr>
+                                    <th class="text-center">Name</th>
                                     <th class="text-center">Designation</th>
                                     <th class="text-center">Department</th>
                                     <th class="text-center">Promotion Date</th>
@@ -75,7 +76,10 @@
                                 @foreach($allPromotion as $promotion)
                                 <tr>
                                     <td>
-                                        {{ optional($promotion->designation)->title }}
+                                        {{ optional($promotion->employe)->name }}
+                                    </td>
+                                    <td>
+                                        {{ optional($promotion->emp_desig)->title }}
                                     </td>
 
                                     <td>
@@ -92,14 +96,14 @@
                                         {{optional($promotion)->salary}}
                                     </td>
 
-                                     <td>
+                                    <td>
                                         {{optional($promotion)->pro_status}}
                                     </td>
 
                                     <td class="text-info">
                                         {{optional($promotion->creator)->name}}
                                     </td>
-                                   
+
 
                                     <td>
                                         <div class="btn-group" role="group">
@@ -107,19 +111,27 @@
                                                 Action
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                {{-- <li><a class="dropdown-item" href="{{ route('superadmin.designation.view',$promotion->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
+                                                {{-- <li><a class="dropdown-item" href="{{ route('portal.designation.view',$promotion->id) }}"><i class="mdi mdi-view-agenda"></i>View</a></li> --}}
 
                                                 @php
-                                                    $onlyEdit = App\Models\EmployeePromotion::latest('pro_date')->first();
+                                                $onlyEdit = App\Models\EmployeePromotion::latest('pro_date')->first();
                                                 @endphp
+                                               
                                                 @if($onlyEdit->id == $promotion->id)
-                                                <li><a href="{{route('admin.promotion.edit',Crypt::encrypt($promotion->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
+                                                 @can('Edit Employee Promotion')
+                                                    <li><a href="{{route('admin.promotion.edit',Crypt::encrypt($promotion->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
                                                         </i>Edit</a>
                                                 </li>
+                                                @endcan
                                                 @endif
+                                                
+
+                                                @can('Delete Employee Promotion')
                                                 <li><a href="#" id="delete" class="dropdown-item waves-effect waves-light text-danger" data-id="{{$promotion->id}}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="mdi mdi-delete-alert">
                                                         </i>Delete</a>
                                                 </li>
+                                                @endcan
+
                                             </ul>
                                         </div>
                                     </td>

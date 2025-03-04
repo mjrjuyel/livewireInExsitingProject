@@ -22,12 +22,12 @@ class DailyReportController extends Controller
     public function index(){
         try{
             // dd('hello');
-            $id = auth('sanctum')->user()->id;
-            $alldata = DailyReport::where('status',1)->where('submit_by',$id)->get();
+            $id = auth()->user()->id;
+            $alldata = DailyReport::where('status',1)->where('submit_by',$id)->simplePaginate(10);
             // dd($alldata);
                 return response()->json([
                     'status'=>true,
-                    'Message'=>'All Daily Reports For Specific Employee',
+                    'Message'=>'Total Daily Reports For Specific Employee is ' .$alldata->count('id'),
                     'Data'=> $alldata
                 ],200);
         }
@@ -35,12 +35,12 @@ class DailyReportController extends Controller
             return response()->json([
                 'status'=>false,
                 'Message'=>'Faild to Fetch Report',
-            ],404);
+            ],201);
         }
     }
 
     public function add(){
-        $id = auth('sanctum')->user()->id;
+        $id = auth()->user()->id;
         return view('employe.dailyreport.add');
     }
 
@@ -62,7 +62,7 @@ class DailyReportController extends Controller
                 'Error-message'=>$validate->errors(), 
             ]);
         }
-        $id = auth('sanctum')->user()->id;
+        $id = auth()->user()->id;
         $submitDate = Carbon::parse($request->submit_date);
         $checkDate=DailyReport::where('status',1)->where('submit_by',$id)->whereDay('submit_date',$submitDate->day)->whereMonth('submit_date',$submitDate->month)->count();
 
@@ -83,38 +83,25 @@ class DailyReportController extends Controller
                     // return "3 day after";
                     $insert= DailyReport::create([
                         'submit_by'=>$request['submit_by'],
-                        'submit_date'=>$request['submit_date'],
+                        'submit_date'=>Carbon::parse($request['submit_date'])->addHours(6),
                         'detail'=>$request['detail'],
                         'check_in'=>Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                        'slug'=>'report-'.uniqId(),
+                        // 'slug'=>'report-'.uniqId(),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
-
-                    // return $insert;
-                    $email = AdminEmail::where('id',1)->first();
-                     
-                    // return $email;
-                    // try {
-                    if($email->email_report == 1){
-                        
-                        $explode = explode(',',$email->email);
-                                    // try {
-                        foreach($explode as $emai){
-                            Mail::to($emai)->send(new DailyReportMail($insert));
-                        }
-                    }
-        
+                    $data = DailyReport::where('submit_by',$request['submit_by'])->latest()->first();
                     if($insert){
+                        //dd($insert);
                         Session::flash('success','Daily Report Submited');
                         return response()->json([
                             'status'=>true,
                             'Message'=>'Report Submit Success Fully',
-                            'Data'=>$insert,
+                            'Data'=>$data,
                         ],200);
                     }
                 }else{
-                    // return "3 days Before";
+                
                     Session::flash('error','You can not Submit report 3 Days before From Current Day!');
                     return response()->json([
                         'status'=>false,
@@ -142,7 +129,7 @@ class DailyReportController extends Controller
             'status'=>false,
             'Message'=>'failed to Insert',
             'data'=>$e->getMessage(),
-        ],404);
+        ],201);
      }
         
     }
@@ -160,7 +147,7 @@ class DailyReportController extends Controller
                     'status'=>true,
                     'message'=>"Error MESSAGE",
                     'Data'=>"Data is Not Found",
-                ],404);
+                ],201);
             }
 
             $validate = Validator::make($request->all(),[
@@ -174,16 +161,13 @@ class DailyReportController extends Controller
                     'status'=>true,
                     'mesage'=>'Validation Error',
                     'Error-message'=>$validate->errors(), 
-                ]);
+                ],201);
             }
-
-
         $report->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
         $report->detail = $request['detail'];
-        $report->editor = auth('sanctum')->user()->id;
+        $report->editor = auth()->user()->id;
         $report->updated_at = Carbon::now('UTC');
-    
         $report->save();
 
         return response()->json([
@@ -208,7 +192,6 @@ class DailyReportController extends Controller
         ]);
     }
 
-
     public function view($id){
         try{
             $view = DailyReport::find($id);
@@ -223,7 +206,7 @@ class DailyReportController extends Controller
                 'status'=>false,
                 'message'=>'Single Daily Report view',
                 'data'=>$e->getMessage(),
-            ],404);
+            ],201);
         }
     }
 }

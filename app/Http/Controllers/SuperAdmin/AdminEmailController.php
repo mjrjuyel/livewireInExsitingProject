@@ -73,7 +73,7 @@ class AdminEmailController extends Controller
         }
         
     public function dailySummaryMailActive(Request $request){
-       
+
             $update = AdminEmail::where('id',1)->update([
                 'email_summary'=>$request->dailyMail,
                 'editor'=>Auth::user()->id,
@@ -88,6 +88,23 @@ class AdminEmailController extends Controller
                 return redirect()->back();
             }
             
-        }
+    }
+    public function deleteReport(Request $request){
+
+            $update = AdminEmail::where('id',1)->update([
+                'delete_report'=>$request->deletereport,
+                'editor'=>Auth::user()->id,
+                'updated_at'=>Carbon::now('UTC'),
+            ]);
+            $active = AdminEmail::first();
+            if($active->delete_report != ''){
+                Session::flash('success','Delete 180 days old Daily Report Function is Activated');
+                return redirect()->back();
+            }else{
+                Session::flash('success','Delete 180 days old Daily Report Function is Deactivated');
+                return redirect()->back();
+            }
+            
+    }
         
 }

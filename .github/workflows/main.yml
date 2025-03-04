@@ -3,7 +3,7 @@ name: Deploy website on push
 on:
   push:
     branches:
-      - main
+      - apibranch
 
 jobs:
   web-deploy:
@@ -18,9 +18,10 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: 106.0.62.88
-        username: team@team.supreox.com
-        password: ${{ secrets.ftp_password }}
+        username: eteamify_dev@eteamify.supreoxmail.com
+        password: ${{ secrets.DEV_FTP_PASS }}
         
 
+        
         
         

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\EmployeePromotion;
 use App\Models\Designation;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\Department;
 use App\Models\Design;
 use carbon\Carbon;
@@ -16,15 +16,26 @@ use Session;
 
 class EmployeePromotionController extends Controller
 {
+    public function __construct(){
+        $this->middleware('permission:All Employee Promotion')->only('index');
+        $this->middleware('permission:Add Employee Promotion')->only('add','insert');
+        $this->middleware('permission:Edit Employee Promotion')->only('edit','update');
+        $this->middleware('permission:View Employee Promotion')->only('view');
+        $this->middleware('permission:Delete Employee Promotion')->only('delete','softDelete');
+    }
+
     public function index($id){
         $userId = Crypt::decrypt($id);
         $allPromotion = EmployeePromotion::where('emp_id',$userId)->orderBy('pro_date','DESC')->get();
-        $view = Employee::findOrFail($userId);
+        $view = User::findOrFail($userId);
         
-        $departs = Department::all();
-        $designs = Designation::all();
+        $departs = Department::get(['id','depart_name']);
+        $designs = Designation::get(['id','title']);
+
+        // return $userId;
         return view('superadmin.employePromotion.index',compact(['allPromotion','view','departs','designs']));
     }
+
      public function insert(Request $request){
 
         $depart = Designation::where('id',$request->desig)->first('depart_id');
@@ -51,8 +62,8 @@ class EmployeePromotionController extends Controller
         $dataId = Crypt::decrypt($id);
         $edit = EmployeePromotion::findOrFail($dataId);
 
-        $departs = Department::all();
-        $designs = Designation::all();
+        $departs = Department::get(['id','depart_name']);
+        $designs = Designation::get(['id','title']);
         // return $data;
         return view('superadmin.employePromotion.edit',compact(['edit','departs','designs']));
     }
@@ -75,7 +86,7 @@ class EmployeePromotionController extends Controller
 
         if($insert){
             Session::flash('success','Employee Promotion Update');
-            return redirect()->route('admin.promotion',Crypt::encrypt($id));
+            return redirect()->route('admin.promotion',Crypt::encrypt($request->employe));
         }
     }
 
@@ -84,12 +95,6 @@ class EmployeePromotionController extends Controller
         $delete = EmployeePromotion::findOrFail($request->id);
         $delete->delete();
         if($delete){
-        //     $admin = User::all();
-        // // Update the auto-incrementing column values
-        //     foreach ($admin as $index => $row) {
-        //         $row->id = $index + 1;
-        //         $row->save();
-        //     }
         Session::flash('error','One Employee Promotion Data is  Deleted');
         return redirect()->back();
         }

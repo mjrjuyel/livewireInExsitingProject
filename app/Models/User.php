@@ -20,27 +20,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     public $timetamps = false;
+    public $guarded = [];
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'join_date'   => 'datetime',
+        'dob'    => 'datetime',
+        'resign_date' => 'datetime',
     ];
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role_id',
-        'status',
-        'username',
-        'image',
-        'slug',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -59,19 +47,48 @@ class User extends Authenticatable
         ];
     }
 
-    public function role(){
-        return $this->belongsTo(UserRole::class);
-    }
-
-    public function designation(){
-        return $this->belongsTo(Designation::class);
-    }
-
     public function employe(){
-        return $this->hasMany(Employee::class,'emp_creator');
+        return $this->hasMany(User::class,'creator');
     }
 
     public function leave(){
         return $this->belongsTo(Leave::class,'user_id');
+    }
+    
+    // Copy From Employee Model
+
+    public function emp_desig(){
+        return $this->belongsTo(Designation::class,'desig_id','id');
+    }
+
+    public function creator(){
+        return $this->belongsTo(User::class,'creator','id');
+    }
+    public function editor(){
+        return $this->belongsTo(User::class,'editor','id');
+    }
+
+    public function dailyreport(){
+        return $this->hasMany(DailyReport::class);
+    }
+
+    public function reporting(){
+        return $this->belongsTo(User::class,'report_manager','id');
+    }
+
+    public function department(){
+        return $this->belongsTo(Department::class,'depart_id','id');
+    }
+    
+    public function officeBranch(){
+        return $this->belongsTo(OfficeBranch::class,'office_branch_id','id');
+    }
+
+    public function bankName(){
+        return $this->belongsTo(BankName::class,'bank_id','id');
+    }
+
+    public function bankBranch(){
+        return $this->belongsTo(BankBranch::class,'bank_branch_id','id');
     }
 }

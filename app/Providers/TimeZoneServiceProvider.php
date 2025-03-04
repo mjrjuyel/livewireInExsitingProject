@@ -22,8 +22,14 @@ class TimeZoneServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $timeZone = TimeZone::where('id',1)->first();
-        date_default_timezone_set($timeZone->name);
+        if($timeZone){
+            date_default_timezone_set($timeZone->name);
         config(['app.timezone' => $timeZone->name]);
+        }
+        else{
+            date_default_timezone_set('Asia/Dhaka');
+        config(['app.timezone' => 'Asia/Dhaka']);
+        }
 
         // 
         // Carbon::setLocale($timeZone->name);

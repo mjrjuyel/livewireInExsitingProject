@@ -65,13 +65,13 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.cateringfood')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('portal.cateringfood')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Catering Food</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.cateringfood.insert')}}" method="post">
+                    <form action="{{route('portal.cateringfood.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-3 offset-1">
@@ -79,7 +79,7 @@ swal({
                                 <div class="mb-3">
                                     <label class="form-label">Order Date<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{old('date')}}"
+                                    <input type="text" id="humanfd-datepicker" class="form-control" name="date" value="{{ date('Y-m-d') ?? old('date')}}"
                                         placeholder="Date">
                                     @error('date')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
@@ -99,9 +99,9 @@ swal({
                             </div>
                             <div class="col-3">
                                 <div class="mb-3">
-                                    <label class="form-label">Cost Per Quntity<span class="text-danger">* </span>:
+                                    <label class="form-label">Cost Per Quantity<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="number"  class="form-control" name="perCost" value="{{old('perCost')}}"
+                                    <input type="number"  class="form-control" name="perCost" value="{{ $lastOrder->per_cost ?? old('perCost')}}"
                                         placeholder="Each Meal Price">
                                     @error('perCost')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>

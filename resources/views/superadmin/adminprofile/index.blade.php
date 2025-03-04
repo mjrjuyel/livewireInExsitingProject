@@ -54,7 +54,7 @@
                     <div class="row mb-2">
                         @can('Add Admin')
                         <div class="col-sm-5">
-                            <a href="{{route('superadmin.admin.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
+                            <a href="{{route('portal.admin.add')}}" class="btn btn-primary"><i class="mdi mdi-plus-circle me-2"></i> Add
                                 New Admin</a>
                         </div>
                         @endcan
@@ -100,12 +100,12 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 @can('View Admin')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/view/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-eye-circle-outline">
+                                                <li><a class="dropdown-item" href="{{ url('portal/view/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-eye-circle-outline">
                                                         </i>View</a>
                                                 </li>
                                                 @endcan
                                                 @can('Edit Admin')
-                                                <li><a class="dropdown-item" href="{{ url('superadmin/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
+                                                <li><a class="dropdown-item" href="{{ url('portal/profile/'.Crypt::encrypt($admin->id)) }}"><i class="mdi mdi-octagram-edit-outline">
                                                         </i>Edit</a>
                                                 </li>
                                                 @endcan
@@ -145,7 +145,7 @@
                 <h5 class="modal-title" id="myModalLabel">Delete an Amin Dashboard User?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
-            <form action="{{route('superadmin.view.softdelete')}}" method="post">
+            <form action="{{route('portal.view.softdelete')}}" method="post">
                 @csrf
                 <div class="modal-body modal_body">
                     <h5 class="font-16">Are You Sure Want to Delete ?</h5>
@@ -161,31 +161,6 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-
-{{-- soft delete MOdal  --}}
-<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content bg-danger">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Delete an Amin Dashboard User? </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-            </div>
-            <form action="{{route('dashboard.admin.delete')}}" method="post">
-            @method('delete')
-                @csrf
-                <div class="modal-body modal_body">
-                    <h5 class="font-16">Are You Sure Want to Delete ?</h5>
-                    <input type="hidden" name="id" id="modal_id" value="">
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light waves-effect" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 
 <script>
 $(document).ready(function () {

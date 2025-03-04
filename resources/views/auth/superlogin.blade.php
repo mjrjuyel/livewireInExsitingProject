@@ -37,7 +37,6 @@
                                         </a>
                                     </div>
                                     <h5 class="text-muted text-uppercase py-3 font-16">Sign In </h5>
-                                     <h5 class="text-muted text-uppercase py-3 font-16">Super Admin </h5>
                                 </div>
 
                                 <form action="{{ route('login') }}" method="POST" class=" mt-2">
@@ -60,30 +59,6 @@
                                         <button class="btn btn-success btn-block waves-effect waves-light w-100" type="submit"> Log In </button>
                                     </div>
                                 </form>
-
-                                <a href="{{route('dashboard')}}" class="text-muted"><i class="mdi mdi-lock me-1"></i>
-                                        Are you an Employee??</a>
-
-                                {{-- <div class="text-center mt-4">
-                                    <h5 class="text-muted py-2"><b>Sign in with</b></h5>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-facebook waves-effect font-14 waves-light mt-3">
-                                                <i class="fab fa-facebook-f me-1"></i> Facebook
-                                            </button>
-
-                                            <button type="button" class="btn btn-twitter waves-effect font-14 waves-light mt-3">
-                                                <i class="fab fa-twitter me-1"></i> Twitter
-                                            </button>
-
-                                            <button type="button" class="btn btn-googleplus waves-effect font-14 waves-light mt-3">
-                                                <i class="fab fa-google-plus-g me-1"></i> Google+
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
                             </div> <!-- end card-body -->
                         </div>
                         <!-- end card -->

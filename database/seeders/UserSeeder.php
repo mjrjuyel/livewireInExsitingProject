@@ -18,8 +18,6 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>'SupreoX',
             'email'=>'bashar@supreoxmail.com',
-            'slug'=>'user-'.uniqId(),
-            'role_id'=>1,
             'password'=>Hash::make('super%%@admin'),
             'created_at'=>Carbon::now(),
         ]);

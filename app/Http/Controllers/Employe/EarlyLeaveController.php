@@ -29,6 +29,7 @@ class EarlyLeaveController extends Controller
 {
     public function index($id){
         $userId = Crypt::decrypt($id);
+        
         $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',$userId)->latest('id')->get();
         // return $leaves;
         return view('employe.earlyleave.index',compact('leaves'));
@@ -47,7 +48,7 @@ class EarlyLeaveController extends Controller
             'detail'=>'required',
         ]);
         $start = Carbon::parse($request->start);
-        $sameDate = EarlyLeave::where('emp_id',Auth::guard('employee')->user()->id)->whereDay('leave_date',$start->day)->whereMonth('leave_date',$start->month)->whereYear('leave_date',$start->year)->exists();
+        $sameDate = EarlyLeave::where('emp_id',Auth::user()->id)->whereDay('leave_date',$start->day)->whereMonth('leave_date',$start->month)->whereYear('leave_date',$start->year)->exists();
 
         if($sameDate){
             Session::flash('error','You Have Already Early Leave On This Day');
@@ -62,7 +63,7 @@ class EarlyLeaveController extends Controller
             $hours = floor($duration/60);
             $minutes = $duration%60;
             $insert = EarlyLeave::create([
-                'emp_id'=>Auth::guard('employee')->user()->id,
+                'emp_id'=>Auth::user()->id,
                 'leave_type'=>$request->leave_type,
                 'other_type' => $request->leave_type == 0 ? $request->others : null,
                 'detail' => $request->detail,
@@ -72,20 +73,20 @@ class EarlyLeaveController extends Controller
                 'total_hour'=>$duration,
                 'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
                 'status'=>1,
-                'submit_by'=>Auth::guard('employee')->user()->emp_name,
+                'submit_by'=>Auth::user()->name,
                 'created_at'=>Carbon::now('UTC'),
             ]);
           
             $adminEmail = AdminEmail::first();
     
-            if($adminEmail->email_leave == 1){
+            // if($adminEmail->email_leave == 1){
                 
-                $getEmail = AdminEmail::where('id',1)->first();
-                $explode = explode(',',$getEmail->email);
-                foreach($explode as $email){
-                    Mail::to($email)->send(new EarlyLeaveMail($insert));
-                }
-            }
+            //     $getEmail = AdminEmail::where('id',1)->first();
+            //     $explode = explode(',',$getEmail->email);
+            //     foreach($explode as $email){
+            //         Mail::to($email)->send(new EarlyLeaveMail($insert));
+            //     }
+            // }
 
             if($insert){
                 Session::flash('success','You have create a Early Leave Request For '.$hours .' Hours ' . $minutes .' minutes' );
@@ -98,9 +99,10 @@ class EarlyLeaveController extends Controller
         }
     } 
 
-    public function view($id){
-        $Id = Crypt::decrypt($id);
-        $view = EarlyLeave::findOrFail($Id);
+    public function view($slug){
+        $Id = Crypt::decrypt($slug);
+        $view = EarlyLeave::with(['employe:id,name'])->where('id',$Id)->first();
+        // return $view;
         return view('employe.earlyleave.view',compact('view'));
     }
 
@@ -121,7 +123,7 @@ class EarlyLeaveController extends Controller
             'detail'=>'required',
         ]);
         $start = Carbon::parse($request->start);
-        $sameDate = EarlyLeave::where('id','!=',$id)->where('emp_id',Auth::guard('employee')->user()->id)->whereDay('leave_date',$start->day)->whereMonth('leave_date',$start->month)->whereYear('leave_date',$start->year)->exists();
+        $sameDate = EarlyLeave::where('id','!=',$id)->where('emp_id',Auth::user()->id)->whereDay('leave_date',$start->day)->whereMonth('leave_date',$start->month)->whereYear('leave_date',$start->year)->exists();
 
         if($sameDate){
             return "hello";
@@ -138,7 +140,7 @@ class EarlyLeaveController extends Controller
             $minutes = $duration%60;
 
             $insert = EarlyLeave::where('id',$id)->update([
-                'emp_id'=>Auth::guard('employee')->user()->id,
+                'emp_id'=>Auth::user()->id,
                 'leave_type'=>$request->leave_type,
                 'other_type' => $request->leave_type == 0 ? $request->others : null,
                 'detail' => $request->detail,
@@ -148,7 +150,7 @@ class EarlyLeaveController extends Controller
                 'total_hour'=>$duration,
                 'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
                 'status'=>1,
-                'submit_by'=>Auth::guard('employee')->user()->emp_name,
+                'submit_by'=>Auth::user()->name,
                 'updated_at'=>Carbon::now('UTC'),
             ]);
 

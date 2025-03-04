@@ -60,12 +60,12 @@
                                         <h3 class="card_header"><i class="mdi mdi-face-man-profile header_icon"></i>Add New Admin
                                         </h3>
                                     </div>
-                                     <div class="col-md-5 text-end"><a href="{{route('superadmin.admin')}}" class="btn btn-bg btn-info btn_header"><i class="mdi mdi-view-dashboard-outline btn_icon"></i>View Data</a>
+                                     <div class="col-md-5 text-end"><a href="{{route('portal.admin')}}" class="btn btn-bg btn-info btn_header"><i class="mdi mdi-view-dashboard-outline btn_icon"></i>View Data</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('superadmin.admin.insert') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('portal.admin.insert') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row mt-3">
                                         <div class="col-5 offset-1">

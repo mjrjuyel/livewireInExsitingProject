@@ -56,13 +56,13 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-2 text-end"><a href="{{route('superadmin.department')}}"
+                            <div class="col-md-2 text-end"><a href="{{route('portal.department')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="fa-brands fa-servicestack btn_icon"></i>All Department</a>
                             </div>
                         </div>
                     </div>
-                    <form action="{{route('superadmin.department.insert')}}" method="post">
+                    <form action="{{route('portal.department.insert')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-6 offset-2">

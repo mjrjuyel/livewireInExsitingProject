@@ -65,14 +65,14 @@ swal({
                                 </h3>
                             </div>
 
-                            <div class="col-md-4 text-end"><a href="{{route('superadmin.cateringpayment')}}"
+                            <div class="col-md-4 text-end"><a href="{{route('portal.cateringpayment')}}"
                                     class="btn btn-bg btn-primary btn_header ">
                                     <i class="mdi mdi-cash-clock btn_icon"></i>Previous Payment</a>
                             </div>
                         </div>
                     </div>
 
-                    <form action="{{route('superadmin.cateringpayment.update')}}" method="post">
+                    <form action="{{route('portal.cateringpayment.update')}}" method="post">
                         @csrf
                         <div class="row mt-3">
                             <div class="col-3 offset-3">

@@ -33,10 +33,10 @@
                                         <h3 class="card_header"><i class="mdi mdi-account-hard-hat header_icon"></i>{{$view->title}}
                                         </h3>
                                     </div>
-                                    <div class="col-md-3 text-end"><a href="{{route('superadmin.designation')}}" class="btn btn-bg btn-primary btn_header ">
+                                    <div class="col-md-3 text-end"><a href="{{route('portal.designation')}}" class="btn btn-bg btn-primary btn_header ">
                                             <i class="fa-brands fa-servicestack btn_icon"></i>All Designation</a>
                                     </div>
-                                    <div class="col-md-2"><a href="{{route('superadmin.designation.edit',$view->id)}}" class="btn btn-bg btn-primary btn_header"><i class="uil-edit btn_icon"></i>Edit</a>
+                                    <div class="col-md-2"><a href="{{route('portal.designation.edit',$view->id)}}" class="btn btn-bg btn-primary btn_header"><i class="uil-edit btn_icon"></i>Edit</a>
                                     </div>
                                 </div>
                             </div>

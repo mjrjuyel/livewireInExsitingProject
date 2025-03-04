@@ -1,4 +1,4 @@
-@extends('layouts.employe')
+@extends('layouts.superAdmin')
 @section('css')
 <link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
 <link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
@@ -6,7 +6,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
-@section('content')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -86,7 +86,7 @@
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{ url('/dashboard/earlyleave/'.Crypt::encrypt(Auth::guard('employee')->user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
+                                <a href="{{ url('/dashboard/earlyleave/'.Crypt::encrypt(Auth::user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
                             </div>
                         </div>
                     </div>

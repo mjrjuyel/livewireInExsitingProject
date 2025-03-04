@@ -1,4 +1,4 @@
-@extends('layouts.employe')
+@extends('layouts.superAdmin')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('contents/admin') }}/assets/libs/dropify/css/dropify.min.css" />
@@ -8,7 +8,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
 
-@section('content')
+@section('superAdminContent')
 
 @if(Session::has('success'))
 <script type="text/javascript">
@@ -73,11 +73,10 @@
                         <div class="row mt-3">
                             <div class="col-5 offset-1">
                                 <input type="hidden" name="id" value="{{$edit->id}}">
-                                <input type="hidden" name="slug" value="{{$edit->emp_slug}}">
                                 <div class="mb-3">
                                     <label class="form-label">Name<span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" name="name" value="{{ $edit->emp_name }}" placeholder="Enter Name">
+                                    <input type="text" class="form-control" name="name" value="{{ $edit->name }}" placeholder="Enter Name">
                                     @error('name')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -85,7 +84,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Phone<span class="text-danger">*</span> :</label>
-                                    <input type="text" class="form-control" name="phone" value="{{ $edit->emp_phone }}" placeholder="Enter Phone">
+                                    <input type="text" class="form-control" name="phone" value="{{ $edit->phone }}" placeholder="Enter Phone">
                                     @error('phone')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -96,7 +95,7 @@
                                     <select type="text" class="form-control" name="desig" disabled>
                                         <option value="">Select One</option>
                                         @foreach($designation as $desig)
-                                        <option value="{{ $desig->id }}" @if($edit->emp_desig_id == $desig->id) selected @endif>{{ $desig->title }}
+                                        <option value="{{ $desig->id }}" @if($edit->desig_id == $desig->id) selected @endif>{{ $desig->title }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -108,7 +107,7 @@
                                 <div class="form-group clearfix">
                                     <label>Date of Birth <span class="text-danger">*</span> :</label> </label>
                                     <div>
-                                        <input class="form-control" id="humanfd-datepicke" name="dob" value="{{$edit->emp_dob}}" type="text">
+                                        <input class="form-control" id="humanfd-datepicke" name="dob" value="{{$edit->dob}}" type="text">
                                     </div>
                                     @error('dob')
                                     <small class="form-text text-warning">{{ $message }}</small>
@@ -156,16 +155,17 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Parmanent Addres<span class="text-danger">*</span> :</label>
-                                    <input type="text" class="form-control" name="add" value="{{ $edit->emp_address }}" placeholder="Enter Present Address">
+                                    <input type="text" class="form-control" name="add" value="{{ $edit->address }}" placeholder="Enter Present Address">
                                     @error('add')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
+                                    
                                     @enderror
                                 </div>
 
                                 {{-- data-provide="datepicker" --}}
                                 <div class="mb-3">
                                     <label class="form-label">Joining Date<span class="text-danger">*</span> :</label>
-                                    <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->emp_join }}" disabled placeholder="Joining From">
+                                    <input type="text" class="form-control" id="humanfd-datepicker" name="join" value="{{ $edit->join_date }}" disabled placeholder="Joining From">
                                     @error('join')
                                     <small id="emailHelp" class="form-text text-warning">{{ $message }}</small>
                                     @enderror
@@ -184,8 +184,8 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="mb-5">
-                                            @if ($edit->emp_image != '')
-                                            <img src="{{ asset('uploads/employe/profile/'.$edit->emp_image) }}" class="img-fluid" alt="" style="width:80px height:80px; object-fit:cover; border-radius:10px;">
+                                            @if ($edit->image != '')
+                                            <img src="{{ asset('uploads/employe/profile/'.$edit->image) }}" class="img-fluid" alt="" style="width:80px height:80px; object-fit:cover; border-radius:10px;">
                                             @endif
                                         </div>
                                     </div>
@@ -195,9 +195,9 @@
                                     <div class="col-md-4">
                                         <label class="form-label">Employe Status</label>
                                         <select type="text" class="form-control text-first" name="status" disabled>
-                                            <option value="1" class="text-primary" @if($edit->emp_status == 1) Selected @endif>Active</option>
-                                            <option value="2" class="text-warning" @if($edit->emp_status == 2) Selected @endif>Suspend</option>
-                                            <option value="0" class="text-danger" @if($edit->emp_status == 0) Selected @endif>Recycle Bin</option>
+                                            <option value="1" class="text-primary" @if($edit->status == 1) Selected @endif>Active</option>
+                                            <option value="2" class="text-warning" @if($edit->status == 2) Selected @endif>Suspend</option>
+                                            <option value="0" class="text-danger" @if($edit->status == 0) Selected @endif>Recycle Bin</option>
                                         </select>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@
                                         <div class="form-group">
                                             <label>Present Address</label>
                                             <div>
-                                                <input name="preAdd" type="text" value="{{$edit->emp_present }}" class="form-control">
+                                                <input name="preAdd" type="text" value="{{$edit->present }}" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -230,14 +230,14 @@
                                         <div class="form-group clearfix">
                                             <label>Phone Number<span>(optional)</span></label>
                                             <div>
-                                                <input name="phone2" value="{{$edit->emp_phone2 ?? old('phone2') }}" type="number" class="form-control">
+                                                <input name="phone2" value="{{$edit->phone2 ?? old('phone2') }}" type="number" class="form-control">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
                                             <label>Emergency Contact Number <span class="text-danger">*</span> :</label>
-                                            <input name="emerPhone" type="number" value="{{$edit->emp_emer_contact }}" class="required form-control">
+                                            <input name="emerPhone" type="number" value="{{$edit->emer_contact }}" class="required form-control">
                                             @error('emerPhone')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -247,7 +247,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group clearfix">
                                             <label>Emergency Contact Name <span class="text-danger">*</span> :</label>
-                                            <input name="emerName" type="text" value="{{$edit->emp_emer_name }}" class="required form-control">
+                                            <input name="emerName" type="text" value="{{$edit->emer_name }}" class="required form-control">
                                             @error('emerName')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror
@@ -258,7 +258,7 @@
                                         <div class="form-group clearfix">
                                             <label>Emgerncy Contact Relationship <span class="text-danger">*</span> :</label>
 
-                                            <input name="emerRelation" type="text" value="{{$edit->emp_emer_relation }}" class="required form-control">
+                                            <input name="emerRelation" type="text" value="{{$edit->emer_relation }}" class="required form-control">
                                             @error('emerRelation')
                                             <small class="form-text text-warning">{{ $message }}</small>
                                             @enderror

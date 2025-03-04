@@ -48,64 +48,18 @@ Route::get('/', function () {
     return view('welcome');
 })->name('.');
 
-// Employe Login ======
-Route::get('/employe/login',[EmployeLoginController::class,'loginEmploye'])->name('employe.login');
-Route::post('/employe/loginsubmit',[EmployeLoginController::class,'loginSubmit'])->name('employe.loginsubmit');
 
 // ========= Employe Dashboard
 Route::middleware('isEmploye')->group(function(){
        Route::middleware('isEmployeActive')->group(function(){
-         // Logout 
-         Route::post('/employe/logout', [EmployeLoginController::class, 'logout'])->name('employe.logout');
-
-         // Dsahboard Index
-         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
- 
-         // Admin Controller 
+     
          Route::get('/dashboard/employe',[EmployeController::class,'index'])->name('dashboard.employe');
          Route::get('/dashboard/employe/view/{slug}',[EmployeController::class,'view'])->name('dashboard.employe.view');
          // Route::get('/dashboard/employe/edit/{slug}',[EmployeController::class,'edit'])->name('dashboard.employe.edit');
          // Route::post('/dashboard/employe/update',[EmployeController::class,'update'])->name('dashboard.employe.update');
          Route::get('/dashboard/employe/profileSettings/{slug}',[EmployeController::class,'profileSettings'])->name('dashboard.employe.profileSettings');
          Route::post('/dashboard/employe/profileSettingUpdate',[EmployeController::class,'profileSettingUpdate'])->name('dashboard.employe.profileSettingUpdate');
-      
-         // Leave Application status by General User
-         Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
-         Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
-         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
-         Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
-         Route::post('/dashboard/leave/update',[LeaveFormController::class,'update'])->name('dashboard.leave.update');
-         Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
-         Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
-         Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
-
-            // Leave Application status by General User
-            Route::get('/dashboard/earlyleave/add',[EarlyLeaveController::class,'add'])->name('dashboard.earlyleave.add');
-            Route::post('/dashboard/earlyleave/insert',[EarlyLeaveController::class,'insert'])->name('dashboard.earlyleave.insert');
-            Route::get('/dashboard/earlyleave/view/{slug}',[EarlyLeaveController::class,'view'])->name('dashboard.earlyleave.view'); 
-            Route::get('/dashboard/earlyleave/edit/{slug}',[EarlyLeaveController::class,'edit'])->name('dashboard.earlyleave.edit'); 
-            Route::post('/dashboard/earlyleave/update',[EarlyLeaveController::class,'update'])->name('dashboard.earlyleave.update');
-            Route::get('/dashboard/earlyleave/{slug}',[EarlyLeaveController::class,'index'])->name('dashboard.earlyleave'); 
-            Route::get('/dashboard/earlyleave/historyMonth/{slug}',[EarlyLeaveController::class,'historyMonth'])->name('dashboard.earlyleave.historyMonth'); 
-            Route::get('/dashboard/earlyleave/historyYear/{slug}',[EarlyLeaveController::class,'historyYear'])->name('dashboard.earlyleave.historyYear'); 
-       
-       
-         //  Switch Into User
-         Route::post('/dashboard/asAdmin/{id}',[EmployeController::class,'loginAdmin'])->name('dashboard.asAdmin');
-
-        // Employe Daily Reports Submit
-         Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
-         Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
-         Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
-         Route::get('/dashboard/dailyreport/edit/{slug}',[DailyReportController::class,'edit'])->name('dashboard.dailyreport.edit');
-         Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
-         Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
-
        });
-
-       Route::get('/notActiveUser',function(){ 
-        return view('employe.notActiveUser');
-        })->name('notActiveUser');
 
 });
 
@@ -115,43 +69,48 @@ Route::post('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'
 // Super Admin Dashboard
 
 Route::middleware(['auth','verified'])->group(function(){
-        Route::get('/superadmin',[SuperAdminController::class,'dashboard'])->name('superadmin');
+    Route::middleware('isEmployeActive')->group(function(){
+                 Route::get('/portal',[SuperAdminController::class,'dashboard'])->name('portal');
 
-        // Only SuperAdmin Can access These Route ******************
-        
-                Route::get('/superadmin/recycle',[RecyclebinController::class,'dashboard'])->name('superadmin.recycle');
-                Route::get('/superadmin/recycle/employe',[RecyclebinController::class,'employe'])->name('superadmin.recycle.employe');
-                Route::get('/superadmin/recycle/dailyreport',[RecyclebinController::class,'dailyreport'])->name('superadmin.recycle.dailyreport');
+                Route::get('/portal/recycle',[RecyclebinController::class,'dashboard'])->name('portal.recycle');
+                Route::get('/portal/recycle/employe',[RecyclebinController::class,'employe'])->name('portal.recycle.employe');
+                Route::get('/portal/recycle/dailyreport',[RecyclebinController::class,'dailyreport'])->name('portal.recycle.dailyreport');
                 // Add Admin 
-                Route::get('superadmin/admin/add',[AdminProfileController::class,'add'])->name('superadmin.admin.add');
+                Route::get('portal/admin/add',[AdminProfileController::class,'add'])->name('portal.admin.add');
          
                 // Admin Profile Controller 
-                Route::get('superadmin/admin',[AdminProfileController::class,'index'])->name('superadmin.admin');
-                Route::post('superadmin/admin/insert',[AdminProfileController::class,'insert'])->name('superadmin.admin.insert');
-                Route::get('superadmin/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('superadmin.view.profile');
-                Route::get('superadmin/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('superadmin.profile');
-                Route::post('superadmin/profile/update',[AdminProfileController::class,'updateAdmin'])->name('superadmin.profile.update');
-                Route::post('superadmin/view/softdelete',[AdminProfileController::class,'softDelete'])->name('superadmin.view.softdelete');
-                Route::post('superadmin/view/restore',[AdminProfileController::class,'restore'])->name('superadmin.view.restore');
-                Route::delete('/dashboard/admin/delete',[AdminProfileController::class,'delete'])->name('dashboard.admin.delete');
+                Route::get('portal/admin',[AdminProfileController::class,'index'])->name('portal.admin');
+                Route::post('portal/admin/insert',[AdminProfileController::class,'insert'])->name('portal.admin.insert');
+                Route::get('portal/view/profile/{id}',[AdminProfileController::class,'viewProfile'])->name('portal.view.profile');
+                Route::get('portal/profile/{slug}',[AdminProfileController::class,'profileAdmin'])->name('portal.profile');
+                Route::post('portal/profile/update',[AdminProfileController::class,'updateAdmin'])->name('portal.profile.update');
+                Route::post('portal/view/softdelete',[AdminProfileController::class,'softDelete'])->name('portal.view.softdelete');
+                Route::post('portal/restore',[AdminProfileController::class,'restore'])->name('portal.restore');
+                Route::delete('admin/delete',[AdminProfileController::class,'delete'])->name('admin.delete');
                 // Admin Edit Access 
                 // Route::get('/dashboard/admin/edit/{slug}',[AdminController::class,'edit'])->name('dashboard.admin.edit');
                 // Route::delete('/dashboard/admin/delete/{slug}',[AdminController::class,'delete'])->name('dashboard.admin.view');
                 
                 // Add Employer Controller
-                Route::get('/superadmin/employe',[AdminEmployeController::class,'index'])->name('superadmin.employe');
-                Route::get('/superadmin/employe/add',[AdminEmployeController::class,'add'])->name('superadmin.employe.add');
-                Route::post('/superadmin/employe/insert',[AdminEmployeController::class,'insert'])->name('superadmin.employe.insert');
-                Route::get('/superadmin/employe/edit/{slug}',[AdminEmployeController::class,'edit'])->name('superadmin.employe.edit');
-                Route::post('/superadmin/employe/update',[AdminEmployeController::class,'update'])->name('superadmin.employe.update');
-                Route::post('/superadmin/employe/softdelete',[AdminEmployeController::class,'softdele'])->name('superadmin.employe.softdelete');
-                Route::post('/superadmin/employe/restore',[AdminEmployeController::class,'restore'])->name('superadmin.employe.restore');
-                Route::get('/superadmin/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('superadmin.employe.view');
-                Route::delete('/superadmin/employe/delete',[AdminEmployeController::class,'delete'])->name('superadmin.employe.delete');
+                Route::get('/portal/employe',[AdminEmployeController::class,'index'])->name('portal.employe');
+                Route::get('/portal/employe/add',[AdminEmployeController::class,'add'])->name('portal.employe.add');
+                Route::post('/portal/employe/insert',[AdminEmployeController::class,'insert'])->name('portal.employe.insert');
+                Route::get('/portal/employe/edit/{slug}',[AdminEmployeController::class,'edit'])->name('portal.employe.edit');
+                Route::post('/portal/employe/update',[AdminEmployeController::class,'update'])->name('portal.employe.update');
+                Route::post('/portal/employe/softdelete',[AdminEmployeController::class,'softdele'])->name('portal.employe.softdelete');
+                Route::post('/portal/employe/restore',[AdminEmployeController::class,'restore'])->name('portal.employe.restore');
+                Route::get('/portal/employe/view/{slug}',[AdminEmployeController::class,'view'])->name('portal.employe.view');
+                Route::delete('/portal/employe/delete',[AdminEmployeController::class,'delete'])->name('portal.employe.delete');
+
+                // my Profile
+                Route::get('/portal/employe/profile/{slug}',[AdminEmployeController::class,'profileView'])->name('portal.employe.profile');
+                Route::get('/portal/employe/editprofile/{slug}',[AdminEmployeController::class,'profileEdit'])->name('portal.employe.editprofile');
+                Route::post('/portal/employe/updateprofile',[AdminEmployeController::class,'profileUpdate'])->name('portal.employe.updateprofile');
                 // log in as a employee
-                Route::post('/superadmin/employe/login/{id}',[AdminEmployeController::class,'login'])->name('superadmin.employe.login');
-                Route::post('/superadmin/asEmploye/{id}',[AdminEmployeController::class,'employeLogin'])->name('superadmin.asEmploye');
+                Route::post('/portal/employe/login/{id}',[AdminEmployeController::class,'login'])->name('portal.employe.login');
+               
                 // get data from select
+
                 Route::get('/get_designation/{id}',[DesgnationController::class,'getDesignation']);
                 Route::get('/get_bankBranch/{id}',[BankBranchController::class,'getBankBranch']);
 
@@ -177,75 +136,75 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::delete('/admin/promotion/delete',[EmployeePromotionController::class,'delete'])->name('admin.promotion.delete');
 
                 // Designation Controller
-                Route::get('/superadmin/designation',[DesgnationController::class,'index'])->name('superadmin.designation');
-                Route::get('/superadmin/designation/add',[DesgnationController::class,'add'])->name('superadmin.designation.add');
-                Route::post('/superadmin/designation/insert',[DesgnationController::class,'insert'])->name('superadmin.designation.insert');
-                Route::get('/superadmin/designation/view/{id}',[DesgnationController::class,'view'])->name('superadmin.designation.view');
-                Route::get('/superadmin/designation/edit/{id}',[DesgnationController::class,'edit'])->name('superadmin.designation.edit');
-                Route::post('/superadmin/designation/update',[DesgnationController::class,'update'])->name('superadmin.designation.update');
-                Route::delete('/superadmin/designation/delete',[DesgnationController::class,'delete'])->name('superadmin.designation.delete');
+                Route::get('/portal/designation',[DesgnationController::class,'index'])->name('portal.designation');
+                Route::get('/portal/designation/add',[DesgnationController::class,'add'])->name('portal.designation.add');
+                Route::post('/portal/designation/insert',[DesgnationController::class,'insert'])->name('portal.designation.insert');
+                Route::get('/portal/designation/view/{id}',[DesgnationController::class,'view'])->name('portal.designation.view');
+                Route::get('/portal/designation/edit/{id}',[DesgnationController::class,'edit'])->name('portal.designation.edit');
+                Route::post('/portal/designation/update',[DesgnationController::class,'update'])->name('portal.designation.update');
+                Route::delete('/portal/designation/delete',[DesgnationController::class,'delete'])->name('portal.designation.delete');
 
                 // Office Branch 
-                Route::get('/superadmin/office_branch',[OfficeBranchController::class,'index'])->name('superadmin.office_branch');
-                Route::get('/superadmin/office_branch/add',[OfficeBranchController::class,'add'])->name('superadmin.office_branch.add');
-                Route::post('/superadmin/office_branch/insert',[OfficeBranchController::class,'insert'])->name('superadmin.office_branch.insert');
-                Route::get('/superadmin/office_branch/edit/{id}',[OfficeBranchController::class,'edit'])->name('superadmin.office_branch.edit');
-                Route::post('/superadmin/office_branch/update',[OfficeBranchController::class,'update'])->name('superadmin.office_branch.update');
-                Route::get('/superadmin/office_branch/view/{id}',[OfficeBranchController::class,'view'])->name('superadmin.office_branch.view');
-                Route::delete('/superadmin/office_branch/delete',[OfficeBranchController::class,'delete'])->name('superadmin.office_branch.delete');
+                Route::get('/portal/office_branch',[OfficeBranchController::class,'index'])->name('portal.office_branch');
+                Route::get('/portal/office_branch/add',[OfficeBranchController::class,'add'])->name('portal.office_branch.add');
+                Route::post('/portal/office_branch/insert',[OfficeBranchController::class,'insert'])->name('portal.office_branch.insert');
+                Route::get('/portal/office_branch/edit/{id}',[OfficeBranchController::class,'edit'])->name('portal.office_branch.edit');
+                Route::post('/portal/office_branch/update',[OfficeBranchController::class,'update'])->name('portal.office_branch.update');
+                Route::get('/portal/office_branch/view/{id}',[OfficeBranchController::class,'view'])->name('portal.office_branch.view');
+                Route::delete('/portal/office_branch/delete',[OfficeBranchController::class,'delete'])->name('portal.office_branch.delete');
             
                 // Bank Detail
-                Route::get('/superadmin/bank_name',[BankNameController::class,'index'])->name('superadmin.bank_name');
-                Route::get('/superadmin/bank_name/add',[BankNameController::class,'add'])->name('superadmin.bank_name.add');
-                Route::post('/superadmin/bank_name/insert',[BankNameController::class,'insert'])->name('superadmin.bank_name.insert');
-                Route::get('/superadmin/bank_name/edit/{id}',[BankNameController::class,'edit'])->name('superadmin.bank_name.edit');
-                Route::post('/superadmin/bank_name/update',[BankNameController::class,'update'])->name('superadmin.bank_name.update');
-                Route::get('/superadmin/bank_name/view/{id}',[BankNameController::class,'view'])->name('superadmin.bank_name.view');
-                Route::delete('/superadmin/bank_name/delete',[BankNameController::class,'delete'])->name('superadmin.bank_name.delete');
+                Route::get('/portal/bank_name',[BankNameController::class,'index'])->name('portal.bank_name');
+                Route::get('/portal/bank_name/add',[BankNameController::class,'add'])->name('portal.bank_name.add');
+                Route::post('/portal/bank_name/insert',[BankNameController::class,'insert'])->name('portal.bank_name.insert');
+                Route::get('/portal/bank_name/edit/{id}',[BankNameController::class,'edit'])->name('portal.bank_name.edit');
+                Route::post('/portal/bank_name/update',[BankNameController::class,'update'])->name('portal.bank_name.update');
+                Route::get('/portal/bank_name/view/{id}',[BankNameController::class,'view'])->name('portal.bank_name.view');
+                Route::delete('/portal/bank_name/delete',[BankNameController::class,'delete'])->name('portal.bank_name.delete');
                 
                 // Bank Branch
-                Route::get('/superadmin/bank_branch',[BankBranchController::class,'index'])->name('superadmin.bank_branch');
-                Route::get('/superadmin/bank_branch/add',[BankBranchController::class,'add'])->name('superadmin.bank_branch.add');
-                Route::post('/superadmin/bank_branch/insert',[BankBranchController::class,'insert'])->name('superadmin.bank_branch.insert');
-                Route::get('/superadmin/bank_branch/edit/{id}',[BankBranchController::class,'edit'])->name('superadmin.bank_branch.edit');
-                Route::post('/superadmin/bank_branch/update',[BankBranchController::class,'update'])->name('superadmin.bank_branch.update');
-                Route::get('/superadmin/bank_branch/view/{id}',[BankBranchController::class,'view'])->name('superadmin.bank_branch.view');
-                Route::delete('/superadmin/bank_branch/delete',[BankBranchController::class,'delete'])->name('superadmin.bank_branch.delete');
+                Route::get('/portal/bank_branch',[BankBranchController::class,'index'])->name('portal.bank_branch');
+                Route::get('/portal/bank_branch/add',[BankBranchController::class,'add'])->name('portal.bank_branch.add');
+                Route::post('/portal/bank_branch/insert',[BankBranchController::class,'insert'])->name('portal.bank_branch.insert');
+                Route::get('/portal/bank_branch/edit/{id}',[BankBranchController::class,'edit'])->name('portal.bank_branch.edit');
+                Route::post('/portal/bank_branch/update',[BankBranchController::class,'update'])->name('portal.bank_branch.update');
+                Route::get('/portal/bank_branch/view/{id}',[BankBranchController::class,'view'])->name('portal.bank_branch.view');
+                Route::delete('/portal/bank_branch/delete',[BankBranchController::class,'delete'])->name('portal.bank_branch.delete');
             
                 // Department
-                Route::get('/superadmin/department',[DepartmentController::class,'index'])->name('superadmin.department');
-                Route::get('/superadmin/department/add',[DepartmentController::class,'add'])->name('superadmin.department.add');
-                Route::post('/superadmin/department/insert',[DepartmentController::class,'insert'])->name('superadmin.department.insert');
-                Route::get('/superadmin/department/edit/{id}',[DepartmentController::class,'edit'])->name('superadmin.department.edit');
-                Route::post('/superadmin/department/update',[DepartmentController::class,'update'])->name('superadmin.department.update');
-                Route::get('/superadmin/department/view/{id}',[DepartmentController::class,'view'])->name('superadmin.department.view');
-                Route::delete('/superadmin/department/delete',[DepartmentController::class,'delete'])->name('superadmin.department.delete');
+                Route::get('/portal/department',[DepartmentController::class,'index'])->name('portal.department');
+                Route::get('/portal/department/add',[DepartmentController::class,'add'])->name('portal.department.add');
+                Route::post('/portal/department/insert',[DepartmentController::class,'insert'])->name('portal.department.insert');
+                Route::get('/portal/department/edit/{id}',[DepartmentController::class,'edit'])->name('portal.department.edit');
+                Route::post('/portal/department/update',[DepartmentController::class,'update'])->name('portal.department.update');
+                Route::get('/portal/department/view/{id}',[DepartmentController::class,'view'])->name('portal.department.view');
+                Route::delete('/portal/department/delete',[DepartmentController::class,'delete'])->name('portal.department.delete');
 
                 // Leave Management 
-                Route::get('/superadmin/leavetype',[LeaveTypeController::class,'index'])->name('superadmin.leavetype');
-                Route::get('/superadmin/leavetype/add',[LeaveTypeController::class,'add'])->name('superadmin.leavetype.add');
-                Route::post('/superadmin/leavetype/insert',[LeaveTypeController::class,'insert'])->name('superadmin.leavetype.insert');
-                Route::get('/superadmin/leavetype/edit/{id}',[LeaveTypeController::class,'edit'])->name('superadmin.leavetype.edit');
-                Route::post('/superadmin/leavetype/update',[LeaveTypeController::class,'update'])->name('superadmin.leavetype.update');
-                Route::get('/superadmin/leavetype/view/{id}',[LeaveTypeController::class,'view'])->name('superadmin.leavetype.view');
-                Route::delete('/superadmin/leavetype/delete/',[LeaveTypeController::class,'delete'])->name('superadmin.leavetype.delete');
+                Route::get('/portal/leavetype',[LeaveTypeController::class,'index'])->name('portal.leavetype');
+                Route::get('/portal/leavetype/add',[LeaveTypeController::class,'add'])->name('portal.leavetype.add');
+                Route::post('/portal/leavetype/insert',[LeaveTypeController::class,'insert'])->name('portal.leavetype.insert');
+                Route::get('/portal/leavetype/edit/{id}',[LeaveTypeController::class,'edit'])->name('portal.leavetype.edit');
+                Route::post('/portal/leavetype/update',[LeaveTypeController::class,'update'])->name('portal.leavetype.update');
+                Route::get('/portal/leavetype/view/{id}',[LeaveTypeController::class,'view'])->name('portal.leavetype.view');
+                Route::delete('/portal/leavetype/delete/',[LeaveTypeController::class,'delete'])->name('portal.leavetype.delete');
                 
                 // Leave Application status
-                Route::get('/superadmin/leave/add',[SuperAdminLeaveController::class,'add'])->name('superadmin.leave.add');
-                Route::post('/superadmin/leave/insert',[SuperAdminLeaveController::class,'insert'])->name('superadmin.leave.insert');
-                Route::get('/superadmin/leave/edit/{id}',[SuperAdminLeaveController::class,'edit'])->name('superadmin.leave.edit');
-                Route::post('/superadmin/leave/updateleave',[SuperAdminLeaveController::class,'updateleave'])->name('superadmin.leave.updateleave');
-                Route::get('/superadmin/leave',[SuperAdminLeaveController::class,'index'])->name('superadmin.leave');
-                Route::get('/superadmin/leavemonth/{slug}',[SuperAdminLeaveController::class,'indexMonth'])->name('superadmin.leaveMonth');
-                Route::get('/superadmin/leaveYear/{slug}',[SuperAdminLeaveController::class,'indexYear'])->name('superadmin.leaveYear');
-                Route::get('/superadmin/leave/pending',[SuperAdminLeaveController::class,'pending'])->name('superadmin.leave.pending');
-                Route::get('/superadmin/leave/approved',[SuperAdminLeaveController::class,'approved'])->name('superadmin.leave.approved');
-                Route::get('/superadmin/leave/cancled',[SuperAdminLeaveController::class,'cancled'])->name('superadmin.leave.cancled');
-                Route::get('/superadmin/leave/view/{slug}',[SuperAdminLeaveController::class,'view'])->name('superadmin.leave.view');
-                Route::post('/superadmin/leave/update',[SuperAdminLeaveController::class,'update'])->name('superadmin.leave.update');
-                Route::post('/superadmin/leave/softdelete',[SuperAdminLeaveController::class,'softDelete'])->name('superadmin.leave.softdelete');
-                Route::post('/superadmin/leave/restore',[SuperAdminLeaveController::class,'restore'])->name('superadmin.leave.restore');
-                Route::delete('/superadmin/leave/delete/',[SuperAdminLeaveController::class,'delete'])->name('superadmin.leave.delete');
+                Route::get('/portal/leave/add',[SuperAdminLeaveController::class,'add'])->name('portal.leave.add');
+                Route::post('/portal/leave/insert',[SuperAdminLeaveController::class,'insert'])->name('portal.leave.insert');
+                Route::get('/portal/leave/edit/{id}',[SuperAdminLeaveController::class,'edit'])->name('portal.leave.edit');
+                Route::post('/portal/leave/updateleave',[SuperAdminLeaveController::class,'updateleave'])->name('portal.leave.updateleave');
+                Route::get('/portal/leave',[SuperAdminLeaveController::class,'index'])->name('portal.leave');
+                Route::get('/portal/leavemonth/{slug}',[SuperAdminLeaveController::class,'indexMonth'])->name('portal.leaveMonth');
+                Route::get('/portal/leaveYear/{slug}',[SuperAdminLeaveController::class,'indexYear'])->name('portal.leaveYear');
+                Route::get('/portal/leave/pending',[SuperAdminLeaveController::class,'pending'])->name('portal.leave.pending');
+                Route::get('/portal/leave/approved',[SuperAdminLeaveController::class,'approved'])->name('portal.leave.approved');
+                Route::get('/portal/leave/cancled',[SuperAdminLeaveController::class,'cancled'])->name('portal.leave.cancled');
+                Route::get('/portal/leave/view/{slug}',[SuperAdminLeaveController::class,'view'])->name('portal.leave.view');
+                Route::post('/portal/leave/update',[SuperAdminLeaveController::class,'update'])->name('portal.leave.update');
+                Route::post('/portal/leave/softdelete',[SuperAdminLeaveController::class,'softDelete'])->name('portal.leave.softdelete');
+                Route::post('/portal/leave/restore',[SuperAdminLeaveController::class,'restore'])->name('portal.leave.restore');
+                Route::delete('/portal/leave/delete/',[SuperAdminLeaveController::class,'delete'])->name('portal.leave.delete');
                 
                 // Leave Application status
                 
@@ -270,84 +229,115 @@ Route::middleware(['auth','verified'])->group(function(){
                 // remove notifuication
                 Route::delete('/notificationAdmin/remove/{id}',[SuperAdminLeaveController::class,'removeNotification']);
                 // Daily reports 
-                Route::get('/superadmin/dailyreport',[AdminDailyReportController::class,'index'])->name('superadmin.dailyreport');
-                Route::get('/superadmin/dailyreport/view/{slug}',[AdminDailyReportController::class,'view'])->name('superadmin.dailyreport.view');
-                Route::post('/superadmin/dailyreport/update',[AdminDailyReportController::class,'update'])->name('superadmin.dailyreport.update');
-                Route::post('/superadmin/dailyreport/softdelete',[AdminDailyReportController::class,'softDelete'])->name('superadmin.dailyreport.softdelete');
-                Route::post('/superadmin/dailyreport/restore',[AdminDailyReportController::class,'restore'])->name('superadmin.dailyreport.restore');
-                Route::delete('/superadmin/dailyreport/delete',[AdminDailyReportController::class,'delete'])->name('superadmin.dailyreport.delete');
-                Route::get('/superadmin/dailyreport/search/{year}/{month}/{name}',[AdminDailyReportController::class,'allSearch'])->name('superadmin.dailyreport.search');
+                Route::get('/portal/dailyreport',[AdminDailyReportController::class,'index'])->name('portal.dailyreport');
+                Route::get('/portal/dailyreport/view/{slug}',[AdminDailyReportController::class,'view'])->name('portal.dailyreport.view');
+                Route::post('/portal/dailyreport/update',[AdminDailyReportController::class,'update'])->name('portal.dailyreport.update');
+                Route::post('/portal/dailyreport/softdelete',[AdminDailyReportController::class,'softDelete'])->name('portal.dailyreport.softdelete');
+                Route::post('/portal/dailyreport/restore',[AdminDailyReportController::class,'restore'])->name('portal.dailyreport.restore');
+                Route::delete('/portal/dailyreport/delete',[AdminDailyReportController::class,'delete'])->name('portal.dailyreport.delete');
+                Route::get('/portal/dailyreport/search/{year}/{month}/{name}',[AdminDailyReportController::class,'allSearch'])->name('portal.dailyreport.search');
                 
                 // Leave Setting status
-                Route::get('/superadmin/leavesetting',[LeaveSettingController::class,'index'])->name('superadmin.leavesetting');
-                Route::post('/superadmin/leavesetting/update',[LeaveSettingController::class,'update'])->name('superadmin.leavesetting.update');
+                Route::get('/portal/leavesetting',[LeaveSettingController::class,'index'])->name('portal.leavesetting');
+                Route::post('/portal/leavesetting/update',[LeaveSettingController::class,'update'])->name('portal.leavesetting.update');
 
                 //SuperAdmin Basic Controller
-                Route::get('/superadmin/basic',[BasicController::class,'index'])->name('superadmin.basic');
-                Route::post('/superadmin/basic/update',[BasicController::class,'updateBasic'])->name('superadmin.basic.update');
-                Route::post('/superadmin/basic/currency',[BasicController::class,'updateCurrency'])->name('superadmin.basic.currency');
-                Route::post('/superadmin/basic/time',[BasicController::class,'updateTimeZone'])->name('superadmin.basic.time');
-                Route::post('/superadmin/basic/officetime',[BasicController::class,'updateOfficeTime'])->name('superadmin.basic.officetime');
+                Route::get('/portal/basic',[BasicController::class,'index'])->name('portal.basic');
+                Route::post('/portal/basic/update',[BasicController::class,'updateBasic'])->name('portal.basic.update');
+                Route::post('/portal/basic/currency',[BasicController::class,'updateCurrency'])->name('portal.basic.currency');
+                Route::post('/portal/basic/time',[BasicController::class,'updateTimeZone'])->name('portal.basic.time');
+                Route::post('/portal/basic/officetime',[BasicController::class,'updateOfficeTime'])->name('portal.basic.officetime');
 
                 //Email  Controller
-                Route::get('/superadmin/email',[AdminEmailController::class,'index'])->name('superadmin.email');
-                Route::post('/superadmin/email/update',[AdminEmailController::class,'update'])->name('superadmin.email.update');
+                Route::get('/portal/email',[AdminEmailController::class,'index'])->name('portal.email');
+                Route::post('/portal/email/update',[AdminEmailController::class,'update'])->name('portal.email.update');
 
-                Route::post('/superadmin/activeDailyReportMail',[AdminEmailController::class,'dailyReportMailActive'])->name('superadmin.activeDailyReportMail');
-                Route::post('/superadmin/activeDailyLeaveMail',[AdminEmailController::class,'dailyLeaveMailActive'])->name('superadmin.activeDailyLeaveMail');
-                Route::post('/superadmin/activeDailySummaryMail',[AdminEmailController::class,'dailySummaryMailActive'])->name('superadmin.activeDailySummaryMail');
+                Route::post('/portal/activeDailyReportMail',[AdminEmailController::class,'dailyReportMailActive'])->name('portal.activeDailyReportMail');
+                Route::post('/portal/activeDailyLeaveMail',[AdminEmailController::class,'dailyLeaveMailActive'])->name('portal.activeDailyLeaveMail');
+                Route::post('/portal/activeDailySummaryMail',[AdminEmailController::class,'dailySummaryMailActive'])->name('portal.activeDailySummaryMail');
+                Route::post('/portal/activeDeleteReport',[AdminEmailController::class,'deleteReport'])->name('portal.activeDeleteReport');
 
                 // Role Permission Management
                 // Permission Management
-                Route::get('/superadmin/permission',[PermissionController::class,'index'])->name('superadmin.permission');
-                Route::get('/superadmin/permission/add',[PermissionController::class,'add'])->name('superadmin.permission.add');
-                Route::post('/superadmin/permission/insert',[PermissionController::class,'insert'])->name('superadmin.permission.insert');
-                Route::get('/superadmin/permission/edit/{id}',[PermissionController::class,'edit'])->name('superadmin.permission.edit');
-                Route::post('/superadmin/permission/update',[PermissionController::class,'update'])->name('superadmin.permission.update');
-                Route::get('/superadmin/permission/view/{id}',[PermissionController::class,'view'])->name('superadmin.permission.view');
-                Route::delete('/superadmin/permission/delete',[PermissionController::class,'delete'])->name('superadmin.permission.delete');
+                Route::get('/portal/permission',[PermissionController::class,'index'])->name('portal.permission');
+                Route::get('/portal/permission/add',[PermissionController::class,'add'])->name('portal.permission.add');
+                Route::post('/portal/permission/insert',[PermissionController::class,'insert'])->name('portal.permission.insert');
+                Route::get('/portal/permission/edit/{id}',[PermissionController::class,'edit'])->name('portal.permission.edit');
+                Route::post('/portal/permission/update',[PermissionController::class,'update'])->name('portal.permission.update');
+                Route::get('/portal/permission/view/{id}',[PermissionController::class,'view'])->name('portal.permission.view');
+                Route::delete('/portal/permission/delete',[PermissionController::class,'delete'])->name('portal.permission.delete');
  
                 // Role Management 
-                Route::get('/superadmin/role',[AdminRoleController::class,'index'])->name('superadmin.role');
-                Route::get('/superadmin/role/add',[AdminRoleController::class,'add'])->name('superadmin.role.add');
-                Route::post('/superadmin/role/insert',[AdminRoleController::class,'insert'])->name('superadmin.role.insert');
-                Route::get('/superadmin/role/edit/{id}',[AdminRoleController::class,'edit'])->name('superadmin.role.edit');
-                Route::post('/superadmin/role/update',[AdminRoleController::class,'update'])->name('superadmin.role.update');
-                Route::get('/superadmin/role/view/{id}',[AdminRoleController::class,'view'])->name('superadmin.role.view');
-                Route::delete('/superadmin/role/delete',[AdminRoleController::class,'delete'])->name('superadmin.role.delete');
+                Route::get('/portal/role',[AdminRoleController::class,'index'])->name('portal.role');
+                Route::get('/portal/role/add',[AdminRoleController::class,'add'])->name('portal.role.add');
+                Route::post('/portal/role/insert',[AdminRoleController::class,'insert'])->name('portal.role.insert');
+                Route::get('/portal/role/edit/{id}',[AdminRoleController::class,'edit'])->name('portal.role.edit');
+                Route::post('/portal/role/update',[AdminRoleController::class,'update'])->name('portal.role.update');
+                Route::get('/portal/role/view/{id}',[AdminRoleController::class,'view'])->name('portal.role.view');
+                Route::delete('/portal/role/delete',[AdminRoleController::class,'delete'])->name('portal.role.delete');
                 
    
                 // Catering Food
-                Route::get('/superadmin/cateringfood',[CateringFoodController::class,'index'])->name('superadmin.cateringfood');
-                Route::get('/superadmin/cateringfood/add',[CateringFoodController::class,'add'])->name('superadmin.cateringfood.add');
-                Route::post('/superadmin/cateringfood/insert',[CateringFoodController::class,'insert'])->name('superadmin.cateringfood.insert');
-                Route::get('/superadmin/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('superadmin.cateringfood.view');
-                Route::get('/superadmin/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('superadmin.cateringfood.edit');
-                Route::post('/superadmin/cateringfood/update',[CateringFoodController::class,'update'])->name('superadmin.cateringfood.update');
-                Route::delete('/superadmin/cateringfood/delete',[CateringFoodController::class,'delete'])->name('superadmin.cateringfood.delete');
+                Route::get('/portal/cateringfood',[CateringFoodController::class,'index'])->name('portal.cateringfood');
+                Route::get('/portal/cateringfood/add',[CateringFoodController::class,'add'])->name('portal.cateringfood.add');
+                Route::post('/portal/cateringfood/insert',[CateringFoodController::class,'insert'])->name('portal.cateringfood.insert');
+                Route::get('/portal/cateringfood/view/{id}',[CateringFoodController::class,'view'])->name('portal.cateringfood.view');
+                Route::get('/portal/cateringfood/edit/{id}',[CateringFoodController::class,'edit'])->name('portal.cateringfood.edit');
+                Route::post('/portal/cateringfood/update',[CateringFoodController::class,'update'])->name('portal.cateringfood.update');
+                Route::delete('/portal/cateringfood/delete',[CateringFoodController::class,'delete'])->name('portal.cateringfood.delete');
                 
                 // Catering Payment
-                Route::get('/superadmin/cateringpayment',[CateringPaymentController::class,'index'])->name('superadmin.cateringpayment');
-                Route::get('/superadmin/cateringpayment/checkbill',[CateringPaymentController::class,'checkBill'])->name('superadmin.cateringpayment.checkbill');
-                Route::get('/superadmin/cateringpayment/add',[CateringPaymentController::class,'add'])->name('superadmin.cateringpayment.add');
-                Route::post('/superadmin/cateringpayment/insert',[CateringPaymentController::class,'insert'])->name('superadmin.cateringpayment.insert');
-                Route::get('/superadmin/cateringpayment/view/{id}',[CateringPaymentController::class,'view'])->name('superadmin.cateringpayment.view');
-                Route::get('/superadmin/cateringpayment/edit/{id}',[CateringPaymentController::class,'edit'])->name('superadmin.cateringpayment.edit');
-                Route::post('/superadmin/cateringpayment/update',[CateringPaymentController::class,'update'])->name('superadmin.cateringpayment.update');
-                Route::delete('/superadmin/cateringpayment/delete',[CateringPaymentController::class,'delete'])->name('superadmin.cateringpayment.delete');
+                Route::get('/portal/cateringpayment',[CateringPaymentController::class,'index'])->name('portal.cateringpayment');
+                Route::get('/portal/cateringpayment/checkbill',[CateringPaymentController::class,'checkBill'])->name('portal.cateringpayment.checkbill');
+                Route::get('/portal/cateringpayment/add',[CateringPaymentController::class,'add'])->name('portal.cateringpayment.add');
+                Route::post('/portal/cateringpayment/insert',[CateringPaymentController::class,'insert'])->name('portal.cateringpayment.insert');
+                Route::get('/portal/cateringpayment/view/{id}',[CateringPaymentController::class,'view'])->name('portal.cateringpayment.view');
+                Route::get('/portal/cateringpayment/edit/{id}',[CateringPaymentController::class,'edit'])->name('portal.cateringpayment.edit');
+                Route::post('/portal/cateringpayment/update',[CateringPaymentController::class,'update'])->name('portal.cateringpayment.update');
+                Route::delete('/portal/cateringpayment/delete',[CateringPaymentController::class,'delete'])->name('portal.cateringpayment.delete');
 
                 // Search by month
-                Route::get('/superadmin/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
-                Route::get('/superadmin/cateringfood/year/{month}',[CateringFoodController::class,'searchYear']);
+                Route::get('/portal/cateringfood/{month}',[CateringFoodController::class,'searchMonth']);
+                Route::get('/portal/cateringfood/year/{month}',[CateringFoodController::class,'searchYear']);
                 // Search by month Payment
-                Route::get('/superadmin/cateringpayment/{month}',[CateringPaymentController::class,'searchMonth']);
-                Route::get('/superadmin/cateringpayment/year/{year}',[CateringPaymentController::class,'searchYear']);
+                Route::get('/portal/cateringpayment/{month}',[CateringPaymentController::class,'searchMonth']);
+                Route::get('/portal/cateringpayment/year/{year}',[CateringPaymentController::class,'searchYear']);
 
-                // Not As A Super Admin // 404 for not authrized
-                Route::get('invalidAccess',function(){ 
-                    return view('layouts.errorpage.notValidRole');
-                    })->name('invalidAccess');
-});
+                 // Work Like Employeee data
+
+                // Dsahboard Index
+                Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+                // Leave Application for Employee
+                Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
+                Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
+                Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
+                Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
+                Route::post('/dashboard/leave/update',[LeaveFormController::class,'update'])->name('dashboard.leave.update');
+                Route::get('/dashboard/leave/history/{slug}',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
+                Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
+                Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
+                
+                // Leave Application status by General User
+                Route::get('/dashboard/earlyleave/add',[EarlyLeaveController::class,'add'])->name('dashboard.earlyleave.add');
+                Route::post('/dashboard/earlyleave/insert',[EarlyLeaveController::class,'insert'])->name('dashboard.earlyleave.insert');
+                Route::get('/dashboard/earlyleave/view/{slug}',[EarlyLeaveController::class,'view'])->name('dashboard.earlyleave.view'); 
+                Route::get('/dashboard/earlyleave/edit/{slug}',[EarlyLeaveController::class,'edit'])->name('dashboard.earlyleave.edit'); 
+                Route::post('/dashboard/earlyleave/update',[EarlyLeaveController::class,'update'])->name('dashboard.earlyleave.update');
+                Route::get('/dashboard/earlyleave/{slug}',[EarlyLeaveController::class,'index'])->name('dashboard.earlyleave');
+
+                 // Employe Daily Reports Submit
+                Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
+                Route::get('/dashboard/dailyreport/add',[DailyReportController::class,'add'])->name('dashboard.dailyreport.add');
+                Route::post('/dashboard/dailyreport/submit',[DailyReportController::class,'submit'])->name('dashboard.dailyreport.submit'); 
+                Route::get('/dashboard/dailyreport/edit/{slug}',[DailyReportController::class,'edit'])->name('dashboard.dailyreport.edit');
+                Route::post('/dashboard/dailyreport/update',[DailyReportController::class,'update'])->name('dashboard.dailyreport.update'); 
+                Route::get('/dashboard/dailyreport/view/{slug}',[DailyReportController::class,'view'])->name('dashboard.dailyreport.view'); 
+        });
+
+        Route::get('notActiveUser',function(){
+            return view('employe.notActiveUser');
+        })->name('notActiveUser');
+    });
 
 
 Route::middleware('auth')->group(function () {

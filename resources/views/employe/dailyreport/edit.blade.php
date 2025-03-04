@@ -1,4 +1,4 @@
-@extends('layouts.employe')
+@extends('layouts.superAdmin')
 @section('css')
 <link href="{{ asset('contents/admin') }}/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet">
 <link href="{{ asset('contents/admin') }}/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" />
@@ -7,7 +7,7 @@
 <link href="{{ asset('contents/admin') }}/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 @endsection
 
-@section('content')
+@section('superAdminContent')
 @if(Session::has('success'))
 <script type="text/javascript">
     swal({
@@ -98,7 +98,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Current User Name <span class="text-danger">* </span>:
                                     </label>
-                                    <input type="text" class="form-control" value="{{$edit->employe->emp_name}}" placeholder="Enter Daily Report" disabled>
+                                    <input type="text" class="form-control" value="{{$edit->employe->name}}" placeholder="Enter Daily Report" disabled>
                                 </div>
 
                                 <div class="mb-3">

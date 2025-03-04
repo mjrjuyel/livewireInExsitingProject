@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\LeaveType;
 use App\Models\EmployeLeaveSetting;
 use App\Models\AdminEmail;
@@ -28,20 +29,19 @@ class SuperAdminLeaveController extends Controller
 
     public function __construct(){
         $this->middleware('permission:Leave Application List')->only('index');
-        $this->middleware('permission:Leave Manually Add')->only('add','insert');
-        $this->middleware('permission:Edit Leave')->only('edit','updateleave');
+        $this->middleware('permission:Add Manual Leave')->only('add','insert');
+        $this->middleware('permission:Edit Manual Leave')->only('edit','updateleave');
         $this->middleware('permission:View Leave')->only('view','update');
         $this->middleware('permission:Delete Leave')->only('delete');
     }
 
     public function add(){
-        $employees = Employee::get(['id','emp_name']);
+        $employees = User::get(['id','name']);
         $leaveType = LeaveType::get(['id','type_title']);
         // return $leaveType;
         return view('superadmin.leave.add',compact(['employees','leaveType']));
     }
     public function insert(Request $request){
-        // validation
 
                 // return $request->all();
                     $request->validate([
@@ -49,19 +49,16 @@ class SuperAdminLeaveController extends Controller
                         'leave_type'=>'required',
                         'start'=>'required',
                         'reason'=>'required',
-                        'others'=>'max:30',
+                        'others'=>'max:48',
                         'end'=>'required',
                     ]);
 
                     $definedLeave = EmployeLeaveSetting::where('id',1)->first();
                     $lastLeave = Leave::latest('id')->where('emp_id',$request->employe)->first();
 
-                        // Convert English date into Unix time stamp 
                     $start_time = strtotime($request['start']);
                     $end_time = strtotime($request['end']);
-                    // $currTime = strtotime(now());
-
-                    // $before5Days = strtotime('-5 days', $currTime);
+                 
 
                 // 2 dates are valid or not!
                 if($start_time <= $end_time ){
@@ -86,10 +83,10 @@ class SuperAdminLeaveController extends Controller
                     // Check Date And Count Total Day between 2 dates
 
                     function countDaysExcludingDynamicAndWeeklyOffs( $startDate,$endDate, $weeklyOffs = [],$specialOffDates = [],) {
-                        // Create DateTime objects for the start and end dates
+                        
                         $start = new DateTime($startDate);
                         $end = new DateTime($endDate);
-                        // Include the end date in the calculation
+
                         $end->modify('+1 day');
                         // Create a DatePeriod with a 1-day interval
                         $interval = new DateInterval('P1D');
@@ -206,7 +203,6 @@ class SuperAdminLeaveController extends Controller
                                                 'emp_id'=>$request->employe,
                                                 'status'=>2,
                                                 'add_from'=>Auth::user()->name,
-                                                'slug'=>'leav-'.uniqId(),
                                                 'created_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
                                             ]);
 
@@ -228,7 +224,6 @@ class SuperAdminLeaveController extends Controller
                                             'emp_id'=>$request->employe,
                                             'status'=>2,
                                             'add_from'=>Auth::user()->name,
-                                            'slug'=>'leav-'.uniqId(),
                                             'created_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
                                         ]);
 
@@ -254,7 +249,7 @@ class SuperAdminLeaveController extends Controller
     public function edit($id){
         $ID = Crypt::decrypt($id);
         $edit= Leave::where('id',$ID)->first();
-        $employees = Employee::get(['id','emp_name']);
+        $employees = User::get(['id','emp_name']);
         $leaveType = LeaveType::get(['id','type_title']);
         // return $edit;
         return view('superadmin.leave.edit',compact(['employees','edit','leaveType']));
@@ -429,8 +424,7 @@ class SuperAdminLeaveController extends Controller
                                     'unpaid_request'=>$request->unpaid,
                                     'emp_id'=>$request->employe,
                                     'status'=>2,
-                                    'add_from'=>'Admin',
-                                    'slug'=>'leav-'.uniqId(),
+                                    'add_from'=>Auth::user()->name,
                                     'updated_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
                                 ]);
 
@@ -451,8 +445,7 @@ class SuperAdminLeaveController extends Controller
                                 'unpaid_request'=>$request->unpaid,
                                 'emp_id'=>$request->employe,
                                 'status'=>2,
-                                'add_from'=>'Admin',
-                                'slug'=>'leav-'.uniqId(),
+                                'add_from'=>Auth::user()->name,
                                 'updated_at'=>Carbon::parse($leavePermonth['start_date']) > Carbon::now() ? Carbon::now('UTC') : Carbon::parse($leavePermonth['start_date']),
                             ]);
 
@@ -476,7 +469,7 @@ class SuperAdminLeaveController extends Controller
 
     //  All Leave
     public function index(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->orderBy('created_at','DESC')->get();
+        $alldata = Leave::with(['employe:id,name','admin','leavetype:id,type_title'])->where('status','!=',0)->orderBy('created_at','DESC')->get();
         // return $alldata;
         return view('superadmin.leave.index',compact('alldata'));
     }
@@ -484,7 +477,7 @@ class SuperAdminLeaveController extends Controller
     public function indexMonth($slug){
         $parseDate = Carbon::parse($slug);
         // return $parseDate;
-        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->whereMonth('start_date',$parseDate->month)->whereYear('start_date',$parseDate->year)->latest('id')->get();
+        $alldata = Leave::with(['employe:id,name','admin','leavetype:id,type_title'])->where('status','!=',0)->whereMonth('start_date',$parseDate->month)->whereYear('start_date',$parseDate->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.indexMonth',compact(['alldata','parseDate']));
     }
@@ -492,25 +485,25 @@ class SuperAdminLeaveController extends Controller
     public function indexYear($slug){
         $parseDate = Carbon::parse($slug);
         // return $parseDate;
-        $alldata = Leave::with(['admin','leavetype'])->where('status','!=',0)->whereYear('start_date',$parseDate->year)->latest('id')->get();
+        $alldata = Leave::with(['employe:id,name','admin','leavetype:id,type_title'])->where('status','!=',0)->whereYear('start_date',$parseDate->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.indexYear',compact(['alldata','parseDate']));
     }
 
     public function pending(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status',1)->whereYear('start_date',now()->year)->latest('id')->get();
+        $alldata = Leave::with(['employe:id,name','admin','leavetype:id,type_title'])->where('status',1)->whereYear('start_date',now()->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.pending',compact('alldata'));
     }
 
     public function approved(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status',2)->whereYear('start_date',now()->year)->latest('id')->get();
+        $alldata = Leave::with(['employe:id,name','admin','leavetype:id,type_title'])->where('status',2)->whereYear('start_date',now()->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.approved',compact('alldata'));
     }
 
     public function cancled(){
-        $alldata = Leave::with(['admin','leavetype'])->where('status',3)->whereYear('start_date',now()->year)->latest('id')->get();
+        $alldata = Leave::with(['employe:id,name','admin','leavetype:id,type_title'])->where('status',3)->whereYear('start_date',now()->year)->latest('id')->get();
         // return $alldata;
         return view('superadmin.leave.cancled',compact('alldata'));
     }
@@ -518,13 +511,8 @@ class SuperAdminLeaveController extends Controller
     // view per role
     public function view($slug){
         $getId = Crypt::decrypt($slug);
-        $view = Leave::with(['employe'=>function($query){
-            $query->select('id','emp_name');
-        }])->where('id',$getId)->first();
-        $leave_type = LeaveType::all();
-        $defaultValue = EmployeLeaveSetting::where('id',1)->first();
-        // return $view;
-        return view('superadmin.leave.view',compact(['view','leave_type','defaultValue']));
+        $view = Leave::with(['employe:id,name','leavetype:id,type_title'])->where('id',$getId)->first();
+        return view('superadmin.leave.view',compact(['view']));
     }
 
     public function update(Request $request){
@@ -533,12 +521,10 @@ class SuperAdminLeaveController extends Controller
         $slug = $request['slug'];
 
         $default = EmployeLeaveSetting::where('id',1)->first();
+        $specific_data = Leave::find($id);
+        $employe = User::where('id',$specific_data->emp_id)->first();
 
-        $email = Leave::find($id);
-        // dynamic 
-        $employe = Employee::where('id',$email->emp_id)->first();
-
-            $update= Leave::where('slug',$slug)->update([
+            $update= Leave::where('id',$id)->update([
                 'status'=>$request['status'],
                 'comments'=>$request['comment'],
                 'status'=>4,
@@ -554,7 +540,7 @@ class SuperAdminLeaveController extends Controller
             }
 
             if($request->status == 2){
-                $update = Leave::where('slug',$slug)->update([
+                $update = Leave::where('id',$id)->update([
                     'status'=>$request['status'],
                     'comments'=>$request['comment'],
                     'editor'=>Auth::user()->id,
@@ -567,7 +553,7 @@ class SuperAdminLeaveController extends Controller
             }
 
             if($request->status == 3){
-                $update = Leave::where('slug',$slug)->update([
+                $update = Leave::where('id',$id)->update([
                     'status'=>$request['status'],
                     'comments'=>$request['comment'],
                     'editor'=>Auth::user()->id,
@@ -583,8 +569,8 @@ class SuperAdminLeaveController extends Controller
             $alldata = Leave::where('id',$id)->first();
             
             Mail::to($employe->email)->send(new LeaveResponseByAdmin($alldata));
-
-            $employe->notify(new LeaveToEmployeNotification($alldata));
+            // return $alldata;
+            // $employe->notify(new LeaveToEmployeNotification($alldata));
 
             Session::flash('success','Updated Successfully');
             return redirect()->back();
@@ -612,6 +598,7 @@ class SuperAdminLeaveController extends Controller
 
         $store = Leave::where('id',$id)->update([
             'status'=>1,
+            'editor'=>Auth::user()->id,
             'updated_at'=>Carbon::now('UTC'),
         ]);
 

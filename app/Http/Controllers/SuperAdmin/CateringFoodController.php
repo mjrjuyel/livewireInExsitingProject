@@ -31,7 +31,9 @@ class CateringFoodController extends Controller
     }
     // role Add
     public function add(){
-        return view('superadmin.catering.food.add');
+        $lastOrder = CateringFood::latest('id')->first();
+        // return $lastOrder;
+        return view('superadmin.catering.food.add',compact('lastOrder'));
     }
     
     public function insert(Request $request){
