@@ -219,6 +219,8 @@
             <div class="card tilebox-one">
                 <div class="card-body">
 
+
+
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Request have Submitted In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
