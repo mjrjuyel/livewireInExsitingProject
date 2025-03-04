@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
 
         // Leave Application for Employee -------------------------------------------------------------
-        Route::get('/dashboard/leave/add',[LeaveFormController::class,'add'])->name('dashboard.leave.add');
+        Route::get('/dashboard/leavelist',[LeaveFormController::class,'leavTypeList'])->name('dashboard.leavelist');
         Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
         Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 

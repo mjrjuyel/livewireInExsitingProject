@@ -25,6 +25,16 @@ use Exception;
 
 class LeaveFormController extends Controller
 {
+
+    public function leavTypeList(){
+        $leaveType = LeaveType::get(['id','type_title']);
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Leave Type List',
+            'data'=>$leaveType,
+        ]);
+    }
     public function insert(Request $request){
        try{
             $validator=Validator::make($request->all(),[
@@ -182,7 +192,7 @@ class LeaveFormController extends Controller
                                 // return $paidLeaves;
                                 $unPaidLeaves = $leavePermonth['totalDays'] - $paidLeaves;
 
-                                $leaveType = LeaveType::get(['id','type_title']);
+                              
                                 if($request->unpaid){
                                     $insert = Leave::create([
                                         'leave_type_id'=>$request['leave_type'],
@@ -219,8 +229,6 @@ class LeaveFormController extends Controller
                                         return response()->json([
                                             'status'=>true,
                                             'message'=>"You Have Sent A Un-Paid Leave Application To Admin",
-                                            'leave_type'=>$leaveType,
-                                            'data'=>$data,
                                         ],201); 
                                     }
                                 }else{
@@ -262,15 +270,11 @@ class LeaveFormController extends Controller
                                             return response()->json([
                                                 'status'=>true,
                                                 'message'=>"You Have Sent A Un-Paid Leave Application To Admin And Monthly leave limit reached! Extra days counted as unpaid.",
-                                                'leave_type'=>$leaveType,
-                                                'data'=>$data,
                                             ],201); 
                                         } else {
                                             return response()->json([
                                                 'status'=>true,
                                                 'message'=>"You Have Sent A Leave Application To Admin",
-                                                'leave_type'=>$leaveType,
-                                                'data'=>$data,
                                             ],201); 
                                         }
                                         
@@ -296,7 +300,7 @@ class LeaveFormController extends Controller
             return response()->json([
                 'status'=>false,
                 'message'=>"failed to submit",
-                'data'=>$e->getMesage(),
+                'data'=>$e->getMessage(),
             ],201);
         }
     
