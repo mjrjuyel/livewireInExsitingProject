@@ -120,10 +120,11 @@
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Total Leave Taken Between Evaluation Periods :</h6>
                     <h3 class="my-3">
-                        @if($totalEvaLeave < 1 ) <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Day</h3>
-                    @else
-                    <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Days</h3>
-                    @endif
+                        @if($totalEvaLeave < 2 ) 
+                        <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Day</h3>
+                         @else
+                        <h3 class="my-3"><span data-plugin="counterup">{{$totalEvaLeave}}</span> Days</h3>
+                         @endif
                     </h3>
                 </div>
             </div>
@@ -169,7 +170,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     @php
-                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeave;
+                    $remainEvaluation = $defaultLeave->year_limit - $totalEvaLeavePaid;
                     @endphp
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Paid Leave Remaining Between Evaluation Periods</span></h6>
@@ -189,8 +190,26 @@
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid leave Have Taken in <span class="text-danger text-italic">{{\Carbon\Carbon::now()->subMonth()->format('F')}}</span></h6>
+                    @if($unpaidPreviousMonth != null)
+                    @if($unpaidPreviousMonth >= 2)
+                    <h3 class="my-3 text-danger"><span data-plugin="counterup">{{$unpaidPreviousMonth}}</span> Days</h3>
+                    @else
+                    <h3 class="my-3 text-danger"><span data-plugin="counterup">{{$unpaidPreviousMonth}}</span> Day</h3>
+                    @endif
+                    @else
+                    <h3 class="my-3 text-danger">Not Yet</h3>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request have Submitted In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInMonth}}</h3>
                 </div>
             </div>
@@ -201,7 +220,7 @@
                 <div class="card-body">
 
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Leave Request In <span class="text-danger text-italic">{{date('Y')}}</h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Leave Request have Submitted In <span class="text-danger text-italic">{{date('Y')}}</h6>
                     <h3 class="my-3" data-plugin="counterup">{{$leaveRequestInYear}}</h3>
 
                 </div>
@@ -253,7 +272,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid leave in <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($unpaidRemainingMonth != null)
                     @if($unpaidRemainingMonth >= 2)
                     <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingMonth}}</span> Days</h3>
@@ -271,7 +290,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid Days in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Total Unpaid leave in <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($unpaidRemainingYear != null)
                     @if($unpaidRemainingYear >= 2)
                     <h3 class="my-3"><span data-plugin="counterup">{{$unpaidRemainingYear}} </span> Days +</h3>
@@ -289,12 +308,24 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
+                    <h6 class="text-muted text-uppercase mt-0">Total Early Leave Have Taken in <span class="text-danger text-italic">{{\Carbon\Carbon::now()->subMonth()->format('F')}}</span></h6>
+                    <h3 class="my-3 text-danger">{{convertTime($previousMonthEarlyLeave)}}</h3>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card tilebox-one">
+                <div class="card-body">
+                    <i class="icon-rocket float-end m-0 h2 text-muted"></i>
                     <h6 class="text-muted text-uppercase mt-0">Total Early Leave in <span class="text-danger text-italic">{{date('M')}}</span></h6>
                     <h3 class="my-3">{{convertTime($earlyleave)}}</h3>
 
                 </div>
             </div>
         </div>
+
         <div class="col-md-6 col-xl-3">
             <div class="card tilebox-one">
                 <div class="card-body">

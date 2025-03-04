@@ -207,8 +207,10 @@ class AdminEmployeController extends Controller
         $paidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_paid');
 
         $unpaidRemainingMonth = Leave::where('emp_id',$view->id)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        
         $unpaidRemainingYear = Leave::where('emp_id',$view->id)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
-
+         //previous month 
+         $unpaidPreviousMonth = Leave::where('emp_id', $view->id)->where('status', 2)->whereMonth('start_date', now()->subMonth()->month)->whereYear('start_date', now('Y'))->sum('total_unpaid'); 
         // Evalution Data 
         $EmpEva = EmployeeEvaluation::where('emp_id',$view->id)->latest('renewed_at')->first();
 
@@ -247,10 +249,12 @@ class AdminEmployeController extends Controller
             $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('id')->first();
             
             $earlyleave = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
+           
             $earlyleaveYear = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereYear('leave_date',date('Y'))->sum('total_hour');
+            $previousMonthEarlyLeave = EarlyLeave::where('status',2)->where('emp_id',$view->id)->whereMonth('leave_date',now()->subMonth()->month)->whereYear('leave_date',date('Y'))->sum('total_hour');
             // Employee Evalaution Data 
-            // return $activeDesig;
-         return view('superadmin.employe.view',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva','earlyleave','earlyleaveYear']));
+            // return $unpaidPreviousMonth;
+         return view('superadmin.employe.view',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','Evaleaves','departs','designs','activeDesig','EmpEva','earlyleave','earlyleaveYear','unpaidPreviousMonth','previousMonthEarlyLeave']));
     }
 
     // Edit Admin

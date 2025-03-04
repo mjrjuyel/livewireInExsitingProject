@@ -36,6 +36,9 @@ class DashboardController extends Controller
 
         $unpaidRemainingMonth = Leave::where('emp_id',$userId)->where('status',2)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->sum('total_unpaid');
         $unpaidRemainingYear = Leave::where('emp_id',$userId)->where('status',2)->whereYear('start_date',date('Y'))->sum('total_unpaid');
+        // Previous month Unpaid
+        $unpaidPreviousMonth = Leave::where('emp_id', $userId)->where('status', 2)->whereMonth('start_date', now()->subMonth()->month)->whereYear('start_date', now('Y'))->sum('total_unpaid'); 
+
 
         $totalReportSubmit = DailyReport::where('submit_by',$userId)->count('id');
 
@@ -74,6 +77,7 @@ class DashboardController extends Controller
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
         $earlyleave = EarlyLeave::where('status',2)->where('emp_id',$userId)->whereMonth('leave_date',date('m'))->whereYear('leave_date',date('Y'))->sum('total_hour');
         $earlyleaveYear = EarlyLeave::where('status',2)->where('emp_id',$userId)->whereYear('leave_date',date('Y'))->sum('total_hour');
+        $previousMonthEarlyLeave = EarlyLeave::where('status',2)->where('emp_id',$userId)->whereMonth('leave_date',now()->subMonth()->month)->whereYear('leave_date',date('Y'))->sum('total_hour');
  
         // special off day
         $explode = explode(',',$defaultLeave->specialoffday);
@@ -90,6 +94,6 @@ class DashboardController extends Controller
         }
         $filteredMonths = array_intersect_key($groupByMonth, array_flip([$currentMonth, $nextMonth]));
             //    return $groupByMonth;
-        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves','EmpEva','earlyleave','earlyleaveYear','filteredMonths']));
+        return view('employe.dashboard.index',compact(['view','leaveRequestInMonth','leaveRequestInYear','paidRemainingMonth','whole_approved_leave','paidRemainingYear','defaultLeave','unpaidRemainingMonth','unpaidRemainingYear','totalReportSubmit','Evaleaves','EmpEva','earlyleave','earlyleaveYear','filteredMonths','unpaidPreviousMonth','previousMonthEarlyLeave']));
     }
 }
