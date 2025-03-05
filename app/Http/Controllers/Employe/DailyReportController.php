@@ -46,24 +46,13 @@ class DailyReportController extends Controller
 
             $presentDay = strtotime('now');
             $submit = strtotime($request->submit_date);
-            // echo  $presentDay;
+
             if($presentDay >= $submit){
                 
                 // check 3 Days before in second
                 $maximumPreviousDate = strtotime('-3 days',$presentDay);
 
                 if($maximumPreviousDate <= $submit){
-
-                    // return "3 day after";
-                    // $insert = new DailyReport();
-                    // $insert->submit_by = $request['name'];
-                    // $insert->submit_date = Carbon::parse($request['submit_date'])->addHours(6);
-                    // $insert->detail = $request['detail'];
-                    // $insert->check_in = Carbon::parse($request->input('checkin'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
-                    // $insert->check_out = Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i');
-                    // $insert->save();
-
-
 
                     $insert = DailyReport::create([
                         'submit_by'=>$request['name'],
@@ -73,22 +62,17 @@ class DailyReportController extends Controller
                         'check_out'=>Carbon::parse($request->input('checkout'), config('app.timezone'))->setTimezone('UTC')->format('H:i'),
                         'created_at'=>Carbon::now('UTC'),
                     ]);
-                    return $insert;
-
+                  
                     $email = AdminEmail::where('id',1)->first();
-                     
-                 
-                    // if($email->email_report == 1){
-                        
-                    //     $explode = explode(',',$email->email);
-                    //                 // try {
-                    //     foreach($explode as $emai){
-                    //         Mail::to($emai)->send(new DailyReportMail($insert));
-                    //     }
-                    // }
+                    if($email->email_report == 1){
+                        $explode = explode(',',$email->email);
+                        foreach($explode as $emai){
+                            Mail::to($emai)->send(new DailyReportMail($insert));
+                        }
+                    }
         
                     if($insert){
-                        Session::flash('success','Daily Report Submited');
+                        Session::flash('success','Daily Report Submitted');
                         return redirect()->back();
                     }
                 }else{

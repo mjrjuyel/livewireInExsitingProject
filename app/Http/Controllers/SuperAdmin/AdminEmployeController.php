@@ -44,7 +44,7 @@ class AdminEmployeController extends Controller
 
     // Fethch All Employer Data
     public function index(){
-        $employe = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('status','!=',0)->latest('id')->get();
+        $employe = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','emp_creator:id,name','emp_editor:id,name'])->where('status','!=',0)->latest('id')->get();
         // return $employe;
         return view('superadmin.employe.index',compact('employe'));
     }
@@ -197,7 +197,7 @@ class AdminEmployeController extends Controller
         $userId = Crypt::decrypt($slug);
 
         $defaultLeave = EmployeLeaveSetting::first();
-        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
+        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','emp_creator:id,name','emp_editor:id,name'])->where('id',$userId)->first();
 
         $whole_approved_leave = Leave::where('emp_id',$view->id)->where('status',2)->latest('id')->sum('total_leave_this_month');
         $leaveRequestInMonth = Leave::where('emp_id',$view->id)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
@@ -482,7 +482,7 @@ class AdminEmployeController extends Controller
     // View Logged User His Profile.
     public function profileView($slug){
         $userId = Crypt::decrypt($slug);
-        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
+        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','emp_creator:id,name','emp_editor:id,name'])->where('id',$userId)->first();
         $activeDesig = EmployeePromotion::where('emp_id',$view->id)->latest('pro_date')->first();
         // Evalution Data 
         // return $view;
@@ -493,7 +493,7 @@ class AdminEmployeController extends Controller
     // update User Own Profile
     public function profileEdit($slug){
         $userId = Crypt::decrypt($slug);
-        $edit = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','creator:id,name','editor:id,name'])->where('id',$userId)->first();
+        $edit = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','emp_creator:id,name','emp_editor:id,name'])->where('id',$userId)->first();
         $designation= Designation::all();
 
         return view('superadmin.employe.profileEdit',compact(['edit','designation']));

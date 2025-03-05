@@ -85,7 +85,7 @@ class EmployeePromotionController extends Controller
         ]);
 
         if($insert){
-            Session::flash('success','Employee Promotion Update');
+            Session::flash('success','Employee Promotion Updated');
             return redirect()->route('admin.promotion',Crypt::encrypt($request->employe));
         }
     }

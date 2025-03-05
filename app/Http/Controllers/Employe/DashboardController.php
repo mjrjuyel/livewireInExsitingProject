@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\EmployeLeaveSetting;
 use App\Models\UserRole;
 use App\Models\Designation;
@@ -25,8 +26,8 @@ class DashboardController extends Controller
 
         $userId = Auth::user()->id;
         $defaultLeave = EmployeLeaveSetting::first();
-        $view = Employee::with(['emp_role','emp_desig','creator'])->where('id',$userId)->first();
-
+        $view = User::with(['reporting:id,name','department:id,depart_name','emp_desig:id,title','bankName:id,bank_name','bankBranch:id,bank_branch_name','officeBranch:id,branch_name','emp_creator:id,name','emp_editor:id,name'])->where('id',$userId)->first();
+        // return $view;
         $whole_approved_leave = Leave::where('emp_id',$userId)->where('status',2)->sum('total_leave_this_month');
         $leaveRequestInMonth = Leave::where('emp_id',$userId)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
         $leaveRequestInYear = Leave::where('emp_id',$userId)->whereYear('start_date',date('Y'))->count();
@@ -48,10 +49,10 @@ class DashboardController extends Controller
          //Eva date Calculation
          if($EmpEva == null || $EmpEva->eva_next_date == ' '){
             // return 'No Eva Date';
-            $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+            $end_date = new DateTime($view->join_date->format('Y-m-d'));
             $end_date->modify('+1 year');
 
-            $start_date = new DateTime($view->emp_join->format('Y-m-d'));
+            $start_date = new DateTime($view->join_date->format('Y-m-d'));
 
             $formatted_start_date = $start_date->format('Y-m-d');
             $formatted_end_date = $end_date->format('Y-m-d');

@@ -61,10 +61,11 @@ class User extends Authenticatable
         return $this->belongsTo(Designation::class,'desig_id','id');
     }
 
-    public function creator(){
+    public function emp_creator(){
         return $this->belongsTo(User::class,'creator','id');
     }
-    public function editor(){
+
+    public function emp_editor(){
         return $this->belongsTo(User::class,'editor','id');
     }
 

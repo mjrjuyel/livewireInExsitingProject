@@ -29,14 +29,14 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     @php
-                    $datetime1 = date_create($view->emp_join->format('Y-m-d'));
+                    $datetime1 = date_create($view->join_date->format('Y-m-d'));
                     $datetime2 = date_create(date('Y-m-d'));
 
                     // Calculates the difference between DateTime objects
                     $interval = date_diff($datetime1, $datetime2);
                     @endphp
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">@if($view->emp_join != ''){{ $view->emp_join->format('d-M-Y')}} @endif</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Joining : <span class="text-info">@if($view->join_date != ''){{ $view->join_date->format('d-M-Y')}} @endif</span></h6>
                     <h3 class="my-3" style="font-size:25px;">{{optional($interval)->format('%y y, %m m, %d d');}}</h3>
 
                 </div>
@@ -48,7 +48,7 @@
                 <div class="card-body">
 
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
-                    <h6 class="text-muted text-uppercase mt-0">His Life Time Leave<span class="text-danger text-italic"> :@if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} to {{date('d-M-Y')}} @endif </span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">His Life Time Leave<span class="text-danger text-italic"> :@if($view->join_date != ''){{$view->join_date->format('d-M-Y')}} to {{date('d-M-Y')}} @endif </span></h6>
                     <h3 class="my-3"><span data-plugin="counterup">{{$whole_approved_leave}}</span> Days</h3>
 
                 </div>
@@ -58,7 +58,7 @@
         @php
 
             if($EmpEva == null){
-                $end_date = new DateTime($view->emp_join->format('Y-m-d'));
+                $end_date = new DateTime($view->join_date->format('Y-m-d'));
                 $end_date->modify('+1 year');
                 }
 
@@ -79,7 +79,7 @@
                     <h6 class="text-muted text-uppercase mt-0">Evaluation Time<span class="text-danger text-italic">:
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Last Evalution Date :
-                                    @if($EmpEva != ''){{$start_date->format('d-M-Y')}} @else @if($view->emp_join != ''){{$view->emp_join->format('d-M-Y')}} @endif @endif</li>
+                                    @if($EmpEva != ''){{$start_date->format('d-M-Y')}} @else @if($view->join_date != ''){{$view->join_date->format('d-M-Y')}} @endif @endif</li>
                                 <li class="list-group-item">Next Evaluation Date:
                                     @if($EmpEva != ''){{$EmpEva->eva_next_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
                             </ul>

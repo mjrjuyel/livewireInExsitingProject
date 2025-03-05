@@ -52,8 +52,7 @@ class LeaveFormController extends Controller
                     $currTime = strtotime(now());
 
                     $before5Days = strtotime('-5 days', $currTime);
-                    // return "Now Date" .$currTime . "Before 5 days" . $before5Days;
-                    // return $start_time . " > Start Time <br>" . "current time " .$curr;
+
                 // 2 dates are valid or not!
                 if($start_time <= $end_time && $start_time >= $before5Days){
 
@@ -205,7 +204,6 @@ class LeaveFormController extends Controller
                                             
                                             $getEmail = AdminEmail::where('id',1)->first();
                                             $explode = explode(',',$getEmail->email);
-                                            // try {
                                             foreach($explode as $email){
                                                 Mail::to($email)->send(new LeaveMailToAdmin($insert));
                                             }
@@ -233,22 +231,17 @@ class LeaveFormController extends Controller
                                             'created_at'=>Carbon::now('UTC'),
                                         ]);
 
-                                        // return $insert;
-                                        // dd($insert);
-                                        $userTimezone = Auth::user()->timezone ?? 'UTC';
-
-                                        dd($insert);
-                                        // $adminEmail = AdminEmail::first();
+                                        $adminEmail = AdminEmail::first();
     
-                                        // if($adminEmail->email_leave == 1){
+                                        if($adminEmail->email_leave == 1){
                                             
-                                        //     $getEmail = AdminEmail::where('id',1)->first();
-                                        //     $explode = explode(',',$getEmail->email);
-                                        //     // try {
-                                        //     foreach($explode as $email){
-                                        //         Mail::to($email)->send(new LeaveMailToAdmin($insert));
-                                        //     }
-                                        // }
+                                            $getEmail = AdminEmail::where('id',1)->first();
+                                            $explode = explode(',',$getEmail->email);
+                                            // try {
+                                            foreach($explode as $email){
+                                                Mail::to($email)->send(new LeaveMailToAdmin($insert));
+                                            }
+                                        }
                                         // notification
                                         // auth()->user()->notify(new LeaveToAdminNotification($insert));
     
@@ -286,7 +279,6 @@ class LeaveFormController extends Controller
     public function update(Request $request){
 
                 $id = $request->id;
-                // return $request->all();
                     $request->validate([
                         'leave_type'=>'required',
                         'start'=>'required',
@@ -303,8 +295,6 @@ class LeaveFormController extends Controller
                     $currTime = strtotime(now());
 
                     $before5Days = strtotime('-5 days', $currTime);
-                    // return "Now Date" .$currTime . "Before 5 days" . $before5Days;
-                    // return $start_time . " > Start Time <br>" . "current time " .$curr;
                 // 2 dates are valid or not!
                 if($start_time <= $end_time && $start_time >= $before5Days){
                     
@@ -446,7 +436,6 @@ class LeaveFormController extends Controller
                                             'total_unpaid'=>$paidLeaves + $unPaidLeaves,
                                             'unpaid_request'=>$request->unpaid,
                                             'emp_id'=>Auth::user()->id,
-                                            'slug'=>'leav-'.uniqId(),
                                             'status'=>1,
                                             'add_from'=>Auth::user()->name,
                                             'created_at'=>Carbon::now('UTC'),
@@ -483,7 +472,6 @@ class LeaveFormController extends Controller
                                             'total_unpaid'=>$unPaidLeaves > 0 ? $unPaidLeaves : null,
                                             'unpaid_request'=>$request->unpaid,
                                             'emp_id'=>Auth::user()->id,
-                                            'slug'=>'leav-'.uniqId(),
                                             'status'=>1,
                                             'add_from'=>Auth::user()->name,
                                             'created_at'=>Carbon::now('UTC'),

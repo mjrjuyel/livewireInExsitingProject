@@ -117,13 +117,13 @@
                                                 $onlyEdit = App\Models\EmployeePromotion::latest('pro_date')->first();
                                                 @endphp
                                                
-                                                @if($onlyEdit->id == $promotion->id)
+                                                {{-- @if($onlyEdit->id == $promotion->id) --}}
                                                  @can('Edit Employee Promotion')
                                                     <li><a href="{{route('admin.promotion.edit',Crypt::encrypt($promotion->id))}}" class="dropdown-item waves-effect waves-light text-warning"><i class="mdi mdi-receipt-text-edit">
                                                         </i>Edit</a>
                                                 </li>
                                                 @endcan
-                                                @endif
+                                                {{-- @endif --}}
                                                 
 
                                                 @can('Delete Employee Promotion')

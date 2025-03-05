@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\UserRole;
 use Spatie\Permission\Models\Role;
 use App\Models\Leave;
@@ -15,7 +16,7 @@ use App\Models\EarlyLeave;
 class SuperAdminController extends Controller
 {
     public function dashboard(){
-        $activeEmploye = Employee::where('emp_status',1)->count();
+        $activeEmploye = User::where('status',1)->count();
         $role = Role::count();
         $leaveRequestInMonth = Leave::whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();
         $leaveRequestInYear = Leave::whereYear('start_date',date('Y'))->count();
