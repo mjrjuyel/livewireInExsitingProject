@@ -11,6 +11,7 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Employee;
 use App\Models\DailyReport;
+use App\Models\OfficeTime;
 use App\Models\AdminEmail;
 use Carbon\Carbon;
 use Session;
@@ -25,7 +26,8 @@ class DailyReportController extends Controller
     }
 
     public function add(){
-        return view('employe.dailyreport.add');
+        $officeTime = OfficeTime::first();
+        return view('employe.dailyreport.add',compact('officeTime'));
     }
 
     public function submit(Request $request){

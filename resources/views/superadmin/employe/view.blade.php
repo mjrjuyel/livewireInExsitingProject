@@ -233,7 +233,7 @@
             <div class="card tilebox-one">
                 <div class="card-body">
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Paid leave Remaining In <span class="text-danger text-italic">{{date('F')}}</span></h6>
                     @if($paidRemainingMonth != 0 && $paidRemainingMonth != null)
                     @if($paidRemainingMonth == 1)
                     <h3 class="my-3"><span data-plugin="counterup">2</span> Days</h3>
@@ -256,7 +256,7 @@
                     $remainYear = $defaultLeave->year_limit - $paidRemainingYear;
                     @endphp
                     <i class="icon-rocket float-end m-0 h2 text-muted"></i>
-                    <h6 class="text-muted text-uppercase mt-0">Paid Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
+                    <h6 class="text-muted text-uppercase mt-0">Paid Leave Remaining In <span class="text-danger text-italic">{{date('Y')}}</span></h6>
                     @if($remainYear >= 1 )
                     @if($remainYear >= 2)
                     <h3 class="my-3"><span data-plugin="counterup">{{$remainYear}}</span> Days</h3>
