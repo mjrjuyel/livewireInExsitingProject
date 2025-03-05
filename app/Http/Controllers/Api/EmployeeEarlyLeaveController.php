@@ -91,52 +91,53 @@ class EmployeeEarlyLeaveController extends Controller
             ],201);
         }
 
-        if($request->start < $request->end){
+        
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
             $duration = $start->diffInMinutes($end);
             // return $totalTime;
             $hours = floor($duration/60);
             $minutes = $duration%60;
-            $insert = EarlyLeave::create([
-                'emp_id'=>Auth::user()->id,
-                'leave_type'=>$request->leave_type,
-                'other_type' => $request->leave_type == 0 ? $request->others : null,
-                'detail' => $request->detail,
-                'leave_date'=>$request->date,
-                'start'=>Carbon::parse($request->input('start'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                'end'=>Carbon::parse($request->input('end'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                'total_hour'=>$duration,
-                'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
-                'status'=>1,
-                'submit_by'=>Auth::user()->name,
-                'created_at'=>Carbon::now('UTC'),
-            ]);
-          
-            $adminEmail = AdminEmail::first();
-    
-            if($adminEmail->email_leave == 1){
-                $getEmail = AdminEmail::where('id',1)->first();
-                $explode = explode(',',$getEmail->email);
-                foreach($explode as $email){
-                    Mail::to($email)->send(new EarlyLeaveMail($insert));
+            if($hours >= 0 && $minutes >= 0){
+                $insert = EarlyLeave::create([
+                    'emp_id'=>Auth::user()->id,
+                    'leave_type'=>$request->leave_type,
+                    'other_type' => $request->leave_type == 0 ? $request->others : null,
+                    'detail' => $request->detail,
+                    'leave_date'=>$request->date,
+                    'start'=>Carbon::parse($request->input('start'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                    'end'=>Carbon::parse($request->input('end'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                    'total_hour'=>$duration,
+                    'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
+                    'status'=>1,
+                    'submit_by'=>Auth::user()->name,
+                    'created_at'=>Carbon::now('UTC'),
+                ]);
+            
+                $adminEmail = AdminEmail::first();
+        
+                if($adminEmail->email_leave == 1){
+                    $getEmail = AdminEmail::where('id',1)->first();
+                    $explode = explode(',',$getEmail->email);
+                    foreach($explode as $email){
+                        Mail::to($email)->send(new EarlyLeaveMail($insert));
+                    }
+                }
+
+                if($insert){
+                    return response()->json([
+                        'status'=>true,
+                        'message'=>'You have create a Early Leave Request For ' .$hours .' hours ' . $minutes .' minutes' ,
+                    ],200);
                 }
             }
-
-            if($insert){
+            else{
+                Session::flash('error','Please Insert Right Time To Apply');
                 return response()->json([
                     'status'=>true,
-                    'message'=>'You have create a Early Leave Request For ' .$hours .' hours ' . $minutes .' minutes' ,
-                ],200);
+                    'message'=>'Please Insert Right Time To Apply',
+                ],201);
             }
-        }
-        else{
-            Session::flash('error','Please Insert Right Time To Apply');
-            return response()->json([
-                'status'=>true,
-                'message'=>'Please Insert Right Time To Apply',
-            ],201);
-        }
     } 
 
     public function view($slug){
@@ -181,43 +182,43 @@ class EmployeeEarlyLeaveController extends Controller
             ],200);
         }
 
-        if($request->start < $request->end){
+        
             
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
-            dd($end);
+            
             $duration = $start->diffInMinutes($end);
-            dd($duration);
             $hours = floor($duration/60);
             $minutes = $duration%60;
 
-            $insert = EarlyLeave::where('id',$id)->update([
-                'emp_id'=>Auth::user()->id,
-                'leave_type'=>$request->leave_type,
-                'other_type' => $request->leave_type == 0 ? $request->others : null,
-                'detail' => $request->detail,
-                'leave_date'=>$request->date,
-                'start'=>Carbon::parse($request->input('start'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                'end'=>Carbon::parse($request->input('end'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
-                'total_hour'=>$duration,
-                'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
-                'status'=>1,
-                'submit_by'=>Auth::user()->name,
-                'updated_at'=>Carbon::now('UTC'),
-            ]);
+            if($hours >= 0 && $minutes >= 0){
+                $insert = EarlyLeave::where('id',$id)->update([
+                    'emp_id'=>Auth::user()->id,
+                    'leave_type'=>$request->leave_type,
+                    'other_type' => $request->leave_type == 0 ? $request->others : null,
+                    'detail' => $request->detail,
+                    'leave_date'=>$request->date,
+                    'start'=>Carbon::parse($request->input('start'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                    'end'=>Carbon::parse($request->input('end'),config('app.timezone'))->setTimezone('UTC')->format('H:i'),
+                    'total_hour'=>$duration,
+                    'unpaid_request'=>$request->unpaid != 0 ? 1 : 0,
+                    'status'=>1,
+                    'submit_by'=>Auth::user()->name,
+                    'updated_at'=>Carbon::now('UTC'),
+                ]);
 
-            if($insert){
+                if($insert){
+                    return response()->json([
+                        'status'=>true,
+                        'message'=>'You have Updated a Early Leave Request For ' . $hours .' Hours ' . $minutes .' minutes' ,
+                    ],200);
+                }
+            }
+            else{
                 return response()->json([
                     'status'=>true,
-                    'message'=>'You have Updated a Early Leave Request For ' . $hours .' Hours ' . $minutes .' minutes' ,
+                    'message'=>'Please Insert Right Time ',
                 ],200);
             }
-        }
-        else{
-            return response()->json([
-                'status'=>true,
-                'message'=>'Please Insert Right Time ' . $hours .' Hours ' . $minutes .' minutes' ,
-            ],200);
-        }
     }
 }
