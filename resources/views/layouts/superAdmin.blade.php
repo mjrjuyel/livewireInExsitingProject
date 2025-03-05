@@ -505,7 +505,7 @@
                                 <li class="side-nav-item">
                                     <a href="{{route('portal.cateringpayment.checkbill')}}" class="side-nav-link">
                                         <span class="menu-icon">{{currencyChange()}}</span>
-                                        <span class="menu-text"> Check Balance </span>
+                                        <span class="menu-text"> Main Branch </span>
                                     </a>
                                 </li>
                                 @endcan
