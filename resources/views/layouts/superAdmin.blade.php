@@ -105,18 +105,24 @@
                                                     <span class="menu-text">Application Form</span>
                                                 </a>
                                             </li>
-
-                                            <li class="side-nav-item">
-                                                <a href="{{ route('dashboard.earlyleave.add') }}" class="side-nav-link">
-                                                    <span class="menu-text">Early Leave</span>
-                                                </a>
-                                            </li>
-
                                             <li class="side-nav-item">
                                                 <a href="{{ url('/dashboard/leave/history/'.Crypt::encrypt(Auth::user()->id)) }}" class="side-nav-link">
                                                     <span class="menu-text">History</span>
                                                 </a>
                                             </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.earlyleave.add') }}" class="side-nav-link">
+                                                    <span class="menu-text">Early Leave Form</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="side-nav-item">
+                                                <a href="{{ route('dashboard.earlyleave') }}" class="side-nav-link">
+                                                    <span class="menu-text">Early Leave History</span>
+                                                </a>
+                                            </li>
+
                                         </ul>
                                     </div>
                                 </li>
@@ -505,7 +511,7 @@
                                 <li class="side-nav-item">
                                     <a href="{{route('portal.cateringpayment.checkbill')}}" class="side-nav-link">
                                         <span class="menu-icon">{{currencyChange()}}</span>
-                                        <span class="menu-text"> Main Branch </span>
+                                        <span class="menu-text"> Check Balance </span>
                                     </a>
                                 </li>
                                 @endcan

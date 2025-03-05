@@ -489,7 +489,7 @@
                                     <h5 class="card-title">Joining Information</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Joinig Date : {{ $view->join != null && $view->join != ' ' ? $view->join_date->format('d-M-Y') : 'yes'}}</li>
+                                    <li class="list-group-item">Joinig Date : {{ $view->join != ' ' ? $view->join_date->format('d-M-Y') : '---'}}</li>
                                     <li class="list-group-item">Office Located In : {{optional($view->officeBranch)->branch_name}}</li>
                                     <li class="list-group-item">Office Id Card Number : {{$view->office_id_number}}</li>
                                     <li class="list-group-item">Work Schedule : {{$view->office_work_schedule}}</li>

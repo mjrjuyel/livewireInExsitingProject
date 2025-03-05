@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\EmployeeAuthController;
 use App\Http\Controllers\Api\DailyReportController; 
 use App\Http\Controllers\Api\EmployeeDashboardController; 
 use App\Http\Controllers\Api\LeaveFormController; 
+use App\Http\Controllers\Api\EmployeeEarlyLeaveController; 
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -32,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
         // Leave Application for Employee -------------------------------------------------------------
         Route::get('/dashboard/leavelist',[LeaveFormController::class,'leavTypeList'])->name('dashboard.leavelist');
+
         Route::post('/dashboard/leave/insert',[LeaveFormController::class,'insert'])->name('dashboard.leave.insert');
         Route::get('/dashboard/leave/view/{slug}',[LeaveFormController::class,'view'])->name('dashboard.leave.view'); 
         Route::get('/dashboard/leave/edit/{slug}',[LeaveFormController::class,'edit'])->name('dashboard.leave.edit'); 
@@ -39,6 +41,15 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/dashboard/leave/history',[LeaveFormController::class,'history'])->name('dashboard.leave.history'); 
         Route::get('/dashboard/leave/historyMonth/{slug}',[LeaveFormController::class,'historyMonth'])->name('dashboard.leave.historyMonth'); 
         Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear');
+
+        // early leave 
+        // Leave Application status by General User
+        Route::get('/dashboard/earlyleave',[EmployeeEarlyLeaveController::class,'index'])->name('dashboard.earlyleave');
+        Route::get('/dashboard/earlyleave/time',[EmployeeEarlyLeaveController::class,'time'])->name('dashboard.earlyleave.time');
+        Route::post('/dashboard/earlyleave/insert',[EmployeeEarlyLeaveController::class,'insert'])->name('dashboard.earlyleave.insert');
+        Route::get('/dashboard/earlyleave/view/{slug}',[EmployeeEarlyLeaveController::class,'view'])->name('dashboard.earlyleave.view'); 
+        Route::get('/dashboard/earlyleave/edit/{slug}',[EmployeeEarlyLeaveController::class,'edit'])->name('dashboard.earlyleave.edit'); 
+        Route::post('/dashboard/earlyleave/update',[EmployeeEarlyLeaveController::class,'update'])->name('dashboard.earlyleave.update');
 
         // Employee Logout --------------------------------------------------------
         Route::get('/logout',[EmployeeAuthController::class,'logout'])->name('logout');

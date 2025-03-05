@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Leave;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\EmployeLeaveSetting;
 use App\Models\UserRole;
 use App\Models\Designation;
@@ -25,9 +26,9 @@ class EmployeeDashboardController extends Controller
     public function index(){
 
         try{
-            $userId = $id = auth()->user()->id;
+            $userId = auth()->user()->id;
             $defaultLeave = EmployeLeaveSetting::first();
-            $view = Employee::with(['creator:id,name','emp_desig:id,title'])->where('id',$userId)->first();
+            $view = User::with(['emp_creator:id,name','emp_desig:id,title'])->where('id',$userId)->first();
 
             $whole_approved_leave = Leave::where('emp_id',$userId)->where('status',2)->sum('total_leave_this_month');
             $leaveRequestInMonth = Leave::where('emp_id',$userId)->whereMonth('start_date',date('m'))->whereYear('start_date',date('Y'))->count();

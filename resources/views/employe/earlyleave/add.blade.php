@@ -86,7 +86,7 @@
                                 </h3>
                             </div>
                             <div class="col-md-4 text-end">
-                                <a href="{{ url('/dashboard/earlyleave/'.Crypt::encrypt(Auth::user()->id)) }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
+                                <a href="{{ url('/dashboard/earlyleave/') }}" class="btn btn-primary"><i class="fa-brands fa-servicestack btn_icon me-2"></i> All Early Leave Data</a>
                             </div>
                         </div>
                     </div>

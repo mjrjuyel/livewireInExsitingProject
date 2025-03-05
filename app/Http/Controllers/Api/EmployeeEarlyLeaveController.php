@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Employe;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EarlyLeaveMail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\LeaveToAdminNotification;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Leave;
 use App\Models\EarlyLeave;
 use App\Models\LeaveType;
@@ -25,36 +26,73 @@ use DateInterval;
 use DatePeriod;
 use Exception;
 
-class EarlyLeaveController extends Controller
+class EmployeeEarlyLeaveController extends Controller
 {
     public function index(){
-        $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',Auth::user()->id)->latest('id')->get();
-        // return $leaves;
-        return view('employe.earlyleave.index',compact('leaves'));
+        try{
+            $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',Auth::user()->id)->latest('id')->get();
+        return response()->json([
+            'status'=>true,
+            'Message'=>'All of My Early Leave History. Total number is : ' . $leaves->count(),
+            'data'=>$leaves,
+        ],200);
+        }
+        catch(Exception $e){
+            return reponse()->json([
+            'status'=>true,
+            'Message'=>'Failed To Fetch Early Leave history',
+            'data'=>$e->getMessage(),
+            ],201);
+        }
     }
-    public function add(){
-        $officeTime = OfficeTime::first();
-        $leaveType = LeaveType::latest('id')->get();
-        return view('employe.earlyleave.add',compact(['leaveType','officeTime']));
+    public function time(){
+        try{
+            $officeTime = OfficeTime::first(['office_start','office_end']);
+            $leaveType = LeaveType::get(['id','type_title']);
+            return response()->json([
+                'status'=>true,
+                'message'=>'Leave Type and Office time Showing dynamic',
+                'leaveType'=>$leaveType,
+                'officeTime' =>$officeTime,
+            ],200);
+        }catch(Exception $e){
+            return reponse()->json([
+            'status'=>true,
+            'Message'=>'Failed To Fetch Early Leaves Credentials',
+            'data'=>$e->getMessage(),
+            ],201);
+        }
     }
 
     public function insert(Request $request){
-        $request->validate([
+       
+        $validator=Validator::make($request->all(),[
             'leave_type'=>'required',
             'start'=>'required',
             'others'=>'max:50',
             'detail'=>'required',
         ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status'=>true,
+                'message'=>"Unsuccesful To Inser!",
+                'Error-Message'=>$validator->errors(), 
+            ]);
+        }
+
         $date = Carbon::parse($request->date);
         $sameDate = EarlyLeave::where('emp_id',Auth::user()->id)->whereDay('leave_date',$date->day)->whereMonth('leave_date',$date->month)->whereYear('leave_date',$date->year)->exists();
 
         if($sameDate){
-            Session::flash('error','You Have Already Early Leave On This Day');
-            return redirect()->back();
+            return response()->json([
+                'status'=>true,
+                'message'=>'Already you have taken early leave on this day!'
+            ],201);
         }
 
         if($request->start < $request->end){
-
+            $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
             $duration = $start->diffInMinutes($end);
             // return $totalTime;
@@ -86,13 +124,18 @@ class EarlyLeaveController extends Controller
             }
 
             if($insert){
-                Session::flash('success','You have create a Early Leave Request For '.$hours .' Hours ' . $minutes .' minutes' );
-                return redirect()->back();
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'You have create a Early Leave Request For ' .$hours .' hours ' . $minutes .' minutes' ,
+                ],200);
             }
         }
         else{
             Session::flash('error','Please Insert Right Time To Apply');
-            return redirect()->back();
+            return response()->json([
+                'status'=>true,
+                'message'=>'Please Insert Right Time To Apply',
+            ],201);
         }
     } 
 
@@ -113,26 +156,38 @@ class EarlyLeaveController extends Controller
 
     public function update(Request $request){
         $id = $request->id;
-        $request->validate([
+        $validator=Validator::make($request->all(),[
             'leave_type'=>'required',
             'start'=>'required',
             'others'=>'max:50',
             'detail'=>'required',
         ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status'=>true,
+                'message'=>"Unsuccesful To Inser!",
+                'Error-Message'=>$validator->errors(), 
+            ]);
+        }
         $date = Carbon::parse($request->date);
         $sameDate = EarlyLeave::where('id','!=',$id)->where('emp_id',Auth::user()->id)->whereDay('leave_date',$date->day)->whereMonth('leave_date',$date->month)->whereYear('leave_date',$date->year)->exists();
 
         if($sameDate){
-            return "hello";
-            Session::flash('error','You Have Already Early Leave On This Day');
-            return redirect()->back();
+            dd('sameDate');
+            return response()->json([
+                'status'=>true,
+                'message'=>'You Have Already Early Leave On This Day',
+            ],200);
         }
 
         if($request->start < $request->end){
-
+            
+            $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
+            dd($end);
             $duration = $start->diffInMinutes($end);
-
+            dd($duration);
             $hours = floor($duration/60);
             $minutes = $duration%60;
 
@@ -152,13 +207,17 @@ class EarlyLeaveController extends Controller
             ]);
 
             if($insert){
-                Session::flash('success','You have Updated a Early Leave Request For '.$hours .' Hours ' . $minutes .' minutes' );
-                return redirect()->back();
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'You have Updated a Early Leave Request For ' . $hours .' Hours ' . $minutes .' minutes' ,
+                ],200);
             }
         }
         else{
-            Session::flash('error','Please Insert Right Time To Apply');
-            return redirect()->back();
+            return response()->json([
+                'status'=>true,
+                'message'=>'Please Insert Right Time ' . $hours .' Hours ' . $minutes .' minutes' ,
+            ],200);
         }
     }
 }

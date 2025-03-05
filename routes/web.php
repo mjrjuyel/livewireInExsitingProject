@@ -318,12 +318,13 @@ Route::middleware(['auth','verified'])->group(function(){
                 Route::get('/dashboard/leave/historyYear/{slug}',[LeaveFormController::class,'historyYear'])->name('dashboard.leave.historyYear'); 
                 
                 // Leave Application status by General User
+                Route::get('/dashboard/earlyleave',[EarlyLeaveController::class,'index'])->name('dashboard.earlyleave');
                 Route::get('/dashboard/earlyleave/add',[EarlyLeaveController::class,'add'])->name('dashboard.earlyleave.add');
                 Route::post('/dashboard/earlyleave/insert',[EarlyLeaveController::class,'insert'])->name('dashboard.earlyleave.insert');
                 Route::get('/dashboard/earlyleave/view/{slug}',[EarlyLeaveController::class,'view'])->name('dashboard.earlyleave.view'); 
                 Route::get('/dashboard/earlyleave/edit/{slug}',[EarlyLeaveController::class,'edit'])->name('dashboard.earlyleave.edit'); 
                 Route::post('/dashboard/earlyleave/update',[EarlyLeaveController::class,'update'])->name('dashboard.earlyleave.update');
-                Route::get('/dashboard/earlyleave/{slug}',[EarlyLeaveController::class,'index'])->name('dashboard.earlyleave');
+                
 
                  // Employe Daily Reports Submit
                 Route::get('/dashboard/dailyreport',[DailyReportController::class,'index'])->name('dashboard.dailyreport');
