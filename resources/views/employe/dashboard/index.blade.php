@@ -78,7 +78,7 @@
                     <img src="{{asset('recruitment.svg')}}" class="float-end m-0 h2 text-muted" style="width:60px;">
                     <h6 class="text-muted text-uppercase mt-0">Evaluation Time<span class="text-danger text-italic">:
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Last Evalution Date :
+                                <li class="list-group-item">Last Evaluation Date :
                                     @if($EmpEva != ''){{$start_date->format('d-M-Y')}} @else @if($view->join_date != ''){{$view->join_date->format('d-M-Y')}} @endif @endif</li>
                                 <li class="list-group-item">Next Evaluation Date:
                                     @if($EmpEva != ''){{$EmpEva->eva_next_date}} @else {{$end_date->format('d-M-Y')}} @endif</li>
