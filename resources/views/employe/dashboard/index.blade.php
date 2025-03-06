@@ -7,7 +7,7 @@
         <div class="d-flex align-items-sm-center flex-sm-row flex-column gap-2">
             <div class="flex-grow-1">
 
-                <h4 class="font-18 mb-0">Dashboard of {{$view->emp_name}}</h4>
+                <h4 class="font-18 mb-0">Dashboard of {{$view->name}}</h4>
                 <div>Date : <span>{{date('d-M-Y | h:i:s A')}}</span></div>
                 <div>Time : <span id="time"></span></div>
             </div>

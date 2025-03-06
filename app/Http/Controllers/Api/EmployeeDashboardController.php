@@ -108,7 +108,7 @@ class EmployeeDashboardController extends Controller
                 'unpaid_remaining_year'=>$unpaidRemainingYear,
                 'total_report_submit'=>$totalReportSubmit,
                 'evaluation_leaves'=>$Evaleaves,
-                // 'last_employe_evaluation'=>$last_employe_evaluation,
+                'last_employe_evaluation'=>$last_employe_evaluation ?? Null,
                 'early_leave'=>$earlyleave,
                 'early_leave_year'=>$earlyleaveYear,
                 'group_by_month'=>$filteredMonths,
