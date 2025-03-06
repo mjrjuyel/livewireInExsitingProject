@@ -112,7 +112,7 @@
                                             <label class="form-label">Weekend Off Day<span class="text-danger">*
                                                 </span>:
                                             </label>
-                                            <select class="form-control " name="weekoff" data-placeholder="Choose ...">
+                                            <select class="form-control" name="weekoff" data-placeholder="Choose ...">
                                                 <optgroup label="Weekly Off Day">
                                                     <option value="1" {{ $setting->weekoffday == 1 ? 'selected' : '' }}>Monday</option>
                                                     <option value="2" {{ $setting->weekoffday == 2 ? 'selected' : '' }}>Tuesday</option>

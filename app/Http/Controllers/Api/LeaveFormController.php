@@ -49,7 +49,7 @@ class LeaveFormController extends Controller
                 return response()->json([
                     'status'=>true,
                     'message'=>"Unsuccesful To Inser!",
-                    'Error-Message'=>$validator->errors(), 
+                    'error-message'=>$validator->errors(), 
                 ]);
             }
 
@@ -311,7 +311,7 @@ class LeaveFormController extends Controller
         // return $leavehistory;
         return response()->json([
             'status'=>true,
-            'Message' => 'All Leave List I have Requested For Leave . Total Number is : ' . $leavehistory->count(),
+            'message' => 'All Leave List I have Requested For Leave . Total Number is : ' . $leavehistory->count(),
             'data'=>$leavehistory,
         ]);
     }

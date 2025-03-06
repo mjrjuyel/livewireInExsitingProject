@@ -33,14 +33,14 @@ class EmployeeEarlyLeaveController extends Controller
             $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',Auth::user()->id)->latest('id')->get();
         return response()->json([
             'status'=>true,
-            'Message'=>'All of My Early Leave History. Total number is : ' . $leaves->count(),
+            'message'=>'All of My Early Leave History. Total number is : ' . $leaves->count(),
             'data'=>$leaves,
         ],200);
         }
         catch(Exception $e){
             return reponse()->json([
             'status'=>true,
-            'Message'=>'Failed To Fetch Early Leave history',
+            'message'=>'Failed To Fetch Early Leave history',
             'data'=>$e->getMessage(),
             ],201);
         }
@@ -58,7 +58,7 @@ class EmployeeEarlyLeaveController extends Controller
         }catch(Exception $e){
             return reponse()->json([
             'status'=>true,
-            'Message'=>'Failed To Fetch Early Leaves Credentials',
+            'message'=>'Failed To Fetch Early Leaves Credentials',
             'data'=>$e->getMessage(),
             ],201);
         }
@@ -77,7 +77,7 @@ class EmployeeEarlyLeaveController extends Controller
             return response()->json([
                 'status'=>true,
                 'message'=>"Unsuccesful To Inser!",
-                'Error-Message'=>$validator->errors(), 
+                'error-message'=>$validator->errors(), 
             ]);
         }
 
@@ -167,8 +167,8 @@ class EmployeeEarlyLeaveController extends Controller
         if($validator->fails()){
             return response()->json([
                 'status'=>true,
-                'message'=>"Unsuccesful To Inser!",
-                'Error-Message'=>$validator->errors(), 
+                'message'=>"Unsuccesful To Insert!",
+                'error-message'=>$validator->errors(), 
             ]);
         }
         $date = Carbon::parse($request->date);

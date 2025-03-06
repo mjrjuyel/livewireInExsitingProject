@@ -82,7 +82,7 @@ class EmployeeAuthController extends Controller
        catch(Exception $e){
         return response()->json([
             'status'=>true,
-            "message"=>$e->getMesaage(),
+            'message'=>$e->getMessage(),
              ],201);
        }
     }

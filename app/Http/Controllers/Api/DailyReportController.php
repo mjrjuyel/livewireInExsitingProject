@@ -23,18 +23,54 @@ class DailyReportController extends Controller
         try{
             // dd('hello');
             $id = auth()->user()->id;
-            $alldata = DailyReport::where('status',1)->where('submit_by',$id)->simplePaginate(10);
-            // dd($alldata);
+            $alldata = DailyReport::with('employe:id,name')->where('status',1)->where('submit_by',$id)->latest('id')->paginate(10);
+
+            // nurul vai
+            if (!$alldata) {
                 return response()->json([
-                    'status'=>true,
-                    'Message'=>'Total Daily Reports For Specific Employee is ' .$alldata->count('id'),
-                    'Data'=> $alldata
-                ],200);
+                    'success' => false,
+                    'message' => 'Daily Report not Fund',
+                    'data' => null
+                ]);
+            }
+     
+            
+            $mappedData = $alldata->getCollection()->map(function ($alldata) {
+                return [
+                    'id' => $alldata->id,
+                    'submit_by' => $alldata->submit_by,
+                    'detail'=>$alldata->detail,
+                    'check_in'=>$alldata->check_in,
+                    'check_out'=>$alldata->check_out,
+                    'editor'=>$alldata->editor,
+                    'status' => $alldata->status,
+                    'created_at' => $alldata->created_at,
+                    'updated_at' => $alldata->updated_at,
+                ];
+            });
+
+            $response = [
+                'success' => true,
+                'message' => 'All Daily Report Fetch own by Logged Employee',
+                'data' => $mappedData,
+                'pagination' => [
+                    'total' => $alldata->total(),
+                    'current_page' => $alldata->currentPage(),
+                    'last_page' => $alldata->lastPage(),
+                    'per_page' => $alldata->perPage(),
+                    'next_page_url' => $alldata->nextPageUrl(),
+                    'prev_page_url' => $alldata->previousPageUrl(),
+                ],
+            ];
+            return response()->json($response);
+                    // nurul vai
+                    // dd($alldata);
+                    
         }
         catch(Exception $e){
             return response()->json([
                 'status'=>false,
-                'Message'=>'Faild to Fetch Report',
+                'message'=>'Faild to Fetch Report',
             ],201);
         }
     }
@@ -96,7 +132,7 @@ class DailyReportController extends Controller
                         Session::flash('success','Daily Report Submited');
                         return response()->json([
                             'status'=>true,
-                            'Message'=>'Report Submit Success Fully',
+                            'message'=>'Report Submit Success Fully',
                             'Data'=>$data,
                         ],200);
                     }
@@ -105,7 +141,7 @@ class DailyReportController extends Controller
                     Session::flash('error','You can not Submit report 3 Days before From Current Day!');
                     return response()->json([
                         'status'=>false,
-                        'Message'=>'You can not Submit report 3 Days before From Current Day!'
+                        'message'=>'You can not Submit report 3 Days before From Current Day!'
                     ],201);
                 }
                 
@@ -113,7 +149,7 @@ class DailyReportController extends Controller
                 Session::flash('error','The Date is not come yet!');
                 return response()->json([
                     'status'=>false,
-                    'Message'=>'The Date is not come yet!',
+                    'message'=>'The Date is not come yet!',
                 ],201);
             }
         }else{
@@ -121,13 +157,13 @@ class DailyReportController extends Controller
             Session::flash('error','Already You have Submitted on This day!');
             return response()->json([
                 'status'=>false,
-                'Message'=>'Already You have Submitted on This day!',
+                'message'=>'Already You have Submitted on This day!',
             ],200);
         }
      }catch(Exception $e){
         return response()->json([
             'status'=>false,
-            'Message'=>'failed to Insert',
+            'message'=>'failed to Insert',
             'data'=>$e->getMessage(),
         ],201);
      }
@@ -172,7 +208,7 @@ class DailyReportController extends Controller
 
         return response()->json([
             'status'=>true,
-            'Message'=>'Report Update SuccessFully',
+            'message'=>'Report Update SuccessFully',
             'Data'=>$report,
         ],200);
             
@@ -180,9 +216,9 @@ class DailyReportController extends Controller
         catch(Exception $e){
             return response()->json([
                 'status'=>false,
-                'Message'=>'Report Faild to Update',
+                'message'=>'Report Faild to Update',
                 'Data'=>$e->getMessage(),
-            ],500);
+            ],201);
         }
     }
     
