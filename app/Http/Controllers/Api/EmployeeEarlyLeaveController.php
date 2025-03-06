@@ -30,12 +30,43 @@ class EmployeeEarlyLeaveController extends Controller
 {
     public function index(){
         try{
-            $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',Auth::user()->id)->latest('id')->get();
-        return response()->json([
-            'status'=>true,
-            'message'=>'All of My Early Leave History. Total number is : ' . $leaves->count(),
-            'data'=>$leaves,
-        ],200);
+            $leaves = EarlyLeave::where('status','!=',0)->where('emp_id',Auth::user()->id)->latest('id')->paginate(10);
+
+                $mappedData = $leaves->getCollection()->map(function ($leaves) {
+                    return [
+                            "id"=>$leaves->id,
+                            "start"=> $leaves->start,
+                            "end"=> $leaves->end,
+                            "leave_date"=> $leaves->leave_date,
+                            "leave_type"=> $leaves->leave_type,
+                            "other_type"=>$leaves->other_type,
+                            "detail"=> $leaves->detail,
+                            "status"=>$leaves->status,
+                            "total_hour"=> $leaves->total_hour,
+                            "leave_summary"=> $leaves->leave_summary,
+                            "unpaid_request"=>$leaves->unpaid_request,
+                            "submit_by"=>$leaves->submit_by,
+                            "emp_id"=>$leaves->emp_id,
+                            "comments"=> $leaves->comments,
+                            "editor"=> $leaves->editor,
+                            'created_at' => $leaves->created_at,
+                            'updated_at' => $leaves->updated_at,
+                        ];
+                    });
+            $response = [
+                'success' => true,
+                'message' => 'All of My Early Leave History. Total number is : ' . $leaves->count(),
+                'data' => $leaves,
+                'pagination' => [
+                    'total' => $leaves->total(),
+                    'current_page' => $leaves->currentPage(),
+                    'last_page' => $leaves->lastPage(),
+                    'per_page' => $leaves->perPage(),
+                    'next_page_url' => $leaves->nextPageUrl(),
+                    'prev_page_url' => $leaves->previousPageUrl(),
+                ],
+            ];
+        return response()->json($response);
         }
         catch(Exception $e){
             return reponse()->json([

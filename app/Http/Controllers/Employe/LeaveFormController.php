@@ -438,7 +438,7 @@ class LeaveFormController extends Controller
                                             'emp_id'=>Auth::user()->id,
                                             'status'=>1,
                                             'add_from'=>Auth::user()->name,
-                                            'created_at'=>Carbon::now('UTC'),
+                                            'updated_at'=>Carbon::now('UTC'),
                                         ]);
     
                                         $data = Leave::where('id',$id)->first();
@@ -474,7 +474,7 @@ class LeaveFormController extends Controller
                                             'emp_id'=>Auth::user()->id,
                                             'status'=>1,
                                             'add_from'=>Auth::user()->name,
-                                            'created_at'=>Carbon::now('UTC'),
+                                            'updated_at'=>Carbon::now('UTC'),
                                         ]);
     
                                         $data = Leave::where('id',$id)->first();
@@ -509,7 +509,7 @@ class LeaveFormController extends Controller
                 }
             Session::flash('error','Date Is not Correct!');
             return redirect()->back();
-        }
+    }
 
     public function view($slug){
         $useId = Crypt::decrypt($slug);
