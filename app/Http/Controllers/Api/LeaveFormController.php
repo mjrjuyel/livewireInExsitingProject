@@ -307,12 +307,42 @@ class LeaveFormController extends Controller
             
     }
     public function history(){
-        $leavehistory = Leave::where('emp_id',auth()->user()->id)->orderBy('created_at','DESC')->get();
-        // return $leavehistory;
-        return response()->json([
-            'status'=>true,
+        $leavehistory = Leave::where('emp_id',auth()->user()->id)->orderBy('created_at','DESC')->latest('id')->paginate(10);
+
+        $mappedData = $leavehistory->getCollection()->map(function ($leavehistory) {
+                    return [
+                    "id"=> $leavehistory->id,
+                    "start_date"=> $leavehistory->start_date,
+                    "end_date"=> $leavehistory->end_date,
+                    "leave_type_id"=> $leavehistory->leave_type_id,
+                    "other_type"=> $leavehistory->other_type,
+                    "reason"=> $leavehistory->reason,
+                    "status"=> $leavehistory->status,
+                    "total_paid"=> $leavehistory->total_paid,
+                    "unpaid_request"=>$leavehistory->unpaid_request,
+                    "total_unpaid"=> $leavehistory->total_unpaid,
+                    "add_from"=> $leavehistory->add_from,
+                    "comments"=> $leavehistory->comments,
+                    "editor"=> $leavehistory->editor,
+                    'created_at' => $leavehistory->created_at,
+                    'updated_at' => $leavehistory->updated_at,
+                    "emp_id"=> 15,
+                ];
+            });
+        $response = [
+            'success' => true,
             'message' => 'All Leave List I have Requested For Leave . Total Number is : ' . $leavehistory->count(),
-            'data'=>$leavehistory,
-        ]);
+            'data' => $mappedData,
+            'pagination' => [
+                'total' => $leavehistory->total(),
+                'current_page' => $leavehistory->currentPage(),
+                'last_page' => $leavehistory->lastPage(),
+                'per_page' => $leavehistory->perPage(),
+                'next_page_url' => $leavehistory->nextPageUrl(),
+                'prev_page_url' => $leavehistory->previousPageUrl(),
+            ],
+        ];
+        return response()->json($response);
+       
     }
 }
