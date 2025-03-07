@@ -15,7 +15,7 @@ class AdminEmailSeeder extends Seeder
     public function run(): void
     {
         AdminEmail::create([
-            'email'=>'eteamify@gmail.com',
+            'email'=>'mjrcoder7@gmail.com',
             'creator'=>1,
             'created_at'=>Carbon::now(),
         ]);

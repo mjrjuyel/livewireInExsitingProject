@@ -11,67 +11,67 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            // Personal Information
-            $table->string('email2')->nullable();
-            $table->string('phone', 20)->nullable();
-            $table->string('phone2', 20)->nullable();
-            $table->string('address', 100)->nullable();
-            $table->string('present', 100)->nullable();
-            $table->string('emer_contact', 20)->nullable();
-            $table->string('emer_name', 50)->nullable();
-            $table->string('emer_relation', 100)->nullable();
-            $table->date('dob')->nullable();
-            $table->string('gender', 20)->nullable();
-            $table->string('marriage', 20)->nullable();
-            $table->integer('status')->default(1)->change();
+        // Schema::table('users', function (Blueprint $table) {
+        //     // Personal Information
+        //     $table->string('email2')->nullable();
+        //     $table->string('phone', 20)->nullable();
+        //     $table->string('phone2', 20)->nullable();
+        //     $table->string('address', 100)->nullable();
+        //     $table->string('present', 100)->nullable();
+        //     $table->string('emer_contact', 20)->nullable();
+        //     $table->string('emer_name', 50)->nullable();
+        //     $table->string('emer_relation', 100)->nullable();
+        //     $table->date('dob')->nullable();
+        //     $table->string('gender', 20)->nullable();
+        //     $table->string('marriage', 20)->nullable();
+        //     $table->integer('status')->default(1)->change();
 
-            // Job Details
-            $table->integer('report_manager')->nullable();
-            $table->integer('depart_id')->nullable();
-            $table->integer('desig_id')->nullable();
-            $table->string('email')->nullable()->change();
-            $table->string('emp_type')->nullable();
-            $table->date('join_date')->nullable();
-            $table->date('resign_date')->nullable();
+        //     // Job Details
+        //     $table->integer('report_manager')->nullable();
+        //     $table->integer('depart_id')->nullable();
+        //     $table->integer('desig_id')->nullable();
+        //     $table->string('email')->nullable()->change();
+        //     $table->string('emp_type')->nullable();
+        //     $table->date('join_date')->nullable();
+        //     $table->date('resign_date')->nullable();
 
-            // Evaluation
-            $table->date('eva_start_date')->nullable();
-            $table->date('eva_end_date')->nullable();
+        //     // Evaluation
+        //     $table->date('eva_start_date')->nullable();
+        //     $table->date('eva_end_date')->nullable();
 
-            // Identity Verification
-            $table->string('id_type')->nullable();
-            $table->string('id_number')->nullable();
+        //     // Identity Verification
+        //     $table->string('id_type')->nullable();
+        //     $table->string('id_number')->nullable();
 
-            // Education
-            $table->string('rec_degree')->nullable();
-            $table->string('rec_year')->nullable();
+        //     // Education
+        //     $table->string('rec_degree')->nullable();
+        //     $table->string('rec_year')->nullable();
 
-            // Bank Details
-            $table->integer('bank_id')->nullable();
-            $table->integer('bank_branch_id')->nullable();
-            $table->string('bank_account_name')->nullable();
-            $table->string('bank_account_number', 50)->nullable();
-            $table->string('bank_swift_code')->nullable();
-            $table->string('bank_sort_code')->nullable();
-            $table->string('bank_routing_number')->nullable();
-            $table->string('bank_country')->nullable();
+        //     // Bank Details
+        //     $table->integer('bank_id')->nullable();
+        //     $table->integer('bank_branch_id')->nullable();
+        //     $table->string('bank_account_name')->nullable();
+        //     $table->string('bank_account_number', 50)->nullable();
+        //     $table->string('bank_swift_code')->nullable();
+        //     $table->string('bank_sort_code')->nullable();
+        //     $table->string('bank_routing_number')->nullable();
+        //     $table->string('bank_country')->nullable();
 
-            // Office Details
-            $table->integer('office_branch_id')->nullable();
-            $table->string('office_id_number')->nullable();
-            $table->string('office_card_number')->nullable();
-            $table->string('office_IT_requirement')->nullable();
-            $table->string('office_work_schedule')->nullable();
+        //     // Office Details
+        //     $table->integer('office_branch_id')->nullable();
+        //     $table->string('office_id_number')->nullable();
+        //     $table->string('office_card_number')->nullable();
+        //     $table->string('office_IT_requirement')->nullable();
+        //     $table->string('office_work_schedule')->nullable();
 
-            // Other Fields
-            $table->string('signature')->nullable();
-            $table->integer('creator')->nullable();
-            $table->integer('editor')->nullable();
-            $table->string('device_token')->nullable();
-            // Drop unnecessary columns (adjust based on actual column names)
-            $table->dropColumn(['role_id', 'designation_id','slug']);
-        });
+        //     // Other Fields
+        //     $table->string('signature')->nullable();
+        //     $table->integer('creator')->nullable();
+        //     $table->integer('editor')->nullable();
+        //     $table->string('device_token')->nullable();
+        //     // Drop unnecessary columns (adjust based on actual column names)
+        //     $table->dropColumn(['role_id', 'designation_id','slug']);
+        // });
     }
 
     public function down(): void

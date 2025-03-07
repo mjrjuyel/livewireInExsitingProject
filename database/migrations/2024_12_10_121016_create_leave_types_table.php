@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('leave_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('type_title',50)->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('leave_types', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('type_title',50)->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

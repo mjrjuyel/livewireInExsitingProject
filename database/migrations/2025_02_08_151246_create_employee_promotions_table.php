@@ -15,8 +15,8 @@ return new class extends Migration
 
         Schema::create('employee_promotions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('emp_id')->nullable()->constrained('employees')->onDelete('cascade');
-            // $table->foreignId('emp_id')->nullable()->constrained('users')->onDelete('cascade');
+            // $table->foreignId('emp_id')->nullable()->constrained('employees')->onDelete('cascade');
+            $table->foreignId('emp_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('depart_id')->nullable()->constrained('departments')->onDelete('set null');
             $table->foreignId('desig_id')->nullable()->constrained('designations')->onDelete('set null');
             $table->string('pro_status',20)->default('Unchanged')->nullable();

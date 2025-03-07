@@ -32,7 +32,7 @@ class BasicSeeder extends Seeder
         if (File::exists($destinationPath)) {
             // Save the path to the database
             Basic::create([
-                'copyright'=>'ETeamifY - By SupreoX',
+                'copyright'=>'EteamifY - By SupreoX',
                 'Mlogo'=>'mlogo.png',
                 'created_at'=>Carbon::now(),
             ]);
